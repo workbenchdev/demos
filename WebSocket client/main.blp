@@ -1,0 +1,54 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "WebSocket Client";
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Entry entry_url {
+      placeholder-text: "url";
+      text: "wss://ws.postman-echo.com/raw";
+      margin-bottom: 24;
+    }
+
+    Button button_connect {
+      label: "Connect";
+      margin-bottom: 24;
+    }
+
+    Button button_disconnect {
+      label: "Disconnect";
+      sensitive: false;
+      margin-bottom: 24;
+    }
+
+    Box {
+      Entry entry_message {
+        margin-end: 12;
+        hexpand: true;
+        placeholder-text: "message";
+        text: "Hello";
+      }
+
+      Button button_send {
+        label: "Send";
+        sensitive: false;
+      }
+
+      margin-bottom: 24;
+    }
+
+    LinkButton {
+      label: "GJS Asynchronous Operations";
+      uri: "https://gjs.guide/guides/gjs/asynchronous-programming.html#asynchronous-operations";
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://libsoup.org/libsoup-3.0/SoupWebsocket.html";
+    }
+  }
+}

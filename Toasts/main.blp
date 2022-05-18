@@ -1,0 +1,40 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.ToastOverlay overlay {
+  Adw.StatusPage {
+    title: "Toasts";
+
+    Box {
+      orientation: vertical;
+      halign: center;
+
+      Button button_simple {
+        label: "Simple In-App notification";
+        margin-bottom: 24;
+        styles ["pill"]
+      }
+
+      Button button_advanced {
+        label: "Advanced Usage";
+        margin-bottom: 24;
+        styles ["pill"]
+      }
+
+      LinkButton {
+        label: "Tutorial";
+        uri: "https://developer.gnome.org/documentation/tutorials/beginners/getting_started/adding_toasts.html";
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/class.Toast.html";
+      }
+
+      LinkButton {
+        label: "Human Interface Guidelines";
+        uri: "https://developer.gnome.org/hig/patterns/feedback/toasts.html";
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Notifications";
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Button button_simple {
+      label: "Trigger notification";
+      margin-bottom: 24;
+      styles ["pill"]
+    }
+
+    LinkButton {
+      label: "Tutorial";
+      uri: "https://developer.gnome.org/documentation/tutorials/notifications.html";
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gio/class.Notification.html";
+    }
+
+    LinkButton {
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/feedback/notifications.html";
+    }
+  }
+}
