@@ -2,22 +2,16 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: _("Open File");
-  description: _("Open a file using a file dialog");
+  title: _("Save File");
+  description: _("Save a file using a file dialog");
 
   Box {
     orientation: vertical;
     spacing: 24;
 
-    Button button_single {
+    Button button {
       halign: center;
-      label: _("Open a file");
-      styles ["pill", "suggested-action"]
-    }
-
-     Button button_multiple {
-      halign: center;
-      label: _("Open multiple files");
+      label: _("Save");
       styles ["pill", "suggested-action"]
     }
 
