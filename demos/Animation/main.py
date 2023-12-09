@@ -62,4 +62,3 @@ animation_spring.epsilon = 0.001
 animation_spring.clamp = False
 
 button_spring.connect("clicked", lambda _: animation_spring.play)
-
