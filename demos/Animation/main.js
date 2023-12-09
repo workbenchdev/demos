@@ -70,4 +70,3 @@ function move_widget(widget, x, y) {
   transform = transform.translate(p);
   widget.allocate(widget.get_width(), widget.get_height(), -1, transform);
 }
-
