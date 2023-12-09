@@ -1,0 +1,21 @@
+{
+  "name": "biome",
+  "buildsystem": "simple",
+  "build-commands": ["chmod +x biome", "cp biome /app/bin/biome"],
+  "sources": [
+    {
+      "type": "file",
+      "dest-filename": "biome",
+      "only-arches": ["aarch64"],
+      "url": "https://github.com/biomejs/biome/releases/download/cli%2Fv1.4.0/biome-linux-arm64",
+      "sha256": "9c944cd932476a5e6264f455ab3979a8ed870a72adffdebc3dbe9ef4e4240926"
+    },
+    {
+      "type": "file",
+      "dest-filename": "biome",
+      "only-arches": ["x86_64"],
+      "url": "https://github.com/biomejs/biome/releases/download/cli%2Fv1.4.0/biome-linux-x64",
+      "sha256": "9d14e2a3ebf5350813d7d2b14b8b0b92d3e9cfa384bfbdc6a314b46cf3c8cc6c"
+    }
+  ]
+}

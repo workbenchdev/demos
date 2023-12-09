@@ -1,0 +1,27 @@
+.flatpak
+.flatpak-builder
+build
+builddir
+/flatpak
+node_modules
+repo
+install
+.eslintcache
+*~
+*.compiled
+*.flatpak
+.fenv
+.venv
+__pycache__
+*.pyc
+
+# IDEs / editors
+.idea
+.vscode
+
+# Project files - sync with Makefile
+demos/**/settings
+demos/**/workbench.vala
+demos/**/main.ui
+demos/**/libworkbenchcode.so
+demos/**/__pycache__
