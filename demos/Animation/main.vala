@@ -31,7 +31,7 @@ public void main () {
 
   var spring_animation = new Adw.SpringAnimation (
     ball, // Widget
-    0, 8.5, // Initial value, final value
+    0, 1, // Initial value, final value
     spring_params, // Spring params
     spring_target // Animation target
   ) {
@@ -44,8 +44,16 @@ public void main () {
 }
 
 private void animation_callback (double value) {
-  double x = Adw.lerp (0, 60, value);
+  var end = get_end_position(ball);
+  double x = Adw.lerp (0, end, value);
   move_widget (ball, x, 0);
+}
+
+private int get_end_position(Gtk.Widget widget) {
+  var parent_width = widget.get_parent().get_width();
+  var width = ball.get_width();
+
+  return parent_width - width;
 }
 
 private void move_widget (Gtk.Widget widget, double x, double y) {

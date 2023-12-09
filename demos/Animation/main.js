@@ -38,7 +38,7 @@ const params = Adw.SpringParams.new(
 const animation_spring = new Adw.SpringAnimation({
   widget: ball,
   value_from: 0,
-  value_to: 8.5,
+  value_to: 1,
   spring_params: params,
   target: target_spring,
 });
@@ -52,8 +52,16 @@ button_spring.connect("clicked", () => {
 });
 
 function animation_cb(value) {
-  const x = Adw.lerp(0, 60, value);
+  const end = get_end_position(ball);
+  const x = Adw.lerp(0, end, value);
   move_widget(ball, x, 0);
+}
+
+function get_end_position(widget) {
+  const parent_width = widget.get_parent().get_width();
+  const width = ball.get_width();
+
+  return parent_width - width;
 }
 
 function move_widget(widget, x, y) {

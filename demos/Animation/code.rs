@@ -31,7 +31,8 @@ pub fn main() {
     let ball: adw::Bin = workbench::builder().object("ball").unwrap();
 
     let target_spring = adw::CallbackAnimationTarget::new(clone!(@weak ball => move |value| {
-        let x = adw::lerp(0., 60., value);
+        let end = (ball.parent().unwrap().width() - ball.width()) as f64;
+        let x = adw::lerp(0., end, value);
         let p = graphene::Point::new(x as f32, 0.);
         let transform = gsk::Transform::new().translate(&p);
         ball.allocate(ball.width(), ball.height(), -1, Some(transform));
@@ -46,7 +47,7 @@ pub fn main() {
     let animation_spring = adw::SpringAnimation::builder()
         .widget(&ball)
         .value_from(0.0)
-        .value_to(8.5)
+        .value_to(1.0)
         .spring_params(&params)
         .target(&target_spring)
         .initial_velocity(1.0)
