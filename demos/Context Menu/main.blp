@@ -1,0 +1,77 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage demo {
+  title: _("Context Menu");
+  description: _("Display context menu");
+
+  Box {
+    orientation: vertical;
+
+    Box box_menu_parent {
+      orientation: vertical;
+      height-request: 140;
+
+      styles [
+        "card",
+      ]
+
+      Label label_emoji {
+        margin-top: 12;
+        valign: fill;
+        label: "😀";
+
+        styles [
+          "title-1",
+        ]
+      }
+
+      Label {
+        margin-top: 12;
+        label: _("Right click on me");
+
+        styles [
+          "title-2",
+        ]
+      }
+
+      GestureClick gesture_click {
+        button: 3;
+      }
+
+      PopoverMenu popover_menu {
+        menu-model: context_menu;
+        has-arrow: false;
+        halign: start;
+      }
+    }
+
+    LinkButton {
+      margin-top: 12;
+      label: _("GJS Guide");
+      uri: "https://gjs.guide/guides/gio/actions-and-menus.html#gmenu";
+    }
+
+    LinkButton {
+      label: _("Human Interface Guidelines");
+      uri: "https://developer.gnome.org/hig/patterns/controls/menus.html";
+    }
+  }
+}
+
+menu context_menu {
+  item {
+    label: _("Happy");
+    action: "mood.happy";
+  }
+
+  item {
+    label: _("Start Struck");
+    action: "mood.start-struck";
+  }
+
+  item {
+    label: _("Partying");
+    action: "mood.partying";
+  }
+}
