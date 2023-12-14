@@ -9,7 +9,7 @@ const popover_menu = workbench.builder.get_object("popover_menu");
 
 gesture_click.connect("pressed", (_self, _n_press, x, y) => {
   const position = new Gdk.Rectangle({ x: x, y: y });
-  popover_menu.set_pointing_to(position);
+  popover_menu.pointing_to = position;
   popover_menu.popup();
 });
 
