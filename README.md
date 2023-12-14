@@ -8,9 +8,21 @@ This is the repository containing the Library demos of [Workbench](https://githu
 2. Clone/fork this repository
 3. In Workbench menu select "Open Project"
 4. Open one of the directory under [demos](./demos)
-5. Open a pull request
+5. Make changes
+6. Open a pull request
 
 For more details see [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+## Code of conduct
+
+Workbench follows the [GNOME Code of Conduct](https://conduct.gnome.org/).
+
+- **Be friendly.** Use welcoming and inclusive language.
+- **Be empathetic.** Be respectful of differing viewpoints and experiences.
+- **Be respectful.** When we disagree, we do so in a polite and constructive manner.
+- **Be considerate.** Remember that decisions are often a difficult choice between competing priorities.
+- **Be patient and generous.** If someone asks for help it is because they need it.
+- **Try to be concise.** Read the discussion before commenting.
 
 ## License
 
