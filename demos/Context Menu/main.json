@@ -1,6 +1,6 @@
 {
   "category": "controls",
-  "description": "Display context menus",
+  "description": "Offer contextual actions",
   "panels": ["ui", "preview"],
   "autorun": true
 }
