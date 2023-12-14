@@ -3,23 +3,24 @@ using Adw 1;
 
 Adw.StatusPage demo {
   title: _("Context Menu");
-  description: _("Display context menu");
+  description: _("Offer contextual actions");
 
   Box {
     orientation: vertical;
 
     Box box_menu_parent {
       orientation: vertical;
-      height-request: 140;
+      halign: center;
+      width-request: 300;
+      height-request: 200;
 
       styles [
         "card",
       ]
 
       Label label_emoji {
-        margin-top: 12;
-        valign: fill;
         label: "😀";
+        vexpand: true;
 
         styles [
           "title-1",
@@ -27,7 +28,6 @@ Adw.StatusPage demo {
       }
 
       Label {
-        margin-top: 12;
         label: _("Right click on me");
 
         styles [
@@ -62,16 +62,19 @@ Adw.StatusPage demo {
 menu context_menu {
   item {
     label: _("Happy");
-    action: "mood.happy";
+    action: "mood.emoji";
+    target: "😀";
   }
 
   item {
     label: _("Start Struck");
-    action: "mood.start-struck";
+    action: "mood.emoji";
+    target: "🤩";
   }
 
   item {
     label: _("Partying");
-    action: "mood.partying";
+    action: "mood.emoji";
+    target: "🥳";
   }
 }
