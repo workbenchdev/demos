@@ -1,5 +1,5 @@
-import Gdk from "gi://Gdk";
 import GLib from "gi://GLib";
+import Gdk from "gi://Gdk";
 import Gio from "gi://Gio";
 
 const box_menu_parent = workbench.builder.get_object("box_menu_parent");
