@@ -25,3 +25,8 @@ demos/**/workbench.vala
 demos/**/main.ui
 demos/**/libworkbenchcode.so
 demos/**/__pycache__
+demos/**/Cargo.lock
+demos/**/Cargo.toml
+demos/**/lib.rs
+demos/**/workbench.rs
+demos/**/biome.json
