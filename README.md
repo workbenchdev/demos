@@ -13,7 +13,7 @@ This is the repository containing the Library demos of [Workbench](https://githu
 
 ⚠️ If you are contributing to Rust please do the following:
 
-```
+```sh
 cd demos
 flatpak override --user --filesystem=$PWD re.sonny.Workbench
 # restart Workbench
