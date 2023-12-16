@@ -11,6 +11,14 @@ This is the repository containing the Library demos of [Workbench](https://githu
 5. Make changes
 6. Open a pull request
 
+⚠️ If you are contributing to Rust please do the following:
+
+```
+cd demos
+flatpak override --user --filesystem=$PWD re.sonny.Workbench
+# restart Workbench
+```
+
 For more details see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Code of conduct

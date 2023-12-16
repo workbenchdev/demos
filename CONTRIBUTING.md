@@ -75,6 +75,14 @@ Some guidelines
 - Follow the patterns of existing entries
 - Follow [the Style Guide](./STYLEGUIDE.md)
 
+⚠️ If you are contributing to Rust please do the following:
+
+```
+cd demos
+flatpak override --user --filesystem=$PWD re.sonny.Workbench
+# restart Workbench
+```
+
 ## Create Library entry
 
 To create a new Library entry, duplicate an existing one and proceed to the next section.
