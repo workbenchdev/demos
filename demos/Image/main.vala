@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vala workbench.vala --pkg libadwaita-1
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 
 public void main () {
   var image_file = File.new_for_uri (workbench.resolve ("workbench.png"));

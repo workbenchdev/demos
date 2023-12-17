@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vala workbench.vala --pkg libadwaita-1
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 
 public void main () {
   var picture_fill = (Gtk.Picture) workbench.builder.get_object ("picture_fill");

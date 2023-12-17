@@ -49,7 +49,7 @@ public void main () {
       create_error_page (failed_url, error.message), // HTML Content
       failed_url, // Content URI for the alternate page content
       null // Base URI for relative locations
-    );
+      );
     return true;
   });
 
@@ -66,7 +66,7 @@ public void main () {
 
 private string create_error_page (string failed_url, string message) {
   string page =
-@"<div style=\"text-align:center; margin:24px;\">
+    @"<div style=\"text-align:center; margin:24px;\">
     <h2>An error has occurred while loading $failed_url</h2>
     <p>$message</p>
   </div>";

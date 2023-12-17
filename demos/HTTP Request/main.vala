@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libsoup-3.0 --pkg json-glib-1.0
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libsoup-3.0 --pkg json-glib-1.0
 
 public errordomain FetchError {
   FAILED_REQUEST,
@@ -25,7 +25,7 @@ private async void fetch_wikipedia_todays_featured_article () throws Error {
   // https://api.wikimedia.org/wiki/Feed_API/Reference/Featured_content
   string language = "en";
   string url =
-    @"https://api.wikimedia.org/feed/v1/wikipedia/$language/featured/$(date.format ("%Y/%m/%d"))";
+    @"https://api.wikimedia.org/feed/v1/wikipedia/$language/featured/$(date.format ("%Y/ %m/ %d "))";
 
   var message = new Soup.Message ("GET", url);
 

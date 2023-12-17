@@ -4,20 +4,21 @@ SHELL:=/bin/bash -O globstar
 
 setup:
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//45 org.freedesktop.Sdk.Extension.rust-stable//23.08
+	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//45 org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08
 	npm install
 	flatpak-builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Demos.json
 
 lint:
 # JavaScript
-# ./node_modules/.bin/eslint --max-warnings=0 src
 	./build-aux/fun biome ci demos/
-# rustfmt
+# Vala
+	./build-aux/fun uncrustify -c - --check --set indent_with_tabs=0 --set nl_end_of_file=force --set nl_end_of_file_min=1 --set indent_columns=4 demos/**/*.vala
+# Rust
 	./build-aux/fun rustfmt --check --edition 2021 demos/**/*.rs
-# black
+# Python
 	./build-aux/fun black --check demos/**/*.py
 # Blueprint
-	find demos/ -type f -name "*blp" -print0 | xargs -0 ./build-aux/fun blueprint-compiler format
+	./build-aux/fun blueprint-compiler format demos/**/*.blp
 
 test: lint
 

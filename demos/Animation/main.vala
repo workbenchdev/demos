@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vala workbench.vala --pkg libadwaita-1
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 
 private Adw.Bin ball;
 
@@ -12,7 +12,7 @@ public void main () {
     0, 1, // Initial value, final value
     1500, // Duration (in milliseconds)
     target_timed // Animation target
-  ) {
+    ) {
     easing = EASE_IN_OUT_CUBIC
   };
 
@@ -27,14 +27,14 @@ public void main () {
     0.5, // Damping Ratio
     1.0, // Mass
     50.0 // Stiffness
-  );
+    );
 
   var spring_animation = new Adw.SpringAnimation (
     ball, // Widget
     0, 1, // Initial value, final value
     spring_params, // Spring params
     spring_target // Animation target
-  ) {
+    ) {
     initial_velocity = 1.0,
     epsilon = 0.001,
     clamp = false

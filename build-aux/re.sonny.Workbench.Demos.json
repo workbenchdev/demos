@@ -3,11 +3,9 @@
   "runtime": "org.gnome.Sdk",
   "runtime-version": "45",
   "sdk": "org.gnome.Sdk",
-  "sdk-extensions": [
-    "org.freedesktop.Sdk.Extension.rust-stable"
-  ],
+  "sdk-extensions": ["org.freedesktop.Sdk.Extension.rust-stable"],
   "build-options": {
-    "append-path": "/usr/lib/sdk/rust-stable/bin"
+    "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin"
   },
   "modules": [
     "modules/python-black.json",

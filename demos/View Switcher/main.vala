@@ -24,7 +24,7 @@ public void main() {
     button.clicked.connect( () => {
       notifications_page.badge_number -= 1;
       notification_list.remove(notification_row);
-      
+
       if (notifications_page.badge_number == 0) {
         notifications_page.needs_attention = false;
       }
@@ -35,4 +35,3 @@ public void main() {
     notification_list.append(notification_row);
   }
 }
-

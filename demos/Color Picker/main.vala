@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libportal-gtk4
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libportal-gtk4
 
 private Xdp.Portal portal;
 private Xdp.Parent parent;

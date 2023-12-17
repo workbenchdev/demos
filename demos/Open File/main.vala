@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vala workbench.vala --pkg libadwaita-1
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 
 public void main () {
   var button_single = (Gtk.Button) workbench.builder.get_object ("button_single");
@@ -11,7 +11,7 @@ public void main () {
 private async void open_single () {
   var default_directory = File.new_for_path (
     Environment.get_user_special_dir (DOWNLOAD)
-  );
+    );
   var file_dialog = new Gtk.FileDialog () {
     initial_folder = default_directory
   };

@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vala workbench.vala --pkg libadwaita-1
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 
 private Gtk.Box interactive_box;
 private int count = 0;
@@ -15,7 +15,7 @@ public void main () {
 
   var toggle_orientation_horizontal = (Gtk.ToggleButton) workbench.builder.get_object (
     "toggle_orientation_horizontal"
-  );
+    );
 
   toggle_orientation_horizontal.toggled.connect (() => {
     if (toggle_orientation_horizontal.active) {
