@@ -19,11 +19,11 @@ private async void on_button_clicked () {
   try {
     bool success = yield portal.compose_email (
       parent,
-      { email_address }, // addresses
-      null, // cc
-      null, // bcc
-      "Email from Workbench", // subject
-      "Hello World!", // body
+      { email_address },       // addresses
+      null,       // cc
+      null,       // bcc
+      "Email from Workbench",       // subject
+      "Hello World!",       // body
       null,
       NONE,
       null

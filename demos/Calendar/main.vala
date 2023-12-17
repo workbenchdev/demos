@@ -4,17 +4,17 @@ public void main () {
   var calendar = (Gtk.Calendar) workbench.builder.get_object ("calendar");
   calendar.notify["day"].connect (() => {
     DateTime date_time = calendar.get_date ();
-    message (date_time.format ("%e")); // Print day of the month
+    message (date_time.format ("%e"));     // Print day of the month
   });
 
   calendar.notify["month"].connect (() => {
     DateTime date_time = calendar.get_date ();
-    message (date_time.format ("%B")); // Print month
+    message (date_time.format ("%B"));     // Print month
   });
 
   calendar.notify["year"].connect (() => {
     DateTime date_time = calendar.get_date ();
-    message (date_time.format ("%Y")); // Print year
+    message (date_time.format ("%Y"));     // Print year
   });
 
   calendar.day_selected.connect (() => {
