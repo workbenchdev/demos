@@ -1,9 +1,7 @@
 #!/usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
 
 public void main () {
-	  Gtk.init ();
-
-	  var box = workbench.builder.get_object ("subtitle") as Gtk.Box;
+	  var box = (Gtk.Box) workbench.builder.get_object ("subtitle");
 
   	// https://valadoc.org/gtk4/Gtk.Button.html
   	var button = new Gtk.Button () {
