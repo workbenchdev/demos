@@ -3,7 +3,7 @@ SHELL:=/bin/bash -O globstar
 .DEFAULT_GOAL := ci
 
 setup:
-	cd Workbench && make build
+	cd Workbench && make setup
 
 lint:
 # JavaScript
