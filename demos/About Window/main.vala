@@ -1,15 +1,15 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
+#!/usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
 
 public void main () {
-    Gtk.init ();
+	  Gtk.init ();
 
-    var button = workbench.builder.get_object ("button") as Gtk.Button;
-    button.clicked.connect (on_button_clicked);
+	  var button = workbench.builder.get_object ("button") as Gtk.Button;
+	  button.clicked.connect(on_button_clicked);
 }
 
 public void on_button_clicked () {
     // https://valadoc.org/libadwaita-1/Adw.AboutWindow.html
-    var dialog = new Adw.AboutWindow () {
+    var dialog = new Adw.AboutWindow() {
         transient_for = workbench.window,
         application_icon = "application-x-executable",
         application_name = "Typeset",
@@ -26,17 +26,17 @@ public void on_button_clicked () {
         translator_credits = "translator-credits",
     };
     dialog.add_link (
-                     "Documentation",
-                     "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.AboutWindow.html"
+        "Documentation",
+        "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.AboutWindow.html"
     );
     dialog.add_legal_section (
-                              "Fonts",
-                              null,
-                              Gtk.License.CUSTOM,
-                              "This application uses font data from <a href='https://example.org'>somewhere</a>."
+        "Fonts",
+        null,
+        Gtk.License.CUSTOM,
+        "This application uses font data from <a href='https://example.org'>somewhere</a>."
     );
 
-    dialog.add_acknowledgement_section ("Special thanks to", { "My cat" });
+    dialog.add_acknowledgement_section ("Special thanks to", { "My cat" } );
 
-    dialog.present ();
+    dialog.present();
 }
