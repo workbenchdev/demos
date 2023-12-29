@@ -8,10 +8,10 @@ public void main () {
     var target_timed = new Adw.PropertyAnimationTarget (progress_bar, "fraction");
 
     var animation_timed = new Adw.TimedAnimation (
-        progress_bar, // Widget
-        0, 1, // Initial value, final value
-        1500, // Duration (in milliseconds)
-        target_timed // Animation target
+                                                  progress_bar, // Widget
+                                                  0, 1, // Initial value, final value
+                                                  1500, // Duration (in milliseconds)
+                                                  target_timed // Animation target
         ) {
         easing = EASE_IN_OUT_CUBIC
     };
@@ -24,16 +24,16 @@ public void main () {
 
     var spring_target = new Adw.CallbackAnimationTarget (animation_callback);
     var spring_params = new Adw.SpringParams (
-        0.5, // Damping Ratio
-        1.0, // Mass
-        50.0 // Stiffness
-        );
+                                              0.5, // Damping Ratio
+                                              1.0, // Mass
+                                              50.0 // Stiffness
+    );
 
     var spring_animation = new Adw.SpringAnimation (
-        ball, // Widget
-        0, 1, // Initial value, final value
-        spring_params, // Spring params
-        spring_target // Animation target
+                                                    ball, // Widget
+                                                    0, 1, // Initial value, final value
+                                                    spring_params, // Spring params
+                                                    spring_target // Animation target
         ) {
         initial_velocity = 1.0,
         epsilon = 0.001,
@@ -44,14 +44,14 @@ public void main () {
 }
 
 private void animation_callback (double value) {
-    var end = get_end_position(ball);
+    var end = get_end_position (ball);
     double x = Adw.lerp (0, end, value);
     move_widget (ball, x, 0);
 }
 
-private int get_end_position(Gtk.Widget widget) {
-    var parent_width = widget.get_parent().get_width();
-    var width = ball.get_width();
+private int get_end_position (Gtk.Widget widget) {
+    var parent_width = widget.get_parent ().get_width ();
+    var width = ball.get_width ();
 
     return parent_width - width;
 }

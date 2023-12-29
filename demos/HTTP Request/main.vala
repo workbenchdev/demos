@@ -25,11 +25,12 @@ private async void fetch_wikipedia_todays_featured_article () throws Error {
     // https://api.wikimedia.org/wiki/Feed_API/Reference/Featured_content
     string language = "en";
     string url =
-        @"https://api.wikimedia.org/feed/v1/wikipedia/$language/featured/$(date.format ("%Y/ %m/ %d "))";
+        @"https://api.wikimedia.org/feed/v1/wikipedia/$language/featured/$(date.format (" % Y / % m / % d "))";
 
     var message = new Soup.Message ("GET", url);
 
     Bytes message_bytes = yield http_session.send_and_read_async (message, Priority.DEFAULT, null);
+
     if (message.status_code != 200) {
         throw new FetchError.FAILED_REQUEST (@"Failed Request. HTTP Status: $(message.status_code)");
     }
@@ -38,7 +39,6 @@ private async void fetch_wikipedia_todays_featured_article () throws Error {
     string json_data = (string) data;
     parse_json_response (json_data);
 }
-
 
 private void parse_json_response (string json) throws Error {
     // https://valadoc.org/json-glib-1.0/Json.Parser.html

@@ -15,12 +15,10 @@ public void main () {
 
 private async void on_button_clicked () {
     try {
-        bool success = yield portal.set_wallpaper (
-            parent,
+        bool success = yield portal.set_wallpaper (parent,
             image_uri,
             PREVIEW | BACKGROUND | LOCKSCREEN,
-            null
-            );
+            null);
 
         if (success) {
             message ("Wallpaper set successfully");

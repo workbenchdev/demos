@@ -9,7 +9,7 @@ public void main () {
     var button = new Gtk.Button () {
         label = "Press me",
         margin_top = 6,
-        css_classes = {"suggested-action"}
+        css_classes = { "suggested-action" }
     };
     button.clicked.connect (greet);
     box.append (button);
@@ -20,8 +20,8 @@ public void main () {
 public void greet () {
     // https://valadoc.org/libadwaita-1/Adw.MessageDialog.html
     var dialog = new Adw.MessageDialog (
-        workbench.window, null, "Hello World!"
-        );
+                                        workbench.window, null, "Hello World!"
+    );
 
     dialog.add_response ("ok", "OK");
     dialog.response.connect ((self, response) => {

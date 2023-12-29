@@ -14,15 +14,14 @@ public void main () {
     // Model
     int item = 1;
     var string_model = new Gtk.StringList (
-        {"Default Item 1", "Default Item 2", "Default Item 3"}
-        );
+                                           { "Default Item 1", "Default Item 2", "Default Item 3" });
     var model = new Gtk.SingleSelection (string_model);
 
     var grid_view_factory = new Gtk.SignalListItemFactory ();
 
     grid_view_factory.setup.connect ((list_item) => {
         var label = new Gtk.Label ("") {
-            css_classes = {"card"},
+            css_classes = { "card" },
             halign = CENTER,
             valign = CENTER,
             hexpand = true,

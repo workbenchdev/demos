@@ -14,8 +14,8 @@ public void main () {
     button_remove.clicked.connect (remove_child);
 
     var toggle_orientation_horizontal = (Gtk.ToggleButton) workbench.builder.get_object (
-        "toggle_orientation_horizontal"
-        );
+                                                                                         "toggle_orientation_horizontal"
+    );
 
     toggle_orientation_horizontal.toggled.connect (() => {
         if (toggle_orientation_horizontal.active) {

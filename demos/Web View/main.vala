@@ -46,10 +46,10 @@ public void main () {
         }
 
         web_view.load_alternate_html (
-            create_error_page (failed_url, error.message), // HTML Content
-            failed_url, // Content URI for the alternate page content
-            null // Base URI for relative locations
-            );
+                                      create_error_page (failed_url, error.message), // HTML Content
+                                      failed_url, // Content URI for the alternate page content
+                                      null // Base URI for relative locations
+        );
         return true;
     });
 

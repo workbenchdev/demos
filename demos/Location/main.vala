@@ -60,17 +60,15 @@ public void main () {
     portal.location_updated.connect (on_location_updated);
 }
 
-private void on_location_updated (
-    double latitude,
-    double longitude,
-    double altitude,
-    double accuracy,
-    double speed,
-    double heading,
-    string description,
-    int64 timestamp_seconds,
-    int64 timestamp_ms
-    ) {
+private void on_location_updated (double latitude,
+                                  double longitude,
+                                  double altitude,
+                                  double accuracy,
+                                  double speed,
+                                  double heading,
+                                  string description,
+                                  int64 timestamp_seconds,
+                                  int64 timestamp_ms) {
     message ("Location updated");
     latitude_label.label = latitude.to_string ();
     longitude_label.label = longitude.to_string ();
@@ -96,14 +94,12 @@ private async void start_session () {
     close_button.sensitive = true;
 
     try {
-        bool result = yield portal.location_monitor_start (
-            parent,
+        bool result = yield portal.location_monitor_start (parent,
             (uint) distance_threshold.value,
             (uint) time_threshold.value,
             (Xdp.LocationAccuracy) accuracy_button.selected,
             NONE,
-            null
-            );
+            null);
 
         if (result) {
             message ("Location access granted");

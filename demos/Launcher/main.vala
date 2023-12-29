@@ -44,6 +44,7 @@ public void main () {
 private async void on_launch_file () {
     try {
         bool success = yield file_launcher.launch (workbench.window, null);
+
         if (!success) {
             critical (@"Failed to open $(file_launcher.file.get_uri ())");
         }
@@ -55,6 +56,7 @@ private async void on_launch_file () {
 private async void open_file_location () {
     try {
         bool success = yield file_launcher.open_containing_folder (workbench.window, null);
+
         if (!success) {
             critical ("Failed to open containing folder");
         }
@@ -76,6 +78,7 @@ private async void launch_uri () {
     var uri_launcher = new Gtk.UriLauncher (uri_details.text);
     try {
         bool success = yield uri_launcher.launch (workbench.window, null);
+
         if (!success) {
             critical (@"Failed to launch $(uri_launcher.uri)");
         }

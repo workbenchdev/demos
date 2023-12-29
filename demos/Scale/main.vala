@@ -7,7 +7,7 @@ private Gtk.ScaleButton scale_button;
 public void main () {
     scale_one = (Gtk.Scale) workbench.builder.get_object ("one");
     scale_two = (Gtk.Scale) workbench.builder.get_object ("two");
-    scale_button = (Gtk.ScaleButton) workbench.builder.get_object("button");
+    scale_button = (Gtk.ScaleButton) workbench.builder.get_object ("button");
 
     string[] marks = { "A", "B", "C" };
     string[] volume_icons = {
@@ -18,12 +18,12 @@ public void main () {
     };
 
     for (int i = 0; i < marks.length; i++) {
-        scale_two.add_mark(i * 50, Gtk.PositionType.RIGHT, marks[i]);
+        scale_two.add_mark (i * 50, Gtk.PositionType.RIGHT, marks[i]);
     }
 
-    scale_two.set_increments(25, 100);
+    scale_two.set_increments (25, 100);
 
-    scale_one.value_changed.connect(() => {
+    scale_one.value_changed.connect (() => {
         var scale_value = scale_one.get_value ();
         if (scale_value == scale_one.adjustment.upper) {
             message ("Maximum value reached");
@@ -32,18 +32,18 @@ public void main () {
         }
     });
 
-    scale_two.value_changed.connect(() => {
+    scale_two.value_changed.connect (() => {
         double scale_value = scale_two.get_value ();
 
         // Check if indicator is on mark
         scale_value /= 50;
-        if (scale_value % 1 != 0) return;
+        if (scale_value % 1 != 0)return;
 
         var label = marks[(int) scale_value];
-        if (label == null) return;
+        if (label == null)return;
 
         message (@"Mark $(label) reached");
     });
 
-    scale_button.set_icons(volume_icons);
+    scale_button.set_icons (volume_icons);
 }

@@ -19,7 +19,7 @@ void main() {
     });
 
     // Drop Target for Files
-    var file_drop_target = new DropTarget(typeof(GLib.File), Gdk.DragAction.COPY);
+    var file_drop_target = new DropTarget(typeof (GLib.File), Gdk.DragAction.COPY);
     bin.add_controller(file_drop_target);
 
     file_drop_target.drop.connect((self, value, x, y) => {

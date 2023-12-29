@@ -5,14 +5,14 @@ public void main () {
     GtkSource.init ();
 
     // Get the language we want to use
-    var language_manager = GtkSource.LanguageManager.get_default();
-    var language = language_manager.get_language("js");
+    var language_manager = GtkSource.LanguageManager.get_default ();
+    var language = language_manager.get_language ("js");
     // Create the buffer - this holds the text that's used in the SourceView
-    var buffer = new GtkSource.Buffer.with_language(language);
-    buffer.set_text("console.log(\"Hello World!\");");
+    var buffer = new GtkSource.Buffer.with_language (language);
+    buffer.set_text ("console.log(\"Hello World!\");");
 
     // Create the SourceView which displays the buffer's display
-    var source_view = new GtkSource.View.with_buffer(buffer);
+    var source_view = new GtkSource.View.with_buffer (buffer);
     source_view.auto_indent = true;
     source_view.indent_width = 4;
     source_view.show_line_numbers = true;

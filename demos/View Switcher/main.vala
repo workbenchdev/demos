@@ -7,13 +7,13 @@ public void main() {
     int notification_count = 5;
     notifications_page.badge_number = notification_count;
 
-    for (int i = 0; i < notification_count; i++){
-        var notification_row = new Adw.ActionRow(){
+    for (int i = 0; i < notification_count; i++) {
+        var notification_row = new Adw.ActionRow() {
             title = "Notification",
             selectable = false,
         };
 
-        var button = new Gtk.Button(){
+        var button = new Gtk.Button() {
             halign = Gtk.Align.CENTER,
             valign = Gtk.Align.CENTER,
             margin_top = 10,
@@ -21,7 +21,7 @@ public void main() {
             icon_name = "check-plain-symbolic"
         };
 
-        button.clicked.connect( () => {
+        button.clicked.connect(() => {
             notifications_page.badge_number -= 1;
             notification_list.remove(notification_row);
 

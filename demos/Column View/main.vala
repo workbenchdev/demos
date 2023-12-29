@@ -2,17 +2,17 @@
 
 // Define our class for our custom model
 public class Book : Object {
-public string title { get; set; }
-public string author { get; set; }
-public int year { get; set; }
+    public string title { get; set; }
+    public string author { get; set; }
+    public int year { get; set; }
 
-public Book (string title, string author, int year) {
-    Object (
-        title: title,
-        author: author,
-        year: year
+    public Book (string title, string author, int year) {
+        Object (
+                title: title,
+                author: author,
+                year: year
         );
-}
+    }
 }
 
 public void main () {
@@ -39,14 +39,14 @@ public void main () {
     }
 
     col1.sorter = new Gtk.StringSorter (
-        new Gtk.PropertyExpression (typeof (Book), null, "title")
-        );
+                                        new Gtk.PropertyExpression (typeof (Book), null, "title")
+    );
     col2.sorter = new Gtk.StringSorter (
-        new Gtk.PropertyExpression (typeof (Book), null, "author")
-        );
+                                        new Gtk.PropertyExpression (typeof (Book), null, "author")
+    );
     col3.sorter = new Gtk.NumericSorter (
-        new Gtk.PropertyExpression (typeof (Book), null, "year")
-        );
+                                         new Gtk.PropertyExpression (typeof (Book), null, "year")
+    );
 
     // View
     // Column 1

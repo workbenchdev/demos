@@ -16,7 +16,7 @@ public void main () {
     };
 
     foreach (string id in button_ids) {
-        var button = (Gtk.Button) workbench.builder.get_object(id);
-        button.clicked.connect(() => message(@"$(button.name) clicked"));
+        var button = (Gtk.Button) workbench.builder.get_object (id);
+        button.clicked.connect (() => message (@"$(button.name) clicked"));
     }
 }

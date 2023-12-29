@@ -37,6 +37,7 @@ public void main () {
 private async void on_button_clicked () {
     try {
         Gdk.RGBA color = yield dialog_custom.choose_rgba (workbench.window, null, null);
+
         message (@"Custom Button: The color selected is $color");
     } catch (Error e) {
         critical (e.message);

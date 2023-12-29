@@ -20,18 +20,18 @@ public void main () {
             var uri = GLib.Uri.parse (message_uri, GLib.UriFlags.NONE).to_string ();
             var session = new Soup.Session ();
             var message = new Soup.Message (
-                "GET",
-                uri
-                );
+                                            "GET",
+                                            uri
+            );
 
             // https://valadoc.org/libsoup-3.0/Soup.Session.websocket_connect_async.html
             session.websocket_connect_async.begin (
-                message,
-                null,
-                null,
-                1,
-                null,
-                (obj, res) => {
+                                                   message,
+                                                   null,
+                                                   null,
+                                                   1,
+                                                   null,
+                                                   (obj, res) => {
                 try {
                     connection = session.websocket_connect_async.end (res);
                 } catch (Error err) {
@@ -43,21 +43,20 @@ public void main () {
                 connection.error.connect (onError);
                 connection.message.connect (onMessage);
 
-                onOpen();
-            }
-                );
+                onOpen ();
+            });
         } catch (Error err) {
             stderr.printf ("error: " + err.message + "\n");
             return;
         }
     });
 
-    button_disconnect.clicked.connect(() => {
-        connection.close(Soup.WebsocketCloseCode.NORMAL, null);
+    button_disconnect.clicked.connect (() => {
+        connection.close (Soup.WebsocketCloseCode.NORMAL, null);
     });
 
     button_send.clicked.connect (() => {
-        var message_text = entry_message.get_text();
+        var message_text = entry_message.get_text ();
         stdout.printf ("preparing to send: " + message_text + "\n");
         send (message_text);
     });
@@ -84,10 +83,10 @@ private void onError (Error err) {
 }
 
 private void onMessage (int type, Bytes msg) {
-    if (type != Soup.WebsocketDataType.TEXT) return;
+    if (type != Soup.WebsocketDataType.TEXT)return;
     StringBuilder str = new StringBuilder ();
     for (int i = 0; i < msg.length; i++) {
-        str.append_c (((char)msg.get (i)));
+        str.append_c (((char) msg.get (i)));
     }
     stdout.printf ("received: " + str.str + "\n");
 }

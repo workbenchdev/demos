@@ -5,13 +5,13 @@ using GLib;
 
 // Define our class for our custom model
 public class KeyValuePair : Object {
-public string key { get; set; default = ""; }
-public string value { get; set; default = ""; }
+    public string key { get; set; default = ""; }
+    public string value { get; set; default = ""; }
 
-public KeyValuePair(string key, string value) {
-    this.key = key;
-    this.value = value;
-}
+    public KeyValuePair(string key, string value) {
+        this.key = key;
+        this.value = value;
+    }
 }
 
 public void main() {
@@ -29,7 +29,7 @@ public void main() {
     });
 
     // Create the model
-    var model = new GLib.ListStore(typeof(KeyValuePair));
+    var model = new GLib.ListStore(typeof (KeyValuePair));
 
     model.splice(0, 0, {
         new KeyValuePair("lion", "Lion"),
@@ -50,7 +50,7 @@ public void main() {
     });
 
     // Create expression for displaying the value in the advanced drop-down
-    var expression = new Gtk.PropertyExpression(typeof(KeyValuePair), null, "value");
+    var expression = new Gtk.PropertyExpression(typeof (KeyValuePair), null, "value");
 
     // Set the model and expression for the advanced drop-down
     advanced_drop_down.set_expression(expression);

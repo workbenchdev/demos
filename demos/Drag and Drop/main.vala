@@ -2,7 +2,7 @@
 
 public void main() {
     var list = workbench.builder.get_object("list") as Gtk.ListBox;
-    var drop_target = new Gtk.DropTarget(typeof(Adw.ActionRow), Gdk.DragAction.MOVE);
+    var drop_target = new Gtk.DropTarget(typeof (Adw.ActionRow), Gdk.DragAction.MOVE);
 
     list.add_controller(drop_target);
 
@@ -25,7 +25,7 @@ public void main() {
             drag_x = x;
             drag_y = y;
 
-            Value value = Value(typeof(Adw.ActionRow));
+            Value value = Value(typeof (Adw.ActionRow));
             value.set_object(row);
 
             return new Gdk.ContentProvider.for_value(value);
@@ -43,11 +43,10 @@ public void main() {
                 title = row.get_title()
             };
 
-            drag_row.add_prefix (
-                new Gtk.Image.from_icon_name("list-drag-handle-symbolic") {
-                css_classes = {"dim-label"}
-            }
-                );
+            drag_row.add_prefix(
+                                new Gtk.Image.from_icon_name("list-drag-handle-symbolic") {
+                css_classes = { "dim-label" }
+            });
 
             drag_widget.append(drag_row);
             drag_widget.drag_highlight_row(drag_row);
@@ -55,7 +54,7 @@ public void main() {
             var icon = Gtk.DragIcon.get_for_drag(drag) as Gtk.DragIcon;
             icon.child = drag_widget;
 
-            drag.set_hotspot((int)drag_x, (int)drag_y);
+            drag.set_hotspot((int) drag_x, (int) drag_y);
         });
 
         // Update row visuals during DnD operation
@@ -65,8 +64,8 @@ public void main() {
 
     // Drop Handling
     drop_target.drop.connect((drop, value, x, y) => {
-        var value_row = value.get_object() as Adw.ActionRow?;
-        Gtk.ListBoxRow? target_row = list.get_row_at_y((int)y);
+        var value_row = value.get_object() as Adw.ActionRow ? ;
+        Gtk.ListBoxRow? target_row = list.get_row_at_y((int) y);
         // If value or the target row is null, do not accept the drop
         if (value_row == null || target_row == null) {
             return false;

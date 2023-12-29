@@ -16,6 +16,7 @@ public void main () {
 private async void on_button_clicked () {
     try {
         string uri = yield portal.take_screenshot (parent, NONE, null);
+
         picture.file = File.new_for_uri (uri);
     } catch (Error e) {
         show_permission_error ();
@@ -24,9 +25,9 @@ private async void on_button_clicked () {
 
 private void show_permission_error () {
     var dialog = new Adw.MessageDialog (
-        workbench.window,
-        "Permission Error",
-        "Ensure Screenshot permission is enabled in\nSettings → Apps → Workbench"
+                                        workbench.window,
+                                        "Permission Error",
+                                        "Ensure Screenshot permission is enabled in\nSettings → Apps → Workbench"
         ) {
         close_response = "ok",
         modal = true,

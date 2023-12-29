@@ -22,6 +22,7 @@ private async void select_image () {
 
     try {
         File file = yield file_dialog.open (workbench.window, null);
+
         avatar_image.custom_image = Gdk.Texture.from_file (file);
     } catch (Error e) {
         critical (e.message);

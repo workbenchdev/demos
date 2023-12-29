@@ -11,13 +11,14 @@ public async void main () {
     try {
         var picture = (Gtk.Picture) workbench.builder.get_object ("picture");
         Bytes image_bytes = yield get_image_bytes (IMAGE_URL);
+
         picture.paintable = Gdk.Texture.from_bytes (image_bytes);
     } catch (Error e) {
         critical (e.message);
     }
 }
 
-private async Bytes? get_image_bytes (string url) throws Error {
+private async Bytes ? get_image_bytes (string url) throws Error {
     var session = new Soup.Session ();
     var message = new Soup.Message.from_uri ("GET", Uri.parse (url, NONE));
 

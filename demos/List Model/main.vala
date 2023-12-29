@@ -20,15 +20,14 @@ public void main () {
     // Model
     int item = 1;
     var model = new Gtk.StringList (
-        {"Default Item 1", "Default Item 2", "Default Item 3"}
-        );
+                                    { "Default Item 1", "Default Item 2", "Default Item 3" });
 
     model.items_changed.connect ((position, removed, added) => {
         message (@"position: $position, Item Removed? $(removed > 0), Item Added? $(added > 0)");
     });
 
     // Filter Model
-    var search_expression = new Gtk.PropertyExpression (typeof(Gtk.StringObject), null, "string");
+    var search_expression = new Gtk.PropertyExpression (typeof (Gtk.StringObject), null, "string");
     var filter = new Gtk.StringFilter (search_expression) {
         ignore_case = true,
         match_mode = SUBSTRING
@@ -84,7 +83,7 @@ private Gtk.Widget create_item_for_flow_box (Object item) {
         hexpand = true,
         width_request = 160,
         height_request = 160,
-        css_classes = {"card"}
+        css_classes = { "card" }
     };
 
     return label;

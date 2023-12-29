@@ -15,7 +15,7 @@
     "*.css": "./Workbench/build-aux/fun workbench-cli format",
     "*.py": "./Workbench/build-aux/fun black",
     "*.rs": "./Workbench/build-aux/fun rustfmt --edition 2021",
-    "*.blp": "./build-aux/fun workbench-cli format",
-    "*.vala": "./build-aux/fun workbench-cli format vala"
+    "*.blp": "./Workbench/build-aux/fun workbench-cli format",
+    "*.vala": "./Workbench/build-aux/fun workbench-cli format vala"
   }
 }

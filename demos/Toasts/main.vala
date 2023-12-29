@@ -18,6 +18,6 @@ public void main () {
 
     // Sorry, this example is not available in Vala yet.
     // see https://github.com/workbenchdev/Workbench/issues/110
-    var button_advanced = workbench.builder.get_object("button_advanced") as Gtk.Button;
+    var button_advanced = workbench.builder.get_object ("button_advanced") as Gtk.Button;
     button_advanced.sensitive = false;
 }

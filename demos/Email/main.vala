@@ -17,8 +17,7 @@ private async void on_button_clicked () {
     string email_address = entry.text;
 
     try {
-        bool success = yield portal.compose_email (
-            parent,
+        bool success = yield portal.compose_email (parent,
             { email_address }, // addresses
             null, // cc
             null, // bcc
@@ -26,8 +25,7 @@ private async void on_button_clicked () {
             "Hello World!", // body
             null,
             NONE,
-            null
-            );
+            null);
 
         if (success) {
             message ("Success");
