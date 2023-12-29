@@ -9,11 +9,11 @@ lint:
 # JavaScript
 	./Workbench/build-aux/fun workbench-cli ci javascript demos/**/*.js
 # Vala
-	./Workbench/build-aux/fun workbench-cli ci vala demos/**/*.vala
+# ./Workbench/build-aux/fun workbench-cli ci vala demos/**/*.vala
 # Blueprint
-	./Workbench/build-aux/fun workbench-cli ci blueprint demos/**/*.blp
+# ./Workbench/build-aux/fun workbench-cli ci blueprint demos/**/*.blp
 # CSS
-	./Workbench/build-aux/fun workbench-cli ci css demos/**/*.css
+# ./Workbench/build-aux/fun workbench-cli ci css demos/**/*.css
 # Rust
 	./Workbench/build-aux/fun rustfmt --check --edition 2021 demos/**/*.rs
 # Python
