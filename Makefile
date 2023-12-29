@@ -3,22 +3,21 @@ SHELL:=/bin/bash -O globstar
 .DEFAULT_GOAL := ci
 
 setup:
-	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//45 org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08
-	npm install
-	flatpak-builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Demos.json
+	cd Workbench && make build
 
 lint:
 # JavaScript
-	./build-aux/fun biome ci demos/
+	./Workbench/build-aux/fun workbench-cli ci javascript demos/**/*.js
 # Vala
-	./build-aux/fun uncrustify -c - --check --set indent_with_tabs=0 --set nl_end_of_file=force --set nl_end_of_file_min=1 --set indent_columns=4 demos/**/*.vala
-# Rust
-	./build-aux/fun rustfmt --check --edition 2021 demos/**/*.rs
-# Python
-	./build-aux/fun black --check demos/**/*.py
+	./Workbench/build-aux/fun workbench-cli ci vala demos/**/*.vala
 # Blueprint
-	./build-aux/fun blueprint-compiler format demos/**/*.blp
+	./Workbench/build-aux/fun workbench-cli ci blueprint demos/**/*.blp
+# CSS
+	./Workbench/build-aux/fun workbench-cli ci css demos/**/*.css
+# Rust
+	./Workbench/build-aux/fun rustfmt --check --edition 2021 demos/**/*.rs
+# Python
+	./Workbench/build-aux/fun black --check demos/**/*.py
 
 test: lint
 
