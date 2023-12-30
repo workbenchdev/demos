@@ -11,7 +11,8 @@ Adw.Window {
     Adw.HeaderBar {
       centering-policy: strict;
 
-      title-widget: Adw.ViewSwitcherTitle switcher_title {
+      title-widget: Adw.ViewSwitcher switcher_title {
+        policy: wide;
         stack: stack;
         title: _("AdwViewSwitcher Demo");
       };
@@ -132,7 +133,6 @@ Adw.Window {
 
     Adw.ViewSwitcherBar switcher_bar {
       stack: stack;
-      reveal: bind switcher_title.title-visible;
     }
   };
 }
