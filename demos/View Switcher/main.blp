@@ -9,6 +9,7 @@ Adw.Window {
     orientation: vertical;
 
     Adw.HeaderBar {
+      centering-policy: strict;
 
       title-widget: Adw.ViewSwitcher switcher_title {
         policy: wide;
@@ -132,6 +133,7 @@ Adw.Window {
 
     Adw.ViewSwitcherBar switcher_bar {
       stack: stack;
+      reveal: bind switcher_title.title-visible;
     }
   };
 }
