@@ -3,21 +3,21 @@ SHELL:=/bin/bash -O globstar
 .DEFAULT_GOAL := ci
 
 setup:
-	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//45 org.freedesktop.Sdk.Extension.rust-stable//23.08
-	npm install
-	flatpak-builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Demos.json
+	cd Workbench && make setup
 
 lint:
 # JavaScript
-# ./node_modules/.bin/eslint --max-warnings=0 src
-	./build-aux/fun biome ci demos/
-# rustfmt
-	./build-aux/fun rustfmt --check --edition 2021 demos/**/*.rs
-# black
-	./build-aux/fun black --check demos/**/*.py
+	./Workbench/build-aux/fun workbench-cli ci javascript demos/**/*.js
+# Vala
+# ./Workbench/build-aux/fun workbench-cli ci vala demos/**/*.vala
 # Blueprint
-	find demos/ -type f -name "*blp" -print0 | xargs -0 ./build-aux/fun blueprint-compiler format
+# ./Workbench/build-aux/fun workbench-cli ci blueprint demos/**/*.blp
+# CSS
+# ./Workbench/build-aux/fun workbench-cli ci css demos/**/*.css
+# Rust
+	./Workbench/build-aux/fun rustfmt --check --edition 2021 demos/**/*.rs
+# Python
+	./Workbench/build-aux/fun black --check demos/**/*.py
 
 test: lint
 

@@ -10,12 +10,12 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{css,json,md,yaml,yml}": "prettier --write",
-    "*.{js,cjs,mjs}": [
-      "./build-aux/fun biome check --apply-unsafe"
-    ],
-    "*.py": "./build-aux/fun black",
-    "*.rs": "./build-aux/fun rustfmt --edition 2021",
-    "*.blp": "./build-aux/fun blueprint-compiler format --fix"
+    "*.{json,md,yaml,yml}": "prettier --write",
+    "*.{js,cjs,mjs}": "./Workbench/build-aux/fun workbench-cli format javascript",
+    "*.css": "./Workbench/build-aux/fun workbench-cli format css",
+    "*.py": "./Workbench/build-aux/fun black",
+    "*.rs": "./Workbench/build-aux/fun rustfmt --edition 2021",
+    "*.blp": "./Workbench/build-aux/fun workbench-cli format blueprint",
+    "*.vala": "./Workbench/build-aux/fun workbench-cli format vala"
   }
 }
