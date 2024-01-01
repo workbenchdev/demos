@@ -79,30 +79,26 @@ def model_func(item):
     pass
 
 
-def sort_title(object_a, object_b, data=None):
-    a = object_a.title.lower()
-    b = object_b.title.lower()
-    return (a > b) - (a < b)
-
-
-def sort_author(object_a, object_b, _data=None):
-    a = object_a.author.lower()
-    b = object_b.author.lower()
-    return (a > b) - (a < b)
-
-
-def sort_year(object_a, object_b, _data=None):
-    a = int(object_a.year)
-    b = int(object_b.year)
-    return (a > b) - (a < b)
-
-
 tree_model = Gtk.TreeListModel.new(data_model, False, True, model_func)
 tree_sorter = Gtk.TreeListRowSorter.new(column_view.get_sorter())
 sorter_model = Gtk.SortListModel(model=tree_model, sorter=tree_sorter)
 selection = Gtk.SingleSelection.new(model=sorter_model)
 column_view.set_model(model=selection)
 
-col1.set_sorter(Gtk.CustomSorter.new(sort_title))
-col2.set_sorter(Gtk.CustomSorter.new(sort_author))
-col3.set_sorter(Gtk.CustomSorter.new(sort_year))
+
+def str_sorter(object_a, object_b, column) -> bool:
+    a = getattr(object_a, column).lower()
+    b = getattr(object_b, column).lower()
+    return (a > b) - (a < b)
+
+
+def int_sorter(object_a, object_b, column) -> bool:
+    print(object_a)
+    a = getattr(object_a, column)
+    b = getattr(object_b, column)
+    return (a > b) - (a < b)
+
+
+col1.set_sorter(Gtk.CustomSorter.new(str_sorter, "title"))
+col2.set_sorter(Gtk.CustomSorter.new(str_sorter, "author"))
+col3.set_sorter(Gtk.CustomSorter.new(int_sorter, "year"))
