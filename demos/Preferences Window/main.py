@@ -25,9 +25,9 @@ dm_switch.connect(
 )
 
 # Preferences windows can display subpages
-subpage_row.connect("activated", lambda *_: pref_window.present_subpage(subpage))
+subpage_row.connect("activated", lambda *_: pref_window.push_subpage(subpage))
 
-subpage_button.connect("clicked", lambda *_: pref_window.close_subpage())
+subpage_button.connect("clicked", lambda *_: pref_window.pop_subpage())
 
 toast_button.connect(
     "clicked",

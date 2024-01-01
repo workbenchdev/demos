@@ -3,7 +3,7 @@
 public void main () {
     var pref_window = (Adw.PreferencesWindow) workbench.builder.get_object ("pref_window");
     var dm_switch = (Adw.SwitchRow) workbench.builder.get_object ("dm_switch");
-    var subpage = (Adw.StatusPage) workbench.builder.get_object ("subpage");
+    var subpage = (Adw.NavigationPage) workbench.builder.get_object ("subpage");
     var subpage_row = (Adw.ActionRow) workbench.builder.get_object ("subpage_row");
     var subpage_button = (Gtk.Button) workbench.builder.get_object ("subpage_button");
     var toast_button = (Gtk.Button) workbench.builder.get_object ("toast_button");
@@ -21,9 +21,9 @@ public void main () {
     });
 
     // Preferences windows can display subpages
-    subpage_row.activated.connect (() => pref_window.present_subpage (subpage));
+    subpage_row.activated.connect (() => pref_window.push_subpage (subpage));
 
-    subpage_button.clicked.connect (() => pref_window.close_subpage ());
+    subpage_button.clicked.connect (() => pref_window.pop_subpage ());
 
     toast_button.clicked.connect (() => {
         var toast = new Adw.Toast ("Preferences windows can display toasts");

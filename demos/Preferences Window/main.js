@@ -21,11 +21,11 @@ dm_switch.connect("notify::active", () => {
 
 // Preferences windows can display subpages
 subpage_row.connect("activated", () => {
-  pref_window.present_subpage(subpage);
+  pref_window.push_subpage(subpage);
 });
 
 subpage_button.connect("clicked", () => {
-  pref_window.close_subpage();
+  pref_window.pop_subpage();
 });
 
 toast_button.connect("clicked", () => {
@@ -35,3 +35,4 @@ toast_button.connect("clicked", () => {
 
   pref_window.add_toast(toast);
 });
+
