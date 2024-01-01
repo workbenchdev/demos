@@ -29,29 +29,6 @@ The Welcome example in the Library has all 3. Play with it, try to understand an
 
 Once you understand these 3 things, try creating something new. There are plenty of widgets and patterns to explore.
 
-## Setup
-
-We provide a couple of tools to make the development process pleasant.
-
-- Code formatter that runs automatically on git commit
-- Single command to run all the tests locally
-
-```sh
-# Ubuntu requirements
-# sudo apt install flatpak flatpak-builder nodejs make
-# Fedora requirements
-# sudo dnf install flatpak flatpak-builder nodejs make
-
-cd demos
-make setup
-```
-
-Before submitting a PR, we recommend running tests locally with
-
-```sh
-make test
-```
-
 ## Contributing a new demo
 
 Library entries have 3 functions
@@ -111,7 +88,20 @@ Some guidelines:
 - If relevant, mention the related issue in the PR description
 - Always review your own work before asking someone else
 
-See also [the list of Library entries](https://github.com/workbenchdev/Workbench/wiki/Language-support-table) and some additional instructions on the Wiki.
+## Running tests
+
+When you submit a PR and after approval, a GitHub workflow will trigger a series of tests.
+You can run tests locally with
+
+```sh
+# Ubuntu requirements
+# sudo apt install flatpak flatpak-builder make
+# Fedora requirements
+# sudo dnf install flatpak flatpak-builder make
+make setup
+
+make test
+```
 
 ## Learn
 

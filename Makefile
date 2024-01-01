@@ -19,9 +19,18 @@ lint:
 # Python
 	./Workbench/build-aux/fun black --check demos/**/*.py
 
+format:
+# npx prettier --write demos/**/*.json
+	./Workbench/build-aux/fun workbench-cli format javascript demos/**/*.js
+	./Workbench/build-aux/fun workbench-cli format css demos/**/*.css
+	./Workbench/build-aux/fun black demos/**/*.py
+	./Workbench/build-aux/fun rustfmt --edition 2021 demos/**/*.rs
+	./Workbench/build-aux/fun workbench-cli format blueprint demos/**/*.blp
+	./Workbench/build-aux/fun workbench-cli format vala demos/**/*.vala
+
 test: lint
 
-ci: setup lint
+ci: setup test
 
 # Sync with .gitignore
 clean:
@@ -30,9 +39,3 @@ clean:
 	rm -f demos/**/main.ui
 	rm -f demos/**/libworkbenchcode.so
 	rm -rf demos/**/__pycache__
-	rm -rf _build
-	rm -rf .flatpak
-	rm -rf .flatpak-builder
-	rm -rf flatpak
-	rm -rf flatpak-builder
-	rm -rf repo
