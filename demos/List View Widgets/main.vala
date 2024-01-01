@@ -19,7 +19,8 @@ public void main () {
 
     var grid_view_factory = new Gtk.SignalListItemFactory ();
 
-    grid_view_factory.setup.connect ((list_item) => {
+    grid_view_factory.setup.connect ((item) => {
+        var list_item = (Gtk.ListItem) item;
         var label = new Gtk.Label ("") {
             css_classes = { "card" },
             halign = CENTER,
@@ -32,7 +33,8 @@ public void main () {
         list_item.child = label;
     });
 
-    grid_view_factory.bind.connect ((list_item) => {
+    grid_view_factory.bind.connect ((item) => {
+        var list_item = (Gtk.ListItem) item;
         var label_widget = (Gtk.Label) list_item.child;
         var model_item = (Gtk.StringObject) list_item.item;
 
