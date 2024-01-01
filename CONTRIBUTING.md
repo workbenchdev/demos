@@ -95,9 +95,9 @@ You can run tests locally with
 
 ```sh
 # Ubuntu requirements
-# sudo apt install flatpak flatpak-builder nodejs make
+# sudo apt install flatpak flatpak-builder make
 # Fedora requirements
-# sudo dnf install flatpak flatpak-builder nodejs make
+# sudo dnf install flatpak flatpak-builder make
 make setup
 
 make test
