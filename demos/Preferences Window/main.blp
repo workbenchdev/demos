@@ -142,17 +142,22 @@ Adw.PreferencesWindow pref_window {
   }
 }
 
-Adw.StatusPage subpage {
-  description: _("Custom Subpage");
+Adw.NavigationPage subpage {
+  title: bind subpage_row.title;
 
-  Gtk.Button subpage_button {
-    label: _("Go back");
-    halign: center;
-    valign: center;
+  Adw.StatusPage {
+    description: _("Custom Subpage");
 
-    styles [
-      "suggested-action",
-      "pill"
-    ]
+    Gtk.Button subpage_button {
+      label: _("Go back");
+      halign: center;
+      valign: center;
+
+      styles [
+        "suggested-action",
+        "pill"
+      ]
+    }
   }
 }
+

@@ -35,10 +35,9 @@ for (const row of list) {
   });
 
   drag_source.connect("drag-begin", (_source, drag) => {
-    const allocation = row.get_allocation();
     const drag_widget = new Gtk.ListBox();
 
-    drag_widget.set_size_request(allocation.width, allocation.height);
+    drag_widget.set_size_request(row.get_width(), row.get_height());
     drag_widget.add_css_class("boxed-list");
 
     const drag_row = new Adw.ActionRow({ title: row.title });
@@ -85,3 +84,4 @@ drop_target.connect("drop", (_drop, value, _x, y) => {
   // If everything is successful, return true to accept the drop
   return true;
 });
+

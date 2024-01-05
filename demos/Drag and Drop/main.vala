@@ -32,11 +32,9 @@ public void main() {
         });
 
         drag_source.drag_begin.connect((drag) => {
-            Gtk.Allocation allocation;
-            row.get_allocation(out allocation);
             var drag_widget = new Gtk.ListBox();
 
-            drag_widget.set_size_request(allocation.width, allocation.height);
+            drag_widget.set_size_request(row.get_width(), row.get_height());
             drag_widget.add_css_class("boxed-list");
 
             var drag_row = new Adw.ActionRow() {
