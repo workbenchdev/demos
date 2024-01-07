@@ -1,6 +1,6 @@
 {
   "category": "network",
-  "description": "Create a simple HTTP server",
+  "description": "Interact with HTTP clients and browsers",
   "panels": ["code", "preview"],
   "autorun": true
 }
