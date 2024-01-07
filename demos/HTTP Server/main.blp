@@ -3,15 +3,39 @@ using Adw 1;
 
 Adw.StatusPage {
   title: "HTTP Server";
-  description: _("Create a simple HTTP server");
+  description: _("Interact with HTTP clients and browsers");
 
-  ToggleButton button_server {
+  Box {
     halign: center;
-    label: _("Start Server");
+    orientation: vertical;
+    spacing: 12;
 
-    styles [
-      "pill"
-    ]
+    ToggleButton button_server {
+      label: _("Start Server");
+      halign: center;
+
+      styles [
+        "pill"
+      ]
+    }
+
+    Box {
+      margin-top: 12;
+      orientation: vertical;
+      visible: bind button_server.active;
+
+      Label {
+        label: _("Visit");
+      }
+
+      LinkButton linkbutton {
+        label: bind linkbutton.uri;
+      }
+    }
+
+    Label label_greetings {
+      justify: center;
+    }
   }
 }
 
