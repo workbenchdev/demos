@@ -6,7 +6,7 @@ from gi.repository import GObject, Gdk, Gio, Gtk
 import workbench
 
 
-def createBoxWidget():
+def create_box_widget():
     return Gtk.Box(
         orientation=Gtk.Orientation.VERTICAL,
         halign=Gtk.Align.CENTER,
@@ -19,23 +19,23 @@ def createBoxWidget():
     )
 
 
-def createVideoPreview(file):
-    widget = createBoxWidget()
+def create_video_preview(file):
+    widget = create_box_widget()
     video = Gtk.Video(file=file)
     widget.append(video)
     return widget
 
 
-def createTextPreview(text):
-    widget = createBoxWidget()
+def create_text_preview(text):
+    widget = create_box_widget()
 
     label = Gtk.Label(label=text, wrap=True)
     widget.append(label)
     return widget
 
 
-def createImagePreview(value):
-    widget = createBoxWidget()
+def create_image_preview(value):
+    widget = create_box_widget()
 
     picture = Gtk.Picture.new_for_file(value)
     picture.can_shrink = True
@@ -44,8 +44,8 @@ def createImagePreview(value):
     return widget
 
 
-def createFilePreview(file):
-    widget = createBoxWidget()
+def create_file_preview(file):
+    widget = create_box_widget()
 
     file_info = file.query_info("standard::icon", 0, None)
     icon = Gtk.Image.new_from_gicon(file_info.get_icon())
@@ -58,7 +58,7 @@ def createFilePreview(file):
     return widget
 
 
-def onDrop(value):
+def on_drop(value):
     if not isinstance(value, Gio.File):
         return False
 
@@ -66,21 +66,21 @@ def onDrop(value):
     content_type = file_info.get_content_type()
 
     if content_type.startswith("image/"):
-        return createImagePreview(value)
+        return create_image_preview(value)
     elif content_type.startswith("video/"):
-        return createVideoPreview(value)
+        return create_video_preview(value)
     else:
-        return createFilePreview(value)
+        return create_file_preview(value)
 
 
 def on_string_drop(_self, value, _x, _y):
-    bin.set_child(createTextPreview(value))
+    bin.set_child(create_text_preview(value))
     bin.remove_css_class("overlay-drag-area")
 
 
 def on_file_drop(_self, value, _x, _y):
     try:
-        bin.set_child(onDrop(value))
+        bin.set_child(on_drop(value))
     except Exception as err:
         print(err, "Unable to load preview")
     bin.remove_css_class("overlay-drag-area")
