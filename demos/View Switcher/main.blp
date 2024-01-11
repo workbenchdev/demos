@@ -2,20 +2,29 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.Window {
+  title: _("AdwViewSwitcher Demo");
   width-request: 360;
   height-request: 360;
+
+  Adw.Breakpoint {
+    condition ("max-width: 550sp")
+
+    setters {
+      header_bar.title-widget: null;
+      switcher_bar.reveal: true;
+    }
+  }
 
   content: Box {
     orientation: vertical;
 
-    Adw.HeaderBar {
-      centering-policy: strict;
-
-      title-widget: Adw.ViewSwitcherTitle switcher_title {
+    Adw.HeaderBar header_bar {
+      title-widget: Adw.ViewSwitcher switcher_title {
         stack: stack;
-        title: _("AdwViewSwitcher Demo");
+        policy: wide;
       };
     }
+    
 
     Adw.ViewStack stack {
       vexpand: true;
@@ -132,7 +141,6 @@ Adw.Window {
 
     Adw.ViewSwitcherBar switcher_bar {
       stack: stack;
-      reveal: bind switcher_title.title-visible;
     }
   };
 }
