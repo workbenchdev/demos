@@ -72,4 +72,3 @@ function stopServer() {
   linkbutton.uri = "";
   button_server.label = "Start Server";
 }
-
