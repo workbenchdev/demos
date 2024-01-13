@@ -35,4 +35,3 @@ toast_button.connect("clicked", () => {
 
   pref_window.add_toast(toast);
 });
-

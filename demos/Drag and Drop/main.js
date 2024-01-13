@@ -84,4 +84,3 @@ drop_target.connect("drop", (_drop, value, _x, y) => {
   // If everything is successful, return true to accept the drop
   return true;
 });
-
