@@ -13,12 +13,7 @@ const button_single = workbench.builder.get_object("button_single");
 const button_multiple = workbench.builder.get_object("button_multiple");
 
 async function openFile() {
-  const default_dir = Gio.File.new_for_path(
-    GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOAD),
-  );
-  const dialog_for_file = new Gtk.FileDialog({
-    initial_folder: default_dir,
-  });
+  const dialog_for_file = new Gtk.FileDialog();
   const file = await dialog_for_file.open(workbench.window, null);
   const info = file.query_info(
     "standard::name",
