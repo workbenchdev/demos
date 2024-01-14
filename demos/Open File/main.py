@@ -19,10 +19,7 @@ def on_file_opened(dialog, result):
 
 
 def open_file():
-    default_dir = Gio.File.new_for_path(
-        GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOAD),
-    )
-    dialog_for_file = Gtk.FileDialog(initial_folder=default_dir)
+    dialog_for_file = Gtk.FileDialog()
     dialog_for_file.open(workbench.window, None, on_file_opened)
 
 
@@ -41,3 +38,4 @@ def open_multiple_files():
 
 button_single.connect("clicked", lambda *_: open_file())
 button_multiple.connect("clicked", lambda *_: open_multiple_files())
+
