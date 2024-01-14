@@ -9,11 +9,7 @@ public void main () {
 }
 
 private async void open_single () {
-    var default_directory = File.new_for_path (
-                                               Environment.get_user_special_dir (DOWNLOAD)
-    );
     var file_dialog = new Gtk.FileDialog () {
-        initial_folder = default_directory
     };
 
     try {
