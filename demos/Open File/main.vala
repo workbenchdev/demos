@@ -9,7 +9,8 @@ public void main () {
 }
 
 private async void open_single () {
-    var file_dialog = new Gtk.FileDialog () {};
+    var file_dialog = new Gtk.FileDialog () {
+    };
 
     try {
         File file = yield file_dialog.open (workbench.window, null);
