@@ -62,4 +62,3 @@ button_image.connect("clicked", () => {
 button_multiple.connect("clicked", () => {
   openMultipleFiles().catch(console.error);
 });
-
