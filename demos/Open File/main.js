@@ -10,8 +10,8 @@ Gio._promisify(
 
 const button_single = workbench.builder.get_object("button_single");
 const button_multiple = workbench.builder.get_object("button_multiple");
-const button_multiple_images = workbench.builder.get_object(
-  "button_multiple_images",
+const button_images = workbench.builder.get_object(
+  "button_images",
 );
 
 async function openFile() {
@@ -35,7 +35,7 @@ async function openMultipleFiles() {
   console.log(`No of selected files: ${selected_items_count}`);
 }
 
-async function openMultipleImageFiles() {
+async function openImageFiles() {
   const filters = new Gio.ListStore();
 
   const imageFilter = Gtk.FileFilter.new();
@@ -45,9 +45,13 @@ async function openMultipleImageFiles() {
 
   const fileDialog = new Gtk.FileDialog({ filters });
 
-  const files = await fileDialog.open_multiple(workbench.window, null);
-  const selectedItemsCount = files.get_n_items();
-  console.log(`No of selected files: ${selectedItemsCount}`);
+  const file = await fileDialog.open(workbench.window, null);
+  const info = file.query_info(
+    "standard::name",
+    Gio.FileQueryInfoFlags.NONE,
+    null,
+  );
+  console.log(`Selected file: ${info.get_name()}`);
 }
 
 button_single.connect("clicked", () => {
@@ -58,6 +62,6 @@ button_multiple.connect("clicked", () => {
   openMultipleFiles().catch(console.error);
 });
 
-button_multiple_images.connect("clicked", () => {
-  openMultipleImageFiles().catch(console.error);
+button_images.connect("clicked", () => {
+  openImageFiles().catch(console.error);
 });
