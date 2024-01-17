@@ -25,16 +25,6 @@ async function openFile() {
   console.log(`Selected File: ${info.get_name()}`);
 }
 
-async function openMultipleFiles() {
-  const dialog_for_multiple_files = new Gtk.FileDialog();
-  const files = await dialog_for_multiple_files.open_multiple(
-    workbench.window,
-    null,
-  );
-  const selected_items_count = files.get_n_items();
-  console.log(`No of selected files: ${selected_items_count}`);
-}
-
 async function openImageFiles() {
   const filters = new Gio.ListStore();
 
@@ -54,14 +44,24 @@ async function openImageFiles() {
   console.log(`Selected file: ${info.get_name()}`);
 }
 
+async function openMultipleFiles() {
+  const dialog_for_multiple_files = new Gtk.FileDialog();
+  const files = await dialog_for_multiple_files.open_multiple(
+    workbench.window,
+    null,
+  );
+  const selected_items_count = files.get_n_items();
+  console.log(`No of selected files: ${selected_items_count}`);
+}
+
 button_single.connect("clicked", () => {
   openFile().catch(console.error);
 });
 
-button_multiple.connect("clicked", () => {
-  openMultipleFiles().catch(console.error);
-});
-
 button_images.connect("clicked", () => {
   openImageFiles().catch(console.error);
+});
+
+button_multiple.connect("clicked", () => {
+  openMultipleFiles().catch(console.error);
 });
