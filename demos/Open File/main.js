@@ -32,7 +32,6 @@ async function openImageFile() {
   filters.append(imageFilter);
 
   const fileDialog = new Gtk.FileDialog({ filters });
-
   const file = await fileDialog.open(workbench.window, null);
   const info = file.query_info(
     "standard::name",
