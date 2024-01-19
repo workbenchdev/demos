@@ -3,25 +3,26 @@ SHELL:=/bin/bash -O globstar
 .DEFAULT_GOAL := ci
 
 setup:
-	cd Workbench && make setup
+	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+	flatpak install --or-update --user --noninteractive flathub re.sonny.Workbench org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08
 
 lint:
 # Rust
-	./Workbench/build-aux/fun rustfmt --check --edition 2021 demos/**/*.rs
+	flatpak run --command="/usr/lib/sdk/rust-stable/bin/rustfmt" --filesystem=host re.sonny.Workbench --check --edition 2021 demos/**/*.rs
 # Python
-	./Workbench/build-aux/fun black --check demos/**/*.py
+	flatpak run --command="black" --filesystem=host re.sonny.Workbench --check demos/**/*.py
 
 format:
 # npx prettier --write demos/**/*.json
-	./Workbench/build-aux/fun workbench-cli format javascript demos/**/*.js
-	./Workbench/build-aux/fun workbench-cli format css demos/**/*.css
-	./Workbench/build-aux/fun black demos/**/*.py
-	./Workbench/build-aux/fun rustfmt --edition 2021 demos/**/*.rs
-	./Workbench/build-aux/fun workbench-cli format blueprint demos/**/*.blp
-	./Workbench/build-aux/fun workbench-cli format vala demos/**/*.vala
+	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench format javascript demos/**/*.js
+	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench format css demos/**/*.css
+	flatpak run --command="black" --filesystem=host re.sonny.Workbench demos/**/*.py
+	flatpak run --command="/usr/lib/sdk/rust-stable/bin/rustfmt" --filesystem=host re.sonny.Workbench --edition 2021 demos/**/*.rs
+	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench format blueprint demos/**/*.blp
+	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench format vala demos/**/*.vala
 
 test: lint
-	./Workbench/build-aux/fun workbench-cli ci demos/*
+	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench ci demos/*
 
 ci: setup test
 
