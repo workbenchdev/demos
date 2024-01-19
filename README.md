@@ -1,6 +1,6 @@
 # Demos
 
-This is the repository containing the Library demos of [Workbench](https://github.com/sonnyp/Workbench).
+This is the repository containing the Library demos of [Workbench](https://github.com/workbenchdev/Workbench).
 
 ## Contributing
 
@@ -11,6 +11,8 @@ This is the repository containing the Library demos of [Workbench](https://githu
 5. Make changes
 6. Open a pull request
 
+---
+
 ⚠️ If you are contributing to Rust please do the following:
 
 ```sh
@@ -20,6 +22,22 @@ flatpak override --user --filesystem=$PWD re.sonny.Workbench
 ```
 
 For more details see [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+## Testing
+
+Please make sure to test your changes manually.
+
+You can run automated tests for a specific demo locally with
+
+```sh
+flatpak run --command="workbench-cli" --filesystem=$PWD/demos re.sonny.Workbench ci demos/Welcome
+```
+
+Or run all the tests locally with
+
+```sh
+make ci
+```
 
 ## Code of conduct
 
