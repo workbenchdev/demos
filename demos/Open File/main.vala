@@ -54,4 +54,3 @@ private async void open_multiple () {
         critical (e.message);
     }
 }
-
