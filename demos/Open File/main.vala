@@ -42,7 +42,7 @@ private async void open_multiple () {
     try {
         var files = yield file_dialog.open_multiple (workbench.window, null);
 
-        message (@"Selected Files:");
+        message (@"Selected Files ($(files.get_n_items())):");
         for (int i = 0; i < files.get_n_items (); i++) {
             var file = files.get_item (i) as File;
             message (@"  $(get_file_name(file))");

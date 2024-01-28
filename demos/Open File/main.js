@@ -27,11 +27,8 @@ async function openImageFile() {
 
 async function openMultipleFiles() {
   const file_dialog = new Gtk.FileDialog();
-  const files = await file_dialog.open_multiple(
-    workbench.window,
-    null,
-  );
-  console.log("Selected Files:");
+  const files = await file_dialog.open_multiple(workbench.window, null);
+  console.log(`Selected Files (${files.get_n_items()}):`);
   for (const file of files) {
     console.log("  ", getFileName(file));
   }

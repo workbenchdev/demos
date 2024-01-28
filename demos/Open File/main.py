@@ -31,8 +31,8 @@ def open_image():
 
 
 def on_multiple_files_opened(file_dialog, result):
-    print(f"Selected Files:")
     files = file_dialog.open_multiple_finish(result)
+    print(f"Selected Files ({files.get_n_items()}):")
     for file in files:
         print(f"  {get_file_name(file)}")
 
