@@ -2,6 +2,9 @@
 
 private Adw.Avatar avatar_image;
 
+var file_filter = new Gtk.FileFilter ();
+file_filter.add_pixbuf_formats ();
+
 public void main () {
     avatar_image = (Adw.Avatar) workbench.builder.get_object ("avatar_image");
     var button = (Gtk.Button) workbench.builder.get_object ("button");
@@ -9,11 +12,6 @@ public void main () {
 }
 
 private async void select_image () {
-    var file_filter = new Gtk.FileFilter () {
-        name = "Images"
-    };
-    file_filter.add_pixbuf_formats ();
-
     var file_dialog = new Gtk.FileDialog () {
         title = "Select an Avatar",
         modal = true,

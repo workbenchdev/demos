@@ -6,7 +6,7 @@ from gi.repository import Gtk, Gdk, Gio
 import workbench
 
 
-file_filter = Gtk.FileFilter(name="Images")
+file_filter = Gtk.FileFilter()
 file_filter.add_pixbuf_formats()
 
 file_dialog = Gtk.FileDialog(
