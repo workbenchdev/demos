@@ -25,4 +25,3 @@ async function onClicked() {
   const texture = Gdk.Texture.new_from_file(file);
   avatar_image.set_custom_image(texture);
 }
-

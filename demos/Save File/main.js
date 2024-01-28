@@ -33,4 +33,3 @@ async function saveFile() {
 button.connect("clicked", () => {
   saveFile().catch(console.error);
 });
-

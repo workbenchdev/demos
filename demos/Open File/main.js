@@ -54,4 +54,3 @@ function getFileName(file) {
   );
   return info.get_name();
 }
-
