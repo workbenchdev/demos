@@ -9,35 +9,33 @@ button_single = workbench.builder.get_object("button_single")
 button_multiple = workbench.builder.get_object("button_multiple")
 
 
-def on_single_selected(dialog, result):
-    file = dialog.select_folder_finish(result)
-    info = file.query_info(
-        "standard::name",
-        Gio.FileQueryInfoFlags.NONE,
-        None,
-    )
-    print(f'"{info.get_name()}" selected')
+def on_single_selected(file_dialog, result):
+    file = file_dialog.select_folder_finish(result)
+    print(f"Selected Folder: {get_file_name(file)}")
 
 
 def select_folder(button):
-    dialog_for_folder = Gtk.FileDialog()
-    dialog_for_folder.select_folder(workbench.window, None, on_single_selected)
+    file_dialog = Gtk.FileDialog()
+    file_dialog.select_folder(workbench.window, None, on_single_selected)
 
 
-button_single.connect("clicked", select_folder)
-
-
-def on_multiple_selected(dialog, result):
-    folders = dialog.select_multiple_folders_finish(result)
-    selected_items_count = folders.get_n_items()
-    print(f"{selected_items_count} selected folders")
+def on_multiple_selected(file_dialog, result):
+    files = file_dialog.select_multiple_folders_finish(result)
+    print(f"Selected Folders ({files.get_n_items()}):")
+    for file in files:
+        print(f"  {get_file_name(file)}")
 
 
 def select_multiple_folders(button):
-    dialog_for_folders = Gtk.FileDialog()
-    dialog_for_folders.select_multiple_folders(
-        workbench.window, None, on_multiple_selected
-    )
+    file_dialog = Gtk.FileDialog()
+    file_dialog.select_multiple_folders(workbench.window, None, on_multiple_selected)
 
 
+def get_file_name(file):
+    info = file.query_info("standard::name", Gio.FileQueryInfoFlags.NONE, None)
+    return info.get_name()
+
+
+button_single.connect("clicked", select_folder)
 button_multiple.connect("clicked", select_multiple_folders)
+
