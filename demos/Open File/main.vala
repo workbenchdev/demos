@@ -11,34 +11,27 @@ public void main () {
 }
 
 private async void open_single () {
-    var file_dialog = new Gtk.FileDialog () {
-    };
+    var file_dialog = new Gtk.FileDialog ();
 
     try {
         File file = yield file_dialog.open (workbench.window, null);
 
-        FileInfo info = file.query_info ("standard::name", NONE, null);
-
-        message (@"Selected file: $(info.get_name ())");
+        message (@"Selected File: $( get_file_name (file))");
     } catch (Error e) {
         critical (e.message);
     }
 }
 
 private async void open_image () {
-    var image_filter = new Gtk.FileFilter ();
-
-    image_filter.add_mime_type ("image/*");
-
+    var file_filter_image = (Gtk.FileFilter) workbench.builder.get_object ("file_filter_image");
     var file_dialog = new Gtk.FileDialog () {
-        default_filter = image_filter
+        default_filter = file_filter_image
     };
 
     try {
         File file = yield file_dialog.open (workbench.window, null);
 
-        FileInfo info = file.query_info ("standard::name", NONE, null);
-        message (@"Selected file: $(info.get_name ())");
+        message (@"Selected Image: $( get_file_name (file))");
     } catch (Error e) {
         critical (e.message);
     }
@@ -47,10 +40,25 @@ private async void open_image () {
 private async void open_multiple () {
     var file_dialog = new Gtk.FileDialog ();
     try {
-        ListModel files = yield file_dialog.open_multiple (workbench.window, null);
+        var files = yield file_dialog.open_multiple (workbench.window, null);
 
-        message (@"Number of selected files: $(files.get_n_items ())");
+        message (@"Selected Files:");
+        for (int i = 0; i < files.get_n_items (); i++) {
+            var file = files.get_item (i) as File;
+            message (@"  $(get_file_name(file))");
+        }
     } catch (Error e) {
         critical (e.message);
     }
 }
+
+private static string get_file_name (File file) {
+    try {
+        var info = file.query_info ("standard::name", NONE, null);
+        return info.get_name ();
+    } catch (Error e) {
+        critical (e.message);
+    }
+    return "";
+}
+
