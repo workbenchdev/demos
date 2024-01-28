@@ -10,8 +10,8 @@ button_multiple = workbench.builder.get_object("button_multiple")
 file_filter_image = workbench.builder.get_object("file_filter_image")
 
 
-def on_file_opened(dialog, result):
-    file = dialog.open_finish(result)
+def on_file_opened(file_dialog, result):
+    file = file_dialog.open_finish(result)
     print(f"Selected File: {get_file_name(file)}")
 
 
@@ -20,26 +20,26 @@ def open_file():
     dialog.open(workbench.window, None, on_file_opened)
 
 
-def on_image_opened(dialog, result):
-    file = dialog.open_finish(result)
+def on_image_opened(file_dialog, result):
+    file = file_dialog.open_finish(result)
     print(f"Selected Image: {get_file_name(file)}")
 
 
 def open_image():
-    dialog = Gtk.FileDialog(default_filter=file_filter_image)
-    dialog.open(workbench.window, None, on_image_opened)
+    file_dialog = Gtk.FileDialog(default_filter=file_filter_image)
+    file_dialog.open(workbench.window, None, on_image_opened)
 
 
-def on_multiple_files_opened(dialog, result):
+def on_multiple_files_opened(file_dialog, result):
     print(f"Selected Files:")
-    files = dialog.open_multiple_finish(result)
+    files = file_dialog.open_multiple_finish(result)
     for file in files:
         print(f"  {get_file_name(file)}")
 
 
 def open_multiple_files():
-    dialog = Gtk.FileDialog()
-    dialog.open_multiple(workbench.window, None, on_multiple_files_opened)
+    file_dialog = Gtk.FileDialog()
+    file_dialog.open_multiple(workbench.window, None, on_multiple_files_opened)
 
 
 def get_file_name(file):

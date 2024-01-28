@@ -14,20 +14,20 @@ const button_multiple = workbench.builder.get_object("button_multiple");
 const file_filter_image = workbench.builder.get_object("file_filter_image");
 
 async function openFile() {
-  const dialog_for_file = new Gtk.FileDialog();
-  const file = await dialog_for_file.open(workbench.window, null);
+  const file_dialog = new Gtk.FileDialog();
+  const file = await file_dialog.open(workbench.window, null);
   console.log("Selected File:", getFileName(file));
 }
 
 async function openImageFile() {
-  const fileDialog = new Gtk.FileDialog({ default_filter: file_filter_image });
-  const file = await fileDialog.open(workbench.window, null);
+  const file_dialog = new Gtk.FileDialog({ default_filter: file_filter_image });
+  const file = await file_dialog.open(workbench.window, null);
   console.log("Selected Image:", getFileName(file));
 }
 
 async function openMultipleFiles() {
-  const dialog_for_multiple_files = new Gtk.FileDialog();
-  const files = await dialog_for_multiple_files.open_multiple(
+  const file_dialog = new Gtk.FileDialog();
+  const files = await file_dialog.open_multiple(
     workbench.window,
     null,
   );
