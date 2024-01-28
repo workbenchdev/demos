@@ -33,4 +33,3 @@ def on_replace_contents(file, result):
 
 # Handle button click
 button.connect("clicked", save_file)
-

@@ -38,4 +38,3 @@ def get_file_name(file):
 
 button_single.connect("clicked", select_folder)
 button_multiple.connect("clicked", select_multiple_folders)
-

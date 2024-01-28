@@ -29,4 +29,3 @@ def on_selected(file_dialog, result):
 
 def on_clicked():
     file_dialog.open(workbench.window, None, on_selected)
-

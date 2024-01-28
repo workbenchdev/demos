@@ -50,4 +50,3 @@ def get_file_name(file):
 button_single.connect("clicked", lambda *_: open_file())
 button_image.connect("clicked", lambda *_: open_image())
 button_multiple.connect("clicked", lambda *_: open_multiple_files())
-

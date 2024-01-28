@@ -35,4 +35,3 @@ fn on_clicked(result: Result<gio::File, glib::Error>) {
         Err(err) => eprintln!("Could not load avatar image: {err}."),
     }
 }
-
