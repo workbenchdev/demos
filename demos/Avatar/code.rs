@@ -7,18 +7,18 @@ pub fn main() {
 
     let button: gtk::Button = workbench::builder().object("button").unwrap();
 
-    let mut filter = gtk::FileFilter::new();
-    filter.set_name(Some("Images"));
-    filter.add_pixbuf_formats();
+    let mut file_filter = gtk::FileFilter::new();
+    file_filter.set_name(Some("Images"));
+    file_filter.add_pixbuf_formats();
 
-    let dialog = gtk::FileDialog::builder()
+    let file_dialog = gtk::FileDialog::builder()
         .title("Select an Avatar")
         .modal(true)
         .default_filter(&filter)
         .build();
 
     button.connect_clicked(move |_| {
-        dialog.open(
+        file_dialog.open(
             Some(workbench::window()),
             None::<&gio::Cancellable>,
             on_clicked,
@@ -36,3 +36,4 @@ fn on_clicked(result: Result<gio::File, glib::Error>) {
         Err(err) => eprintln!("Could not load avatar image: {err}."),
     }
 }
+
