@@ -1,9 +1,12 @@
 #! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 
+private Gtk.FileFilter file_filter_image;
+
 public void main () {
     var button_single = (Gtk.Button) workbench.builder.get_object ("button_single");
     var button_image = (Gtk.Button) workbench.builder.get_object ("button_image");
     var button_multiple = (Gtk.Button) workbench.builder.get_object ("button_multiple");
+    file_filter_image = (Gtk.FileFilter) workbench.builder.get_object ("file_filter_image");
 
     button_single.clicked.connect (open_single.begin);
     button_image.clicked.connect (open_image.begin);
@@ -23,7 +26,6 @@ private async void open_single () {
 }
 
 private async void open_image () {
-    var file_filter_image = (Gtk.FileFilter) workbench.builder.get_object ("file_filter_image");
     var file_dialog = new Gtk.FileDialog () {
         default_filter = file_filter_image
     };
