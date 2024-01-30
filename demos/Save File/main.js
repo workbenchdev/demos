@@ -11,11 +11,11 @@ Gio._promisify(
 const button = workbench.builder.get_object("button");
 
 async function saveFile() {
-  const dialog = new Gtk.FileDialog({
+  const file_dialog = new Gtk.FileDialog({
     initial_name: "Workbench.txt",
   });
   // "dialog.save" returns a Gio.File you can write to
-  const file = await dialog.save(workbench.window, null);
+  const file = await file_dialog.save(workbench.window, null);
 
   const contents = new TextEncoder().encode("Hello from Workbench!");
   await file.replace_contents_async(

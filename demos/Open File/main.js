@@ -11,44 +11,27 @@ Gio._promisify(
 const button_single = workbench.builder.get_object("button_single");
 const button_image = workbench.builder.get_object("button_image");
 const button_multiple = workbench.builder.get_object("button_multiple");
+const file_filter_image = workbench.builder.get_object("file_filter_image");
 
 async function openFile() {
-  const dialog_for_file = new Gtk.FileDialog();
-  const file = await dialog_for_file.open(workbench.window, null);
-  const info = file.query_info(
-    "standard::name",
-    Gio.FileQueryInfoFlags.NONE,
-    null,
-  );
-  console.log(`Selected File: ${info.get_name()}`);
+  const file_dialog = new Gtk.FileDialog();
+  const file = await file_dialog.open(workbench.window, null);
+  console.log("Selected File:", getFileName(file));
 }
 
 async function openImageFile() {
-  const filters = new Gio.ListStore();
-
-  const imageFilter = Gtk.FileFilter.new();
-  imageFilter.set_name("Image File");
-  imageFilter.add_mime_type("image/*");
-  filters.append(imageFilter);
-
-  const fileDialog = new Gtk.FileDialog({ filters });
-  const file = await fileDialog.open(workbench.window, null);
-  const info = file.query_info(
-    "standard::name",
-    Gio.FileQueryInfoFlags.NONE,
-    null,
-  );
-  console.log(`Selected file: ${info.get_name()}`);
+  const file_dialog = new Gtk.FileDialog({ default_filter: file_filter_image });
+  const file = await file_dialog.open(workbench.window, null);
+  console.log("Selected Image:", getFileName(file));
 }
 
 async function openMultipleFiles() {
-  const dialog_for_multiple_files = new Gtk.FileDialog();
-  const files = await dialog_for_multiple_files.open_multiple(
-    workbench.window,
-    null,
-  );
-  const selected_items_count = files.get_n_items();
-  console.log(`No of selected files: ${selected_items_count}`);
+  const file_dialog = new Gtk.FileDialog();
+  const files = await file_dialog.open_multiple(workbench.window, null);
+  console.log(`Selected Files (${files.get_n_items()}):`);
+  for (const file of files) {
+    console.log("  ", getFileName(file));
+  }
 }
 
 button_single.connect("clicked", () => {
@@ -62,3 +45,12 @@ button_image.connect("clicked", () => {
 button_multiple.connect("clicked", () => {
   openMultipleFiles().catch(console.error);
 });
+
+function getFileName(file) {
+  const info = file.query_info(
+    "standard::name",
+    Gio.FileQueryInfoFlags.NONE,
+    null,
+  );
+  return info.get_name();
+}

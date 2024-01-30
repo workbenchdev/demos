@@ -6,13 +6,13 @@ from gi.repository import Gtk, Gdk, Gio
 import workbench
 
 
-filter = Gtk.FileFilter(name="Images")
-filter.add_pixbuf_formats()
+file_filter = Gtk.FileFilter()
+file_filter.add_pixbuf_formats()
 
-dialog = Gtk.FileDialog(
+file_dialog = Gtk.FileDialog(
     title="Select an Avatar",
     modal=True,
-    default_filter=filter,
+    default_filter=file_filter,
 )
 
 avatar_image = workbench.builder.get_object("avatar_image")
@@ -21,11 +21,11 @@ button = workbench.builder.get_object("button")
 button.connect("clicked", lambda *_: on_clicked())
 
 
-def on_selected(_dialog, result):
-    file = _dialog.open_finish(result)
+def on_selected(file_dialog, result):
+    file = file_dialog.open_finish(result)
     texture = Gdk.Texture.new_from_file(file)
     avatar_image.set_custom_image(texture)
 
 
 def on_clicked():
-    file = dialog.open(workbench.window, None, on_selected)
+    file_dialog.open(workbench.window, None, on_selected)

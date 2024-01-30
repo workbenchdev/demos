@@ -14,8 +14,7 @@ Adw.StatusPage {
       label: _("Open a file");
 
       styles [
-        "pill",
-        "suggested-action"
+        "pill"
       ]
     }
 
@@ -24,8 +23,7 @@ Adw.StatusPage {
       label: _("Open Image");
 
       styles [
-        "pill",
-        "suggested-action"
+        "pill"
       ]
     }
 
@@ -34,8 +32,7 @@ Adw.StatusPage {
       label: _("Open multiple files");
 
       styles [
-        "pill",
-        "suggested-action"
+        "pill"
       ]
     }
 
@@ -44,4 +41,14 @@ Adw.StatusPage {
       uri: "https://docs.gtk.org/gtk4/class.FileDialog.html";
     }
   }
+}
+
+FileFilter file_filter_image {
+  mime-types [
+    "image/svg+xml",
+    "image/png",
+    "image/jpeg",
+    "image/webp",
+    "image/gif"
+  ]
 }

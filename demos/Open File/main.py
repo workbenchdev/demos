@@ -7,52 +7,44 @@ import workbench
 button_single = workbench.builder.get_object("button_single")
 button_image = workbench.builder.get_object("button_image")
 button_multiple = workbench.builder.get_object("button_multiple")
-
-image_filter = Gtk.FileFilter(name="Images")
-image_filter.add_mime_type("image/*")
-file_dialog = Gtk.FileDialog(
-    default_filter=image_filter,
-)
+file_filter_image = workbench.builder.get_object("file_filter_image")
 
 
-def on_file_opened(dialog, result):
-    file = dialog.open_finish(result)
-    info = file.query_info(
-        "standard::name",
-        Gio.FileQueryInfoFlags.NONE,
-        None,
-    )
-    print(f"Selected File: {info.get_name()}")
+def on_file_opened(file_dialog, result):
+    file = file_dialog.open_finish(result)
+    print(f"Selected File: {get_file_name(file)}")
 
 
 def open_file():
-    dialog_for_file = Gtk.FileDialog()
-    dialog_for_file.open(workbench.window, None, on_file_opened)
+    dialog = Gtk.FileDialog()
+    dialog.open(workbench.window, None, on_file_opened)
 
 
-def on_image_opened(dialog, result):
+def on_image_opened(file_dialog, result):
     file = file_dialog.open_finish(result)
-    info = file.query_info("standard::name", Gio.FileQueryInfoFlags.NONE, None)
-
-    print(f"Selected File: {info.get_name()}")
+    print(f"Selected Image: {get_file_name(file)}")
 
 
 def open_image():
-    dialog_for_image = file_dialog
-    dialog_for_image.open(workbench.window, None, on_image_opened)
+    file_dialog = Gtk.FileDialog(default_filter=file_filter_image)
+    file_dialog.open(workbench.window, None, on_image_opened)
 
 
-def on_multiple_files_opened(dialog, result):
-    files = dialog.open_multiple_finish(result)
-    selected_items_count = files.get_n_items()
-    print(f"No of selected files: {selected_items_count}")
+def on_multiple_files_opened(file_dialog, result):
+    files = file_dialog.open_multiple_finish(result)
+    print(f"Selected Files ({files.get_n_items()}):")
+    for file in files:
+        print(f"  {get_file_name(file)}")
 
 
 def open_multiple_files():
-    dialog_for_multiple_files = Gtk.FileDialog()
-    dialog_for_multiple_files.open_multiple(
-        workbench.window, None, on_multiple_files_opened
-    )
+    file_dialog = Gtk.FileDialog()
+    file_dialog.open_multiple(workbench.window, None, on_multiple_files_opened)
+
+
+def get_file_name(file):
+    info = file.query_info("standard::name", Gio.FileQueryInfoFlags.NONE, None)
+    return info.get_name()
 
 
 button_single.connect("clicked", lambda *_: open_file())
