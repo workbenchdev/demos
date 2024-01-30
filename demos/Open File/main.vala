@@ -42,11 +42,11 @@ private async void open_image () {
 private async void open_multiple () {
     var file_dialog = new Gtk.FileDialog ();
     try {
-        var files = yield file_dialog.open_multiple (workbench.window, null);
+        ListModel files = yield file_dialog.open_multiple (workbench.window, null);
 
         message (@"Selected Files ($(files.get_n_items())):");
         for (int i = 0; i < files.get_n_items (); i++) {
-            var file = files.get_item (i) as File;
+            var file = (File) files.get_item (i);
             message (@"  $(get_file_name(file))");
         }
     } catch (Error e) {
