@@ -18,93 +18,105 @@ Adw.StatusPage {
           "boxed-list"
         ]
 
-        Adw.ActionRow {
-          title: _("ActionRow can have a prefix child");
+        Adw.ExpanderRow {
+          title: _("Action Types");
 
-          [prefix]
-          CheckButton checkbox {
-            active: true;
+          Adw.ActionRow {
+            title: _("ActionRow can have a prefix child");
+
+            [prefix]
+            CheckButton checkbox {
+              active: true;
+            }
           }
-        }
 
-        Adw.ActionRow {
-          title: _("ActionRow can have a suffix child");
-          subtitle: _("The checkbox above controls the spinner");
+          Adw.ActionRow {
+            title: _("ActionRow can have a suffix child");
+            subtitle: _("The checkbox above controls the spinner");
 
-          [suffix]
-          Spinner {
-            spinning: bind checkbox.active;
+            [suffix]
+            Spinner {
+              spinning: bind checkbox.active;
+            }
           }
-        }
 
-        Adw.ActionRow {
-          title: _("Action Row can have a activatable widget");
-          subtitle: _("Click on the row to activate it");
-          activatable-widget: activatable_toggle;
+          Adw.ActionRow {
+            title: _("Action Row can have a activatable widget");
+            subtitle: _("Click on the row to activate it");
+            activatable-widget: activatable_toggle;
 
-          [suffix]
-          ToggleButton activatable_toggle {
-            icon-name: "hand-touch-symbolic";
-            valign: center;
+            [suffix]
+            ToggleButton activatable_toggle {
+              icon-name: "hand-touch-symbolic";
+              valign: center;
+            }
           }
-        }
 
-        Adw.ActionRow {
-          styles [
-            "property"
-          ]
-
-          title: _("Property Row");
-          subtitle: _("Deemphasizes the row title and emphasizes subtitle instead");
-        }
-
-        Adw.EntryRow {
-          title: _("A row can be an entry");
-        }
-
-        Adw.SwitchRow {
-          title: _("Switch Row");
-          subtitle: _("Simple on/off control");
-        }
-
-        Adw.SpinRow {
-          title: _("Spin Row");
-          subtitle: _("Increment or decrement a value");
-          climb-rate: 0.2;
-
-          adjustment: Adjustment {
-            lower: 0;
-            upper: 100;
-            step-increment: 1;
-            value: 50;
-          };
-        }
-
-        Adw.ComboRow {
-          title: _("Choose an item");
-          subtitle: _("List of options from a drop down");
-
-          model: StringList list {
-            strings [
-              "this",
-              "is",
-              "a",
-              "string",
-              "list"
+          Adw.ActionRow {
+            styles [
+              "property"
             ]
-          };
+
+            title: _("Property Row");
+            subtitle: _("Deemphasizes the row title and emphasizes subtitle instead");
+          }
         }
 
         Adw.ExpanderRow {
-          title: _("Rows can be expandable");
-          show-enable-switch: true;
+          title: _("Row Types");
 
-          Adw.ActionRow {
-            title: _("First row");
+          Adw.EntryRow {
+            title: _("A row can be an entry");
           }
 
-          Adw.ActionRow {
-            title: _("Second row");
+          Adw.SwitchRow {
+            title: _("Switch Row");
+            subtitle: _("Simple on/off control");
+          }
+
+          Adw.SpinRow {
+            title: _("Spin Row");
+            subtitle: _("Increment or decrement a value");
+            climb-rate: 0.2;
+
+            adjustment: Adjustment {
+              lower: 0;
+              upper: 100;
+              step-increment: 1;
+              value: 50;
+            };
+          }
+        }
+
+        Adw.ExpanderRow {
+          title: _("Selection Types");
+
+          Adw.ComboRow {
+            title: _("Choose an item");
+            subtitle: _("List of options from a drop down");
+
+            model: StringList list {
+              strings [
+                "this",
+                "is",
+                "a",
+                "string",
+                "list"
+              ]
+            };
+          }
+
+          Adw.ExpanderRow {
+            title: _("Rows can be expandable");
+            show-enable-switch: true;
+
+            Adw.ActionRow {
+              title: _("First row");
+            }
+
+            Adw.ActionRow {
+              title: _("Second row");
+            }
           }
         }
       }
