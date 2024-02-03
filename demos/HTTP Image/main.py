@@ -23,7 +23,9 @@ def get_image_bytes(url):
         method="GET",
         uri=GLib.Uri.parse(url, GLib.UriFlags.NONE),
     )
-    session.send_and_read_async(message, GLib.PRIORITY_DEFAULT, None, on_receive_bytes, message)
+    session.send_and_read_async(
+        message, GLib.PRIORITY_DEFAULT, None, on_receive_bytes, message
+    )
 
 
 get_image_bytes(IMAGE_URL)
