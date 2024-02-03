@@ -24,7 +24,7 @@ private async Bytes ? get_image_bytes (string url) throws Error {
 
     Bytes image_bytes = yield session.send_and_read_async (message, Priority.DEFAULT, null);
 
-    Soup.Status status = message.get_status();
+    Soup.Status status = message.get_status ();
     string reason = message.reason_phrase;
 
     if (status != Soup.Status.OK) {
