@@ -24,11 +24,11 @@ private async Bytes ? get_image_bytes (string url) throws Error {
 
     Bytes image_bytes = yield session.send_and_read_async (message, Priority.DEFAULT, null);
 
-    uint status_code = message.status_code;
+    Soup.Status status = message.get_status();
     string reason = message.reason_phrase;
 
-    if (status_code != 200) {
-        throw new MessageError.FAILED (@"Got $status_code: $reason");
+    if (status != Soup.Status.OK) {
+        throw new MessageError.FAILED (@"Got $status: $reason");
     }
 
     return image_bytes;
