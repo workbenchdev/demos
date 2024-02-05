@@ -24,15 +24,13 @@ private async void on_button_clicked () {
 }
 
 private void show_permission_error () {
-    var dialog = new Adw.MessageDialog (
-                                        workbench.window,
-                                        "Permission Error",
-                                        "Ensure Screenshot permission is enabled in\nSettings → Apps → Workbench"
+    var dialog = new Adw.AlertDialog (
+                                      "Permission Error",
+                                      "Ensure Screenshot permission is enabled in\nSettings → Apps → Workbench"
         ) {
         close_response = "ok",
-        modal = true,
     };
 
     dialog.add_response ("ok", "OK");
-    dialog.present ();
+    dialog.present (workbench.window);
 }

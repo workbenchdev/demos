@@ -43,4 +43,3 @@ function openAboutDialog() {
 }
 
 button.connect("clicked", openAboutDialog);
-
