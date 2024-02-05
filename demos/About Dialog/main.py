@@ -8,8 +8,7 @@ import workbench
 
 
 def open_about_window(_widget):
-    dialog = Adw.AboutWindow(
-        transient_for=workbench.window,
+    dialog = Adw.AboutDialog(
         application_icon="application-x-executable",
         application_name="Typeset",
         developer_name="Angela Avery",
@@ -29,7 +28,7 @@ def open_about_window(_widget):
 
     dialog.add_link(
         _("Documentation"),
-        "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.AboutWindow.html",
+        "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/class.AboutDialog.html",
     )
 
     dialog.add_legal_section(
@@ -43,7 +42,7 @@ def open_about_window(_widget):
 
     dialog.add_acknowledgement_section(_("Special thanks to"), [_("My cat")])
 
-    dialog.present()
+    dialog.present(workbench.window)
 
 
 button: Gtk.Button = workbench.builder.get_object("button")

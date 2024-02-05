@@ -33,3 +33,7 @@ clean:
 	rm -f demos/**/main.ui
 	rm -f demos/**/libworkbenchcode.so
 	rm -rf demos/**/__pycache__
+	rm -rf demos/**/Cargo.toml
+	rm -rf demos/**/Cargo.lockfile
+	rm -rf demos/**/lib.rs
+	rm -rf demos/**/workbench.rs

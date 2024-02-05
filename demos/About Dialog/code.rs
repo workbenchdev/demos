@@ -10,8 +10,7 @@ pub fn main() {
 }
 
 fn on_button_clicked() {
-    let dialog = adw::AboutWindow::builder()
-        .transient_for(workbench::window())
+    let dialog = adw::AboutDialog::builder()
         .application_icon("application-x-executable")
         .application_name("Typeset")
         .developer_name("Angela Avery")
@@ -29,7 +28,7 @@ fn on_button_clicked() {
 
     dialog.add_link(
         "Documentation",
-        "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.AboutWindow.html",
+        "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/class.AboutDialog.html",
     );
 
     dialog.add_legal_section(
@@ -41,5 +40,5 @@ fn on_button_clicked() {
 
     dialog.add_acknowledgement_section(Some("Special thanks to"), &["My cat"]);
 
-    dialog.present();
+    dialog.present(workbench::window);
 }

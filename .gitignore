@@ -29,4 +29,3 @@ demos/**/Cargo.lock
 demos/**/Cargo.toml
 demos/**/lib.rs
 demos/**/workbench.rs
-demos/**/biome.json

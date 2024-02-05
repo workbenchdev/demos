@@ -9,8 +9,7 @@ public void main () {
 
 public void on_button_clicked () {
     // https://valadoc.org/libadwaita-1/Adw.AboutWindow.html
-    var dialog = new Adw.AboutWindow () {
-        transient_for = workbench.window,
+    var dialog = new Adw.AboutDialog () {
         application_icon = "application-x-executable",
         application_name = "Typeset",
         developer_name = "Angela Avery",
@@ -27,7 +26,7 @@ public void on_button_clicked () {
     };
     dialog.add_link (
                      "Documentation",
-                     "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.AboutWindow.html"
+                     "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/class.AboutDialog.html"
     );
     dialog.add_legal_section (
                               "Fonts",
@@ -38,5 +37,5 @@ public void on_button_clicked () {
 
     dialog.add_acknowledgement_section ("Special thanks to", { "My cat" });
 
-    dialog.present ();
+    dialog.present (workbench.window);
 }
