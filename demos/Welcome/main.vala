@@ -3,7 +3,6 @@
 public void main () {
     var box = (Gtk.Box) workbench.builder.get_object ("subtitle");
 
-    // https://valadoc.org/gtk4/Gtk.Button.html
     var button = new Gtk.Button () {
         label = "Press me",
         margin_top = 6,
@@ -16,9 +15,8 @@ public void main () {
 }
 
 public void greet () {
-    // https://valadoc.org/libadwaita-1/Adw.MessageDialog.html
-    var dialog = new Adw.MessageDialog (
-                                        workbench.window, null, "Hello World!"
+    var dialog = new Adw.AlertDialog (
+                                      null, "Hello World!"
     );
 
     dialog.add_response ("ok", "OK");
@@ -26,5 +24,5 @@ public void greet () {
         stdout.printf ("%s\n", response);
     });
 
-    dialog.present ();
+    dialog.present (workbench.window);
 }

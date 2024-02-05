@@ -17,10 +17,7 @@ pub fn main() {
 }
 
 fn greet() {
-    let dialog = adw::MessageDialog::builder()
-        .body("Hello World!")
-        .transient_for(workbench::window())
-        .build();
+    let dialog = adw::AlertDialog::builder().body("Hello World!").build();
 
     dialog.add_responses(&[("ok", "Cancel")]);
     dialog.connect_response(None, |dialog, response| {
@@ -28,5 +25,5 @@ fn greet() {
         dialog.close();
     });
 
-    dialog.present();
+    dialog.present(workbench::window());
 }
