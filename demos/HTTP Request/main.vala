@@ -24,8 +24,9 @@ private async void fetch_wikipedia_todays_featured_article () throws Error {
 
     // https://api.wikimedia.org/wiki/Feed_API/Reference/Featured_content
     string language = "en";
+    string date_string = date.format ("%Y/%m/%d");
     string url =
-        @"https://api.wikimedia.org/feed/v1/wikipedia/$language/featured/$(date.format (" % Y / % m / % d "))";
+        @"https://api.wikimedia.org/feed/v1/wikipedia/$language/featured/$(date_string)";
 
     var message = new Soup.Message ("GET", url);
 
