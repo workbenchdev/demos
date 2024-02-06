@@ -12,7 +12,7 @@ port = 0
 
 
 def handler(_server, msg, _path, _query):
-    msg.set_status(200, None)
+    msg.set_status(Soup.Status.OK, None)
     msg.get_response_headers().set_content_type("text/html", {"charset": "UTF-8"})
     msg.get_response_body().append(
         b"""
@@ -31,14 +31,14 @@ def handler(_server, msg, _path, _query):
 
 def hello_handler(_server, msg, _path, query):
     if not query:
-        msg.set_redirect(302, "/")
+        msg.set_redirect(Soup.Status.FOUND, "/")
         return
 
     user_agent = msg.get_request_headers().get_one("User-Agent")
 
     label_greetings.set_label(f"Hello {query['name']}, your browser is\n{user_agent}")
 
-    msg.set_status(200, None)
+    msg.set_status(Soup.Status.OK, None)
     msg.get_response_headers().set_content_type("text/html", {"charset": "UTF-8"})
     msg.get_response_body().append(
         b"""
