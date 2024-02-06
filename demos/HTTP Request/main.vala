@@ -32,8 +32,8 @@ private async void fetch_wikipedia_todays_featured_article () throws Error {
 
     Bytes message_bytes = yield http_session.send_and_read_async (message, Priority.DEFAULT, null);
 
-    if (message.status_code != 200) {
-        throw new FetchError.FAILED_REQUEST (@"Failed Request. HTTP Status: $(message.status_code)");
+    if (message.get_status () != Soup.Status.OK) {
+        throw new FetchError.FAILED_REQUEST (@"Failed Request. HTTP Status: $(message.get_status())");
     }
 
     unowned uint8[] data = message_bytes.get_data ();
