@@ -15,4 +15,3 @@ const expression = new Gtk.ClosureExpression(
 );
 
 drop_down.expression = expression;
-
