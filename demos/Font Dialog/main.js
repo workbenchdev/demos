@@ -3,12 +3,6 @@ import Gtk from "gi://Gtk";
 
 Gio._promisify(
   Gtk.FontDialog.prototype,
-  "choose_font_and_features",
-  "choose_font_and_features_finish",
-);
-
-Gio._promisify(
-  Gtk.FontDialog.prototype,
   "choose_family",
   "choose_family_finish",
 );
@@ -35,10 +29,10 @@ const dialog_custom = new Gtk.FontDialog({
 custom_button.connect("clicked", () => onClicked().catch(console.error));
 
 async function onClicked() {
-  const result = await dialog_custom.choose_family(
+  const family = await dialog_custom.choose_family(
     workbench.window,
     null,
     null,
   );
-  console.log(`Font Family: ${result.get_name()}`);
+  console.log(`Font Family: ${family.get_name()}`);
 }
