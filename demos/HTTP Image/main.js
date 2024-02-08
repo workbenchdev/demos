@@ -22,10 +22,14 @@ async function getImageBytes(url) {
     method: "GET",
     uri: GLib.Uri.parse(url, GLib.UriFlags.NONE),
   });
-  const bytes = await session.send_and_read_async(message, null, null);
-  const { status_code, reason_phrase } = message;
-  if (status_code !== 200) {
-    throw new Error(`Got ${status_code}, ${reason_phrase}`);
+  const bytes = await session.send_and_read_async(
+    message,
+    GLib.PRIORITY_DEFAULT,
+    null,
+  );
+  const status = message.get_status();
+  if (status !== Soup.Status.OK) {
+    throw new Error(`Got ${status}, ${message.reason_phrase}`);
   }
   return bytes;
 }
