@@ -115,3 +115,6 @@ Here is a compilation of resources to learn more about the GNOME platform.
 - [GJS docs](https://gitlab.gnome.org/GNOME/gjs/-/tree/master/doc)
 - [GJS examples](https://gitlab.gnome.org/GNOME/gjs/-/tree/master/examples)
 - [Human Interface Guidelines](https://developer.gnome.org/hig/)
+- [Valadoc.org](https://valadoc.org)
+- [Vala tutorial](https://wiki.gnome.org/Projects/Vala/Tutorial)
+- [Vala examples](https://wiki.gnome.org/Projects/Vala/Examples)

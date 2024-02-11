@@ -91,8 +91,20 @@ Please see existing code, or ask. Add anything you learn here.
 
 ### General Principles
 
-- ...
+- Prefer `async`/`yield`
+- snake_case for functions for example `open_file`
+- Type identifiers in `CamelCase`
+- Enum members and constants in `ALL_CAPS`, words seperated by underscores
+- implcit typing with `var` only when the type is obvious due to the assignment, for example `var foo = new Window ();`
+- only use casting with `as` when you also check the variable for `null` afterwards
+- Make valadoc style code comments when it makes sense
+- Use functions-in-functions when the same handler needs to be connected to multiple signals
+- Use `@"blub $foo blob $(bar.baz)\n"` instead of `"blub " + foo.to_string() + ...`
+- Errors should be catched with `try { ... } catch { ... }`
 
 ### General Formatting
 
-- ...
+- Use 4-space indentation
+- Property get, set, default declaration all on one line, seperated by semicolons, if default implementations are used
+- If properties have implementations, then `get {`, `set {` open new lines
+- Attributes on their own line
