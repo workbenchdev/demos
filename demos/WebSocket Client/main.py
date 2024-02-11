@@ -40,22 +40,21 @@ def on_error(_self, err):
 def on_message(_self, data_type, message):
     if data_type != Soup.WebsocketDataType.TEXT:
         return
-    str = message.unref_to_array().decode("utf-8")
-    print("received:", str)
+    text = message.unref_to_array().decode("utf-8")
+    print("received:", text)
 
 
-def send(message):
+def send(text):
     connection.send_message(
         Soup.WebsocketDataType.TEXT,
-        GLib.Bytes(message.encode("utf-8")),
+        GLib.Bytes(text.encode("utf-8")),
     )
-    print("sent:", message)
+    print("sent:", text)
 
 
 def on_button_send_clicked(_button):
-    global message
-    message = entry_message.get_text()
-    send(message)
+    text = entry_message.get_text()
+    send(text)
 
 
 def on_connected(session, result):
