@@ -4,8 +4,6 @@ gi.require_version("WebKit", "6.0")
 from gi.repository import GLib, GObject, WebKit
 import workbench
 
-dummy = WebKit.WebView()  # Throw away object to make Gtk.Builder aware of this type
-
 button_back = workbench.builder.get_object("button_back")
 button_forward = workbench.builder.get_object("button_forward")
 button_reload = workbench.builder.get_object("button_reload")
