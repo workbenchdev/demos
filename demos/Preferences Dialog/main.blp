@@ -1,9 +1,56 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.PreferencesWindow pref_window {
-  default-width: 800;
-  default-height: 600;
+Adw.StatusPage {
+  title: _("Preferences Dialog");
+  description: _("A dialog showing application’s preferences");
+
+  Box {
+    spacing: 12;
+    halign: center;
+    orientation: vertical;
+
+    Button button {
+      label: _("Open");
+
+      styles [
+        "suggested-action",
+        "pill"
+      ]
+    }
+
+    FlowBox {
+      orientation: horizontal;
+      margin-top: 12;
+      max-children-per-line: 2;
+      min-children-per-line: 2;
+
+      LinkButton {
+        label: _("PreferencesDialog");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/class.PreferencesDialog.html";
+      }
+
+      LinkButton {
+        label: _("PreferencesPage");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/class.PreferencesPage.html";
+      }
+
+      LinkButton {
+        label: _("PreferencesGroup");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/class.PreferencesGroup.html";
+      }
+
+      LinkButton {
+        label: _("PreferencesRow");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/class.PreferencesRow.html";
+      }
+    }
+  }
+}
+
+Adw.PreferencesDialog dialog {
+  content-width: 800;
+  content-height: 600;
   title: _("Preferences");
 
   Adw.PreferencesPage appearance_page {
@@ -43,37 +90,6 @@ Adw.PreferencesWindow pref_window {
           valign: center;
 
           dialog: ColorDialog {};
-        }
-      }
-    }
-
-    Adw.PreferencesGroup {
-      title: _("API References");
-
-      FlowBox {
-        orientation: horizontal;
-        margin-top: 12;
-        max-children-per-line: 2;
-        min-children-per-line: 2;
-
-        LinkButton {
-          label: _("PreferencesWindow");
-          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/class.PreferencesWindow.html";
-        }
-
-        LinkButton {
-          label: _("PreferencesPage");
-          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/class.PreferencesPage.html";
-        }
-
-        LinkButton {
-          label: _("PreferencesGroup");
-          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/class.PreferencesGroup.html";
-        }
-
-        LinkButton {
-          label: _("PreferencesRow");
-          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/class.PreferencesRow.html";
         }
       }
     }
@@ -118,11 +134,11 @@ Adw.PreferencesWindow pref_window {
       description: _("Manage user data related settings.");
 
       Adw.SwitchRow {
-        title: _("Enable Telemetry");
+        title: _("Enable Debug");
       }
 
       Adw.SwitchRow {
-        title: _("Enable Auto-Updates");
+        title: _("Check for updates");
       }
 
       Adw.ActionRow subpage_row {

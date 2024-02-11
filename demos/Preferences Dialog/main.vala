@@ -1,12 +1,13 @@
 #! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
 
 public void main () {
-    var pref_window = (Adw.PreferencesWindow) workbench.builder.get_object ("pref_window");
+    var dialog = (Adw.PreferencesDialog) workbench.builder.get_object ("dialog");
     var dm_switch = (Adw.SwitchRow) workbench.builder.get_object ("dm_switch");
     var subpage = (Adw.NavigationPage) workbench.builder.get_object ("subpage");
     var subpage_row = (Adw.ActionRow) workbench.builder.get_object ("subpage_row");
     var subpage_button = (Gtk.Button) workbench.builder.get_object ("subpage_button");
     var toast_button = (Gtk.Button) workbench.builder.get_object ("toast_button");
+    var button = (Gtk.Button) workbench.builder.get_object ("button");
     var style_manager = Adw.StyleManager.get_default ();
 
     dm_switch.active = style_manager.dark;
@@ -20,14 +21,18 @@ public void main () {
         }
     });
 
-    // Preferences windows can display subpages
-    subpage_row.activated.connect (() => pref_window.push_subpage (subpage));
+    // Preferences dialogs can display subpages
+    subpage_row.activated.connect (() => dialog.push_subpage (subpage));
 
-    subpage_button.clicked.connect (() => pref_window.pop_subpage ());
+    subpage_button.clicked.connect (() => dialog.pop_subpage ());
 
     toast_button.clicked.connect (() => {
-        var toast = new Adw.Toast ("Preferences windows can display toasts");
+        var toast = new Adw.Toast ("Preferences dialogs can display toasts");
 
-        pref_window.add_toast (toast);
+        dialog.add_toast (toast);
+    });
+
+    button.clicked.connect (() => {
+        dialog.present (workbench.window);
     });
 }

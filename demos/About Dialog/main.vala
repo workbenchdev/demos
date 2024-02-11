@@ -8,13 +8,12 @@ public void main () {
 }
 
 public void on_button_clicked () {
-    // https://valadoc.org/libadwaita-1/Adw.AboutWindow.html
     var dialog = new Adw.AboutDialog () {
         application_icon = "application-x-executable",
         application_name = "Typeset",
         developer_name = "Angela Avery",
         version = "1.2.3",
-        comments = "Typeset is an app that doesn’t exist and is used as an example content for About Window.",
+        comments = "Typeset is an app that doesn’t exist and is used as an example content for About Dialog.",
         website = "https://example.org",
         issue_url = "https://example.org",
         support_url = "https://example.org",

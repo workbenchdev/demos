@@ -14,7 +14,7 @@ def open_about_window(_widget):
         developer_name="Angela Avery",
         version="1.2.3",
         comments=_(
-            "Typeset is an app that doesn’t exist and is used as an example content for About Window.",
+            "Typeset is an app that doesn’t exist and is used as an example content for About Dialog.",
         ),
         website="https://example.org",
         issue_url="https://example.org",

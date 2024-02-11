@@ -15,7 +15,7 @@ fn on_button_clicked() {
         .application_name("Typeset")
         .developer_name("Angela Avery")
         .version("1.2.3")
-        .comments("Typeset is an app that doesn’t exist and is used as an example content for About Window.")
+        .comments("Typeset is an app that doesn’t exist and is used as an example content for About Dialog.")
         .website("https://example.org")
         .issue_url("https://example.org")
         .support_url("https://example.org")
@@ -40,5 +40,5 @@ fn on_button_clicked() {
 
     dialog.add_acknowledgement_section(Some("Special thanks to"), &["My cat"]);
 
-    dialog.present(workbench::window);
+    dialog.present(workbench::window());
 }
