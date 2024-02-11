@@ -5,6 +5,7 @@ use crate::workbench;
 use glib::source::Priority;
 use gtk::{gdk, glib};
 use soup::prelude::*;
+use soup::Status;
 
 pub fn main() {
     glib::spawn_future_local(async_main());
@@ -27,12 +28,8 @@ async fn get_image_bytes(url: &str) -> glib::Bytes {
         .await
         .unwrap();
 
-    if message.status_code() != 200 {
-        panic!(
-            "Got {}, {:?}",
-            message.status_code(),
-            message.reason_phrase()
-        );
+    if message.status() != Status::Ok {
+        panic!("Got {}, {:?}", message.status(), message.reason_phrase());
     }
     image_bytes
 }
