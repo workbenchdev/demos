@@ -1,0 +1,7 @@
+{
+  "name": "Gamepads",
+  "category": "controls",
+  "description": "Use Libmanette to access controllers and gamepads",
+  "panels": ["code", "preview"],
+  "autorun": false
+}
