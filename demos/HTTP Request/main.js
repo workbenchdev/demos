@@ -31,8 +31,8 @@ async function fetchWikipediaTodaysFeaturedArticle() {
     null,
   );
 
-  if (message.status_code !== 200) {
-    console.error(`HTTP Status ${message.status_code}`);
+  if (message.get_status() !== Soup.Status.OK) {
+    console.error(`HTTP Status ${message.get_status()}`);
     return;
   }
 

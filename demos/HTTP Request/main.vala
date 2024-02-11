@@ -24,15 +24,16 @@ private async void fetch_wikipedia_todays_featured_article () throws Error {
 
     // https://api.wikimedia.org/wiki/Feed_API/Reference/Featured_content
     string language = "en";
+    string date_string = date.format ("%Y/%m/%d");
     string url =
-        @"https://api.wikimedia.org/feed/v1/wikipedia/$language/featured/$(date.format (" % Y / % m / % d "))";
+        @"https://api.wikimedia.org/feed/v1/wikipedia/$language/featured/$(date_string)";
 
     var message = new Soup.Message ("GET", url);
 
     Bytes message_bytes = yield http_session.send_and_read_async (message, Priority.DEFAULT, null);
 
-    if (message.status_code != 200) {
-        throw new FetchError.FAILED_REQUEST (@"Failed Request. HTTP Status: $(message.status_code)");
+    if (message.get_status () != Soup.Status.OK) {
+        throw new FetchError.FAILED_REQUEST (@"Failed Request. HTTP Status: $(message.get_status())");
     }
 
     unowned uint8[] data = message_bytes.get_data ();
