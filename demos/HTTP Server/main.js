@@ -5,7 +5,7 @@ const linkbutton = workbench.builder.get_object("linkbutton");
 const label_greetings = workbench.builder.get_object("label_greetings");
 
 function handler(_server, msg, _path, _query) {
-  msg.set_status(200, null);
+  msg.set_status(Soup.Status.OK, null);
   msg
     .get_response_headers()
     .set_content_type("text/html", { charset: "UTF-8" });
@@ -24,7 +24,7 @@ function handler(_server, msg, _path, _query) {
 
 function helloHandler(_server, msg, _path, query) {
   if (!query) {
-    msg.set_redirect(302, "/");
+    msg.set_redirect(Soup.Status.FOUND, "/");
     return;
   }
 
@@ -32,7 +32,7 @@ function helloHandler(_server, msg, _path, query) {
 
   label_greetings.label = `Hello ${query.name}, your browser is\n${user_agent}`;
 
-  msg.set_status(200, null);
+  msg.set_status(Soup.Status.OK, null);
   msg
     .get_response_headers()
     .set_content_type("text/html", { charset: "UTF-8" });
