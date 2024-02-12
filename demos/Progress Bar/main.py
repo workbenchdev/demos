@@ -52,7 +52,7 @@ def pulse_progress():
     # Duration of animation
     duration = 10000
     increment = pulse_period / duration
-    interval = GLib.timeout_add(pulse_period, on_pulse)
+    GLib.timeout_add(pulse_period, on_pulse)
 
 
 def on_track_finished():
@@ -70,4 +70,4 @@ def on_track_finished():
 def update_tracker():
     global time
     time = 10
-    interval = GLib.timeout_add(1000, on_track_finished)
+    GLib.timeout_add(1000, on_track_finished)
