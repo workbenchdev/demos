@@ -80,9 +80,10 @@ Adw.StatusPage {
           };
         }
 
-        Adw.ComboRow {
+        Adw.ComboRow drop_down {
           title: _("Choose an item");
           subtitle: _("List of options from a drop down");
+          enable-search: true;
 
           model: StringList list {
             strings [
@@ -122,3 +123,4 @@ Adw.StatusPage {
     }
   }
 }
+
