@@ -2,11 +2,11 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Shumate", "1.0")
+
 from gi.repository import Gtk, Shumate, GObject
 import workbench
 import math
 
-GObject.type_ensure(Shumate.SimpleMap)
 map_widget = workbench.builder.get_object("map_widget")
 registry = Shumate.MapSourceRegistry.new_with_defaults()
 
