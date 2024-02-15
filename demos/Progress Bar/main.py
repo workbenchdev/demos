@@ -32,20 +32,18 @@ animation.connect("done", lambda _: animation.reset())
 play.connect("clicked", on_play_clicked)
 
 
-def on_pulse():
-    global counter
-    if counter >= 1.0:
-        counter = 0
-        second_bar.set_fraction(0)
-        return False
-
-    second_bar.pulse()
-    counter += increment
-    return True
-
-
 def pulse_progress():
-    global counter, increment
+    def on_pulse():
+        nonlocal counter
+        if counter >= 1.0:
+            counter = 0
+            second_bar.set_fraction(0)
+            return False
+
+        second_bar.pulse()
+        counter += increment
+        return True
+
     counter = 0
     # Time after which progress bar is pulsed
     pulse_period = 500
@@ -55,19 +53,17 @@ def pulse_progress():
     GLib.timeout_add(pulse_period, on_pulse)
 
 
-def on_track_finished():
-    global time
-    if time == 0:
-        progress_tracker.set_label("")
-        print("Operation complete!")
-        return False
-
-    progress_tracker.set_label(f"{time} seconds remaining…")
-    time -= 1
-    return True
-
-
 def update_tracker():
-    global time
+    def on_track_finished():
+        nonlocal time
+        if time == 0:
+            progress_tracker.set_label("")
+            print("Operation complete!")
+            return False
+
+        progress_tracker.set_label(f"{time} seconds remaining…")
+        time -= 1
+        return True
+
     time = 10
     GLib.timeout_add(1000, on_track_finished)
