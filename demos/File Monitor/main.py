@@ -57,8 +57,8 @@ def on_dir_changed(_self, child, other_file, event):
 
 def on_edit_clicked(_button):
     bytes = GLib.Bytes(buffer.props.text.encode())
-    file.replace_contents_async(
-        bytes.get_data(),
+    file.replace_contents_bytes_async(
+        bytes,
         None,
         False,
         Gio.FileCreateFlags.REPLACE_DESTINATION,
