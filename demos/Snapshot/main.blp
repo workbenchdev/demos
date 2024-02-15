@@ -1,0 +1,20 @@
+using Gtk 4.0;
+
+Window {
+  title: _("Snapshot");
+
+  Box box {
+    orientation: vertical;
+    margin-top: 12;
+    spacing: 12;
+
+    Label {
+      label: _("Drag the knight with your mouse");
+    }
+
+    LinkButton {
+      label: _("API Reference");
+      uri: "https://docs.gtk.org/gtk4/class.Snapshot.html";
+    }
+  }
+}
