@@ -24,9 +24,9 @@ heading_label = workbench.builder.get_object("heading")
 description_label = workbench.builder.get_object("description")
 timestamp_label = workbench.builder.get_object("timestamp")
 
-locationAccuracy = Xdp.LocationAccuracy.EXACT
-distanceThreshold = distance_threshold.get_value()
-timeThreshold = time_threshold.get_value()
+location_accuracy = Xdp.LocationAccuracy.EXACT
+distance_threshold_value = distance_threshold.get_value()
+time_threshold_value = time_threshold.get_value()
 
 
 def on_location_monitor_started(portal, result):
@@ -43,9 +43,9 @@ def start_session():
     close.set_sensitive(True)
     portal.location_monitor_start(
         parent,
-        distanceThreshold,
-        timeThreshold,
-        locationAccuracy,
+        distance_threshold_value,
+        time_threshold_value,
+        location_accuracy,
         Xdp.LocationMonitorFlags.NONE,
         None,
         on_location_monitor_started,
@@ -53,29 +53,30 @@ def start_session():
 
 
 def on_time_threshold_changed(_row, _value):
+    global time_threshold_value
     portal.location_monitor_stop()
     revealer.set_reveal_child(False)
-    timeThreshold = time_threshold.get_value()
+    time_threshold_value = time_threshold.get_value()
     print("Time threshold changed")
     start_session()
 
 
 def on_distance_threshold_changed(_row, _value):
-    global distanceThreshold
+    global distance_threshold_value
     portal.location_monitor_stop()
     revealer.set_reveal_child(False)
-    distanceThreshold = distance_threshold.get_value()
+    distance_threshold_value = distance_threshold.get_value()
     print("Distance threshold changed")
     start_session()
 
 
 def on_selected_item_changed(_row, _item):
-    global locationAccuracy
+    global location_accuracy
     print("Accuracy changed")
     portal.location_monitor_stop()
     revealer.set_reveal_child(False)
     accuracy_flag = accuracy_button.get_selected_item().get_string()
-    locationAccuracy = getattr(Xdp.LocationAccuracy, accuracy_flag.upper())
+    location_accuracy = getattr(Xdp.LocationAccuracy, accuracy_flag.upper())
     start_session()
 
 
