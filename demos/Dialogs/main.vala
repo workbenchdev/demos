@@ -1,77 +1,78 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 
 public void main () {
-    var button_confirmation = workbench.builder.get_object ("button_confirmation") as Gtk.Button;
-    var button_error = workbench.builder.get_object ("button_error") as Gtk.Button;
-    var button_advanced = workbench.builder.get_object ("button_advanced") as Gtk.Button;
+    var button_confirmation = (Gtk.Button) workbench.builder.get_object ("button_confirmation");
+    var button_error = (Gtk.Button) workbench.builder.get_object ("button_error");
+    var button_advanced = (Gtk.Button) workbench.builder.get_object ("button_advanced");
 
-    button_confirmation.clicked.connect (_create_confirmation_dialog);
-    button_error.clicked.connect (_create_error_dialog);
-    button_advanced.clicked.connect (_create_advanced_dialog);
+    button_confirmation.clicked.connect (create_confirmation_dialog.begin);
+    button_error.clicked.connect (create_error_dialog.begin);
+    button_advanced.clicked.connect (create_advanced_dialog.begin);
 }
 
-private void _create_confirmation_dialog (Gtk.Button button) {
-    Adw.MessageDialog dialog = new Adw.MessageDialog
+private async void create_confirmation_dialog (Gtk.Button button) {
+    var dialog = new Adw.MessageDialog
             (workbench.window,
             "Replace File?",
-            """A file named "example.png" already exists. Do you want to replace it?""");
-
-    dialog.close_response = "replace";
+            "A file named `example.png` already exists. Do you want to replace it?") {
+        modal = true,
+        close_response = "cancel"
+    };
 
     dialog.add_response ("cancel", "Cancel");
     dialog.add_response ("replace", "Replace");
 
     // Use DESTRUCTIVE to draw attention to the potentially damaging consequences of using response.
-    dialog.set_response_appearance ("replace", Adw.ResponseAppearance.DESTRUCTIVE);
+    dialog.set_response_appearance ("replace", DESTRUCTIVE);
 
-    dialog.response.connect ((response) => {
-        message ("Selected \"%s\" response.\n", response);
-    });
+    string response = yield dialog.choose (null);
 
-    dialog.present ();
+    message (@"Selected \"$response\" response");
 }
 
-private void _create_error_dialog (Gtk.Button button) {
-    Adw.MessageDialog dialog = new Adw.MessageDialog
+private async void create_error_dialog (Gtk.Button button) {
+    var dialog = new Adw.MessageDialog
             (workbench.window,
             "Critical Error",
-            "You did something you should not have");
-
-    dialog.close_response = "okay";
+            "You did something you should not have") {
+        modal = true,
+        close_response = "okay"
+    };
 
     dialog.add_response ("okay", "Okay");
 
-    dialog.response.connect ((response) => {
-        message ("Selected \"%s\" response.\n", response);
-    });
+    string response = yield dialog.choose (null);
 
-    dialog.present ();
+    message (@"Selected \"$response\" response");
 }
 
-private void _create_advanced_dialog (Gtk.Button button) {
-    Adw.MessageDialog dialog = new Adw.MessageDialog (
-                                                      workbench.window,
-                                                      "Login",
-                                                      "A valid password is needed to continue");
+// Creates a message dialog with an extra child
+private async void create_advanced_dialog (Gtk.Button button) {
+    var dialog = new Adw.MessageDialog (
+                                        workbench.window,
+                                        "Login",
+                                        "A valid password is needed to continue") {
+        modal = true,
+        close_response = "cancel"
+    };
 
-    dialog.close_response = "cancel";
     dialog.add_response ("cancel", "Cancel");
     dialog.add_response ("login", "Login");
-    dialog.set_response_appearance ("login", Adw.ResponseAppearance.SUGGESTED);
+
+    // Use SUGGESTED appearance to mark important responses such as the affirmative action
+    dialog.set_response_appearance ("login", SUGGESTED);
 
     var entry = new Gtk.PasswordEntry () {
         show_peek_icon = true
     };
 
-    dialog.set_extra_child (entry);
+    dialog.extra_child = entry;
 
-    dialog.response.connect ((response) => {
-        if (dialog.get_response_label (response) == "Login") {
-            message ("Selected \"%s\" response with password \"%s\".", response, entry.get_text ());
-        } else {
-            message ("Selected \"%s\" response.", response);
-        }
-    });
+    string response = yield dialog.choose (null);
 
-    dialog.present ();
+    if (response == "login") {
+        message (@"Selected \"$response\" response with password \"$(entry.text)\".");
+    } else {
+        message (@"Selected \"$response\" response");
+    }
 }
