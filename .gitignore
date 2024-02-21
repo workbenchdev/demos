@@ -20,12 +20,13 @@ __pycache__
 .vscode
 
 # Project files - sync with Makefile
-demos/**/settings
-demos/**/workbench.vala
-demos/**/main.ui
-demos/**/libworkbenchcode.so
-demos/**/__pycache__
-demos/**/Cargo.lock
-demos/**/Cargo.toml
-demos/**/lib.rs
-demos/**/workbench.rs
+demos/*/settings
+demos/*/workbench.vala
+demos/*/main.ui
+demos/*/libworkbenchcode.so
+demos/*/__pycache__
+demos/*/Cargo.lock
+demos/*/Cargo.toml
+demos/*/lib.rs
+demos/*/workbench.rs
+demos/*/target

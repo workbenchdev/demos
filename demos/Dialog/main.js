@@ -6,12 +6,8 @@ const image = workbench.builder.get_object("image");
 
 image.file = Gio.File.new_for_uri(workbench.resolve("image.svg")).get_path();
 
-async function openDialog() {
-  dialog.present(workbench.window);
-}
-
 button.connect("clicked", () => {
-  openDialog().catch(console.error);
+  dialog.present(workbench.window);
 });
 
 dialog.connect("close-attempt", () => {
