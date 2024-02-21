@@ -17,27 +17,24 @@ button.connect("clicked", lambda _: take_screenshot())
 
 def take_screenshot():
     flags = Xdp.ScreenshotFlags.NONE
-
-    try:
-        portal.take_screenshot(parent, flags, None, on_finished)
-    except PermissionError:
-        show_permission_error()
+    portal.take_screenshot(parent, flags, None, on_finished)
 
 
 def on_finished(portal, result):
-    uri = portal.take_screenshot_finish(result)
+    try:
+        uri = portal.take_screenshot_finish(result)
+    except PermissionError:
+        show_permission_error()
     file = Gio.File.new_for_uri(uri)
     picture.set_file(file)
 
 
 def show_permission_error():
-    dialog = Adw.MessageDialog(
+    dialog = Adw.AlertDialog(
         heading="Permission Error",
         body="Ensure Screenshot permission is enabled in\nSettings → Apps → Workbench",
         close_response="ok",
-        modal=True,
-        transient_for=workbench.window,
     )
 
     dialog.add_response("ok", "OK")
-    dialog.present()
+    dialog.present(workbench.window)

@@ -6,15 +6,15 @@ from gi.repository import Gtk, Adw
 import workbench
 
 
-def greet(_widget):
-    dialog = Adw.MessageDialog(body="Hello World!", transient_for=workbench.window)
+def greet(_button):
+    dialog = Adw.AlertDialog(body="Hello World!")
 
     dialog.add_response("ok", "Ok")
     dialog.connect("response", dialog_response)
-    dialog.present()
+    dialog.present(workbench.window)
 
 
-def dialog_response(dialog: Adw.MessageDialog, response: str):
+def dialog_response(dialog, response):
     print(response)
     dialog.close()
 

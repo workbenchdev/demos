@@ -28,8 +28,13 @@ ci: setup test
 
 # Sync with .gitignore
 clean:
-	rm -f demos/**/settings
-	rm -f demos/**/workbench.vala
-	rm -f demos/**/main.ui
-	rm -f demos/**/libworkbenchcode.so
-	rm -rf demos/**/__pycache__
+	rm -f demos/*/settings
+	rm -f demos/*/workbench.vala
+	rm -f demos/*/main.ui
+	rm -f demos/*/libworkbenchcode.so
+	rm -f demos/*/Cargo.toml
+	rm -f demos/*/Cargo.lockfile
+	rm -f demos/*/lib.rs
+	rm -f demos/*/workbench.rs
+	rm -rf demos/*/target
+	rm -rf demos/*/__pycache__
