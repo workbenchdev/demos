@@ -1,4 +1,5 @@
 import Adw from "gi://Adw";
+import GLib from "gi://GLib";
 
 const first_bar = workbench.builder.get_object("first");
 const second_bar = workbench.builder.get_object("second");
@@ -33,30 +34,30 @@ function pulseProgress() {
   // Duration of animation
   const duration = 10000;
   const increment = pulse_period / duration;
-  const interval = setInterval(() => {
+  GLib.timeout_add(GLib.PRIORITY_DEFAULT, pulse_period, () => {
     if (counter >= 1.0) {
-      clearInterval(interval);
       counter = 0;
       second_bar.fraction = 0;
-      return;
+      return false;
     }
 
     second_bar.pulse();
     counter += increment;
-  }, pulse_period);
+    return true;
+  });
 }
 
 function updateTracker() {
   let time = 10;
-  const interval = setInterval(() => {
+  GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000, () => {
     if (time === 0) {
       progress_tracker.label = "";
-      clearInterval(interval);
       console.log("Operation complete!");
-      return;
+      return false;
     }
 
     progress_tracker.label = `${time} seconds remaining…`;
     time -= 1;
-  }, 1000);
+    return true;
+  });
 }

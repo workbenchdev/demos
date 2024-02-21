@@ -43,16 +43,16 @@ function onError(_self, err) {
 
 function onMessage(_self, type, message) {
   if (type !== Soup.WebsocketDataType.TEXT) return;
-  const str = text_decoder.decode(message.toArray());
-  console.log("received:", str);
+  const text = text_decoder.decode(message.toArray());
+  console.log("received:", text);
 }
 
-function send(message) {
+function send(text) {
   connection.send_message(
     Soup.WebsocketDataType.TEXT,
-    new GLib.Bytes(text_encoder.encode(message)),
+    new GLib.Bytes(text_encoder.encode(text)),
   );
-  console.log("sent:", message);
+  console.log("sent:", text);
 }
 
 button_connect.connect("clicked", () => {
@@ -64,8 +64,8 @@ button_disconnect.connect("clicked", () => {
 });
 
 button_send.connect("clicked", () => {
-  const message = entry_message.get_text();
-  send(message);
+  const text = entry_message.get_text();
+  send(text);
 });
 
 async function connect() {

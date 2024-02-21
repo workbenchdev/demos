@@ -2,96 +2,81 @@
 
 private Gtk.Button button_connect;
 private Gtk.Button button_disconnect;
+private Gtk.Entry entry_url;
 private Gtk.Button button_send;
 private Soup.WebsocketConnection connection;
 
 public void main () {
-    button_connect = workbench.builder.get_object ("button_connect") as Gtk.Button;
-    button_disconnect = workbench.builder.get_object ("button_disconnect") as Gtk.Button;
-    button_send = workbench.builder.get_object ("button_send") as Gtk.Button;
-    var entry_url = workbench.builder.get_object ("entry_url") as Gtk.Entry;
-    var entry_message = workbench.builder.get_object ("entry_message") as Gtk.Entry;
+    entry_url = (Gtk.Entry) workbench.builder.get_object ("entry_url");
+    button_connect = (Gtk.Button) workbench.builder.get_object ("button_connect");
+    button_disconnect = (Gtk.Button) workbench.builder.get_object ("button_disconnect");
+    button_send = (Gtk.Button) workbench.builder.get_object ("button_send");
+    var entry_message = (Gtk.Entry) workbench.builder.get_object ("entry_message");
 
-    button_connect.clicked.connect (() => {
-        var message_uri = entry_url.get_text ();
-        stdout.printf ("entry url: " + message_uri + "\n");
-
-        try {
-            var uri = GLib.Uri.parse (message_uri, GLib.UriFlags.NONE).to_string ();
-            var session = new Soup.Session ();
-            var message = new Soup.Message (
-                                            "GET",
-                                            uri
-            );
-
-            // https://valadoc.org/libsoup-3.0/Soup.Session.websocket_connect_async.html
-            session.websocket_connect_async.begin (
-                                                   message,
-                                                   null,
-                                                   null,
-                                                   1,
-                                                   null,
-                                                   (obj, res) => {
-                try {
-                    connection = session.websocket_connect_async.end (res);
-                } catch (Error err) {
-                    onError (err);
-                    return;
-                }
-
-                connection.closed.connect (onClosed);
-                connection.error.connect (onError);
-                connection.message.connect (onMessage);
-
-                onOpen ();
-            });
-        } catch (Error err) {
-            stderr.printf ("error: " + err.message + "\n");
-            return;
-        }
-    });
+    button_connect.clicked.connect (connect.begin);
 
     button_disconnect.clicked.connect (() => {
         connection.close (Soup.WebsocketCloseCode.NORMAL, null);
     });
 
     button_send.clicked.connect (() => {
-        var message_text = entry_message.get_text ();
-        stdout.printf ("preparing to send: " + message_text + "\n");
-        send (message_text);
+        send (entry_message.text);
     });
 }
 
-private void onOpen () {
-    stdout.printf ("open\n");
-    button_connect.set_sensitive (false);
-    button_disconnect.set_sensitive (true);
-    button_send.set_sensitive (true);
-}
+private async void connect () {
+    try {
+        string uri = GLib.Uri.parse (entry_url.text, NONE).to_string ();
+        var session = new Soup.Session ();
+        var message = new Soup.Message ("GET", uri);
 
-private void onClosed () {
-    stdout.printf ("closed");
-    connection = null;
-    button_connect.set_sensitive (true);
-    button_disconnect.set_sensitive (false);
-    button_send.set_sensitive (false);
-}
-
-private void onError (Error err) {
-    stdout.printf ("error");
-    stderr.printf (err.message);
-}
-
-private void onMessage (int type, Bytes msg) {
-    if (type != Soup.WebsocketDataType.TEXT)return;
-    StringBuilder str = new StringBuilder ();
-    for (int i = 0; i < msg.length; i++) {
-        str.append_c (((char) msg.get (i)));
+        // https://valadoc.org/libsoup-3.0/Soup.Session.websocket_connect_async.html
+        connection = yield session.websocket_connect_async (message,
+            null,
+            null,
+            1,
+            null);
+    } catch (Error err) {
+        stderr.printf (@"Error : $(err.message)\n");
+        return;
     }
-    stdout.printf ("received: " + str.str + "\n");
+
+    connection.closed.connect (on_closed);
+    connection.error.connect (on_error);
+    connection.message.connect (on_message);
+
+    on_open ();
 }
 
-private void send (string msg) {
-    stdout.printf ("sent: " + msg + "\n");
-    connection.send_text (msg);
+private void on_open () {
+    stdout.printf ("open\n");
+    button_connect.sensitive = false;
+    button_disconnect.sensitive = true;
+    button_send.sensitive = true;
+}
+
+private void on_closed () {
+    stdout.printf ("closed\n");
+    connection = null;
+    button_connect.sensitive = true;
+    button_disconnect.sensitive = false;
+    button_send.sensitive = false;
+}
+
+private void on_error (Error err) {
+    stderr.printf (@"Error: $(err.message)\n");
+}
+
+private void on_message (int type, Bytes message) {
+    if (type != Soup.WebsocketDataType.TEXT) {
+        return;
+    }
+
+    string text = (string) message.get_data ();
+    print (@"Received: $text\n");
+}
+
+private void send (string text) {
+    print (@"Sent: $text\n");
+    connection.send_text (text);
 }

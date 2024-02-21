@@ -108,10 +108,19 @@ make test
 Here is a compilation of resources to learn more about the GNOME platform.
 
 - [Workbench](https://github.com/workbenchdev/Workbench) 😉
+- [Human Interface Guidelines](https://developer.gnome.org/hig/)
+
+### JavaScript
+
 - [GObject](https://gjs.guide/guides/gobject/basics.html#gobject-construction)
 - [GTK4 + GJS Book](https://rmnvgr.gitlab.io/gtk4-gjs-book/)
 - [Asynchronous programming](https://gjs.guide/guides/gjs/asynchronous-programming.html)
 - [API references](https://gjs-docs.gnome.org/) make sure to enable at least GTK, GJS, GLib, Gio
 - [GJS docs](https://gitlab.gnome.org/GNOME/gjs/-/tree/master/doc)
 - [GJS examples](https://gitlab.gnome.org/GNOME/gjs/-/tree/master/examples)
-- [Human Interface Guidelines](https://developer.gnome.org/hig/)
+
+### Vala
+
+- [Valadoc.org](https://valadoc.org)
+- [Vala tutorial](https://wiki.gnome.org/Projects/Vala/Tutorial)
+- [Vala examples](https://wiki.gnome.org/Projects/Vala/Examples)
