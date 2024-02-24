@@ -25,17 +25,17 @@ def on_button_clicked(button: Gtk.Button, *_):
 
 
 for i in range(notifications_count):
-    notification_row = Adw.ActionRow()
-    notification_row.set_title("Notification")
-    notification_row.set_selectable(False)
+    notification_row = Adw.ActionRow(title="Notification", selectable=False)
 
-    button = Gtk.Button()
-    button.set_halign(Gtk.Align.CENTER)
-    button.set_valign(Gtk.Align.CENTER)
-    button.set_margin_top(10)
-    button.set_margin_bottom(10)
-    button.set_icon_name("check-plain-symbolic")
-
+    button = Gtk.Button(
+        halign=Gtk.Align.CENTER,
+        valign=Gtk.Align.CENTER,
+        margin_top=10,
+        margin_bottom=10,
+        icon_name="check-plain-symbolic",
+    )
+    
     button.connect("clicked", on_button_clicked)
+    
     notification_row.add_suffix(button)
     notification_list.append(notification_row)
