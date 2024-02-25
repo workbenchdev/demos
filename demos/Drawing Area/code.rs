@@ -1,6 +1,4 @@
 use crate::workbench;
-use glib::clone;
-use gtk::glib;
 use gtk::prelude::*;
 use std::cell::RefCell;
 use std::f64::consts::PI;
@@ -11,71 +9,28 @@ pub fn main() {
     let scale_rotate: gtk::Scale = workbench::builder().object("scale").unwrap();
 
     // Create the main triangle data structure using arrays
-    let triangle = Rc::new(RefCell::new([
-        [100.0, 100.0],
-        [0.0, -100.0],
-        [-100.0, 100.0],
-    ]));
+    let triangle = [[100.0, 100.0], [0.0, -100.0], [-100.0, 100.0]];
 
-    // Create a copy of the original triangle
-    let triangle_original = triangle.borrow().clone();
+    let angle = Rc::new(RefCell::new(0.));
 
-    drawing_area.set_draw_func(clone!(@weak triangle => move |_area, cr, _width, _height| {
+    let angle1 = Rc::clone(&angle);
+    drawing_area.set_draw_func(move |_area, cr, _width, _height| {
         // Draw triangle in context
-        cr.move_to(150. + triangle.borrow()[0][0], 150. + triangle.borrow()[0][1]);
-        cr.line_to(150. + triangle.borrow()[1][0], 150. + triangle.borrow()[1][1]);
-        cr.line_to(150. + triangle.borrow()[2][0], 150. + triangle.borrow()[2][1]);
-        cr.line_to(150. + triangle.borrow()[0][0], 150. + triangle.borrow()[0][1]);
+        cr.translate(150., 150.);
+
+        cr.rotate(*angle1.borrow());
+        cr.move_to(triangle[2][0], triangle[2][1]);
+        for vertex in triangle.iter() {
+            cr.line_to(vertex[0], vertex[1]);
+        }
 
         cr.set_source_rgba(1., 0., 1., 1.);
         cr.stroke().unwrap();
-    }));
+    });
 
+    let angle2 = Rc::clone(&angle);
     scale_rotate.connect_value_changed(move |scale_rotate| {
-        // Recalculate value of points of triangle
-        for (point, point_original) in triangle.borrow_mut().iter_mut().zip(triangle_original) {
-            // Calculate original angle
-            let x = point_original[0];
-            let y = point_original[1];
-            let mut angle = (y.abs() / x.abs()).atan();
-            if x > 0. && y > 0. {
-                // no change
-            }
-            if x < 0. && y > 0. {
-                angle = PI - angle;
-            }
-            if x < 0. && y < 0. {
-                angle = PI + angle;
-            }
-            if x > 0. && y < 0. {
-                angle = PI * 2. - angle;
-            }
-            if x == 0. {
-                if y > 0. {
-                    // no change
-                }
-                if y < 0. {
-                    angle = -1. * angle;
-                }
-            }
-            if y == 0. {
-                if x > 0. {
-                    // no change
-                }
-                if x < 0. {
-                    // no change
-                }
-            }
-            // Add to original angle scale value
-            angle += scale_rotate.value() * PI / 180.;
-            // Set new value to triangle
-            let radius = (x * x + y * y).sqrt();
-
-            point[0] = radius * angle.cos();
-            point[1] = radius * angle.sin();
-
-            // Redraw drawing_area
-            drawing_area.queue_draw();
-        }
+        *angle2.borrow_mut() = scale_rotate.value() / 180. * PI;
+        drawing_area.queue_draw();
     });
 }
