@@ -1,4 +1,6 @@
 use crate::workbench;
+use glib::clone;
+use gtk::glib;
 use gtk::prelude::*;
 use std::cell::RefCell;
 use std::f64::consts::PI;
@@ -13,24 +15,23 @@ pub fn main() {
 
     let angle = Rc::new(RefCell::new(0.));
 
-    let angle1 = Rc::clone(&angle);
-    drawing_area.set_draw_func(move |_area, cr, _width, _height| {
+    drawing_area.set_draw_func(clone!(@weak angle => move |_area, cr, _width, _height| {
         // Draw triangle in context
         cr.translate(150., 150.);
 
-        cr.rotate(*angle1.borrow());
+        cr.rotate(*angle.borrow());
         cr.move_to(triangle[2][0], triangle[2][1]);
-        for vertex in triangle.iter() {
+        for vertex in triangle {
             cr.line_to(vertex[0], vertex[1]);
         }
 
         cr.set_source_rgba(1., 0., 1., 1.);
         cr.stroke().unwrap();
-    });
+    }));
 
-    let angle2 = Rc::clone(&angle);
-    scale_rotate.connect_value_changed(move |scale_rotate| {
-        *angle2.borrow_mut() = scale_rotate.value() / 180. * PI;
+    scale_rotate.connect_value_changed(clone!(@strong angle => move |scale_rotate| {
+        *angle.borrow_mut() = scale_rotate.value() / 180. * PI;
         drawing_area.queue_draw();
-    });
+    }));
 }
+
