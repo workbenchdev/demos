@@ -34,4 +34,3 @@ pub fn main() {
         drawing_area.queue_draw();
     }));
 }
-
