@@ -28,13 +28,13 @@ const description_label = workbench.builder.get_object("description");
 const timestamp_label = workbench.builder.get_object("timestamp");
 
 let locationAccuracy = Xdp.LocationAccuracy.Exact;
-let distanceThreshold = distance_threshold.value;
-let timeThreshold = time_threshold.value;
+let distanceThresholdValue = distance_threshold.value;
+let timeThresholdValue = time_threshold.value;
 
 time_threshold.connect("notify::value", () => {
   portal.location_monitor_stop();
   revealer.reveal_child = false;
-  timeThreshold = time_threshold.value;
+  timeThresholdValue = time_threshold.value;
   console.log("Time threshold changed");
   startSession();
 });
@@ -42,7 +42,7 @@ time_threshold.connect("notify::value", () => {
 distance_threshold.connect("notify::value", () => {
   portal.location_monitor_stop();
   revealer.reveal_child = false;
-  distanceThreshold = distance_threshold.value;
+  distanceThresholdValue = distance_threshold.value;
   console.log("Distance threshold changed");
   startSession();
 });
@@ -61,8 +61,8 @@ async function startSession() {
   close.sensitive = true;
   const result = await portal.location_monitor_start(
     parent,
-    distanceThreshold,
-    timeThreshold,
+    distanceThresholdValue,
+    timeThresholdValue,
     locationAccuracy,
     Xdp.LocationMonitorFlags.NONE,
     null,
