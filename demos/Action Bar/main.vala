@@ -18,4 +18,3 @@ public void main () {
         message ("End widget");
     });
 }
-
