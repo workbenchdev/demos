@@ -2,11 +2,10 @@ import Adw from "gi://Adw";
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
 
-Gio._promisify(Adw.MessageDialog.prototype, "choose", "choose_finish");
+Gio._promisify(Adw.AlertDialog.prototype, "choose", "choose_finish");
 
 const box = workbench.builder.get_object("subtitle");
 
-// https://gjs-docs.gnome.org/gtk40/gtk.button
 const button = new Gtk.Button({
   label: "Press me",
   margin_top: 6,
@@ -20,14 +19,12 @@ box.append(button);
 console.log("Welcome to Workbench!");
 
 async function greet() {
-  // https://gjs-docs.gnome.org/adw1~1/adw.messagedialog
-  const dialog = new Adw.MessageDialog({
+  const dialog = new Adw.AlertDialog({
     body: "Hello World!",
-    transient_for: workbench.window,
   });
 
   dialog.add_response("ok", "OK");
 
-  const response = await dialog.choose(null);
+  const response = await dialog.choose(workbench.window, null);
   console.log(response);
 }

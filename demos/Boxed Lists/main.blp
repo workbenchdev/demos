@@ -19,7 +19,7 @@ Adw.StatusPage {
         ]
 
         Adw.ActionRow {
-          title: _("ActionRow can have a prefix child");
+          title: _("Action Row Can Have a Prefix Child");
 
           [prefix]
           CheckButton checkbox {
@@ -28,7 +28,7 @@ Adw.StatusPage {
         }
 
         Adw.ActionRow {
-          title: _("ActionRow can have a suffix child");
+          title: _("Action Row Can Have a Suffix Child");
           subtitle: _("The checkbox above controls the spinner");
 
           [suffix]
@@ -38,7 +38,7 @@ Adw.StatusPage {
         }
 
         Adw.ActionRow {
-          title: _("Action Row can have a activatable widget");
+          title: _("Action Row Can Have an Activatable Widget");
           subtitle: _("Click on the row to activate it");
           activatable-widget: activatable_toggle;
 
@@ -59,7 +59,7 @@ Adw.StatusPage {
         }
 
         Adw.EntryRow {
-          title: _("A row can be an entry");
+          title: _("A Row Can Be an Entry");
         }
 
         Adw.SwitchRow {
@@ -81,30 +81,30 @@ Adw.StatusPage {
         }
 
         Adw.ComboRow {
-          title: _("Choose an item");
+          title: _("Choose an Item");
           subtitle: _("List of options from a drop down");
 
           model: StringList list {
             strings [
-              "this",
-              "is",
-              "a",
-              "string",
-              "list"
+              "This",
+              "Is",
+              "A",
+              "String",
+              "List"
             ]
           };
         }
 
         Adw.ExpanderRow {
-          title: _("Rows can be expandable");
+          title: _("Rows Can Be Expandable");
           show-enable-switch: true;
 
           Adw.ActionRow {
-            title: _("First row");
+            title: _("First Row");
           }
 
           Adw.ActionRow {
-            title: _("Second row");
+            title: _("Second Row");
           }
         }
       }
@@ -112,7 +112,7 @@ Adw.StatusPage {
       LinkButton {
         margin-top: 24;
         label: _("API Reference");
-        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/boxed-lists.html";
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/boxed-lists.html";
       }
 
       LinkButton {

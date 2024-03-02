@@ -2,14 +2,16 @@
 
 private Gtk.Button button_connect;
 private Gtk.Button button_disconnect;
+private Gtk.Entry entry_url;
 private Gtk.Button button_send;
 private Soup.WebsocketConnection connection;
 
 public void main () {
-    button_connect = workbench.builder.get_object ("button_connect") as Gtk.Button;
-    button_disconnect = workbench.builder.get_object ("button_disconnect") as Gtk.Button;
-    button_send = workbench.builder.get_object ("button_send") as Gtk.Button;
-    var entry_message = workbench.builder.get_object ("entry_message") as Gtk.Entry;
+    entry_url = (Gtk.Entry) workbench.builder.get_object ("entry_url");
+    button_connect = (Gtk.Button) workbench.builder.get_object ("button_connect");
+    button_disconnect = (Gtk.Button) workbench.builder.get_object ("button_disconnect");
+    button_send = (Gtk.Button) workbench.builder.get_object ("button_send");
+    var entry_message = (Gtk.Entry) workbench.builder.get_object ("entry_message");
 
     button_connect.clicked.connect (connect.begin);
 
@@ -18,16 +20,13 @@ public void main () {
     });
 
     button_send.clicked.connect (() => {
-        var text = entry_message.get_text ();
-        send (text);
+        send (entry_message.text);
     });
 }
 
 private async void connect () {
-    var entry_url = workbench.builder.get_object ("entry_url") as Gtk.Entry;
-
     try {
-        var uri = GLib.Uri.parse (entry_url.get_text (), GLib.UriFlags.NONE).to_string ();
+        string uri = GLib.Uri.parse (entry_url.text, NONE).to_string ();
         var session = new Soup.Session ();
         var message = new Soup.Message ("GET", uri);
 
@@ -38,44 +37,46 @@ private async void connect () {
             1,
             null);
     } catch (Error err) {
-        stderr.printf ("error: " + err.message + "\n");
+        stderr.printf (@"Error : $(err.message)\n");
         return;
     }
 
-    connection.closed.connect (onClosed);
-    connection.error.connect (onError);
-    connection.message.connect (onMessage);
+    connection.closed.connect (on_closed);
+    connection.error.connect (on_error);
+    connection.message.connect (on_message);
 
-    onOpen ();
+    on_open ();
 }
 
-private void onOpen () {
+private void on_open () {
     stdout.printf ("open\n");
-    button_connect.set_sensitive (false);
-    button_disconnect.set_sensitive (true);
-    button_send.set_sensitive (true);
+    button_connect.sensitive = false;
+    button_disconnect.sensitive = true;
+    button_send.sensitive = true;
 }
 
-private void onClosed () {
+private void on_closed () {
     stdout.printf ("closed\n");
     connection = null;
-    button_connect.set_sensitive (true);
-    button_disconnect.set_sensitive (false);
-    button_send.set_sensitive (false);
+    button_connect.sensitive = true;
+    button_disconnect.sensitive = false;
+    button_send.sensitive = false;
 }
 
-private void onError (Error err) {
-    stdout.printf ("error\n");
-    stderr.printf (err.message);
+private void on_error (Error err) {
+    stderr.printf (@"Error: $(err.message)\n");
 }
 
-private void onMessage (int type, Bytes message) {
-    if (type != Soup.WebsocketDataType.TEXT)return;
+private void on_message (int type, Bytes message) {
+    if (type != Soup.WebsocketDataType.TEXT) {
+        return;
+    }
+
     string text = (string) message.get_data ();
-    stdout.printf ("received: " + text + "\n");
+    print (@"Received: $text\n");
 }
 
 private void send (string text) {
-    stdout.printf ("sent: " + text + "\n");
+    print (@"Sent: $text\n");
     connection.send_text (text);
 }

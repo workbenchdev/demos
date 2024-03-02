@@ -4,7 +4,9 @@ SHELL:=/bin/bash -O globstar
 
 setup:
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --or-update --user --noninteractive flathub re.sonny.Workbench org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08
+	flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+	flatpak install --or-update --user --noninteractive flathub-beta re.sonny.Workbench
+	flatpak install --or-update --user --noninteractive flathub org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08
 
 lint:
 # Rust
@@ -28,8 +30,13 @@ ci: setup test
 
 # Sync with .gitignore
 clean:
-	rm -f demos/**/settings
-	rm -f demos/**/workbench.vala
-	rm -f demos/**/main.ui
-	rm -f demos/**/libworkbenchcode.so
-	rm -rf demos/**/__pycache__
+	rm -f demos/*/settings
+	rm -f demos/*/workbench.vala
+	rm -f demos/*/main.ui
+	rm -f demos/*/libworkbenchcode.so
+	rm -f demos/*/Cargo.toml
+	rm -f demos/*/Cargo.lockfile
+	rm -f demos/*/lib.rs
+	rm -f demos/*/workbench.rs
+	rm -rf demos/*/target
+	rm -rf demos/*/__pycache__

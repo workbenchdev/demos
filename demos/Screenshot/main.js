@@ -35,14 +35,12 @@ async function takeScreenshot() {
 }
 
 function showPermissionError() {
-  const dialog = new Adw.MessageDialog({
+  const dialog = new Adw.AlertDialog({
     heading: "Permission Error",
     body: "Ensure Screenshot permission is enabled in\nSettings → Apps → Workbench",
     close_response: "ok",
-    modal: true,
-    transient_for: workbench.window,
   });
 
   dialog.add_response("ok", "OK");
-  dialog.present();
+  dialog.present(workbench.window);
 }

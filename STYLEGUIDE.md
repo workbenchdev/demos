@@ -101,6 +101,24 @@ Please see existing code, or ask. Add anything you learn here.
 - Use functions-in-functions when the same handler needs to be connected to multiple signals
 - Use `@"blub $foo blob $(bar.baz)\n"` instead of `"blub " + foo.to_string() + ...`
 - Errors should be catched with `try { ... } catch { ... }`
+- For enum members, use `button.valign = CENTER` instead of `button.valign = Gtk.Align.CENTER` where possible
+- Initialize objects with properties where possible:
+
+```vala
+// OK
+var button = new Gtk.Button () {
+    label = "Click Me!",
+    halign = CENTER,
+    css_classes = { "suggested-action", "pill" }
+};
+
+// NOT OK
+var button = new Gtk.Button ();
+button.label = "Click Me!";
+button.halign = CENTER;
+button.add_css_class ("suggested-action");
+button.add_css_class ("pill");
+```
 
 ### General Formatting
 

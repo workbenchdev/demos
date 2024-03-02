@@ -29,7 +29,7 @@ async fn get_image_bytes(url: &str) -> glib::Bytes {
         .unwrap();
 
     if message.status() != Status::Ok {
-        panic!("Got {}, {:?}", message.status(), message.reason_phrase());
+        panic!("Got {:?}, {:?}", message.status(), message.reason_phrase());
     }
     image_bytes
 }

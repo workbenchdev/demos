@@ -4,12 +4,14 @@ gi.require_version("Adw", "1")
 from gi.repository import Adw
 import workbench
 
-pref_window = workbench.builder.get_object("pref_window")
+dialog = workbench.builder.get_object("dialog")
 dm_switch = workbench.builder.get_object("dm_switch")
 subpage = workbench.builder.get_object("subpage")
 subpage_row = workbench.builder.get_object("subpage_row")
 subpage_button = workbench.builder.get_object("subpage_button")
 toast_button = workbench.builder.get_object("toast_button")
+button = workbench.builder.get_object("button")
+
 style_manager = Adw.StyleManager.get_default()
 
 dm_switch.set_active(style_manager.get_dark())
@@ -24,16 +26,18 @@ dm_switch.connect(
     ),
 )
 
-# Preferences windows can display subpages
-subpage_row.connect("activated", lambda *_: pref_window.push_subpage(subpage))
+# Preferences dialogs can display subpages
+subpage_row.connect("activated", lambda *_: dialog.push_subpage(subpage))
 
-subpage_button.connect("clicked", lambda *_: pref_window.pop_subpage())
+subpage_button.connect("clicked", lambda *_: dialog.pop_subpage())
 
 toast_button.connect(
     "clicked",
-    lambda *_: pref_window.add_toast(
+    lambda *_: dialog.add_toast(
         Adw.Toast(
-            title="Preferences windows can display toasts",
+            title="Preferences dialogs can display toasts",
         )
     ),
 )
+
+button.connect("clicked", lambda *_: dialog.present(workbench.window))

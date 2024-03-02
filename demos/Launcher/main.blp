@@ -3,7 +3,7 @@ using Adw 1;
 
 Adw.StatusPage {
   title: _("Launcher");
-  description: _("Open a File or URI");
+  description: _("Open a file or URI");
 
   Adw.Clamp {
     maximum-size: 640;
@@ -63,7 +63,7 @@ Adw.StatusPage {
                 orientation: vertical;
 
                 Label {
-                  label: _("Select File");
+                  label: _("Select File…");
 
                   styles [
                     "title-4"
@@ -111,7 +111,7 @@ Adw.StatusPage {
             }
 
             Entry uri_details {
-              placeholder-text: _("Enter URL");
+              placeholder-text: _("URL");
               text: "https://gnome.org";
             }
 
