@@ -34,8 +34,8 @@ for i in range(notifications_count):
         margin_bottom=10,
         icon_name="check-plain-symbolic",
     )
-    
+
     button.connect("clicked", on_button_clicked)
-    
+
     notification_row.add_suffix(button)
     notification_list.append(notification_row)
