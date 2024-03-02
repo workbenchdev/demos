@@ -35,8 +35,10 @@ class Chessboard(Gtk.Widget):
         # Add drag gesture and connect it to signals
         self.gesture = Gtk.GestureDrag()
         self.add_controller(self.gesture)
+        self.gesture.connect("drag-begin", self.on_drag_begin)
         self.gesture.connect("drag-end", self.on_drag_end)
         self.gesture.connect("drag-update", self.on_drag_update)
+        self.gesture_started = False
 
     def do_snapshot(self, snapshot):
         # Draw chessboard by repeating a 2x2 block of squares
@@ -71,12 +73,24 @@ class Chessboard(Gtk.Widget):
     def do_measure(self, orientation, for_size):
         return self.BOARD_SIZE, self.BOARD_SIZE, -1, -1
 
+    def on_drag_begin(self, _gesture, x, y):
+        knight_hitbox = Graphene.Rect().init(
+            self.initial_x, self.initial_y, self.PIECE_SIZE, self.PIECE_SIZE
+        )
+        cursor_pos = Graphene.Point().init(x, y)
+        self.gesture_started = knight_hitbox.contains_point(cursor_pos)
+
     def on_drag_end(self, _gesture, offset_x, offset_y):
+        if not self.gesture_started:
+            return
         self.initial_x += offset_x
         self.initial_y += offset_y
         self.queue_draw()
+        self.gesture_started = False
 
     def on_drag_update(self, _gesture, offset_x, offset_y):
+        if not self.gesture_started:
+            return
         self.x = self.initial_x + offset_x
         self.y = self.initial_y + offset_y
         self.queue_draw()
