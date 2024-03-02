@@ -137,4 +137,3 @@ const Chessboard = GObject.registerClass(
 
 const chessboard = new Chessboard({ hexpand: true, vexpand: true });
 box.append(chessboard);
-
