@@ -36,4 +36,3 @@ private void decrease () {
         stdout.printf ("Minimum size reached\n");
     }
 }
-
