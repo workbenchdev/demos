@@ -13,7 +13,7 @@ navigation_widget = None
 separator = None
 
 
-def on_connect(*args):
+def on_connect(*_args):
     global navigation_widget, separator
 
     if navigation_row.get_selected() == 0:

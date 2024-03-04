@@ -1,7 +1,7 @@
 import gi
 
 gi.require_version("Gtk", "4.0")
-from gi.repository import Gtk, Gio, GLib
+from gi.repository import Gtk, Gio
 import workbench
 
 button_single = workbench.builder.get_object("button_single")

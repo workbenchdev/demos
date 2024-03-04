@@ -2,7 +2,7 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Gio", "2.0")
-from gi.repository import Gtk, Gio
+from gi.repository import Gio
 import workbench
 
 path: Gio.File = Gio.File.new_for_uri(workbench.resolve("workbench.png")).get_path()

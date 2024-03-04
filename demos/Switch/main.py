@@ -12,12 +12,12 @@ switch_off: Gtk.Switch = workbench.builder.get_object("switch_off")
 label_off: Gtk.Label = workbench.builder.get_object("label_off")
 
 
-def on_switch_on_activated(*args):
+def on_switch_on_activated(*_args):
     label_on.set_label("On" if switch_on.get_active() else "Off")
     switch_off.set_active(not switch_on.get_active())
 
 
-def on_switch_off_activated(*args):
+def on_switch_off_activated(*_args):
     label_off.set_label("On" if switch_off.get_active() else "Off")
     switch_on.set_active(not switch_off.get_active())
 

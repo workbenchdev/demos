@@ -34,7 +34,7 @@ plerique autem se ipsos penitus perdiderunt, sic robustus animus et excelsus omn
 label.set_label(short_label)
 
 
-def on_single_line_changed(*args):
+def on_single_line_changed(*_args):
     if single_line_switch.get_active():
         label.set_label(short_label)
     else:
@@ -48,7 +48,7 @@ justification_row.connect(
 )
 
 
-def on_style_class_selected(row, item):
+def on_style_class_selected(_row, _item):
     # Remove all existing style classes
     for style_class in style_classes:
         label.remove_css_class(style_class)

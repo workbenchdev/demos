@@ -32,7 +32,7 @@ italic_action = Gio.SimpleAction(
 )
 
 italic_action.connect(
-    "notify::state", lambda action, state: on_state_changed(action, "italic")
+    "notify::state", lambda action, _state: on_state_changed(action, "italic")
 )
 text_group.add_action(italic_action)
 
@@ -43,7 +43,7 @@ bold_action = Gio.SimpleAction(
 )
 
 bold_action.connect(
-    "notify::state", lambda action, state: on_state_changed(action, "bold")
+    "notify::state", lambda action, _state: on_state_changed(action, "bold")
 )
 text_group.add_action(bold_action)
 
@@ -55,6 +55,6 @@ color_action = Gio.SimpleAction(
 )
 
 color_action.connect(
-    "notify::state", lambda action, state: on_state_changed(action, "foreground")
+    "notify::state", lambda action, _state: on_state_changed(action, "foreground")
 )
 text_group.add_action(color_action)

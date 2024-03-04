@@ -2,7 +2,7 @@ import gi
 
 gi.require_version("Xdp", "1.0")
 gi.require_version("XdpGtk4", "1.0")
-from gi.repository import Gio, Xdp, XdpGtk4, GLib
+from gi.repository import Xdp, XdpGtk4, GLib
 import workbench
 
 portal = Xdp.Portal()

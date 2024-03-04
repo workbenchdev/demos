@@ -22,13 +22,13 @@ pic2.set_file(Gio.File.new_for_uri(workbench.resolve("image2.png")))
 ctrl_pressed = False
 
 
-def on_key_pressed(_self, keyval, _keycode, state):
+def on_key_pressed(_self, keyval, _keycode, _state):
     if keyval == Gdk.KEY_Control_L or keyval == Gdk.KEY_Control_R:
         global ctrl_pressed
         ctrl_pressed = True
 
 
-def on_key_released(_self, keyval, _keycode, state):
+def on_key_released(_self, keyval, _keycode, _state):
     if keyval == Gdk.KEY_Control_L or keyval == Gdk.KEY_Control_R:
         global ctrl_pressed
         ctrl_pressed = False

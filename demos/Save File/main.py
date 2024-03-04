@@ -7,7 +7,7 @@ import workbench
 button = workbench.builder.get_object("button")
 
 
-def save_file(button):
+def save_file(_button):
     file_dialog = Gtk.FileDialog(initial_name="Workbench.txt")
     file_dialog.save(parent=workbench.window, cancellable=None, callback=on_save)
 
