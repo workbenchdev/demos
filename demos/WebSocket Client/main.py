@@ -1,7 +1,7 @@
 import gi
 
 gi.require_version("Soup", "3.0")
-from gi.repository import GLib, Gio, Soup
+from gi.repository import GLib, Soup
 import sys
 import workbench
 

@@ -74,7 +74,7 @@ def update_css_provider(css):
     )
 
 
-def update(*args):
+def update(*_args):
     spin_row_angle.set_sensitive(combo_row_gradient_type.get_selected() != 1)
     css = generate_css()
     gtksource_buffer.set_text(css, -1)
@@ -94,7 +94,7 @@ clipboard = Gdk.Display.get_default().get_clipboard()
 
 button_copy_css.connect(
     "clicked",
-    lambda *args: clipboard.set(
+    lambda *_args: clipboard.set(
         gtksource_buffer.get_text(
             gtksource_buffer.get_start_iter(), gtksource_buffer.get_end_iter(), False
         )
@@ -112,7 +112,7 @@ def update_color_scheme():
 
 
 style_manager = Adw.StyleManager.get_default()
-style_manager.connect("notify::dark", lambda *args: update_color_scheme)
+style_manager.connect("notify::dark", lambda *_args: update_color_scheme)
 
 update_color_scheme()
 

@@ -1,5 +1,3 @@
-import gi
-
 from gi.repository import Gio
 
 memory_monitor = Gio.MemoryMonitor.dup_default()
@@ -10,7 +8,7 @@ cache["b"] = 2
 cache["c"] = 3
 
 
-def evaluate_memory(monitor, level):
+def evaluate_memory(_monitor, level):
     # Use inequalities for checking as new levels may be added in the future
     if level >= Gio.MemoryMonitorWarningLevel.LOW:
         # Processes should free up unneeded resources

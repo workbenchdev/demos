@@ -21,7 +21,7 @@ def on_bus_message(_self, message):
     message_type = message.type
 
     # Handle different message types
-    match (message_type):
+    match message_type:
         case Gst.MessageType.ERROR:
             error_message = message.parse_error()
             print(error_message[0].message, file=sys.stderr)

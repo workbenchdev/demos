@@ -1,5 +1,3 @@
-import gi
-
 from gi.repository import GObject, Gio, Gtk
 import workbench
 

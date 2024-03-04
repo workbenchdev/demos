@@ -2,7 +2,7 @@ import gi
 
 gi.require_version("Xdp", "1.0")
 gi.require_version("XdpGtk4", "1.0")
-from gi.repository import GObject, Gio, Gst, Xdp, XdpGtk4
+from gi.repository import Gst, Xdp, XdpGtk4
 import workbench
 import sys
 

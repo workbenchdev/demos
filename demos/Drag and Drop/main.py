@@ -83,7 +83,7 @@ for row in list:
 
     # Update row visuals during DnD operation
     drop_controller.connect(
-        "enter", lambda _target, x, y, row: list.drag_highlight_row(row), row
+        "enter", lambda _target, _x, _y, row: list.drag_highlight_row(row), row
     )
 
     drop_controller.connect("leave", lambda _target: list.drag_unhighlight_row())

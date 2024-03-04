@@ -24,7 +24,7 @@ def on_response_selected_advanced(_dialog, task):
         print(f'Selected "{response}" response.')
 
 
-def create_confirmation_dialog(*args):
+def create_confirmation_dialog(*_args):
     dialog = Adw.AlertDialog(
         heading="Replace File?",
         body="A file named `example.png` already exists. Do you want to replace it?",
@@ -40,7 +40,7 @@ def create_confirmation_dialog(*args):
     dialog.choose(workbench.window, None, on_response_selected)
 
 
-def create_error_dialog(*args):
+def create_error_dialog(*_args):
     dialog = Adw.AlertDialog(
         heading="Critical Error",
         body="You did something you should not have",
@@ -52,7 +52,7 @@ def create_error_dialog(*args):
     dialog.choose(workbench.window, None, on_response_selected)
 
 
-def create_advanced_dialog(*args):
+def create_advanced_dialog(*_args):
     dialog = Adw.AlertDialog(
         heading="Login",
         body="A valid password is needed to continue",

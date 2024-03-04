@@ -3,7 +3,7 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Shumate", "1.0")
 
-from gi.repository import Gtk, Shumate, GObject
+from gi.repository import Gtk, Shumate
 import workbench
 import math
 

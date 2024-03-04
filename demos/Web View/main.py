@@ -30,7 +30,7 @@ def on_activate(_entry):
 
 
 def on_load_changed(_self, load_event):
-    match (load_event):
+    match load_event:
         case WebKit.LoadEvent.STARTED:
             print("Page loading started")
         case WebKit.LoadEvent.FINISHED:
@@ -54,7 +54,7 @@ def on_timeout():
     return False
 
 
-def on_estimated_load_progress(widget, load_progress):
+def on_estimated_load_progress(_widget, _load_progress):
     url_bar.set_progress_fraction(web_view.get_estimated_load_progress())
     if url_bar.get_progress_fraction() == 1:
         GLib.timeout_add(500, on_timeout)

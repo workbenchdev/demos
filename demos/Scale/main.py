@@ -27,7 +27,7 @@ for value, label in marks.items():
 scale_two.set_increments(25, 100)
 
 
-def callback1(scale):
+def callback1(_scale):
     scale_value = scale_one.get_value()
     if scale_value == scale_one.get_adjustment().get_upper():
         print("Maximum value reached")
@@ -38,7 +38,7 @@ def callback1(scale):
 scale_one.connect("value-changed", callback1)
 
 
-def callback2(scale):
+def callback2(_scale):
     scale_value = scale_two.get_value()
     label = marks.get(scale_value)
     if label:

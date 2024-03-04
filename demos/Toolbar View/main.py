@@ -31,7 +31,7 @@ def change_bottom_bar(name):
     bottom_bar = new_bottom_bar
 
 
-def select_top_bar(*args):
+def select_top_bar(*_args):
     match topbar_select.get_selected():
         case 0:
             change_top_bar("header_bar")
@@ -49,7 +49,7 @@ def select_top_bar(*args):
             change_top_bar("gtk_box")
 
 
-def select_bottom_bar(*args):
+def select_bottom_bar(*_args):
     match bottombar_select.get_selected():
         case 0:
             change_bottom_bar("header_bar")

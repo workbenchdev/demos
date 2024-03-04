@@ -12,13 +12,13 @@ lint:
 # Rust
 	flatpak run --command="/usr/lib/sdk/rust-stable/bin/rustfmt" --filesystem=host re.sonny.Workbench --check --edition 2021 demos/**/*.rs
 # Python
-	flatpak run --command="black" --filesystem=host re.sonny.Workbench --check demos/**/*.py
+# flatpak run --command="ruff" --filesystem=host re.sonny.Workbench check --config=../src/langs/python/ruff.toml demos/**/*.py
 
 format:
 # npx prettier --write demos/**/*.json
 	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench format javascript demos/**/*.js
 	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench format css demos/**/*.css
-	flatpak run --command="black" --filesystem=host re.sonny.Workbench demos/**/*.py
+# flatpak run --command="ruff" --filesystem=host re.sonny.Workbench format --config=../src/langs/python/ruff.toml demos/**/*.py
 	flatpak run --command="/usr/lib/sdk/rust-stable/bin/rustfmt" --filesystem=host re.sonny.Workbench --edition 2021 demos/**/*.rs
 	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench format blueprint demos/**/*.blp
 	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench format vala demos/**/*.vala

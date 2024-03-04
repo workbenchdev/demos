@@ -111,14 +111,18 @@ file_drop_target.connect("drop", on_file_drop)
 
 # Drop Hover Effect
 
-file_drop_target.connect("enter", lambda target, x, y: add_class("overlay-drag-area"))
-
 file_drop_target.connect(
-    "leave", lambda target: bin.remove_css_class("overlay-drag-area")
+    "enter", lambda _target, _x, _y: add_class("overlay-drag-area")
 )
 
-string_drop_target.connect("enter", lambda target, x, y: add_class("overlay-drag-area"))
+file_drop_target.connect(
+    "leave", lambda _target: bin.remove_css_class("overlay-drag-area")
+)
 
 string_drop_target.connect(
-    "leave", lambda target: bin.remove_css_class("overlay-drag-area")
+    "enter", lambda _target, _x, _y: add_class("overlay-drag-area")
+)
+
+string_drop_target.connect(
+    "leave", lambda _target: bin.remove_css_class("overlay-drag-area")
 )

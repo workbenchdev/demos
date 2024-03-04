@@ -50,14 +50,14 @@ for title, book_info in books.items():
     data_model.append(Book(title=title, author=book_info[0], year=book_info[1]))
 
 
-def _on_factory_setup(factory, list_item):
+def _on_factory_setup(_factory, list_item):
     label = Gtk.Label()
     label.set_margin_top(12)
     label.set_margin_bottom(12)
     list_item.set_child(label)
 
 
-def _on_factory_bind(factory, list_item, what):
+def _on_factory_bind(_factory, list_item, what):
     label_widget = list_item.get_child()
     book = list_item.get_item().get_item()
     label_widget.set_label(str(getattr(book, what)))
@@ -75,7 +75,7 @@ col3.get_factory().connect("bind", _on_factory_bind, "year")
 # Gtk.Expression: https://gitlab.gnome.org/GNOME/pygobject/-/issues/356
 
 
-def model_func(item):
+def model_func(_item):
     pass
 
 

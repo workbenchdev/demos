@@ -2,7 +2,7 @@ import gi
 
 gi.require_version("Xdp", "1.0")
 gi.require_version("XdpGtk4", "1.0")
-from gi.repository import Gio, Xdp, XdpGtk4, GLib
+from gi.repository import Xdp, XdpGtk4, GLib
 import workbench
 
 portal = Xdp.Portal()
@@ -90,7 +90,7 @@ def on_location_updated(
     heading,
     description,
     timestamp_s,
-    timestamp_ms,
+    _timestamp_ms,
 ):
     latitude_label.set_label(str(latitude))
     longitude_label.set_label(str(longitude))

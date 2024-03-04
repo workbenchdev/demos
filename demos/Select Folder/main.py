@@ -14,7 +14,7 @@ def on_single_selected(file_dialog, result):
     print(f"Selected Folder: {get_file_name(file)}")
 
 
-def select_folder(button):
+def select_folder(_button):
     file_dialog = Gtk.FileDialog()
     file_dialog.select_folder(workbench.window, None, on_single_selected)
 
@@ -26,7 +26,7 @@ def on_multiple_selected(file_dialog, result):
         print(f"  {get_file_name(file)}")
 
 
-def select_multiple_folders(button):
+def select_multiple_folders(_button):
     file_dialog = Gtk.FileDialog()
     file_dialog.select_multiple_folders(workbench.window, None, on_multiple_selected)
 

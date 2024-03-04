@@ -21,8 +21,8 @@ def on_value_changed(spin_button):
     return True
 
 
-hours.connect("value-changed", lambda *args: print(tell_time(hours, minutes)))
-minutes.connect("value-changed", lambda *args: print(tell_time(hours, minutes)))
+hours.connect("value-changed", lambda *_args: print(tell_time(hours, minutes)))
+minutes.connect("value-changed", lambda *_args: print(tell_time(hours, minutes)))
 
 
 hours.connect("output", on_value_changed)
@@ -32,4 +32,4 @@ minutes.connect("output", on_value_changed)
 
 # This only works for one direction
 # Add any extra logic to account for wrapping in both directions
-minutes.connect("wrapped", lambda *args: hours.spin(Gtk.SpinType.STEP_FORWARD, 1))
+minutes.connect("wrapped", lambda *_args: hours.spin(Gtk.SpinType.STEP_FORWARD, 1))
