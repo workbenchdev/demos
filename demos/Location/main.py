@@ -90,7 +90,7 @@ def on_location_updated(
     heading,
     description,
     timestamp_s,
-    timestamp_ms,
+    _timestamp_ms,
 ):
     latitude_label.set_label(str(latitude))
     longitude_label.set_label(str(longitude))

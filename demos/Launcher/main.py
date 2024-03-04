@@ -34,7 +34,7 @@ def on_uri_changed(_entry):
 
     try:
         uri_launch.set_sensitive(GLib.Uri.is_valid(text, GLib.UriFlags.NONE))
-    except:
+    except Exception:
         uri_launch.set_sensitive(False)
 
 
