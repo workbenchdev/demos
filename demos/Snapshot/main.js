@@ -5,6 +5,7 @@ import Gsk from "gi://Gsk";
 import GObject from "gi://GObject";
 
 const box = workbench.builder.get_object("box");
+const label = workbench.builder.get_object("label");
 
 const Chessboard = GObject.registerClass(
   {
@@ -12,7 +13,7 @@ const Chessboard = GObject.registerClass(
   },
 
   class Chessboard extends Gtk.Widget {
-    square_size = 100;
+    square_size = 70;
     board_size = 8 * this.square_size;
     piece_size = 1.5 * this.square_size;
 
@@ -136,4 +137,4 @@ const Chessboard = GObject.registerClass(
 );
 
 const chessboard = new Chessboard({ hexpand: true, vexpand: true });
-box.append(chessboard);
+box.insert_child_after(chessboard, label);

@@ -5,10 +5,11 @@ from gi.repository import Gtk, Gdk, Graphene, Gsk
 import workbench
 
 box = workbench.builder.get_object("box")
+label = workbench.builder.get_object("label")
 
 
 class Chessboard(Gtk.Widget):
-    SQUARE_SIZE = 100
+    SQUARE_SIZE = 70
     BOARD_SIZE = 8 * SQUARE_SIZE
     PIECE_SIZE = 1.5 * SQUARE_SIZE
 
@@ -97,4 +98,4 @@ class Chessboard(Gtk.Widget):
 
 
 chessboard = Chessboard(hexpand=True, vexpand=True)
-box.append(chessboard)
+box.insert_child_after(chessboard, label)
