@@ -65,7 +65,7 @@ flatpak override --user --filesystem=$PWD re.sonny.Workbench
 To create a new Library entry, duplicate an existing one and proceed to the next section.
 
 ```sh
-cp -r demos/Button demos/Something
+cp -r src/Button src/Something
 ```
 
 ### Update Library entry
@@ -74,7 +74,7 @@ To update or port an existing Library entry
 
 1. Open Workbench
 2. Select "Open Project…" in the menu
-3. Select the corresponding demo folder, for example `demos/Something`
+3. Select the corresponding demo folder, for example `src/Something`
 4. Make the changes
 
 ## Submitting a contribution
