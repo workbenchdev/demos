@@ -71,7 +71,7 @@ class Chessboard(Gtk.Widget):
         snapshot.transform(transformation)
         snapshot.append_stroke(self.knight_path, self.knight_stroke, self.knight_color)
 
-    def do_measure(self, orientation, for_size):
+    def do_measure(self, _orientation, _for_size):
         return self.BOARD_SIZE, self.BOARD_SIZE, -1, -1
 
     def on_drag_begin(self, _gesture, x, y):
