@@ -4,7 +4,6 @@ using Adw 1;
 Adw.StatusPage {
   title: _("List View Widgets");
   description: _("List and Grid views present a large dynamic list of model items");
-  valign: start;
 
   Adw.Clamp {
     maximum-size: 240;
@@ -58,6 +57,7 @@ Adw.StatusPage {
 
       Gtk.Stack stack {
         transition-type: crossfade;
+        hhomogeneous: false;
         vexpand: true;
 
         Gtk.StackPage {
@@ -67,21 +67,28 @@ Adw.StatusPage {
           child: Frame {
             valign: start;
 
-            ListView list_view {
-              enable-rubberband: true;
+            ScrolledWindow {
+              hscrollbar-policy: never;
+              vexpand: true;
+              hexpand: false;
+              propagate-natural-height: true;
 
-              factory: BuilderListItemFactory {
-                template ListItem {
-                  child: Gtk.Box {
-                    Gtk.Label {
-                      label: bind template.item as <StringObject>.string;
-                      height-request: 50;
-                      margin-start: 12;
-                      margin-end: 12;
-                    }
-                  };
-                }
-              };
+              ListView list_view {
+                enable-rubberband: true;
+
+                factory: BuilderListItemFactory {
+                  template ListItem {
+                    child: Gtk.Box {
+                      Gtk.Label {
+                        label: bind template.item as <StringObject>.string;
+                        height-request: 50;
+                        margin-start: 12;
+                        margin-end: 12;
+                      }
+                    };
+                  }
+                };
+              }
             }
           };
         }
@@ -93,11 +100,18 @@ Adw.StatusPage {
           child: Frame {
             valign: start;
 
-            GridView grid_view {
-              orientation: vertical;
-              max-columns: 4;
-              min-columns: 4;
-              enable-rubberband: true;
+            ScrolledWindow {
+              vexpand: true;
+              hexpand: false;
+              propagate-natural-height: true;
+              hscrollbar-policy: never;
+
+              GridView grid_view {
+                orientation: vertical;
+                max-columns: 4;
+                min-columns: 4;
+                enable-rubberband: true;
+              }
             }
           };
         }
