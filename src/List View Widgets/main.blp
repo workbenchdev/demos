@@ -64,29 +64,25 @@ Adw.StatusPage {
           name: "listview";
           title: _("List View");
 
-          child: Frame {
+          child: ScrolledWindow {
+            hscrollbar-policy: never;
+            propagate-natural-height: true;
+            has-frame: true;
             valign: start;
 
-            ScrolledWindow {
-              hscrollbar-policy: never;
-              propagate-natural-height: true;
-
-              ListView list_view {
-                enable-rubberband: true;
-
-                factory: BuilderListItemFactory {
-                  template ListItem {
-                    child: Gtk.Box {
-                      Gtk.Label {
-                        label: bind template.item as <StringObject>.string;
-                        height-request: 50;
-                        margin-start: 12;
-                        margin-end: 12;
-                      }
-                    };
-                  }
-                };
-              }
+            ListView list_view {
+              factory: BuilderListItemFactory {
+                template ListItem {
+                  child: Gtk.Box {
+                    Gtk.Label {
+                      label: bind template.item as <StringObject>.string;
+                      height-request: 50;
+                      margin-start: 12;
+                      margin-end: 12;
+                    }
+                  };
+                }
+              };
             }
           };
         }
@@ -95,19 +91,16 @@ Adw.StatusPage {
           name: "gridview";
           title: _("Grid View");
 
-          child: Frame {
+          child: ScrolledWindow {
+            hscrollbar-policy: never;
+            propagate-natural-height: true;
+            has-frame: true;
             valign: start;
 
-            ScrolledWindow {
-              hscrollbar-policy: never;
-              propagate-natural-height: true;
-
-              GridView grid_view {
-                orientation: vertical;
-                max-columns: 2;
-                min-columns: 2;
-                enable-rubberband: true;
-              }
+            GridView grid_view {
+              orientation: vertical;
+              max-columns: 2;
+              min-columns: 2;
             }
           };
         }
