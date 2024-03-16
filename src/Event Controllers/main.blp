@@ -1,14 +1,14 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.StatusPage page {
+Adw.StatusPage {
   title: _("Event Controllers");
   description: _("Ancillary Objects which responds to events");
 
   child: Box {
     orientation: vertical;
     halign: center;
-    spacing: 18;
+    spacing: 36;
 
     Box {
       orientation: vertical;
@@ -41,33 +41,24 @@ Adw.StatusPage page {
         ]
       }
 
-      Frame gesture_frame {
+      Box {
         halign: center;
+        homogeneous: true;
 
-        Box {
-          halign: center;
+        styles [
+          "linked"
+        ]
 
-          styles [
-            "linked"
-          ]
+        Button primary_button {
+          label: _("Left");
+        }
 
-          Button primary_button {
-            label: _("Left");
-            width-request: 150;
-            height-request: 50;
-          }
+        Button middle_button {
+          label: _("Middle");
+        }
 
-          Button middle_button {
-            label: _("Middle");
-            width-request: 150;
-            height-request: 50;
-          }
-
-          Button secondary_button {
-            label: _("Right");
-            width-request: 150;
-            height-request: 50;
-          }
+        Button secondary_button {
+          label: _("Right");
         }
       }
     }
@@ -75,6 +66,8 @@ Adw.StatusPage page {
     Box {
       orientation: vertical;
       spacing: 12;
+      halign: center;
+      valign: start;
 
       Label {
         label: _("GestureSwipe Example");
@@ -88,21 +81,19 @@ Adw.StatusPage page {
         stack: stack;
       }
 
-      Frame {
+      Box {
+        height-request: 256;
+        width-request: 256;
         halign: center;
 
         Stack stack {
           transition-type: slide_left_right;
-          valign: center;
-          halign: center;
-          height-request: 128;
-          width-request: 128;
 
           StackPage {
             title: _("Start");
-            name: "pic1";
+            name: "stack_picture_1";
 
-            child: Picture pic1 {
+            child: Picture stack_picture_1 {
               can-shrink: true;
               content-fit: scale_down;
             };
@@ -110,9 +101,9 @@ Adw.StatusPage page {
 
           StackPage {
             title: _("Finish");
-            name: "pic2";
+            name: "stack_picture_2";
 
-            child: Picture pic2 {
+            child: Picture stack_picture_2 {
               can-shrink: true;
               content-fit: scale_down;
             };
@@ -121,16 +112,14 @@ Adw.StatusPage page {
       }
 
       Label {
-        margin-top: 12;
-        label: _("Swipe");
+        label: _("Swipe the picture left or right");
       }
     }
 
     Box {
-      orientation: horizontal;
+      orientation: vertical;
       halign: center;
       valign: center;
-      margin-top: 24;
 
       LinkButton {
         label: _("Event Controller Key API Reference");

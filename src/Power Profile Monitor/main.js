@@ -5,19 +5,14 @@ const power_profile_monitor = Gio.PowerProfileMonitor.dup_default();
 const overlay = workbench.builder.get_object("overlay");
 
 power_profile_monitor.connect("notify::power-saver-enabled", () => {
-  let toast;
+  const toast = new Adw.Toast({
+    priority: Adw.ToastPriority.HIGH,
+  });
 
   if (power_profile_monitor.power_saver_enabled) {
-    toast = new Adw.Toast({
-      title: "Backup paused to save power",
-      button_label: "Resume",
-      priority: Adw.ToastPriority.HIGH,
-    });
+    toast.title = "Power Saver Enabled";
   } else {
-    toast = new Adw.Toast({
-      title: "Backup resumed",
-      priority: Adw.ToastPriority.HIGH,
-    });
+    toast.title = "Power Saver Disabled";
   }
 
   overlay.add_toast(toast);

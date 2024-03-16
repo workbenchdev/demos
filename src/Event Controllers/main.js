@@ -6,14 +6,14 @@ import Gtk from "gi://Gtk";
 const window = workbench.window;
 const ctrl_button = workbench.builder.get_object("ctrl_button");
 const stack = workbench.builder.get_object("stack");
-const pic1 = workbench.builder.get_object("pic1");
-const pic2 = workbench.builder.get_object("pic2");
+const stack_picture_1 = workbench.builder.get_object("stack_picture_1");
+const stack_picture_2 = workbench.builder.get_object("stack_picture_2");
 const primary_button = workbench.builder.get_object("primary_button");
 const middle_button = workbench.builder.get_object("middle_button");
 const secondary_button = workbench.builder.get_object("secondary_button");
 
-pic1.file = Gio.File.new_for_uri(workbench.resolve("image1.png"));
-pic2.file = Gio.File.new_for_uri(workbench.resolve("image2.png"));
+stack_picture_1.file = Gio.File.new_for_uri(workbench.resolve("image1.png"));
+stack_picture_2.file = Gio.File.new_for_uri(workbench.resolve("image2.png"));
 
 let ctrl_pressed = false;
 
@@ -85,8 +85,8 @@ stack.add_controller(gesture_swipe);
 
 gesture_swipe.connect("swipe", (_self, vel_x, _vel_y) => {
   if (vel_x > 0) {
-    stack.set_visible_child_name("pic1");
+    stack.set_visible_child_name("stack_picture_1");
   } else {
-    stack.set_visible_child_name("pic2");
+    stack.set_visible_child_name("stack_picture_2");
   }
 });

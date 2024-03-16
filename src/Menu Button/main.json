@@ -1,6 +1,6 @@
 {
   "category": "controls",
   "description": "Displays a popover on button click",
-  "panels": ["ui", "code", "preview"],
+  "panels": ["ui", "preview"],
   "autorun": true
 }

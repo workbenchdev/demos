@@ -12,32 +12,12 @@ Adw.StatusPage {
     orientation: vertical;
 
     Box {
-      halign: center;
       spacing: 24;
-
-      Button {
-        tooltip-text: _("Back");
-        icon-name: "go-previous-symbolic";
-      }
-
-      Button {
-        tooltip-text: _("New Tab");
-        icon-name: "tab-new-filled-symbolic";
-      }
 
       ToggleButton {
         tooltip-text: _("Do Not Disturb");
-        icon-name: "bell-large-none-symbolic";
+        icon-name: "bell-outline-none-symbolic";
       }
-
-      ToggleButton {
-        icon-name: "dock-left-symbolic";
-        tooltip-text: _("Toggle Sidebar");
-      }
-    }
-
-    Box {
-      spacing: 24;
 
       Button {
         label: _("Open…");
@@ -54,9 +34,13 @@ Adw.StatusPage {
       }
     }
 
+    Label {
+      label: _("Hover the buttons to see tooltips");
+    }
+
     Box {
-      spacing: 6;
       orientation: vertical;
+      halign: center;
 
       LinkButton {
         label: _("API Reference");

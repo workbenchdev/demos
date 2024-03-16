@@ -11,7 +11,7 @@ const button_advanced = workbench.builder.get_object("button_advanced");
 async function createConfirmationDialog() {
   const dialog = new Adw.AlertDialog({
     heading: "Replace File?",
-    body: "A file named `example.png` already exists. Do you want to replace it?",
+    body: "A file named “example.png” already exists. Do you want to replace it?",
     close_response: "cancel",
   });
 
@@ -28,7 +28,7 @@ async function createConfirmationDialog() {
 async function createErrorDialog() {
   const dialog = new Adw.AlertDialog({
     heading: "Critical Error",
-    body: "You did something you should not have",
+    body: "Something unexpected happened",
     close_response: "okay",
   });
 
