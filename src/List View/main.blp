@@ -2,8 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: _("List View Widgets");
-  description: _("List and Grid views present a large dynamic list of model items");
+  title: _("List View");
+  description: _("Arrange a large and dynamic list of items one after the other");
   valign: start;
 
   Adw.Clamp {
@@ -26,11 +26,6 @@ Adw.StatusPage {
           label: _("List View API Reference");
           uri: "https://docs.gtk.org/gtk4/class.ListView.html";
         }
-
-        LinkButton {
-          label: _("Grid View API Reference");
-          uri: "https://docs.gtk.org/gtk4/class.GridView.html";
-        }
       }
 
       Box {
@@ -49,11 +44,6 @@ Adw.StatusPage {
           label: _("Remove Item");
           tooltip-text: _("Remove Item");
         }
-      }
-
-      Gtk.StackSwitcher {
-        stack: stack;
-        halign: center;
       }
 
       Gtk.Stack stack {
@@ -83,24 +73,6 @@ Adw.StatusPage {
                   };
                 }
               };
-            }
-          };
-        }
-
-        Gtk.StackPage {
-          name: "gridview";
-          title: _("Grid View");
-
-          child: ScrolledWindow {
-            hscrollbar-policy: never;
-            propagate-natural-height: true;
-            has-frame: true;
-            valign: start;
-
-            GridView grid_view {
-              orientation: vertical;
-              max-columns: 2;
-              min-columns: 2;
             }
           };
         }
