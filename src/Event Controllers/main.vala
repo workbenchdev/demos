@@ -5,11 +5,11 @@ private bool ctrl_pressed = false;
 public void main () {
     Gtk.Window window = workbench.window;
 
-    var pic1 = (Gtk.Picture) workbench.builder.get_object ("pic1");
-    var pic2 = (Gtk.Picture) workbench.builder.get_object ("pic2");
+    var stack_picture_1 = (Gtk.Picture) workbench.builder.get_object ("stack_picture_1");
+    var stack_picture_2 = (Gtk.Picture) workbench.builder.get_object ("stack_picture_2");
 
-    pic1.file = File.new_for_uri (workbench.resolve ("image1.png"));
-    pic2.file = File.new_for_uri (workbench.resolve ("image2.png"));
+    stack_picture_1.file = File.new_for_uri (workbench.resolve ("image1.png"));
+    stack_picture_2.file = File.new_for_uri (workbench.resolve ("image2.png"));
 
     var stack = (Gtk.Stack) workbench.builder.get_object ("stack");
     var primary_button = (Gtk.Button) workbench.builder.get_object ("primary_button");
@@ -82,9 +82,9 @@ public void main () {
 
     gesture_swipe.swipe.connect ((vel_x, vel_y) => {
         if (vel_x > 0) {
-            stack.visible_child_name = "pic1";
+            stack.visible_child_name = "stack_picture_1";
         } else {
-            stack.visible_child_name = "pic2";
+            stack.visible_child_name = "stack_picture_2";
         }
     });
 }

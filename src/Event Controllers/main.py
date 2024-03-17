@@ -10,14 +10,14 @@ import workbench
 window = workbench.window
 ctrl_button = workbench.builder.get_object("ctrl_button")
 stack = workbench.builder.get_object("stack")
-pic1 = workbench.builder.get_object("pic1")
-pic2 = workbench.builder.get_object("pic2")
+stack_picture_1 = workbench.builder.get_object("stack_picture_1")
+stack_picture_2 = workbench.builder.get_object("stack_picture_2")
 primary_button = workbench.builder.get_object("primary_button")
 middle_button = workbench.builder.get_object("middle_button")
 secondary_button = workbench.builder.get_object("secondary_button")
 
-pic1.set_file(Gio.File.new_for_uri(workbench.resolve("image1.png")))
-pic2.set_file(Gio.File.new_for_uri(workbench.resolve("image2.png")))
+stack_picture_1.set_file(Gio.File.new_for_uri(workbench.resolve("image1.png")))
+stack_picture_2.set_file(Gio.File.new_for_uri(workbench.resolve("image2.png")))
 
 ctrl_pressed = False
 
@@ -69,9 +69,9 @@ def on_released(_self, _n_press, _x, _y):
 
 def on_swipe(_self, vel_x, _vel_y):
     if vel_x > 0:
-        stack.set_visible_child_name("pic1")
+        stack.set_visible_child_name("stack_picture_1")
     else:
-        stack.set_visible_child_name("pic2")
+        stack.set_visible_child_name("stack_picture_2")
 
 
 # Key controller to detect when the Ctrl key is pressed and released

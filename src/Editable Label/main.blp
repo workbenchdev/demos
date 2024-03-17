@@ -8,22 +8,35 @@ Adw.StatusPage {
   Box {
     orientation: vertical;
     halign: center;
-    spacing: 12;
+    spacing: 18;
 
     EditableLabel edit_label {
       text: _("Lorem ipsum dolor sit amet, consectetur adipiscing elit");
       editing: bind edit_switch.active;
     }
 
-    Switch edit_switch {
+    Box {
       halign: center;
-      active: bind edit_label.editing;
+
+      Label {
+        label: _("Editable");
+      }
+
+      Separator {
+        styles [
+          "spacer"
+        ]
+      }
+
+      Switch edit_switch {
+        halign: center;
+        active: bind edit_label.editing;
+      }
     }
 
     LinkButton {
       label: _("API Reference");
       uri: "https://docs.gtk.org/gtk4/class.EditableLabel.html";
-      margin-top: 12;
     }
   }
 }
