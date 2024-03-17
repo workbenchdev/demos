@@ -8,18 +8,15 @@ power_profile_monitor = Gio.PowerProfileMonitor.dup_default()
 overlay = workbench.builder.get_object("overlay")
 
 
-def on_power_saver_enabled(_monitor, enabled):
-    if enabled:
-        toast = Adw.Toast(
-            title="Backup paused to save power",
-            button_label="Resume",
-            priority=Adw.ToastPriority.HIGH,
-        )
+def on_power_saver_enabled(monitor, _paramspec):
+    toast = Adw.Toast(
+        priority=Adw.ToastPriority.HIGH,
+    )
+
+    if monitor.get_power_saver_enabled():
+        toast.set_title("Power Saver Enabled")
     else:
-        toast = Adw.Toast(
-            title="Backup resumed",
-            priority=Adw.ToastPriority.HIGH,
-        )
+        toast.set_title("Power Saver Disabled")
 
     overlay.add_toast(toast)
 

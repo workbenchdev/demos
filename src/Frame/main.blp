@@ -2,8 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: _('Frame');
-  description: _('A widget that surrounds its child with a decorative frame');
+  title: _("Frame");
+  description: _("A widget that surrounds its child with a decorative frame");
 
   Box {
     orientation: vertical;
@@ -27,10 +27,10 @@ Adw.StatusPage {
         }
 
         Label {
-          label: _('Without Frame');
+          label: _("Without Frame");
 
           styles [
-            "title-4",
+            "title-4"
           ]
         }
       }
@@ -53,10 +53,10 @@ Adw.StatusPage {
         }
 
         Label {
-          label: _('With Frame');
+          label: _("With Frame");
 
           styles [
-            "title-4",
+            "title-4"
           ]
         }
       }
@@ -67,12 +67,12 @@ Adw.StatusPage {
     }
 
     Label {
-      label: _('Without Frame');
+      label: _("Without Frame");
       margin-bottom: 12;
       halign: start;
 
       styles [
-        "title-4",
+        "title-4"
       ]
     }
 
@@ -81,53 +81,53 @@ Adw.StatusPage {
       halign: center;
 
       styles [
-        "toolbar",
+        "toolbar"
       ]
 
       Button {
-        icon-name: 'plus-symbolic';
+        icon-name: "plus-symbolic";
       }
 
       Button {
-        icon-name: 'minus-symbolic';
+        icon-name: "minus-symbolic";
       }
 
       Button {
-        icon-name: 'bell-outline-symbolic';
+        icon-name: "bell-outline-symbolic";
       }
     }
 
     Label {
       halign: start;
-      label: _('With Frame');
+      label: _("With Frame");
       margin-bottom: 12;
 
       styles [
-        "title-4",
+        "title-4"
       ]
     }
 
     Frame {
-      label: _('Frame can have an optional label');
+      label: _("Frame can have an optional label");
       margin-bottom: 24;
 
       Box {
         halign: center;
 
         styles [
-          "toolbar",
+          "toolbar"
         ]
 
         Button {
-          icon-name: 'plus-symbolic';
+          icon-name: "plus-symbolic";
         }
 
         Button {
-          icon-name: 'minus-symbolic';
+          icon-name: "minus-symbolic";
         }
 
         Button {
-          icon-name: 'bell-outline-symbolic';
+          icon-name: "bell-outline-symbolic";
         }
       }
     }
@@ -164,10 +164,10 @@ Adw.StatusPage {
         }
 
         Label {
-          label: _('Without Frame');
+          label: _("Without Frame");
 
           styles [
-            "title-4",
+            "title-4"
           ]
         }
       }
@@ -199,18 +199,18 @@ Adw.StatusPage {
         }
 
         Label {
-          label: _('With Frame');
+          label: _("With Frame");
 
           styles [
-            "title-4",
+            "title-4"
           ]
         }
       }
     }
 
     LinkButton {
-      label: _('API Reference');
-      uri: 'https://docs.gtk.org/gtk4/class.Frame.html';
+      label: _("API Reference");
+      uri: "https://docs.gtk.org/gtk4/class.Frame.html";
     }
   }
 }
