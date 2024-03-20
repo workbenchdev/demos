@@ -126,3 +126,8 @@ button.add_css_class ("pill");
 - Property get, set, default declaration all on one line, seperated by semicolons, if default implementations are used
 - If properties have implementations, then `get {`, `set {` open new lines
 - Attributes on their own line
+
+### Logging
+
+- Use `message ()`, `warning ()` and `critical ()` for debug messages (depending on the severity)
+- Use `print ()`/`stdout.printf ()` for messages that are intended to be seen by the user
