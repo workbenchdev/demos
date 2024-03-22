@@ -8,6 +8,7 @@ public void main() {
             stdout.printf("Force Light Mode\n");
         }
     });
+
     radio_button_2.toggled.connect(() => {
         if (radio_button_2.active) {
             stdout.printf("Force Dark Mode\n");
