@@ -1,6 +1,5 @@
 import Gtk from "gi://Gtk";
 
-const list_view = workbench.builder.get_object("list_view");
 const grid_view = workbench.builder.get_object("grid_view");
 const add = workbench.builder.get_object("add");
 const remove = workbench.builder.get_object("remove");
@@ -52,7 +51,6 @@ model.connect("selection-changed", () => {
   );
 });
 
-list_view.model = model;
 grid_view.model = model;
 grid_view.factory = factory_for_grid_view;
 
