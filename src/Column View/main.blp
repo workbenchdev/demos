@@ -11,16 +11,20 @@ Adw.StatusPage {
 
     Box {
       orientation: vertical;
-      spacing: 12;
+      spacing: 18;
 
-      LinkButton {
-        label: _("Documentation");
-        uri: "https://docs.gtk.org/gtk4/section-list-widget.html";
-      }
+      Box {
+        halign: center;
 
-      LinkButton {
-        label: _("Column View API Reference");
-        uri: "https://docs.gtk.org/gtk4/class.ColumnView.html";
+        LinkButton {
+          label: _("API Reference");
+          uri: "https://docs.gtk.org/gtk4/class.ColumnView.html";
+        }
+
+        LinkButton {
+          label: _("Documentation");
+          uri: "https://docs.gtk.org/gtk4/section-list-widget.html";
+        }
       }
 
       Frame {
@@ -50,4 +54,3 @@ Adw.StatusPage {
     }
   }
 }
-
