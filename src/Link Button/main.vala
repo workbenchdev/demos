@@ -1,4 +1,4 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
+#! /usr/bin/env -S vala workbench.vala --pkg gtk4
 
 public void main () {
     var linkbutton = (Gtk.LinkButton) workbench.builder.get_object ("linkbutton");
