@@ -3,5 +3,5 @@
   "category": "controls",
   "description": "Respond to gamepads and controllers input",
   "panels": ["code", "preview"],
-  "autorun": false
+  "autorun": true
 }
