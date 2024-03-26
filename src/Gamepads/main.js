@@ -11,10 +11,7 @@ let [has_next, device] = monitor_iter.next();
 
 while (device !== null) {
   console.log("Device:", device.get_name());
-
-  status_page.title = _("Controller connected");
-  status_page.description = "";
-
+  
   // Face and Shoulder Buttons
   device.connect("button-press-event", (device, event) => {
     console.log(
