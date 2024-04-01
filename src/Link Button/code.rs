@@ -1,4 +1,6 @@
 use crate::workbench;
+use glib::signal::Propagation;
+use gtk::glib;
 use gtk::prelude::*;
 
 pub fn main() {
@@ -6,7 +8,7 @@ pub fn main() {
 
     linkbutton.connect_activate_link(|button| {
         println!("About to activate {}", button.uri());
-        return false.into();
+        Propagation::Proceed
     });
 
     linkbutton.connect_notify(Some("visited"), |_, _| {
