@@ -1,6 +1,4 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
-
-Gtk.LevelBar bar_discrete;
+#! /usr/bin/env -S vala workbench.vala --pkg gtk4
 
 public void main () {
 
@@ -29,32 +27,32 @@ public void main () {
 // Use appropriate solutions instead
 // such as https://github.com/dropbox/zxcvbn
 
-public void estimatePasswordStrength () {
-    var level = Math.fmin(Math.ceil(entry.get_text_length / 2), 6);
+public void estimate_password_strength() {
+    var level = Math.fmin(Math.ceil(entry.text.length / 2), 6);
 
     switch (level) {
-    case 1:
-        label_strength.set_label ("Very Weak");
-        label_strength.add_css_class ("very-weak-label");
-        break;
-    case 2:
-        label_strength.set_label ("Weak");
-        label_strength.add_css_class ("weak-label");
-        break;
-    case 3:
-    case 4:
-        label_strength.set_label ("Moderate");
-        label_strength.add_css_class ("moderate-label");
-        break;
-    case 5:
-    case 6:
-        label_strength.set_label ("Strong");
-        label_strength.add_css_class ("strong-label");
-        break;
-    default:
-        label_strength.set_label ("");
-        label_strength.add_css_class ("");
+        case 1:
+            label_strength.label = "Very Weak";
+            label_strength.add_css_class("very-weak-label");
+            break;
+        case 2:
+            label_strength.label = "Weak";
+            label_strength.add_css_class("weak-label");
+            break;
+        case 3:
+        case 4:
+            label_strength.label = "Moderate";
+            label_strength.add_css_class("moderate-label");
+            break;
+        case 5:
+        case 6:
+            label_strength.label = "Strong";
+            label_strength.add_css_class("strong-label");
+            break;
+        default:
+            label_strength.label = "";
+            label_strength.add_css_class("");
     }
 
-    bar_discrete.set_value(level);
+    bar_discrete.value = level;
 }
