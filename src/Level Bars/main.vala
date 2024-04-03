@@ -1,6 +1,6 @@
 #! /usr/bin/env -S vala workbench.vala --pkg gtk4
 
-Gtk.Entry entry;
+Gtk.PasswordEntry entry;
 Gtk.LevelBar bar_discrete;
 Gtk.Label label_strength;
 
@@ -20,7 +20,7 @@ public void main () {
     bar_discrete.add_offset_value ("strong", 6);
 
 
-    entry = (Gtk.Entry) workbench.builder.get_object ("entry");
+    entry = (Gtk.PasswordEntry) workbench.builder.get_object ("entry");
 
     label_strength = (Gtk.Label) workbench.builder.get_object ("label_strength");
 
@@ -32,9 +32,11 @@ public void main () {
 // such as https://github.com/dropbox/zxcvbn
 
 public void estimate_password_strength () {
-    var level = Math.fmin(Math.ceil(entry.text.length / 2), 6);
+    var level = (int) Math.fmin (Math.ceil ((entry.text.length + 1) / 2), 6);
 
-    switch ((int) level) {
+    label_strength.css_classes = new string[0];
+
+    switch (level) {
     case 1:
         label_strength.label = "Very Weak";
         label_strength.add_css_class ("very-weak-label");
