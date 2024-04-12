@@ -14,10 +14,3 @@ function draw(_self, cr, width, height) {
   cr.$dispose();
 }
 drawing_area.set_draw_func(draw);
-
-// Redraw if the display scale factor changes
-const surface = drawing_area.get_root().get_surface();
-surface.connect("notify::scale", () => {
-  console.log("scale changed");
-  drawing_area.queue_draw();
-});
