@@ -1,6 +1,3 @@
-import Gio from "gi://Gio";
-import Gtk from "gi://Gtk";
-import Gdk from "gi://Gdk";
 import Rsvg from "gi://Rsvg?version=2.0";
 
 const drawing_area = workbench.builder.get_object("drawing_area");
@@ -9,7 +6,7 @@ const svg = workbench.resolve("image.svg");
 const handle = Rsvg.Handle.new_from_file(svg);
 
 const [, width, height] = handle.get_intrinsic_size_in_pixels();
-console.log("SVG intrasic size", { width, height });
+console.log("SVG intrisic size", { width, height });
 
 function draw(_self, cr, width, height) {
   console.log("drawing SVG at", { width, height });
@@ -24,5 +21,3 @@ surface.connect("notify::scale", () => {
   console.log("scale changed");
   drawing_area.queue_draw();
 });
-
-drawing_area.queue_draw();
