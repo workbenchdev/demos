@@ -54,11 +54,14 @@ params = Adw.SpringParams.new(
     stiffness=50.0,
 )
 animation_spring = Adw.SpringAnimation(
-    widget=ball, value_from=0, value_to=1, spring_params=params, target=target_spring
+    widget=ball,
+    value_from=0,
+    value_to=1,
+    spring_params=params,
+    target=target_spring,
+    initial_velocity=1.0,  # If amplitude of oscillation < epsilon, animation stops
+    epsilon=0.001,
+    clamp=False,
 )
-animation_spring.set_initial_velocity(1.0)
-# If amplitude of oscillation < epsilon, animation stops
-animation_spring.set_epsilon(0.001)
-animation_spring.set_clamp(False)
 
 button_spring.connect("clicked", lambda _: animation_spring.play())
