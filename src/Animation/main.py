@@ -21,7 +21,7 @@ animation_timed = Adw.TimedAnimation(
 )
 
 button_timed.connect("clicked", lambda _: animation_timed.play())
-animation_timed.connect("done", lambda _: animation_timed.reset)
+animation_timed.connect("done", lambda _: animation_timed.reset())
 
 button_spring = workbench.builder.get_object("button_spring")
 ball = workbench.builder.get_object("ball")
@@ -36,7 +36,7 @@ def get_end_position(widget):
 
 def move_widget(widget, x, y):
     transform = Gsk.Transform.new()
-    p = Graphene.Point.new(x=x, y=y)
+    p = Graphene.Point().init(x, y)
     transform = transform.translate(p)
     widget.allocate(widget.get_width(), widget.get_height(), -1, transform)
 
@@ -56,9 +56,9 @@ params = Adw.SpringParams.new(
 animation_spring = Adw.SpringAnimation(
     widget=ball, value_from=0, value_to=1, spring_params=params, target=target_spring
 )
-animation_spring.initial_velocity = 1.0
+animation_spring.set_initial_velocity(1.0)
 # If amplitude of oscillation < epsilon, animation stops
-animation_spring.epsilon = 0.001
-animation_spring.clamp = False
+animation_spring.set_epsilon(0.001)
+animation_spring.set_clamp(False)
 
-button_spring.connect("clicked", lambda _: animation_spring.play)
+button_spring.connect("clicked", lambda _: animation_spring.play())
