@@ -80,17 +80,18 @@ Adw.StatusPage {
           };
         }
 
-        Adw.ComboRow {
+        Adw.ComboRow drop_down {
           title: _("Choose an Item");
           subtitle: _("List of options from a drop down");
+          enable-search: true;
 
           model: StringList list {
             strings [
-              "This",
-              "Is",
-              "A",
-              "String",
-              "List"
+              "Cat",
+              "Dog",
+              "Hippo",
+              "Duck",
+              "Dodo"
             ]
           };
         }
