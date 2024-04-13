@@ -5,7 +5,6 @@ Gtk.LevelBar bar_discrete;
 Gtk.Label label_strength;
 
 public void main () {
-
     var bar_continuous = (Gtk.LevelBar) workbench.builder.get_object ("bar_continuous");
 
     bar_continuous.add_offset_value ("full", 100);
@@ -63,4 +62,3 @@ public void estimate_password_strength () {
 
     bar_discrete.value = level;
 }
-
