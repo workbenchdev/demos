@@ -1,5 +1,5 @@
 SHELL:=/bin/bash -O globstar
-.PHONY: setup lint test ci
+.PHONY: setup test ci
 .DEFAULT_GOAL := ci
 
 setup:
@@ -7,22 +7,20 @@ setup:
 # flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
 	flatpak install --or-update --user --noninteractive flathub re.sonny.Workbench org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08
 
-lint:
-# Rust
-	flatpak run --command="/usr/lib/sdk/rust-stable/bin/rustfmt" --filesystem=host re.sonny.Workbench --check --edition 2021 src/*/*.rs
-# Python
-# flatpak run --command="ruff" --filesystem=host re.sonny.Workbench check --config=../src/langs/python/ruff.toml src/*/*.py
-
 format:
 # npx prettier --write src/*/*.json
 	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench format javascript src/*/*.js
 	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench format css src/*/*.css
-# flatpak run --command="ruff" --filesystem=host re.sonny.Workbench format --config=../src/langs/python/ruff.toml src/**/*.py
-	flatpak run --command="/usr/lib/sdk/rust-stable/bin/rustfmt" --filesystem=host re.sonny.Workbench --edition 2021 src/*/*.rs
+	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench format python src/*/*.py
+	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench format rust src/*/*.rs
 	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench format blueprint src/*/*.blp
 	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench format vala src/*/*.vala
 
-test: lint
+test:
+# list folders that have changed and run workbench-cli ci on them
+	git diff --dirstat=files,0 origin/main src | sed 's/^[ 0-9.]\+% //g' | uniq | xargs -d '\n' flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench ci
+
+all:
 	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench ci src/*
 
 ci: setup test
