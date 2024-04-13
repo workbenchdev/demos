@@ -13,5 +13,4 @@ const expression = new Gtk.ClosureExpression(
   (obj) => obj.string,
   null,
 );
-
 drop_down.expression = expression;
