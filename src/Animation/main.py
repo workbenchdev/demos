@@ -3,7 +3,7 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-from gi.repository import Gtk, Gsk, Graphene, Adw
+from gi.repository import Gsk, Graphene, Adw
 import workbench
 
 
