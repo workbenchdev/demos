@@ -30,3 +30,5 @@ src/*/Cargo.toml
 src/*/lib.rs
 src/*/workbench.rs
 src/*/target
+src/*/*.gresource
+src/*/*.gresource.xml
