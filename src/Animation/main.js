@@ -41,11 +41,10 @@ const animation_spring = new Adw.SpringAnimation({
   value_to: 1,
   spring_params: params,
   target: target_spring,
+  initial_velocity: 1.0, // If amplitude of oscillation < epsilon, animation stops
+  epsilon: 0.001,
+  clamp: false,
 });
-animation_spring.initial_velocity = 1.0;
-// If amplitude of oscillation < epsilon, animation stops
-animation_spring.epsilon = 0.001;
-animation_spring.clamp = false;
 
 button_spring.connect("clicked", () => {
   animation_spring.play();
