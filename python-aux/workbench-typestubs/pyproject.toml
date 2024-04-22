@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools"]  # REQUIRED if [build-system] table is used
-build-backend = "setuptools.build_meta"  # If not defined, then legacy behavior can happen.
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "workbench-typestubs"

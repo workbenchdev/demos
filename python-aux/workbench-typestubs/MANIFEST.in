@@ -1,2 +1,2 @@
 include workbench/py.typed
-recursive-include  workbench *.pyi
+recursive-include workbench *.pyi
