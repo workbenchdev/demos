@@ -14,4 +14,3 @@ def on_destructive_activated(*_args):
 
 button_row_suggested.connect("activated", on_suggested_activated)
 button_row_destructive.connect("activated", on_destructive_activated)
-
