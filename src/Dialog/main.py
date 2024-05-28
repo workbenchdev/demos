@@ -2,7 +2,7 @@ import gi
 
 gi.require_version("Adw", "1")
 gi.require_version("Gtk", "4.0")
-from gi.repository import Adw, Gtk, Gio
+from gi.repository import Gio
 import workbench
 
 dialog = workbench.builder.get_object("dialog")
