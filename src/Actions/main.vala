@@ -9,14 +9,14 @@ public void main() {
     // Action with no state or parameters
     var simple_action = new SimpleAction("simple", null);
     simple_action.activate.connect(() => {
-        message("%s action activated", simple_action.get_name());
+        message(@"$(simple_action.get_name()) action activated");
     });
     demo_group.add_action(simple_action);
 
     // Action with parameter
     var bookmarks_action = new SimpleAction("open-bookmarks", new GLib.VariantType("s"));
     bookmarks_action.activate.connect((action, parameter) => {
-        message("%s activated with %s", action.get_name(), parameter.get_string());
+        message(@"$(action.get_name()) activated with $(parameter.get_string())");
     });
     demo_group.add_action(bookmarks_action);
 
@@ -24,7 +24,7 @@ public void main() {
     var toggle_action = new SimpleAction.stateful("toggle", null, new Variant.boolean(false));
     toggle_action.notify.connect((action, state) => {
         bool b = toggle_action.state.get_boolean();
-        message("%s action set to %s", toggle_action.name, b ? "true" : "false");
+        message(@"$(toggle_action.name) action set to " + (b ? "true" : "false"));
     });
 
     demo_group.add_action(toggle_action);
@@ -33,7 +33,7 @@ public void main() {
     var scale_action = new SimpleAction.stateful("scale", new VariantType("s"), new Variant.string("100%"));
 
     scale_action.notify.connect((action) => {
-        message("%s action set to %s", action.get_name(), scale_action.state.get_string());
+        message(@"$(scale_action.name) action set to $(scale_action.state.get_string())");
     });
 
     demo_group.add_action(scale_action);
