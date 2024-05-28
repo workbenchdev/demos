@@ -1,4 +1,4 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg gio-2.0
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 
 public void main() {
     var demo = (Adw.StatusPage) workbench.builder.get_object("demo");
