@@ -73,7 +73,7 @@ void update_color_scheme () {
     var scheme = scheme_manager.get_scheme (scheme_name);
 
     if (scheme != null) {
-        gtksource_buffer.set_style_scheme (scheme);
+        gtksource_buffer.style_scheme = scheme;
     }
 }
 
@@ -110,7 +110,7 @@ public void main () {
 
     var language_manager = GtkSource.LanguageManager.get_default ();
     var css_language = language_manager.get_language ("css");
-    gtksource_buffer.set_language (css_language);
+    gtksource_buffer.language = css_language;
 
     update ();
     update_color_scheme ();
