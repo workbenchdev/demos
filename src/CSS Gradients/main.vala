@@ -38,39 +38,43 @@ string generate_css () {
     string third_color_string = button_color_3.get_rgba ().to_string ();
 
     uint selected = combo_row_gradient_type.selected;
-    if (selected == 0) {
-        css = """.background-gradient {
+    switch (selected) {
+    case 0:
+        css = @".background-gradient {
     background-image: linear-gradient(
-        %sdeg,
-        %s,
-        %s,
-        %s
+        $(angle_string)deg,
+        $(first_color_string),
+        $(second_color_string),
+        $(third_color_string)
     );
-}""".printf (angle_string, first_color_string, second_color_string, third_color_string);
-    } else if (selected == 1) {
-        css = """.background-gradient {
+}";
+        break;
+    case 1:
+        css = @".background-gradient {
     background-image: radial-gradient(
-        %s,
-        %s,
-        %s
+        $(first_color_string),
+        $(second_color_string),
+        $(third_color_string)
     );
-}""".printf (first_color_string, second_color_string, third_color_string);
-    } else if (selected == 2) {
-        css = """.background-gradient {
+}";
+        break;
+    case 2:
+        css = @".background-gradient {
     background-image: conic-gradient(
-        from %sdeg,
-        %s,
-        %s,
-        %s
+        from $(angle_string)deg,
+        $(first_color_string),
+        $(second_color_string),
+        $(third_color_string)
     );
-}""".printf (angle_string, first_color_string, second_color_string, third_color_string);
+}";
+        break;
     }
     return css;
 }
 
 void update_color_scheme () {
     string scheme_name = style_manager.dark ? "Adwaita-dark" : "Adwaita";
-    var scheme = scheme_manager.get_scheme (scheme_name);
+    GtkSource.StyleScheme scheme = scheme_manager.get_scheme (scheme_name);
 
     if (scheme != null) {
         gtksource_buffer.style_scheme = scheme;
@@ -91,10 +95,10 @@ public void main () {
     button_color_1.notify["rgba"].connect (update);
     button_color_2.notify["rgba"].connect (update);
     button_color_3.notify["rgba"].connect (update);
-/*
- *  code view
- */
-    var clipboard = Gdk.Display.get_default ().get_clipboard ();
+    /*
+     * code view
+     */
+    Gdk.Clipboard clipboard = Gdk.Display.get_default ().get_clipboard ();
 
     button_copy_css.clicked.connect (() => {
         Gtk.TextIter start, end;
@@ -109,7 +113,7 @@ public void main () {
     style_manager.notify["dark"].connect (() => update_color_scheme ());
 
     var language_manager = GtkSource.LanguageManager.get_default ();
-    var css_language = language_manager.get_language ("css");
+    GtkSource.Language css_language = language_manager.get_language ("css");
     gtksource_buffer.language = css_language;
 
     update ();
