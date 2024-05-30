@@ -4,8 +4,10 @@ SHELL:=/bin/bash -O globstar
 
 setup:
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-# flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
 	flatpak install --or-update --user --noninteractive flathub re.sonny.Workbench org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08
+# flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+	flatpak remote-add --user --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
+	flatpak install --or-update --user --noninteractive gnome-nightly re.sonny.Workbench.Devel//master
 
 format:
 # npx prettier --write src/*/*.json
@@ -19,9 +21,11 @@ format:
 test:
 # list folders that have changed and run workbench-cli ci on them
 	git diff --dirstat=files,0 origin/main src | sed 's/^[ 0-9.]\+% //g' | uniq | xargs -d '\n' flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench ci
+	git diff --dirstat=files,0 origin/main src | sed 's/^[ 0-9.]\+% //g' | uniq | xargs -d '\n' flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench.Devel ci
 
 all:
 	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench ci src/*
+	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench.Devel ci src/*
 
 ci: setup test
 
