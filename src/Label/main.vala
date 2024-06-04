@@ -28,12 +28,12 @@ public void main () {
         "<b>Lorem ipsum</b> dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore disputandum putant.";
 
     string long_label =
-        """     <b>Lorem ipsum</b> dolor sit amet, consectetur adipiscing elit,
-sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem.
-Ut enim mortis metu omnis quietae vitae status perturbatur,
-et ut succumbere doloribus eosque humili animo inbecilloque ferre miserum est,
-ob eamque debilitatem animi multi parentes, multi amicos, non nulli patriam,
-plerique autem se ipsos penitus perdiderunt, sic robustus animus et excelsus omni.""";
+        "     <b>Lorem ipsum</b> dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem.
+    Ut enim mortis metu omnis quietae vitae status perturbatur,
+    et ut succumbere doloribus eosque humili animo inbecilloque ferre miserum est,
+    ob eamque debilitatem animi multi parentes, multi amicos, non nulli patriam,
+    plerique autem se ipsos penitus perdiderunt, sic robustus animus et excelsus omni.";
 
     label.label = (short_label);
 
