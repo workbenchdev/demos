@@ -1,6 +1,8 @@
 #! /usr/bin/env -S vala workbench.vala --pkg gtk4
 
-async void on_clicked (Gtk.FontDialog dialog_custom) {
+private Gtk.FontDialog dialog_custom;
+
+async void on_clicked () {
     try {
         var family = yield dialog_custom.choose_family (workbench.window, null, null);
 
@@ -26,12 +28,10 @@ public void main () {
         message (@"Font: $(font_name)");
     });
 
-    Gtk.FontDialog dialog_custom = new Gtk.FontDialog () {
+    dialog_custom = new Gtk.FontDialog () {
         title = "Select a Font Family",
         modal = true
     };
 
-    custom_button.clicked.connect (() => {
-        on_clicked (dialog_custom);
-    });
+    custom_button.clicked.connect (on_clicked);
 }
