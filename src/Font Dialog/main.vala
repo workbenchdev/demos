@@ -1,9 +1,13 @@
 #! /usr/bin/env -S vala workbench.vala --pkg gtk4
 
 async void on_clicked (Gtk.FontDialog dialog_custom) {
-    var family = yield dialog_custom.choose_family (workbench.window, null, null);
+    try {
+        var family = yield dialog_custom.choose_family (workbench.window, null, null);
 
-    message (@"Font Family: $(family.get_name())");
+        message (@"Font Family: $(family.get_name())");
+    } catch (Error err) {
+        warning ("Error: %s\n", err.message);
+    }
 }
 
 public void main () {
