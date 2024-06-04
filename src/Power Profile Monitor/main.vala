@@ -5,7 +5,7 @@ public void main () {
     var overlay = (Adw.ToastOverlay) workbench.builder.get_object ("overlay");
 
     power_profile_monitor.notify["power-saver-enabled"].connect (() => {
-        var toast = new Adw.Toast ("") {
+        Adw.Toast toast = new Adw.Toast ("") {
             priority = Adw.ToastPriority.HIGH
         };
 
