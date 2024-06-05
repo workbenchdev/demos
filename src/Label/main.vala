@@ -45,12 +45,12 @@ public void main () {
     });
 
     justification_row.notify["selected"].connect (() => {
-        label.justify = justification_row.selected;
+        label.justify = (Gtk.Justification) justification_row.selected;
     });
 
     style_row.notify["selected"].connect (() => {
-        foreach (var style_class in style_classes) {
-            label.remove_css_class (style_class);
+        foreach (var string in style_classes) {
+            label.remove_css_class (string);
         }
 
         if (style_row.selected == 0)return;
