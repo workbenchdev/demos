@@ -49,8 +49,8 @@ public void main () {
     });
 
     style_row.notify["selected"].connect (() => {
-        foreach (var string in style_classes) {
-            label.remove_css_class (string);
+        foreach (string style_class in style_classes) {
+            label.remove_css_class (style_class);
         }
 
         if (style_row.selected == 0)return;
