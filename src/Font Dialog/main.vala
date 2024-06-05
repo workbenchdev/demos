@@ -16,7 +16,7 @@ public void main () {
     var font_dialog_button = (Gtk.FontDialogButton) workbench.builder.get_object ("font_dialog_button");
     var custom_button = (Gtk.Button) workbench.builder.get_object ("custom_button");
 
-    Gtk.FontDialog dialog_standard = new Gtk.FontDialog () {
+    var dialog_standard = new Gtk.FontDialog () {
         title = "Select a Font",
         modal = true
     };
