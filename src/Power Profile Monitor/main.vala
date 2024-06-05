@@ -1,11 +1,11 @@
 #! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 
 public void main () {
-    PowerProfileMonitor power_profile_monitor = PowerProfileMonitor.dup_default ();
+    var power_profile_monitor = PowerProfileMonitor.dup_default ();
     var overlay = (Adw.ToastOverlay) workbench.builder.get_object ("overlay");
 
     power_profile_monitor.notify["power-saver-enabled"].connect (() => {
-        Adw.Toast toast = new Adw.Toast ("") {
+        var toast = new Adw.Toast ("") {
             priority = Adw.ToastPriority.HIGH
         };
 
