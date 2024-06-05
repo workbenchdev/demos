@@ -11,8 +11,8 @@ public void main () {
         var button = (Gtk.ToggleButton) workbench.builder.get_object (id);
 
         button.notify["active"].connect (() => {
-            bool active = button.active;
-            message (@"$name $(active ? "On " : "Off ")");
+            string status = button.active ? "On" : "Off";
+            message (@"$name $status");
         });
     }
 }
