@@ -5,9 +5,9 @@ public void main () {
     var buffer = (GtkSource.Buffer) workbench.builder.get_object ("buffer");
     var text_view = (Gtk.TextView) workbench.builder.get_object ("text_view");
 
-    Spelling.Checker checker = Spelling.Checker.get_default ();
+    var checker = Spelling.Checker.get_default ();
     checker.language = "en_US";
-    Spelling.TextBufferAdapter adapter = new Spelling.TextBufferAdapter (buffer, checker);
+    var adapter = new Spelling.TextBufferAdapter (buffer, checker);
     MenuModel extra_menu = adapter.get_menu_model ();
 
     text_view.extra_menu = extra_menu;
