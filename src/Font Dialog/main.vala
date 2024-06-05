@@ -4,11 +4,11 @@ private Gtk.FontDialog dialog_custom;
 
 async void on_clicked () {
     try {
-        var family = yield dialog_custom.choose_family (workbench.window, null, null);
+        Pango.FontFamily family = yield dialog_custom.choose_family (workbench.window, null, null);
 
         message (@"Font Family: $(family.get_name())");
     } catch (Error err) {
-        warning ("Error: %s\n", err.message);
+        warning (@"Error: $(err.message)");
     }
 }
 
@@ -24,7 +24,7 @@ public void main () {
     font_dialog_button.dialog = dialog_standard;
 
     font_dialog_button.notify["font-desc"].connect (() => {
-        var font_name = font_dialog_button.get_font_desc ().to_string ();
+        string font_name = font_dialog_button.get_font_desc ().to_string ();
         message (@"Font: $(font_name)");
     });
 
@@ -33,5 +33,5 @@ public void main () {
         modal = true
     };
 
-    custom_button.clicked.connect (on_clicked);
+    custom_button.clicked.connect (on_clicked.begin);
 }
