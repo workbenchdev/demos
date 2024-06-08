@@ -1,7 +1,6 @@
 #! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 
 public void main () {
-
     var first_bar = (Gtk.ProgressBar) workbench.builder.get_object ("first");
     var second_bar = (Gtk.ProgressBar) workbench.builder.get_object ("second");
     var play = (Gtk.Button) workbench.builder.get_object ("play");
@@ -50,7 +49,6 @@ void update_tracker (Gtk.ProgressBar second_bar) {
 }
 
 void pulse_progress (Gtk.Label progress_tracker) {
-
     int time = 10;
 
     Timeout.add (1000, () => {
