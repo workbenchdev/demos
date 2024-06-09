@@ -15,7 +15,6 @@ public void main () {
                                             1, // value_to
                                             11000, // duration
                                             target // target
-
         ) {
         easing = LINEAR
     };
