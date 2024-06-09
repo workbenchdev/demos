@@ -1,34 +1,37 @@
 #! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 
-string tell_time (Gtk.SpinButton hours, Gtk.SpinButton minutes) {
+private Gtk.SpinButton hours;
+private Gtk.SpinButton minutes;
+
+string tell_time () {
     return (@"The time selected is $(hours.text):$(minutes.text)");
 }
 
 public void main () {
-    var hours = (Gtk.SpinButton) workbench.builder.get_object ("hours");
-    var minutes = (Gtk.SpinButton) workbench.builder.get_object ("minutes");
+    hours = (Gtk.SpinButton) workbench.builder.get_object ("hours");
+    minutes = (Gtk.SpinButton) workbench.builder.get_object ("minutes");
 
     hours.text = "00";
     minutes.text = "00";
 
     hours.value_changed.connect (() => {
-        message (@"$(tell_time (hours, minutes))");
+        message (@"$(tell_time ())");
     });
 
     minutes.value_changed.connect (() => {
-        message (@"$(tell_time (hours, minutes))");
+        message (@"$(tell_time ())");
     });
 
 
     hours.output.connect (() => {
-        double value = hours.adjustment.value;
-        hours.set_text ("%02d".printf ((int) value));
+        var value = (int) hours.adjustment.value;
+        hours.text = "%02d".printf (value);
         return true;
     });
 
     minutes.output.connect (() => {
-        double value = minutes.adjustment.value;
-        minutes.set_text ("%02d".printf ((int) value));
+        var value = (int) minutes.adjustment.value;
+        minutes.text = "%02d".printf (value);
         return true;
     });
 
