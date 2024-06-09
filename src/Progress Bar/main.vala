@@ -1,6 +1,7 @@
 #! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 
 public void main () {
+
     var first_bar = (Gtk.ProgressBar) workbench.builder.get_object ("first");
     var second_bar = (Gtk.ProgressBar) workbench.builder.get_object ("second");
     var play = (Gtk.Button) workbench.builder.get_object ("play");
@@ -8,12 +9,21 @@ public void main () {
 
     var target = new Adw.PropertyAnimationTarget (first_bar, "fraction");
 
-    var animation = new Adw.TimedAnimation (
-                                            first_bar,
-                                            0.2,
-                                            1,
-                                            11000,
-                                            target
+    var animation = new Adw.TimedAnimation
+        /*
+         * widget
+         * value_from
+         * value_to
+         * duration
+         * target
+         */
+        (
+         first_bar,
+         0.2,
+         1,
+         11000,
+         target
+
         ) {
         easing = LINEAR
     };
@@ -49,16 +59,17 @@ void update_tracker (Gtk.ProgressBar second_bar) {
 }
 
 void pulse_progress (Gtk.Label progress_tracker) {
+
     int time = 10;
 
     Timeout.add (1000, () => {
         if (time == 0) {
-            progress_tracker.set_text ("");
+            progress_tracker.label = ("");
             message (@"Operation complete!");
             return false;
         }
 
-        progress_tracker.set_text (@"$time seconds remaining…");
+        progress_tracker.label = (@"$time seconds remaining…");
         time -= 1;
         return true;
     }, Priority.DEFAULT);
