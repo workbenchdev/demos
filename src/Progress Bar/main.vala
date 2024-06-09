@@ -9,20 +9,12 @@ public void main () {
 
     var target = new Adw.PropertyAnimationTarget (first_bar, "fraction");
 
-    var animation = new Adw.TimedAnimation
-        /*
-         * widget
-         * value_from
-         * value_to
-         * duration
-         * target
-         */
-        (
-         first_bar,
-         0.2,
-         1,
-         11000,
-         target
+    var animation = new Adw.TimedAnimation (
+                                            first_bar, // widget
+                                            0.2, // value_from
+                                            1, // value_to
+                                            11000, // duration
+                                            target // target
 
         ) {
         easing = LINEAR
