@@ -9,12 +9,13 @@ async void save_file () {
 
         uint8[] contents = ("Hello from Workbench!").data;
 
-        yield file.replace_contents_async (contents,
-            null,
-            false,
-            FileCreateFlags.NONE,
-            null,
-            null);
+        yield file.replace_contents_async (contents, // contents
+            null, // etag
+            false, // make_backup
+            FileCreateFlags.NONE, // flags
+            null, // cancellable
+            null // callback
+        );
 
         message (@"File $(file.get_basename()) saved");
     } catch (Error e) {
