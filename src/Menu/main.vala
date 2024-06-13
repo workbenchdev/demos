@@ -1,13 +1,12 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg pango --pkg glib-2.0 --pkg gio-2.0
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 
 public void main () {
-
     var label = (Gtk.Label) workbench.builder.get_object ("label");
 
     var text_group = new SimpleActionGroup ();
     label.insert_action_group ("text", text_group);
 
-    var text_state = new GLib.HashTable<string, GLib.Variant> (str_hash, str_equal);
+    var text_state = new HashTable<string, Variant> (str_hash, str_equal);
     text_state.insert ("italic", false);
     text_state.insert ("bold", false);
     text_state.insert ("foreground", "green");
@@ -26,7 +25,7 @@ public void main () {
     });
     text_group.add_action (bold_action);
 
-    var color_action = new SimpleAction.stateful ("color", new GLib.VariantType ("s"), new Variant.string ("green"));
+    var color_action = new SimpleAction.stateful ("color", new VariantType ("s"), new Variant.string ("green"));
     color_action.notify["state"].connect (() => {
         text_state.replace ("foreground", color_action.state.get_string ());
         label.attributes = (state_to_attr (text_state));
@@ -37,23 +36,25 @@ public void main () {
 // Helper function to create a PangoAttrList from text_state
 private Pango.AttrList state_to_attr (HashTable<string, Variant> state) {
     string attr_string = "";
-    var attrs = new Gtk.StringList (null);
+    GenericArray<string> attrs = new GenericArray<string> ();
 
     Variant? bold_variant = state.lookup ("bold");
-    if (bold_variant.get_boolean ()) {
-        attrs.append (@"0 -1 weight bold");
+    if (bold_variant != null && bold_variant.get_boolean ()) {
+        attrs.add (@"0 -1 weight bold");
     }
 
     Variant? italic_variant = state.lookup ("italic");
-    if (italic_variant.get_boolean ()) {
-        attrs.append (@"0 -1 style italic");
+    if (italic_variant != null && italic_variant.get_boolean ()) {
+        attrs.add (@"0 -1 style italic");
     }
 
     string color = state.lookup ("foreground").get_string ();
-    attrs.append (@"0 -1 foreground $color");
+    if (color != null) {
+        attrs.add (@"0 -1 foreground $color");
+    }
 
-    for (uint i = 0; i < attrs.n_items; i++) {
-        attr_string += attrs.get_string (i) + ", ";
+    foreach (string arr_attrb in attrs) {
+        attr_string += arr_attrb + ", ";
     }
     return Pango.AttrList.from_string (attr_string);
 }
