@@ -1,15 +1,16 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg shumate-1.0
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg gstreamer-1.0 --pkg libportal --pkg shumate-1.0
 
 private Shumate.SimpleMap map_widget;
 private Shumate.Viewport viewport;
 private Gtk.Entry entry_latitude;
 private Gtk.Entry entry_longitude;
 
-void go_to_location () {
-    var latitude = float.parse (entry_latitude.text);
-    var longitude = float.parse (entry_longitude.text);
 
-    if (!float.try_parse (entry_latitude.text) || !float.try_parse (entry_longitude.text)) {
+void go_to_location () {
+    float latitude = 0, longitude = 0;
+
+    if (!float.try_parse (entry_latitude.text, out latitude) || !float.try_parse
+            (entry_longitude.text, out longitude)) {
         message (@"Please enter valid coordinates");
         return;
     }
