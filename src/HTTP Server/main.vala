@@ -4,9 +4,9 @@ private Gtk.ToggleButton button_server;
 private Gtk.LinkButton linkbutton;
 int port;
 
-void handler (Soup.Server server, Soup.ServerMessage msg, string path, GLib.HashTable<string, string>? query) {
-    var content_type_params = new GLib.HashTable<string, string> (str_hash, str_equal);
-    content_type_params.insert ("charset", "UTF-8");
+void handler (Soup.Server server, Soup.ServerMessage msg, string path, HashTable<string, string>? query) {
+    var content_type_params = new HashTable<string, string> (str_hash, str_equal);
+    content_type_params["charset"] = "UTF-8";
 
     msg.set_status (Soup.Status.OK, null);
     msg.get_response_headers ().set_content_type ("text/html", content_type_params);
@@ -23,17 +23,17 @@ void handler (Soup.Server server, Soup.ServerMessage msg, string path, GLib.Hash
     """.data);
 }
 
-void hello_handler (Soup.Server server, Soup.ServerMessage msg, string path, GLib.HashTable<string, string>? query) {
+void hello_handler (Soup.Server server, Soup.ServerMessage msg, string path, HashTable<string, string>? query) {
     if (query == null) {
         msg.set_redirect (Soup.Status.FOUND, "/");
         return;
     }
 
-    var user_agent = msg.get_request_headers ().get_one ("User-Agent");
-    var name = query.lookup ("name");
+    string user_agent = msg.get_request_headers ().get_one ("User-Agent");
+    string name = query["name"];
     label_greetings.label = (@"Hello $(name), your browser is\n$(user_agent)");
-    var content_type_params = new GLib.HashTable<string, string> (str_hash, str_equal);
-    content_type_params.insert ("charset", "UTF-8");
+    var content_type_params = new HashTable<string, string> (str_hash, str_equal);
+    content_type_params["charset"] = "UTF-8";
     msg.set_status (Soup.Status.OK, null);
     msg.get_response_headers ().set_content_type ("text/html", content_type_params);
     msg.get_response_body ().append_take ("
@@ -48,9 +48,9 @@ void hello_handler (Soup.Server server, Soup.ServerMessage msg, string path, GLi
 void start_server (Soup.Server server) {
     try {
         server.listen_local (port, 0);
-        var uri = server.get_uris ();
+        SList<Uri> uri = server.get_uris ();
         port = uri.data.get_port ();
-        linkbutton.set_uri (@"http://localhost:$(port)");
+        linkbutton.uri = (@"http://localhost:$(port)");
 
         button_server.label = "Stop Server";
     } catch (Error e) {
