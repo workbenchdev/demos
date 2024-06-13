@@ -10,7 +10,7 @@ public void main () {
     var delete_file = (Gtk.Button) workbench.builder.get_object ("delete_file");
     var edit_file = (Gtk.Button) workbench.builder.get_object ("edit_file");
     var file_name = (Gtk.Label) workbench.builder.get_object ("file_name");
-    Gtk.TextBuffer buffer = edit_entry.get_buffer ();
+    Gtk.TextBuffer buffer = edit_entry.buffer;
     File file = File.new_for_uri (workbench.resolve ("workbench.txt"));
     File file_dir = file.get_parent ();
     var overlay = (Adw.ToastOverlay) workbench.builder.get_object ("overlay");
@@ -60,6 +60,8 @@ public void main () {
             case FileMonitorEvent.CREATED:
                 toast.title = @"$(child.get_basename()) created in the directory";
                 break;
+            default:
+                break;
         }
 
         if (toast.title != "")overlay.add_toast (toast);
@@ -68,17 +70,13 @@ public void main () {
     edit_file.clicked.connect (() => {
         string byte_string = buffer.text;
         uint8[] bytes = byte_string.data;
-        try {
-            file.replace_contents (
-                                   bytes, // contents
-                                   null, // etag
-                                   false, // make_backup
-                                   FileCreateFlags.REPLACE_DESTINATION, // flags
-                                   null, // new_etag
-                                   null // cancellable
-            );
-        } catch (Error e) {
-            message (@"$(e.message)");
-        }
+        file.replace_contents_async.begin (
+                                           bytes, // contents
+                                           null, // etag
+                                           false, // make_backup
+                                           FileCreateFlags.REPLACE_DESTINATION, // flags
+                                           null, // new_etag
+                                           null // cancellable
+        );
     });
 }
