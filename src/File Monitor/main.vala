@@ -2,7 +2,6 @@
 
 private FileMonitor monitor_for_dir;
 private FileMonitor monitor_for_file;
-
 public void main () {
 
     var edit_entry = (Gtk.TextView) workbench.builder.get_object ("edit_entry");
@@ -68,15 +67,22 @@ public void main () {
     });
 
     edit_file.clicked.connect (() => {
-        string byte_string = buffer.text;
-        uint8[] bytes = byte_string.data;
-        file.replace_contents_async.begin (
-                                           bytes, // contents
-                                           null, // etag
-                                           false, // make_backup
-                                           FileCreateFlags.REPLACE_DESTINATION, // flags
-                                           null, // new_etag
-                                           null // cancellable
-        );
+        replace_handler.begin (buffer, file);
     });
+}
+
+async void replace_handler (Gtk.TextBuffer buffer, File file) {
+    string byte_string = buffer.text;
+    uint8[] bytes = byte_string.data;
+    try {
+        yield file.replace_contents_async (bytes, // contents
+            null, // etag
+            false, // make_backup
+            FileCreateFlags.REPLACE_DESTINATION, // flags
+            null, // new_etag
+            null // cancellable
+        );
+    } catch (Error e) {
+        message (@"$(e.message)");
+    }
 }
