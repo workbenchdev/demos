@@ -1,4 +1,4 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg gstreamer-1.0 --pkg libportal --pkg shumate-1.0
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg shumate-1.0
 
 private Shumate.SimpleMap map_widget;
 private Shumate.Viewport viewport;
