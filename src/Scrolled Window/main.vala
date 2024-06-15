@@ -27,7 +27,8 @@ public void main () {
         populate_container (container, @"Item $(i + 1)");
     }
 
-    scrollbars.foreach ((orientation, scrollbar) => {
+    foreach (Gtk.Orientation orientation in scrollbars.get_keys ()) {
+        Gtk.Scrollbar scrollbar = scrollbars[orientation];
         Gtk.Adjustment adj = scrollbar.adjustment;
         adj.value_changed.connect (() => {
             if (adj.value == adj.lower) {
@@ -42,7 +43,7 @@ public void main () {
                 button_start.sensitive = !auto_scrolling;
             }
         });
-    });
+    }
 
     scrolled_window.edge_reached.connect (() => {
         message (@"Edge Reached");
