@@ -4,42 +4,42 @@ private Gtk.Picture output;
 
 async void start_screencast_session (Xdp.Portal portal, Xdp.Parent parent) {
     try {
-        Xdp.Session session = yield portal.create_screencast_session (Xdp.OutputType.MONITOR,
-            Xdp.ScreencastFlags.NONE,
-            Xdp.CursorMode.EMBEDDED,
-            Xdp.PersistMode.TRANSIENT,
-            null,
-            null);
+        Xdp.Session session = yield portal.create_screencast_session (MONITOR, // Output Type
+            NONE, // Screencast Flags
+            EMBEDDED, // Cursor Mode
+            TRANSIENT, // Persist Mode
+            null, // Restore token
+            null); // Cancellable
 
         if (session == null) {
             message ("Permission denied");
             return;
         }
 
-        var success = yield session.start (parent, null);
+        bool success = yield session.start (parent, null);
 
         if (!success) {
             message ("Could not start session");
             return;
         }
-        var pw_remote = session.open_pipewire_remote ();
+        int pw_remote = session.open_pipewire_remote ();
         var pipeline = new Gst.Pipeline ("");
-        var source = Gst.ElementFactory.make ("pipewiresrc", "source");
-        var queue = Gst.ElementFactory.make ("queue", "queue"); // add a queue element
-        var paintable_sink = Gst.ElementFactory.make (
-                                                      "gtk4paintablesink",
-                                                      "paintable_sink"
+        Gst.Element source = Gst.ElementFactory.make ("pipewiresrc", "source");
+        Gst.Element queue = Gst.ElementFactory.make ("queue", "queue"); // add a queue element
+        Gst.Element paintable_sink = Gst.ElementFactory.make (
+                                                              "gtk4paintablesink",
+                                                              "paintable_sink"
         );
-        var glsinkbin = Gst.ElementFactory.make ("glsinkbin", "glsinkbin");
+        Gst.Element glsinkbin = Gst.ElementFactory.make ("glsinkbin", "glsinkbin");
 
         // Set up and Link Pipeline
         source.set_property ("fd", pw_remote); // pw_remote is the file descriptor obtained from libportal
 
         // Obtain the node id from the screencast session
-        var streamss = session.get_streams ();
-        var node_id = streamss.get_child_value (0);
+        Variant streams = session.get_streams ();
+        uint node_id = streams.get_child_value (0).get_child_value (0).get_uint32 ();
 
-        if (node_id == null) {
+        if (node_id == 0) {
             stderr.printf ("No available node id\n");
             return;
         }
@@ -53,17 +53,17 @@ async void start_screencast_session (Xdp.Portal portal, Xdp.Parent parent) {
         source.link (queue);
         queue.link (glsinkbin);
 
-        var paintable = GLib.Value (typeof (Gdk.Paintable));
+        var paintable = Value (typeof (Gdk.Paintable));
 
         paintable_sink.get_property ("paintable", ref paintable);
         output.paintable = (Gdk.Paintable) paintable.get_object ();
 
         // Start the pipeline
-        pipeline.set_state (Gst.State.PLAYING);
+        pipeline.set_state (PLAYING);
 
         // Handle cleanup on application exit
         output.destroy.connect (() => {
-            pipeline.set_state (Gst.State.NULL);
+            pipeline.set_state (NULL);
         });
     } catch (Error e) {
         message (@"$(e.message)");
