@@ -1,7 +1,5 @@
 #! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 
-private bool ctrl_pressed = false;
-
 public void main () {
     Gtk.Window window = workbench.window;
 
@@ -23,23 +21,13 @@ public void main () {
 
     key_controller.key_pressed.connect ((keyval, keycode, state) => {
         if (keyval == Gdk.Key.Control_L || keyval == Gdk.Key.Control_R) {
-            ctrl_pressed = true;
+            ctrl_button.add_css_class ("suggested-action");
         }
         return true;
     });
 
     key_controller.key_released.connect ((keyval, keycode, state) => {
         if (keyval == Gdk.Key.Control_L || keyval == Gdk.Key.Control_R) {
-            ctrl_pressed = false;
-        }
-    });
-
-    ctrl_button.clicked.connect (() => {
-        if (ctrl_pressed) {
-            ctrl_button.label = "Click to Deactivate";
-            ctrl_button.add_css_class ("suggested-action");
-        } else {
-            ctrl_button.label = "Ctrl + Click to Activate";
             ctrl_button.remove_css_class ("suggested-action");
         }
     });
@@ -50,15 +38,19 @@ public void main () {
     ((Gtk.Widget) window).add_controller (gesture_click);
 
     gesture_click.pressed.connect ((gesture, n_press, x, y) => {
+        var css_class = "suggested-action";
+        if ((gesture.get_current_event_state () & Gdk.ModifierType.CONTROL_MASK) > 0) {
+            css_class = "destructive-action";
+        }
         switch (gesture.get_current_button ()) {
             case Gdk.BUTTON_PRIMARY:
-                primary_button.add_css_class ("suggested-action");
+                primary_button.add_css_class (css_class);
                 break;
             case Gdk.BUTTON_MIDDLE:
-                middle_button.add_css_class ("suggested-action");
+                middle_button.add_css_class (css_class);
                 break;
             case Gdk.BUTTON_SECONDARY:
-                secondary_button.add_css_class ("suggested-action");
+                secondary_button.add_css_class (css_class);
                 break;
         }
     });
@@ -67,12 +59,15 @@ public void main () {
         switch (gesture.get_current_button ()) {
             case Gdk.BUTTON_PRIMARY:
                 primary_button.remove_css_class ("suggested-action");
+                primary_button.remove_css_class ("destructive-action");
                 break;
             case Gdk.BUTTON_MIDDLE:
                 middle_button.remove_css_class ("suggested-action");
+                middle_button.remove_css_class ("destructive-action");
                 break;
             case Gdk.BUTTON_SECONDARY:
                 secondary_button.remove_css_class ("suggested-action");
+                secondary_button.remove_css_class ("destructive-action");
                 break;
         }
     });
