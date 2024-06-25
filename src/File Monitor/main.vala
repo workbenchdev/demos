@@ -27,13 +27,9 @@ public void main () {
         message (@"$(e.message)");
     }
 
-    delete_file.clicked.connect (() => {
-        file.delete_async.begin (Priority.DEFAULT, null);
-    });
+    delete_file.clicked.connect (() => file.delete_async.begin (Priority.DEFAULT, null));
 
-    view_file.clicked.connect (() => {
-        file_launcher.launch.begin (workbench.window, null);
-    });
+    view_file.clicked.connect (() => file_launcher.launch.begin (workbench.window, null));
 
     monitor_for_file.changed.connect ((file, other_file, event) => {
         if (event == FileMonitorEvent.CHANGES_DONE_HINT) {
@@ -66,9 +62,7 @@ public void main () {
         if (toast.title != "")overlay.add_toast (toast);
     });
 
-    edit_file.clicked.connect (() => {
-        replace_handler.begin (buffer, file);
-    });
+    edit_file.clicked.connect (() => replace_handler.begin (buffer, file));
 }
 
 async void replace_handler (Gtk.TextBuffer buffer, File file) {
