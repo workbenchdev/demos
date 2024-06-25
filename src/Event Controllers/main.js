@@ -15,29 +15,17 @@ const secondary_button = workbench.builder.get_object("secondary_button");
 stack_picture_1.file = Gio.File.new_for_uri(workbench.resolve("image1.png"));
 stack_picture_2.file = Gio.File.new_for_uri(workbench.resolve("image2.png"));
 
-let ctrl_pressed = false;
-
 // Key controller to detect when the Ctrl key is pressed and released
 const key_controller = new Gtk.EventControllerKey();
 window.add_controller(key_controller);
 key_controller.connect("key-pressed", (_self, keyval, _keycode, _state) => {
   if (keyval === Gdk.KEY_Control_L || keyval === Gdk.KEY_Control_R) {
-    ctrl_pressed = true;
+    ctrl_button.add_css_class("suggested-action");
   }
 });
 
 key_controller.connect("key-released", (_self, keyval, _keycode, _state) => {
   if (keyval === Gdk.KEY_Control_L || keyval === Gdk.KEY_Control_R) {
-    ctrl_pressed = false;
-  }
-});
-
-ctrl_button.connect("clicked", () => {
-  if (ctrl_pressed) {
-    ctrl_button.label = _("Click to Deactivate");
-    ctrl_button.add_css_class("suggested-action");
-  } else {
-    ctrl_button.label = _("Ctrl + Click to Activate");
     ctrl_button.remove_css_class("suggested-action");
   }
 });
@@ -48,33 +36,41 @@ const gesture_click = new Gtk.GestureClick({ button: 0 });
 window.add_controller(gesture_click);
 
 gesture_click.connect("pressed", (_self, _n_press, _x, _y) => {
-  switch (gesture_click.get_current_button()) {
+  let css_class = "suggested-action";
+  if (_self.get_current_event_state() & Gdk.ModifierType.CONTROL_MASK) {
+    css_class = "destructive-action";
+  }
+
+  switch (_self.get_current_button()) {
     case Gdk.BUTTON_PRIMARY:
-      primary_button.add_css_class("suggested-action");
+      primary_button.add_css_class(css_class);
       break;
 
     case Gdk.BUTTON_MIDDLE:
-      middle_button.add_css_class("suggested-action");
+      middle_button.add_css_class(css_class);
       break;
 
     case Gdk.BUTTON_SECONDARY:
-      secondary_button.add_css_class("suggested-action");
+      secondary_button.add_css_class(css_class);
       break;
   }
 });
 
 gesture_click.connect("released", (_self, _n_press, _x, _y) => {
-  switch (gesture_click.get_current_button()) {
+  switch (_self.get_current_button()) {
     case Gdk.BUTTON_PRIMARY:
       primary_button.remove_css_class("suggested-action");
+      primary_button.remove_css_class("destructive-action");
       break;
 
     case Gdk.BUTTON_MIDDLE:
       middle_button.remove_css_class("suggested-action");
+      middle_button.remove_css_class("destructive-action");
       break;
 
     case Gdk.BUTTON_SECONDARY:
       secondary_button.remove_css_class("suggested-action");
+      secondary_button.remove_css_class("destructive-action");
       break;
   }
 });
