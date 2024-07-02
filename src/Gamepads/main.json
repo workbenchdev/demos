@@ -1,0 +1,7 @@
+{
+  "name": "Gamepads",
+  "category": "controls",
+  "description": "Respond to gamepads and controllers input",
+  "panels": ["code", "preview"],
+  "autorun": true
+}
