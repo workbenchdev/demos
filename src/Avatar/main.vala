@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 private Adw.Avatar avatar_image;
 private Gtk.FileFilter file_filter;
 

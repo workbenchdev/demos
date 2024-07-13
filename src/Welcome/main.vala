@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
-
 public void main () {
     var box = (Gtk.Box) workbench.builder.get_object ("subtitle");
 
