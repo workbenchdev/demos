@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4
-
 double to_radians (double degrees) {
     return degrees * (Math.PI / 180);
 }

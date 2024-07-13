@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 private Chessboard chessboard;
 private Gtk.Box box;
 private Gtk.Label label;

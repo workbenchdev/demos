@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 public void main () {
     var checkbox_1 = (Gtk.CheckButton) workbench.builder.get_object ("checkbox_1");
     var checkbox_2 = (Gtk.CheckButton) workbench.builder.get_object ("checkbox_2");

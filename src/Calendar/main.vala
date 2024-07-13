@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 public void main () {
     var calendar = (Gtk.Calendar) workbench.builder.get_object ("calendar");
     calendar.notify["day"].connect (() => {

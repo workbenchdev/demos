@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg gtksourceview-5 --pkg libspelling-1
-
 public void main () {
     GtkSource.init ();
     var buffer = (GtkSource.Buffer) workbench.builder.get_object ("buffer");

@@ -1,4 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libsoup-3.0
 private Gtk.Label label_greetings;
 private Gtk.ToggleButton button_server;
 private Gtk.LinkButton linkbutton;

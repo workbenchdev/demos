@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 public void main () {
     var controls = (Gtk.MediaControls) workbench.builder.get_object ("controls");
 

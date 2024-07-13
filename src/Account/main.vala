@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libportal-gtk4
-
 private Gtk.Revealer revealer;
 private Adw.EntryRow entry;
 private Adw.Avatar avatar;

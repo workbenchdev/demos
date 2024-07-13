@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 public void main () {
     var action_bar = (Gtk.ActionBar) workbench.builder.get_object ("action_bar");
     var button = (Gtk.Button) workbench.builder.get_object ("button");
