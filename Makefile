@@ -37,8 +37,8 @@ clean:
 	rm -f src/*/Cargo.lockfile
 	rm -f src/*/lib.rs
 	rm -f src/*/workbench.rs
+	rm -f src/*/jsconfig.json
 	rm -f src/*/*.gresource
 	rm -f src/*/*.gresource.xml
-	rm -f src/*/jsconfig.json
 	rm -rf src/*/target
 	rm -rf src/*/__pycache__

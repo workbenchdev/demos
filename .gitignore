@@ -14,7 +14,6 @@ install
 .venv
 __pycache__
 *.pyc
-jsconfig.json
 
 # IDEs / editors
 .idea
@@ -33,3 +32,4 @@ src/*/workbench.rs
 src/*/target
 src/*/*.gresource
 src/*/*.gresource.xml
+src/*/jsconfig.json
