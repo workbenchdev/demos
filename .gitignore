@@ -32,3 +32,4 @@ src/*/workbench.rs
 src/*/target
 src/*/*.gresource
 src/*/*.gresource.xml
+src/*/jsconfig.json

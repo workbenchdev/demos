@@ -15,8 +15,8 @@ async function onClicked() {
     parent,
     uri,
     Xdp.WallpaperFlags.PREVIEW |
-      Xdp.WallpaperFlags.BACKGROUND |
-      Xdp.WallpaperFlags.LOCKSCREEN,
+    Xdp.WallpaperFlags.BACKGROUND |
+    Xdp.WallpaperFlags.LOCKSCREEN,
     null,
   );
 
