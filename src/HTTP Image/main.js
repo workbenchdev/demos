@@ -1,5 +1,5 @@
 import GLib from "gi://GLib";
-import Gdk from "gi://Gdk";
+import Gdk from "gi://Gdk?version=4.0";
 import Gio from "gi://Gio";
 import Soup from "gi://Soup";
 

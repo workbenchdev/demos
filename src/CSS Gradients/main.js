@@ -1,5 +1,5 @@
 import Adw from "gi://Adw";
-import Gdk from "gi://Gdk";
+import Gdk from "gi://Gdk?version=4.0";
 import Gtk from "gi://Gtk?version=4.0";
 import GtkSource from "gi://GtkSource";
 

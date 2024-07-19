@@ -1,4 +1,4 @@
-import Gdk from "gi://Gdk";
+import Gdk from "gi://Gdk?version=4.0";
 
 const textview = workbench.builder.get_object("textview");
 const select = workbench.builder.get_object("select");

@@ -1,5 +1,5 @@
 import Gtk from "gi://Gtk?version=4.0";
-import Gdk from "gi://Gdk";
+import Gdk from "gi://Gdk?version=4.0";
 import Graphene from "gi://Graphene";
 import Gsk from "gi://Gsk";
 import GObject from "gi://GObject";
