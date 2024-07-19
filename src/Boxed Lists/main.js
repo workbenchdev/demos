@@ -1,5 +1,5 @@
 import GObject from "gi://GObject";
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 
 const drop_down = workbench.builder.get_object("drop_down");
 

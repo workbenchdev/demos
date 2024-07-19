@@ -1,4 +1,4 @@
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 
 const scale_one = workbench.builder.get_object("one");
 const scale_two = workbench.builder.get_object("two");

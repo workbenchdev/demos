@@ -1,6 +1,6 @@
 import Adw from "gi://Adw";
 import Gdk from "gi://Gdk";
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 import GtkSource from "gi://GtkSource";
 
 let css_provider;

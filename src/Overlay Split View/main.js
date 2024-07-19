@@ -1,4 +1,4 @@
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 
 const split_view = workbench.builder.get_object("split_view");
 const start_toggle = workbench.builder.get_object("start_toggle");

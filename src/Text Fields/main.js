@@ -1,5 +1,5 @@
 import Adw from "gi://Adw";
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 
 const entry = workbench.builder.get_object("entry");
 const entry_placeholder = workbench.builder.get_object("entry_placeholder");

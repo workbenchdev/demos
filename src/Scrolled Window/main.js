@@ -1,5 +1,5 @@
 import Adw from "gi://Adw";
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 
 const scrolled_window = workbench.builder.get_object("scrolled_window");
 const container = workbench.builder.get_object("container");

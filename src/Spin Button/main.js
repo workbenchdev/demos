@@ -1,4 +1,4 @@
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 const hours = workbench.builder.get_object("hours");
 const minutes = workbench.builder.get_object("minutes");
 

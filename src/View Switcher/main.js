@@ -1,5 +1,5 @@
 import Adw from "gi://Adw";
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 
 const notifications_page = workbench.builder.get_object("page3");
 const notification_list = workbench.builder.get_object("notification_list");

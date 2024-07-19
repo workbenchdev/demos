@@ -1,4 +1,4 @@
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 import Gdk from "gi://Gdk";
 import Graphene from "gi://Graphene";
 import Gsk from "gi://Gsk";
