@@ -31,10 +31,7 @@ pub fn main() {
     // required by adw::PropertyAnimationTarget::new
     gtk::init().unwrap();
 
-    let target = adw::PropertyAnimationTarget::new(
-        &entry_progress,
-        "progress-fraction"
-    );
+    let target = adw::PropertyAnimationTarget::new(&entry_progress, "progress-fraction");
 
     let animation = adw::TimedAnimation::builder()
         .widget(&entry_progress)
