@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
-
 private Gtk.Entry entry;
 private Gtk.Entry entry_placeholder;
 private Gtk.Entry entry_icon;

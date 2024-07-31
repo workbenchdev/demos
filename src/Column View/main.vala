@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 // Define our class for our custom model
 public class Book : Object {
     public string title { get; set; }
