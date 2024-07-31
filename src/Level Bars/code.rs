@@ -1,7 +1,6 @@
 use crate::workbench;
-use gtk::prelude::*;
 use gtk::glib;
-
+use gtk::prelude::*;
 
 pub fn main() {
     let bar_continuous: gtk::LevelBar = workbench::builder().object("bar_continuous").unwrap();
@@ -47,7 +46,7 @@ pub fn main() {
                 }
                 5 | 6 => {
                     label_strength.set_label("Strong");
-                    label_strength.set_css_classes(&["strong-label"]);        
+                    label_strength.set_css_classes(&["strong-label"]);
                 }
                 _ => {
                     label_strength.set_label("");
