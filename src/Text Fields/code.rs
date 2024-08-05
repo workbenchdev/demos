@@ -8,7 +8,6 @@ pub fn main() {
     let entry_icon: gtk::Entry = workbench::builder().object("entry_icon").unwrap();
     let entry_progress: gtk::Entry = workbench::builder().object("entry_progress").unwrap();
 
-    /* In rust it's easier to pass the reference to the triggered element */
     entry.connect_activate(|triggered_entry| {
         println!("Regular Entry: {} entered", triggered_entry.text());
     });
@@ -28,7 +27,7 @@ pub fn main() {
     entry_progress.connect_activate(|triggered_entry| {
         println!("Progress Bar Entry: {} entered", triggered_entry.text());
     });
-    // required by adw::PropertyAnimationTarget::new
+    // GTK init is required by adw::PropertyAnimationTarget::new
     gtk::init().unwrap();
 
     let target = adw::PropertyAnimationTarget::new(&entry_progress, "progress-fraction");
@@ -76,7 +75,7 @@ pub fn main() {
         return String::from("Password made successfully");
     }
 
-    //Notice how we move the
+    //Notice how we move the references inside of the closure using the glib::clone! macro
     entry_confirm_password.connect_activate(
         gtk::glib::clone!(@weak label_password, @weak entry_password, @weak entry_confirm_password => move |_| {
           let passwd = entry_password.text();
