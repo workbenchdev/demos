@@ -4,7 +4,7 @@ use gtk::prelude::*;
 use std::collections::HashMap;
 
 pub fn main() {
-    //Otherwise the MediaFile crate crashes
+    // Otherwise the MediaFile crate crashes
     gtk::init().unwrap();
 
     let controls: gtk::MediaControls = workbench::builder().object("controls").unwrap();
