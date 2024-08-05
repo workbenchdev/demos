@@ -1,6 +1,6 @@
 use crate::workbench;
-use gtk::glib;
 use gtk::prelude::*;
+use gtk::{gio, glib};
 use std::collections::HashMap;
 
 pub fn main() {
@@ -26,7 +26,7 @@ pub fn main() {
             }
 
             controls.set_media_stream(Some(&gtk::MediaFile::for_file(
-              &gtk::gio::File::for_uri(&workbench::resolve(file_name))
+              &gio::File::for_uri(&workbench::resolve(file_name))
             )));
             // Media stream can be missing
             if let Some(media_stream) = controls.media_stream() {
