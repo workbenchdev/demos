@@ -41,11 +41,10 @@ pub fn main() {
         .target(&target)
         .build();
 
-    /*
-     * Animation is defined outside of the scope of the following closure
-     * That's why we need to use glib::clone! macro
-     * See: https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/macro.clone.html
-     */
+    // Animation is defined outside of the scope of the following closure
+    // That's why we need to use glib::clone! macro
+    // See: https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/macro.clone.html
+
     entry_progress.connect_icon_press(gtk::glib::clone!(
         @strong animation => move |_, __| animation.play()
     ));
@@ -57,8 +56,7 @@ pub fn main() {
     let entry_confirm_password: gtk::PasswordEntry = workbench::builder()
         .object("entry_confirm_password")
         .unwrap();
-    // I am avoiding typing the GString to a normal rust String
-    // Check the documentation for more details on GString
+
     fn validate_password(
         passwd: &gtk::glib::GString,
         confirm_passwd: &gtk::glib::GString,
@@ -75,7 +73,7 @@ pub fn main() {
         return String::from("Password made successfully");
     }
 
-    //Notice how we move the references inside of the closure using the glib::clone! macro
+    // Using the glib::clone! macro we pass the reference to the closure
     entry_confirm_password.connect_activate(
         gtk::glib::clone!(@weak label_password, @weak entry_password, @weak entry_confirm_password => move |_| {
           let passwd = entry_password.text();
@@ -92,10 +90,8 @@ pub fn main() {
         }),
     );
 
-    /*
-    The entry_completion is deprecated
-    https://discourse.gnome.org/t/replacement-for-entrycompletion/13505
-    */
+    // The entry_completion is deprecated
+    // https://discourse.gnome.org/t/replacement-for-entrycompletion/13505
     let entry_completion: gtk::Entry = workbench::builder().object("entry_completion").unwrap();
     let completion = gtk::EntryCompletion::builder().build();
     let store = gtk::TreeStore::new(&[gtk::glib::Type::STRING]);
