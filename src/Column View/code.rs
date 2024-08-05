@@ -1,9 +1,9 @@
 use crate::workbench;
 use glib::Properties;
 use gtk;
-use gtk::glib;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
+use gtk::{gio, glib};
 use std::cell::{Cell, OnceCell};
 
 // Subclassing is quite tricky
@@ -64,7 +64,7 @@ pub fn main() {
     let col2: gtk::ColumnViewColumn = workbench::builder().object("col2").unwrap();
     let col3: gtk::ColumnViewColumn = workbench::builder().object("col3").unwrap();
 
-    let data_model = gtk::gio::ListStore::new::<Book>();
+    let data_model = gio::ListStore::new::<Book>();
     data_model.splice(
         0,
         0,
