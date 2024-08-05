@@ -14,7 +14,9 @@ pub fn main() {
 
     // Model
 
-    // To be used as inside closures, we put it inside Cell
+    // https://doc.rust-lang.org/std/cell/struct.Cell.html
+    // "A mutable memory location."
+    // Makes possible accessing and changing values from signal handlers
     let item = Cell::new(1);
     let strings_model =
         gtk::StringList::new(&["Default Item 1", "Default Item 2", "Default Item 3"]);
