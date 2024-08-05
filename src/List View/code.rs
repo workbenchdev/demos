@@ -12,12 +12,12 @@ pub fn main() {
     let add: gtk::Button = workbench::builder().object("add").unwrap();
     let remove: gtk::Button = workbench::builder().object("remove").unwrap();
 
-    // Model
-
     // https://doc.rust-lang.org/std/cell/struct.Cell.html
     // "A mutable memory location."
     // Makes possible accessing and changing values from signal handlers
     let item = Cell::new(1);
+
+    // Model
     let strings_model =
         gtk::StringList::new(&["Default Item 1", "Default Item 2", "Default Item 3"]);
     let model = gtk::SingleSelection::new(Some(strings_model));
