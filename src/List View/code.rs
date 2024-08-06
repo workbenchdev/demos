@@ -35,7 +35,7 @@ pub fn main() {
     model.connect_selection_changed(move |model, _position, _n_items| {
         let selected_item = model.selected();
         println!(
-            "Model item selected from view: {:?}",
+            "Model item selected from view: {}",
             model
                 .item(selected_item) // Get the item
                 .unwrap() // Make sure it exists
