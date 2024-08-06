@@ -68,7 +68,7 @@ pub fn main() {
     @weak model => move |_| {
       let selected_item = model.selected();
       // In order to delete values we need to access the
-      // actuall Stringlist model, we've created.
+      // actual StringList model, we've created.
       let strings_model: gtk::StringList = model
         .model()
         .unwrap()
