@@ -45,7 +45,7 @@ pub fn main() {
         )
     });
 
-    add.connect_clicked(gtk::glib::clone!(
+    add.connect_clicked(glib::clone!(
     // Copy the reference, so it's accessible from the closure
         // https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/macro.clone.html
     @weak model => move |_| {
