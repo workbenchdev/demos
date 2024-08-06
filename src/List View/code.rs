@@ -58,7 +58,7 @@ pub fn main() {
             .downcast::<gtk::StringList>()
             .unwrap();
         strings_model.append(format!("New item {}", item.get()).as_str());
-        //Increase the counter
+        // Increase the counter
         item.set(value + 1);
     }));
 
