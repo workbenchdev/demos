@@ -20,10 +20,10 @@ pub fn main() {
     // Model
     let strings_model =
         gtk::StringList::new(&["Default Item 1", "Default Item 2", "Default Item 3"]);
-    let model = gtk::SingleSelection::new(Some(strings_model));
+    let model = gtk::SingleSelection::new(Some(strings_model.clone()));
 
-    //View
-    model.connect_items_changed(move |_model, position, removed, added| {
+    // View
+    strings_model.connect_items_changed(move |_model, position, removed, added| {
         println!(
             "position: {}, Item removed? {}, Item added? {}",
             position,
@@ -52,7 +52,7 @@ pub fn main() {
         // Get the item counter value
         let value = item.get();
         // Access the underlying gtk::StringList
-        let strings_model: gtk::StringList = model
+        let strings_model = model
             .model()
             .unwrap()
             .downcast::<gtk::StringList>()
@@ -69,7 +69,7 @@ pub fn main() {
       let selected_item = model.selected();
       // In order to delete values we need to access the
       // actual StringList model, we've created.
-      let strings_model: gtk::StringList = model
+      let strings_model = model
         .model()
         .unwrap()
         .downcast::<gtk::StringList>()
