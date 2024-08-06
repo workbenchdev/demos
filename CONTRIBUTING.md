@@ -124,3 +124,7 @@ Here is a compilation of resources to learn more about the GNOME platform.
 - [Valadoc.org](https://valadoc.org)
 - [Vala tutorial](https://wiki.gnome.org/Projects/Vala/Tutorial)
 - [Vala examples](https://wiki.gnome.org/Projects/Vala/Examples)
+
+### Python
+
+- [PyGObject Docs](https://pygobject.gnome.org)
