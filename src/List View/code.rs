@@ -14,7 +14,7 @@ pub fn main() {
 
     // https://doc.rust-lang.org/std/cell/struct.Cell.html
     // "A mutable memory location."
-    // Makes possible accessing and changing values from signal handlers
+    // Makes it possible to access and change values from within signal handlers
     let item = Cell::new(1);
 
     // Model
