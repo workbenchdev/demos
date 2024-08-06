@@ -25,7 +25,7 @@ pub fn main() {
     //View
     model.connect_items_changed(move |_model, position, removed, added| {
         println!(
-            "position: {}, Item removed? {} Item added? {}",
+            "position: {}, Item removed? {}, Item added? {}",
             position,
             removed > 0,
             added > 0
