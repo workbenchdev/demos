@@ -1,0 +1,75 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.ToastOverlay overlay {
+  Adw.StatusPage {
+    title: _("GOM Demo");
+    description: _("Simple database operations using GOM");
+
+    Box {
+      orientation: vertical;
+      halign: center;
+      spacing: 18;
+
+      Box {
+        spacing: 12;
+
+        styles [
+          "linked"
+        ]
+
+        Entry url_entry {
+          placeholder-text: "Enter URL";
+          width-request: 250;
+        }
+
+        Button insert_button {
+          label: _("Insert");
+        }
+      }
+
+      Box {
+        spacing: 12;
+
+        styles [
+          "linked"
+        ]
+
+        Entry id_entry {
+          placeholder-text: "Enter ID";
+          width-request: 250;
+        }
+
+        Button find_button {
+          label: _("Search");
+        }
+      }
+
+      Frame {
+        ColumnView column_view {
+          show-column-separators: true;
+
+          ColumnViewColumn col1 {
+            title: _("URL");
+            expand: true;
+
+            factory: SignalListItemFactory {};
+          }
+
+          ColumnViewColumn col2 {
+            title: _("ID");
+            expand: true;
+
+            factory: SignalListItemFactory {};
+          }
+        }
+      }
+
+      Label result_label {
+        label: _("Results will appear here");
+        wrap: true;
+        width-request: 250;
+      }
+    }
+  }
+}
