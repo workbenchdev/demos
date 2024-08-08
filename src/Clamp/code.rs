@@ -31,6 +31,5 @@ pub fn main() {
         if clamp.tightening_threshold() == 0 {
           println!("Minimum size reached");
         }
-
     }));
 }
