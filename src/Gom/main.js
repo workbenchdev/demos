@@ -27,7 +27,7 @@ let adapter, repository;
 
 function initDatabase() {
   adapter = new Gom.Adapter();
-  adapter.open_sync(`${GLib.get_home_dir()}/gom-js-workbench.db`);
+  adapter.open_sync(':memory:',);
   repository = new Gom.Repository({ adapter: adapter });
 
   ItemClass.set_table('items');
@@ -56,6 +56,8 @@ const url_entry = workbench.builder.get_object("url_entry");
 const id_entry = workbench.builder.get_object("id_entry");
 const insert_button = workbench.builder.get_object("insert_button");
 const find_button = workbench.builder.get_object("find_button");
+const filter_entry = workbench.builder.get_object("filter_entry");
+const filter_button = workbench.builder.get_object("filter_button");
 const result_label = workbench.builder.get_object("result_label");
 const overlay = workbench.builder.get_object("overlay");
 
@@ -89,6 +91,38 @@ find_button.connect("clicked", () => {
   }
 
 });
+
+filter_button.connect("clicked", () => {
+  data_model.remove_all();
+  const filter_text = filter_entry.text.trim();
+  if (filter_text === "") {
+    result_label.label = "Enter a value";
+    return;
+  }
+
+  const filter = Gom.Filter.new_glob(ItemClass, 'url', `*${filter_text}*`);
+  const filtered_items = repository.find_sync(ItemClass, filter);
+
+  if (filtered_items) {
+    const count = filtered_items.get_count();
+    if (count > 0) {
+      filtered_items.fetch_async(0, count, () => {
+        for (let i = 0; i < count; i++) {
+          const item = filtered_items.get_index(i);
+          if (item) {
+            data_model.append(item);
+          }
+        }
+        result_label.label = "Loaded successfully";
+      });
+    } else {
+      result_label.label = "No matching items found";
+    }
+  } else {
+    result_label.label = "No matching items found";
+  }
+});
+
 
 const factory_col1 = col1.factory;
 factory_col1.connect("setup", (_self, list_item) => {

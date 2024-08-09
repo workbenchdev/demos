@@ -12,8 +12,21 @@ Adw.ToastOverlay overlay {
       spacing: 18;
 
       Box {
-        spacing: 12;
+        styles [
+          "linked"
+        ]
 
+        Entry filter_entry {
+          placeholder-text: "Enter Text";
+          width-request: 250;
+        }
+
+        Button filter_button {
+          label: _("Filter");
+        }
+      }
+
+      Box {
         styles [
           "linked"
         ]
@@ -29,8 +42,6 @@ Adw.ToastOverlay overlay {
       }
 
       Box {
-        spacing: 12;
-
         styles [
           "linked"
         ]
