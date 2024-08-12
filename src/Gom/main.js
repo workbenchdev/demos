@@ -34,7 +34,7 @@ let adapter, repository;
 
 function initDatabase() {
   adapter = new Gom.Adapter();
-  adapter.open_sync(":memory:",);
+  adapter.open_sync(":memory:");
   repository = new Gom.Repository({ adapter: adapter });
 
   // Set up table and primary key
