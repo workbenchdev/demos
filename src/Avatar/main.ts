@@ -1,10 +1,11 @@
+import Adw from "gi://Adw";
 import Gdk from "gi://Gdk?version=4.0";
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk?version=4.0";
 
 Gio._promisify(Gtk.FileDialog.prototype, "open", "open_finish");
 
-const avatar_image = workbench.builder.get_object("avatar_image");
+const avatar_image = workbench.builder.get_object<Adw.Avatar>("avatar_image");
 const button = workbench.builder.get_object("button");
 
 const file_filter = new Gtk.FileFilter();
@@ -21,7 +22,8 @@ button.connect("clicked", () => {
 });
 
 async function onClicked() {
-  const file = await file_dialog.open(workbench.window, null);
+  // @ts-expect-error this function's type isn't detected as async yet
+  const file = await file_dialog.open(workbench.window, null) as Gio.File;
   const texture = Gdk.Texture.new_from_file(file);
   avatar_image.set_custom_image(texture);
 }
