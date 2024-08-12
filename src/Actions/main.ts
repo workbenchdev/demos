@@ -1,7 +1,8 @@
+import Adw from "gi://Adw";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 
-const demo = workbench.builder.get_object("demo");
+const demo = workbench.builder.get_object<Adw.StatusPage>("demo");
 
 const demo_group = new Gio.SimpleActionGroup();
 demo.insert_action_group("demo", demo_group);
