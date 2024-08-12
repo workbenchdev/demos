@@ -16,24 +16,9 @@ Adw.ToastOverlay overlay {
           "linked"
         ]
 
-        Entry filter_entry {
-          placeholder-text: "Enter Text";
-          width-request: 250;
-        }
-
-        Button filter_button {
-          label: _("Filter");
-        }
-      }
-
-      Box {
-        styles [
-          "linked"
-        ]
-
-        Entry url_entry {
-          placeholder-text: "Enter URL";
-          width-request: 250;
+        Entry text_entry {
+          placeholder-text: _("Enter Text");
+          width-request: 300;
         }
 
         Button insert_button {
@@ -42,17 +27,43 @@ Adw.ToastOverlay overlay {
       }
 
       Box {
-        styles [
-          "linked"
-        ]
+        orientation: horizontal;
+        spacing: 18;
 
-        Entry id_entry {
-          placeholder-text: "Enter ID";
-          width-request: 250;
+        Box {
+          orientation: vertical;
+          spacing: 12;
+
+          Label {
+            label: _("Search by Text");
+          }
+
+          SearchEntry search_entry {
+            search-delay: 100;
+            placeholder-text: _("Enter Text");
+            width-request: 250;
+          }
         }
 
-        Button find_button {
-          label: _("Search");
+        Box {
+          spacing: 12;
+          orientation: vertical;
+
+          Label {
+            label: _("Search by ID");
+          }
+
+          SpinButton id_entry {
+            halign: center;
+            orientation: horizontal;
+            wrap: false;
+            climb-rate: 1;
+
+            adjustment: Adjustment {
+              step-increment: 1;
+              value: 0;
+            };
+          }
         }
       }
 
@@ -61,7 +72,7 @@ Adw.ToastOverlay overlay {
           show-column-separators: true;
 
           ColumnViewColumn col1 {
-            title: _("URL");
+            title: _("Text");
             expand: true;
 
             factory: SignalListItemFactory {};
@@ -77,7 +88,6 @@ Adw.ToastOverlay overlay {
       }
 
       Label result_label {
-        label: _("Results will appear here");
         wrap: true;
         width-request: 250;
       }
