@@ -1,7 +1,7 @@
 import Adw from "gi://Adw";
 
-const banner = workbench.builder.get_object("banner");
-const overlay = workbench.builder.get_object("overlay");
+const banner = workbench.builder.get_object<Adw.Banner>("banner");
+const overlay = workbench.builder.get_object<Adw.ToastOverlay>("overlay");
 const button_show_banner = workbench.builder.get_object("button_show_banner");
 
 function alert() {
