@@ -1,7 +1,7 @@
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk?version=4.0";
 
-const controls = workbench.builder.get_object("controls");
+const controls = workbench.builder.get_object<Gtk.MediaControls>("controls");
 
 const buttons = ["sound", "music"];
 const audio_files = {
