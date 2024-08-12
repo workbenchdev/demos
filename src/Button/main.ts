@@ -1,3 +1,5 @@
+import Gtk from "gi://Gtk?version=4.0";
+
 const button_ids = [
   "regular",
   "flat",
@@ -13,7 +15,7 @@ const button_ids = [
 ];
 
 for (const id of button_ids) {
-  const button = workbench.builder.get_object(id);
+  const button = workbench.builder.get_object<Gtk.Button>(id);
   button.connect("clicked", onClicked);
 }
 
