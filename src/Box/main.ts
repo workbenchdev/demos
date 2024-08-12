@@ -1,6 +1,6 @@
 import Gtk from "gi://Gtk?version=4.0";
 
-const interactive_box = workbench.builder.get_object("interactive_box");
+const interactive_box = workbench.builder.get_object<Gtk.Box>("interactive_box");
 const button_append = workbench.builder.get_object("button_append");
 const button_prepend = workbench.builder.get_object("button_prepend");
 const button_remove = workbench.builder.get_object("button_remove");
@@ -10,10 +10,10 @@ button_append.connect("clicked", append);
 button_prepend.connect("clicked", prepend);
 button_remove.connect("clicked", remove);
 
-const toggle_orientation_horizontal = workbench.builder.get_object(
+const toggle_orientation_horizontal = workbench.builder.get_object<Gtk.ToggleButton>(
   "toggle_orientation_horizontal",
 );
-const toggle_orientation_vertical = workbench.builder.get_object(
+const toggle_orientation_vertical = workbench.builder.get_object<Gtk.ToggleButton>(
   "toggle_orientation_vertical",
 );
 
@@ -27,19 +27,19 @@ toggle_orientation_vertical.connect("toggled", () => {
     interactive_box.orientation = Gtk.Orientation.VERTICAL;
 });
 
-const highlight = workbench.builder.get_object("highlight");
+const highlight = workbench.builder.get_object<Gtk.CheckButton>("highlight");
 highlight.connect("toggled", () => {
   highlight.active
     ? interactive_box.add_css_class("border")
     : interactive_box.remove_css_class("border");
 });
 
-const halign_toggle_fill = workbench.builder.get_object("halign_toggle_fill");
-const halign_toggle_start = workbench.builder.get_object("halign_toggle_start");
-const halign_toggle_center = workbench.builder.get_object(
+const halign_toggle_fill = workbench.builder.get_object<Gtk.ToggleButton>("halign_toggle_fill");
+const halign_toggle_start = workbench.builder.get_object<Gtk.ToggleButton>("halign_toggle_start");
+const halign_toggle_center = workbench.builder.get_object<Gtk.ToggleButton>(
   "halign_toggle_center",
 );
-const halign_toggle_end = workbench.builder.get_object("halign_toggle_end");
+const halign_toggle_end = workbench.builder.get_object<Gtk.ToggleButton>("halign_toggle_end");
 
 halign_toggle_fill.connect("toggled", () => {
   if (halign_toggle_fill.active) interactive_box.halign = Gtk.Align.FILL;
@@ -57,12 +57,12 @@ halign_toggle_end.connect("toggled", () => {
   if (halign_toggle_end.active) interactive_box.halign = Gtk.Align.END;
 });
 
-const valign_toggle_fill = workbench.builder.get_object("valign_toggle_fill");
-const valign_toggle_start = workbench.builder.get_object("valign_toggle_start");
-const valign_toggle_center = workbench.builder.get_object(
+const valign_toggle_fill = workbench.builder.get_object<Gtk.ToggleButton>("valign_toggle_fill");
+const valign_toggle_start = workbench.builder.get_object<Gtk.ToggleButton>("valign_toggle_start");
+const valign_toggle_center = workbench.builder.get_object<Gtk.ToggleButton>(
   "valign_toggle_center",
 );
-const valign_toggle_end = workbench.builder.get_object("valign_toggle_end");
+const valign_toggle_end = workbench.builder.get_object<Gtk.ToggleButton>("valign_toggle_end");
 
 valign_toggle_fill.connect("toggled", () => {
   if (valign_toggle_fill.active) interactive_box.valign = Gtk.Align.FILL;
