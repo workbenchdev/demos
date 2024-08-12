@@ -1,4 +1,6 @@
-const calendar = workbench.builder.get_object("calendar");
+import Gtk from "gi://Gtk?version=4.0"
+
+const calendar = workbench.builder.get_object<Gtk.Calendar>("calendar");
 
 // calendar.get_date() returns a GLib.DateTime object
 // https://docs.gtk.org/glib/struct.DateTime.html
