@@ -1,9 +1,10 @@
 import Adw from "gi://Adw";
 import Graphene from "gi://Graphene";
 import Gsk from "gi://Gsk";
+import Gtk from "gi://Gtk?version=4.0";
 
 const button_timed = workbench.builder.get_object("button_timed");
-const progress_bar = workbench.builder.get_object("progress_bar");
+const progress_bar = workbench.builder.get_object<Gtk.ProgressBar>("progress_bar");
 const target_timed = Adw.PropertyAnimationTarget.new(progress_bar, "fraction");
 
 const animation_timed = new Adw.TimedAnimation({
@@ -24,7 +25,7 @@ animation_timed.connect("done", () => {
 });
 
 const button_spring = workbench.builder.get_object("button_spring");
-const ball = workbench.builder.get_object("ball");
+const ball = workbench.builder.get_object<Adw.Bin>("ball");
 
 const target_spring = Adw.CallbackAnimationTarget.new(animation_cb);
 const params = Adw.SpringParams.new(
