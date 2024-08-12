@@ -22,6 +22,9 @@ __pycache__
 # compiled typescript
 out
 
+# extra GIRs from Workbench
+workbench-girs
+
 # Project files - sync with Makefile
 src/*/settings
 src/*/workbench.vala
