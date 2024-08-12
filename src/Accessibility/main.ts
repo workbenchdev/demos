@@ -2,7 +2,7 @@ import GObject from "gi://GObject";
 import Gdk from "gi://Gdk?version=4.0";
 import Gtk from "gi://Gtk?version=4.0";
 
-const button = workbench.builder.get_object("custom_button");
+const button = workbench.builder.get_object<Gtk.Button>("custom_button");
 
 const clicker = new Gtk.GestureClick();
 clicker.connect("released", () => toggleButton(button));
