@@ -4,7 +4,7 @@ import Gtk from "gi://Gtk?version=4.0";
 
 Gio._promisify(Adw.AlertDialog.prototype, "choose", "choose_finish");
 
-const box = workbench.builder.get_object("subtitle");
+const box = workbench.builder.get_object<Gtk.Box>("subtitle");
 
 const button = new Gtk.Button({
   label: "Press me",
