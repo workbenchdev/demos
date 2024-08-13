@@ -1,6 +1,6 @@
 {
-  "category": "feedback",
-  "description": "demo showcases inserting and retrieving items in a SQLite database using GOM",
+  "category": "platform",
+  "description": "Search, load and store GObjects in a SQLite database",
   "panels": ["ui", "preview"],
   "autorun": true
 }
