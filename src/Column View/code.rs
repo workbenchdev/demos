@@ -8,7 +8,7 @@ use std::cell::{Cell, OnceCell};
 
 // Subclassing is quite tricky
 // Documentation https://gtk-rs.org/gtk4-rs/stable/latest/book/g_object_subclassing.html
-// This puts the structure and implementation into the same file
+// This example differs to the book by putting `imp` module into the same file
 
 mod imp {
     use super::*;
@@ -29,10 +29,6 @@ mod imp {
         const NAME: &'static str = "Book";
         type ParentType = glib::Object;
         type Type = super::Book;
-
-        fn new() -> Self {
-            Self::default()
-        }
     }
 
     #[glib::derived_properties]
@@ -49,11 +45,11 @@ glib::wrapper! {
 
 impl Book {
     pub fn new(title: String, author: String, year: i32) -> Self {
-        let obj: Self = glib::Object::new();
-        obj.imp().author.set(author).unwrap();
-        obj.imp().title.set(title).unwrap();
-        obj.imp().year.set(year);
-        obj
+        glib::Object::builder()
+            .property("author", author)
+            .property("title", title)
+            .property("year", year)
+            .build()
     }
 }
 
@@ -64,49 +60,46 @@ pub fn main() {
     let col2: gtk::ColumnViewColumn = workbench::builder().object("col2").unwrap();
     let col3: gtk::ColumnViewColumn = workbench::builder().object("col3").unwrap();
 
-    let data_model = gio::ListStore::new::<Book>();
-    data_model.splice(
-        0,
-        0,
-        &[
-            Book::new(
-                "Winds from Afar".to_string(),
-                "Kenji Miyazawa".to_string(),
-                1972,
-            ),
-            Book::new(
-                "Like Water for Chocolate".to_string(),
-                "Laura Esquivel".to_string(),
-                1989,
-            ),
-            Book::new(
-                "Works and Nights".to_string(),
-                "Alejandra Pizarnik".to_string(),
-                1965,
-            ),
-            Book::new(
-                "Understading Analysis".to_string(),
-                "Stephen Abbott".to_string(),
-                2002,
-            ),
-            Book::new(
-                "The Timeless Way of Building".to_string(),
-                "Cristopher Alexander".to_string(),
-                1979,
-            ),
-            Book::new("Bitter".to_string(), "Akwaeke Emezi".to_string(), 2022),
-            Book::new(
-                "Saying Yes".to_string(),
-                "Griselda Gambaro".to_string(),
-                1981,
-            ),
-            Book::new(
-                "Itinerary of a Dramatist".to_string(),
-                "Rodolfo Usigli".to_string(),
-                1940,
-            ),
-        ],
-    );
+    let data_model: gio::ListStore = [
+        Book::new(
+            "Winds from Afar".to_string(),
+            "Kenji Miyazawa".to_string(),
+            1972,
+        ),
+        Book::new(
+            "Like Water for Chocolate".to_string(),
+            "Laura Esquivel".to_string(),
+            1989,
+        ),
+        Book::new(
+            "Works and Nights".to_string(),
+            "Alejandra Pizarnik".to_string(),
+            1965,
+        ),
+        Book::new(
+            "Understading Analysis".to_string(),
+            "Stephen Abbott".to_string(),
+            2002,
+        ),
+        Book::new(
+            "The Timeless Way of Building".to_string(),
+            "Cristopher Alexander".to_string(),
+            1979,
+        ),
+        Book::new("Bitter".to_string(), "Akwaeke Emezi".to_string(), 2022),
+        Book::new(
+            "Saying Yes".to_string(),
+            "Griselda Gambaro".to_string(),
+            1981,
+        ),
+        Book::new(
+            "Itinerary of a Dramatist".to_string(),
+            "Rodolfo Usigli".to_string(),
+            1940,
+        ),
+    ]
+    .into_iter()
+    .collect();
     // Let's initialize gtk
     gtk::init().unwrap();
 
