@@ -20,9 +20,9 @@ pub fn main() {
         println!("Icon Entry: {} entered", triggered_entry.text());
     });
 
-    entry_icon.connect_icon_press(|_, __| println!("Icon Pressed!"));
+    entry_icon.connect_icon_press(|_, _| println!("Icon Pressed!"));
 
-    entry_icon.connect_icon_release(|_, __| println!("Icon Released!"));
+    entry_icon.connect_icon_release(|_, _| println!("Icon Released!"));
 
     entry_progress.connect_activate(|triggered_entry| {
         println!("Progress Bar Entry: {} entered", triggered_entry.text());
@@ -45,8 +45,8 @@ pub fn main() {
     // That's why we need to use glib::clone! macro
     // See: https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/macro.clone.html
 
-    entry_progress.connect_icon_press(gtk::glib::clone!(
-        @strong animation => move |_, __| animation.play()
+    entry_progress.connect_icon_press(glib::clone!(
+        @strong animation => move |_, _| animation.play()
     ));
 
     animation.connect_done(|animation| animation.reset());
@@ -57,47 +57,41 @@ pub fn main() {
         .object("entry_confirm_password")
         .unwrap();
 
-    fn validate_password(
-        passwd: &gtk::glib::GString,
-        confirm_passwd: &gtk::glib::GString,
-    ) -> String {
-        // If both are empty
+    fn validate_password(passwd: &glib::GString, confirm_passwd: &glib::GString) -> &'static str {
         if passwd.is_empty() || confirm_passwd.is_empty() {
-            return String::from("Both fields are mandatory!");
+            "Both fields are mandatory!"
+        } else if passwd != confirm_passwd {
+            "Both fields should be matching!"
+        } else {
+            "Password made successfully"
         }
-        // If passwords aren't matching
-        if passwd != confirm_passwd {
-            return String::from("Both fields should be matching!");
-        }
-        // Passwords are supposed to match down here
-        return String::from("Password made successfully");
     }
 
     // Using the glib::clone! macro we pass the reference to the closure
     entry_confirm_password.connect_activate(
-        gtk::glib::clone!(@weak label_password, @weak entry_password, @weak entry_confirm_password => move |_| {
+        glib::clone!(@weak label_password, @weak entry_password, @weak entry_confirm_password => move |_| {
           let passwd = entry_password.text();
           let confirm_passwd = entry_confirm_password.text();
-          label_password.set_text(&validate_password(&passwd, &confirm_passwd));
+          label_password.set_text(validate_password(&passwd, &confirm_passwd));
         }),
     );
 
     entry_password.connect_activate(
-        gtk::glib::clone!(@weak label_password, @weak entry_password, @weak entry_confirm_password => move |_| {
+        glib::clone!(@weak label_password, @weak entry_password, @weak entry_confirm_password => move |_| {
           let passwd = entry_password.text();
           let confirm_passwd = entry_confirm_password.text();
-          label_password.set_text(&validate_password(&passwd, &confirm_passwd));
+          label_password.set_text(validate_password(&passwd, &confirm_passwd));
         }),
     );
 
     // The entry_completion is deprecated
     // https://discourse.gnome.org/t/replacement-for-entrycompletion/13505
     let entry_completion: gtk::Entry = workbench::builder().object("entry_completion").unwrap();
-    let completion = gtk::EntryCompletion::builder().build();
-    let store = gtk::TreeStore::new(&[gtk::glib::Type::STRING]);
+    let completion = gtk::EntryCompletion::new();
+    let store = gtk::TreeStore::new(&[glib::Type::STRING]);
     for text in ["a", "app", "apple", "apples", "applets", "application"] {
         let iter = store.append(None);
-        store.set_value(&iter, 0, &gtk::glib::GString::from(text).to_value());
+        store.set_value(&iter, 0, &glib::GString::from(text).to_value());
     }
     completion.set_text_column(0);
     completion.set_model(Some(&store));
