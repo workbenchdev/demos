@@ -23,7 +23,7 @@ pub fn main() {
     // provide access to the object from the handling closure
     // https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/macro.clone.html
 
-    entry.connect_text_notify(gtk::glib::clone!(
+    entry.connect_text_notify(glib::clone!(
         @weak label_strength, @weak bar_discrete => move |entry| {
             // This is not a secure way to estimate password strength
             // Use appropriate solutions instead
