@@ -2,10 +2,16 @@ import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk?version=4.0";
 
-const column_view = workbench.builder.get_object("column_view");
-const col1 = workbench.builder.get_object("col1");
-const col2 = workbench.builder.get_object("col2");
-const col3 = workbench.builder.get_object("col3");
+const column_view = workbench.builder.get_object<Gtk.ColumnView>("column_view");
+const col1 = workbench.builder.get_object<Gtk.ColumnViewColumn>("col1");
+const col2 = workbench.builder.get_object<Gtk.ColumnViewColumn>("col2");
+const col3 = workbench.builder.get_object<Gtk.ColumnViewColumn>("col3");
+
+interface BookConstructorProps {
+  title: string;
+  author: string;
+  year: number;
+}
 
 // Define our class for our custom model
 const Book = GObject.registerClass(
@@ -36,11 +42,16 @@ const Book = GObject.registerClass(
       ),
     },
   },
-  class Book extends GObject.Object {},
+  class Book extends GObject.Object {
+    constructor(props?: Partial<BookConstructorProps>) {
+      // @ts-expect-error incorrect types: https://github.com/gjsify/ts-for-gir/issues/191
+      super(props);
+    }
+  },
 );
 
 // Create the model
-const data_model = new Gio.ListStore({ item_type: Book });
+const data_model = new Gio.ListStore({ item_type: Book.$gtype });
 data_model.splice(0, 0, [
   new Book({
     title: "Winds from Afar",
@@ -85,15 +96,15 @@ data_model.splice(0, 0, [
 ]);
 
 col1.sorter = new Gtk.StringSorter({
-  expression: Gtk.PropertyExpression.new(Book, null, "title"),
+  expression: Gtk.PropertyExpression.new(Book.$gtype, null, "title"),
 });
 
 col2.sorter = new Gtk.StringSorter({
-  expression: Gtk.PropertyExpression.new(Book, null, "author"),
+  expression: Gtk.PropertyExpression.new(Book.$gtype, null, "author"),
 });
 
 col3.sorter = new Gtk.NumericSorter({
-  expression: Gtk.PropertyExpression.new(Book, null, "year"),
+  expression: Gtk.PropertyExpression.new(Book.$gtype, null, "year"),
 });
 
 // View
