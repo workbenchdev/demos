@@ -1,12 +1,12 @@
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk?version=4.0";
 
-const root_box = workbench.builder.get_object("root_box");
-const carousel = workbench.builder.get_object("carousel");
-const ls_switch = workbench.builder.get_object("ls_switch");
-const sw_switch = workbench.builder.get_object("sw_switch");
-const indicator_row = workbench.builder.get_object("indicator_row");
-const orientation_row = workbench.builder.get_object("orientation_row");
+const root_box = workbench.builder.get_object<Gtk.Box>("root_box");
+const carousel = workbench.builder.get_object<Adw.Carousel>("carousel");
+const ls_switch = workbench.builder.get_object<Adw.SwitchRow>("ls_switch");
+const sw_switch = workbench.builder.get_object<Adw.SwitchRow>("sw_switch");
+const indicator_row = workbench.builder.get_object<Adw.ComboRow>("indicator_row");
+const orientation_row = workbench.builder.get_object<Adw.ComboRow>("orientation_row");
 let indicators;
 
 carousel.connect("page-changed", () => {
