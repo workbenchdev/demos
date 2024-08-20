@@ -1,5 +1,7 @@
-const checkbox_1 = workbench.builder.get_object("checkbox_1");
-const checkbox_2 = workbench.builder.get_object("checkbox_2");
+import Gtk from "gi://Gtk?version=4.0";
+
+const checkbox_1 = workbench.builder.get_object<Gtk.CheckButton>("checkbox_1");
+const checkbox_2 = workbench.builder.get_object<Gtk.CheckButton>("checkbox_2");
 
 checkbox_1.connect("toggled", () => {
   if (checkbox_1.active) console.log("Notifications Enabled");
