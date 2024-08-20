@@ -1,9 +1,10 @@
+import Adw from "gi://Adw";
 import GObject from "gi://GObject";
 import Gdk from "gi://Gdk?version=4.0";
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk?version=4.0";
 
-const bin = workbench.builder.get_object("bin");
+const bin = workbench.builder.get_object<Adw.Bin>("bin");
 
 // Universal drop target for any String data
 const string_drop_target = Gtk.DropTarget.new(
@@ -19,7 +20,7 @@ string_drop_target.connect("drop", (_self, value, _x, _y) => {
 });
 
 // Drop Target for Files
-const file_drop_target = Gtk.DropTarget.new(Gio.File, Gdk.DragAction.COPY);
+const file_drop_target = Gtk.DropTarget.new(Gio.File.$gtype, Gdk.DragAction.COPY);
 bin.add_controller(file_drop_target);
 file_drop_target.connect("drop", (_self, value, _x, _y) => {
   try {
@@ -31,7 +32,8 @@ file_drop_target.connect("drop", (_self, value, _x, _y) => {
 });
 
 function onDrop(value) {
-  if (!(value instanceof Gio.File)) return false;
+  // @ts-expect-error https://github.com/gjsify/ts-for-gir/issues/195
+  if (!(value instanceof Gio.File)) return null;
 
   const file_info = value.query_info("standard::content-type", 0, null);
   const content_type = file_info.get_content_type();
