@@ -39,3 +39,6 @@ src/*/target
 src/*/*.gresource
 src/*/*.gresource.xml
 src/*/jsconfig.json
+
+# All JavaScript files
+src/**/*.js
