@@ -1,11 +1,16 @@
 import GLib from "gi://GLib";
 import Gdk from "gi://Gdk?version=4.0";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk?version=4.0";
 
-const box_menu_parent = workbench.builder.get_object("box_menu_parent");
-const label_emoji = workbench.builder.get_object("label_emoji");
+const box_menu_parent = workbench.builder.get_object<Gtk.Box>(
+  "box_menu_parent",
+);
+const label_emoji = workbench.builder.get_object<Gtk.Label>("label_emoji");
 const gesture_click = workbench.builder.get_object("gesture_click");
-const popover_menu = workbench.builder.get_object("popover_menu");
+const popover_menu = workbench.builder.get_object<Gtk.PopoverMenu>(
+  "popover_menu",
+);
 
 gesture_click.connect("pressed", (_self, _n_press, x, y) => {
   const position = new Gdk.Rectangle({ x: x, y: y });
