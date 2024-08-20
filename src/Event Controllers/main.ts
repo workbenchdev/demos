@@ -4,13 +4,21 @@ import Gio from "gi://Gio";
 import Gtk from "gi://Gtk?version=4.0";
 
 const window = workbench.window;
-const ctrl_button = workbench.builder.get_object("ctrl_button");
-const stack = workbench.builder.get_object("stack");
-const stack_picture_1 = workbench.builder.get_object("stack_picture_1");
-const stack_picture_2 = workbench.builder.get_object("stack_picture_2");
-const primary_button = workbench.builder.get_object("primary_button");
-const middle_button = workbench.builder.get_object("middle_button");
-const secondary_button = workbench.builder.get_object("secondary_button");
+const ctrl_button = workbench.builder.get_object<Gtk.Button>("ctrl_button");
+const stack = workbench.builder.get_object<Gtk.Stack>("stack");
+const stack_picture_1 = workbench.builder.get_object<Gtk.Picture>(
+  "stack_picture_1",
+);
+const stack_picture_2 = workbench.builder.get_object<Gtk.Picture>(
+  "stack_picture_2",
+);
+const primary_button = workbench.builder.get_object<Gtk.Button>(
+  "primary_button",
+);
+const middle_button = workbench.builder.get_object<Gtk.Button>("middle_button");
+const secondary_button = workbench.builder.get_object<Gtk.Button>(
+  "secondary_button",
+);
 
 stack_picture_1.file = Gio.File.new_for_uri(workbench.resolve("image1.png"));
 stack_picture_2.file = Gio.File.new_for_uri(workbench.resolve("image2.png"));
