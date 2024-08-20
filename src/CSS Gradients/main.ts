@@ -5,14 +5,24 @@ import GtkSource from "gi://GtkSource";
 
 let css_provider;
 
-const combo_row_gradient_type = workbench.builder.get_object(
+const combo_row_gradient_type = workbench.builder.get_object<Adw.ComboRow>(
   "combo_row_gradient_type",
 );
-const spin_row_angle = workbench.builder.get_object("spin_row_angle");
-const button_color_1 = workbench.builder.get_object("button_color_1");
-const button_color_2 = workbench.builder.get_object("button_color_2");
-const button_color_3 = workbench.builder.get_object("button_color_3");
-const gtksource_buffer = workbench.builder.get_object("gtksource_buffer");
+const spin_row_angle = workbench.builder.get_object<Adw.SpinRow>(
+  "spin_row_angle",
+);
+const button_color_1 = workbench.builder.get_object<Gtk.ColorDialogButton>(
+  "button_color_1",
+);
+const button_color_2 = workbench.builder.get_object<Gtk.ColorDialogButton>(
+  "button_color_2",
+);
+const button_color_3 = workbench.builder.get_object<Gtk.ColorDialogButton>(
+  "button_color_3",
+);
+const gtksource_buffer = workbench.builder.get_object<GtkSource.Buffer>(
+  "gtksource_buffer",
+);
 const button_copy_css = workbench.builder.get_object("button_copy_css");
 
 combo_row_gradient_type.connect("notify::selected", update);
