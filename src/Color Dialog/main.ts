@@ -4,8 +4,10 @@ import Gtk from "gi://Gtk?version=4.0";
 
 Gio._promisify(Gtk.ColorDialog.prototype, "choose_rgba", "choose_rgba_finish");
 
-const color_dialog_button = workbench.builder.get_object("color_dialog_button");
-const custom_button = workbench.builder.get_object("custom_button");
+const color_dialog_button = workbench.builder.get_object<Gtk.ColorDialogButton>(
+  "color_dialog_button",
+);
+const custom_button = workbench.builder.get_object<Gtk.Button>("custom_button");
 
 const color = new Gdk.RGBA();
 color.parse("red");
@@ -36,6 +38,11 @@ custom_button.connect("clicked", () => {
 });
 
 async function onClicked() {
-  const color = await dialog_custom.choose_rgba(workbench.window, null, null);
+  // @ts-expect-error undetected async function
+  const color = await dialog_custom.choose_rgba(
+    workbench.window,
+    null,
+    null,
+  ) as Gdk.RGBA;
   console.log(`Custom Button: The color selected is ${color.to_string()}`);
 }
