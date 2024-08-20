@@ -41,3 +41,6 @@ src/*/*.gresource.xml
 src/*/jsconfig.json
 src/*/rustc-ice-*.txt
 src/*/*.sqlite*
+
+# All JavaScript files
+src/**/*.js
