@@ -1,6 +1,8 @@
+import Adw1 from "gi://Adw";
+
 const button_increase = workbench.builder.get_object("button_increase");
 const button_decrease = workbench.builder.get_object("button_decrease");
-const clamp = workbench.builder.get_object("clamp");
+const clamp = workbench.builder.get_object<Adw1.Clamp>("clamp");
 
 function increase() {
   const current_size = clamp.get_maximum_size();
