@@ -1,5 +1,7 @@
-const button = workbench.builder.get_object("button");
-const spinner = workbench.builder.get_object("spinner");
+import Gtk from "gi://Gtk?version=4.0";
+
+const button = workbench.builder.get_object<Gtk.Button>("button");
+const spinner = workbench.builder.get_object<Gtk.Spinner>("spinner");
 
 button.connect("clicked", () => {
   if (spinner.visible === true) {
