@@ -1,18 +1,23 @@
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk?version=4.0";
 
-const scrolled_window = workbench.builder.get_object("scrolled_window");
-const container = workbench.builder.get_object("container");
-const toggle_orientation = workbench.builder.get_object("toggle_orientation");
-const button_start = workbench.builder.get_object("button_start");
-const button_end = workbench.builder.get_object("button_end");
+const scrolled_window = workbench.builder.get_object<Gtk.ScrolledWindow>(
+  "scrolled_window",
+);
+const container = workbench.builder.get_object<Gtk.Box>("container");
+const toggle_orientation = workbench.builder.get_object<Gtk.ToggleButton>(
+  "toggle_orientation",
+);
+const button_start = workbench.builder.get_object<Gtk.Button>("button_start");
+const button_end = workbench.builder.get_object<Gtk.Button>("button_end");
 let auto_scrolling = false;
 
 button_start.sensitive = false;
 
 const scrollbars = {
-  [Gtk.Orientation.HORIZONTAL]: scrolled_window.get_hscrollbar(),
-  [Gtk.Orientation.VERTICAL]: scrolled_window.get_vscrollbar(),
+  [Gtk.Orientation.HORIZONTAL]: scrolled_window
+    .get_hscrollbar() as Gtk.Scrollbar,
+  [Gtk.Orientation.VERTICAL]: scrolled_window.get_vscrollbar() as Gtk.Scrollbar,
 };
 
 toggle_orientation.connect("toggled", () => {
