@@ -1,13 +1,18 @@
 import Adw from "gi://Adw";
+import Gtk from "gi://Gtk?version=4.0";
 
 const button = workbench.builder.get_object("button_search");
-const searchbar = workbench.builder.get_object("searchbar");
-const searchentry = workbench.builder.get_object("searchentry");
-const stack = workbench.builder.get_object("stack");
-const main_page = workbench.builder.get_object("main_page");
-const search_page = workbench.builder.get_object("search_page");
-const status_page = workbench.builder.get_object("status_page");
-const listbox = workbench.builder.get_object("listbox");
+const searchbar = workbench.builder.get_object<Gtk.SearchBar>("searchbar");
+const searchentry = workbench.builder.get_object<Gtk.SearchEntry>(
+  "searchentry",
+);
+const stack = workbench.builder.get_object<Gtk.Stack>("stack");
+const main_page = workbench.builder.get_object<Adw.StatusPage>("main_page");
+const search_page = workbench.builder.get_object<Gtk.ScrolledWindow>(
+  "search_page",
+);
+const status_page = workbench.builder.get_object<Adw.StatusPage>("status_page");
+const listbox = workbench.builder.get_object<Gtk.ListBox>("listbox");
 
 button.connect("clicked", () => {
   searchbar.search_mode_enabled = !searchbar.search_mode_enabled;
