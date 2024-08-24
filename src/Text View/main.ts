@@ -1,6 +1,7 @@
 import Gdk from "gi://Gdk?version=4.0";
+import Gtk from "gi://Gtk?version=4.0";
 
-const textview = workbench.builder.get_object("textview");
+const textview = workbench.builder.get_object<Gtk.TextView>("textview");
 const select = workbench.builder.get_object("select");
 const copy = workbench.builder.get_object("copy");
 const cut = workbench.builder.get_object("cut");
