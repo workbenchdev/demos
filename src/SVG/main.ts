@@ -1,6 +1,9 @@
+import Gtk from "gi://Gtk?version=4.0";
 import Rsvg from "gi://Rsvg?version=2.0";
 
-const drawing_area = workbench.builder.get_object("drawing_area");
+const drawing_area = workbench.builder.get_object<Gtk.DrawingArea>(
+  "drawing_area",
+);
 const svg = workbench.resolve("image.svg");
 
 const handle = Rsvg.Handle.new_from_file(svg);
