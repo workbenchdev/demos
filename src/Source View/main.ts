@@ -4,7 +4,7 @@ import GtkSource from "gi://GtkSource";
 // However, you _have_ to call this once during the startup in your application - e.g. in GApplication::startup
 GtkSource.init();
 
-const buffer = workbench.builder.get_object("buffer");
+const buffer = workbench.builder.get_object<GtkSource.Buffer>("buffer");
 
 // Set the language we want to use
 const language_manager = GtkSource.LanguageManager.get_default();
