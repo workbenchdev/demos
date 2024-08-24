@@ -15,7 +15,10 @@ async function saveFile() {
     initial_name: "Workbench.txt",
   });
   // "dialog.save" returns a Gio.File you can write to
-  const file = await file_dialog.save(workbench.window, null);
+  // @ts-expect-error this function is not yet detected as async
+  const file = await file_dialog.save(workbench.window, null) as
+    | Gio.File
+    | null;
 
   const contents = new TextEncoder().encode("Hello from Workbench!");
   await file.replace_contents_async(
