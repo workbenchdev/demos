@@ -1,6 +1,6 @@
 import Gtk from "gi://Gtk?version=4.0";
 
-const button = workbench.builder.get_object("button");
+const button = workbench.builder.get_object<Gtk.Button>("button");
 
 button.connect("query-tooltip", (_self, _x, _y, _mode, tooltip) => {
   const custom_tooltip = new Gtk.Box({ spacing: 6 });
