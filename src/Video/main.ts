@@ -1,7 +1,7 @@
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk?version=4.0";
 
-const video = workbench.builder.get_object("video");
+const video = workbench.builder.get_object<Gtk.Video>("video");
 
 video.file = Gio.File.new_for_uri(workbench.resolve("./workbench-video.mp4"));
 
