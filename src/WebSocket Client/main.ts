@@ -1,5 +1,6 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk?version=4.0";
 import Soup from "gi://Soup";
 
 Gio._promisify(
@@ -9,15 +10,15 @@ Gio._promisify(
 );
 
 const text_decoder = new TextDecoder("utf-8");
-const text_encoder = new TextEncoder("utf-8");
+const text_encoder = new TextEncoder();
 
 const { builder } = workbench;
 
-const button_connect = builder.get_object("button_connect");
-const button_disconnect = builder.get_object("button_disconnect");
-const button_send = builder.get_object("button_send");
-const entry_url = builder.get_object("entry_url");
-const entry_message = builder.get_object("entry_message");
+const button_connect = builder.get_object<Gtk.Button>("button_connect");
+const button_disconnect = builder.get_object<Gtk.Button>("button_disconnect");
+const button_send = builder.get_object<Gtk.Button>("button_send");
+const entry_url = builder.get_object<Gtk.Entry>("entry_url");
+const entry_message = builder.get_object<Gtk.Entry>("entry_message");
 
 let connection = null;
 
