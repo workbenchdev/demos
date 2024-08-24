@@ -1,8 +1,17 @@
 import GObject from "gi://GObject";
+import Gdk from "gi://Gdk?version=4.0";
 import Gio from "gi://Gio";
 import Gst from "gi://Gst";
+import GstVideo from "gi://GstVideo?version=1.0";
+import Gtk from "gi://Gtk?version=4.0";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
+
+interface GstGtk4PaintableSink extends GstVideo.VideoSink {
+  paintable: Gdk.Paintable;
+  window_height: number;
+  window_width: number;
+}
 
 Gst.init(null);
 
@@ -16,7 +25,7 @@ Gio._promisify(Xdp.Session.prototype, "start", "start_finish");
 
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
-const output = workbench.builder.get_object("output");
+const output = workbench.builder.get_object<Gtk.Picture>("output");
 const button = workbench.builder.get_object("button");
 
 button.connect("clicked", () => {
@@ -24,6 +33,7 @@ button.connect("clicked", () => {
 });
 
 async function startScreencastSession() {
+  // @ts-expect-error this function is not yet detected as async
   const session = await portal.create_screencast_session(
     Xdp.OutputType.MONITOR,
     Xdp.ScreencastFlags.NONE,
@@ -31,14 +41,16 @@ async function startScreencastSession() {
     Xdp.PersistMode.TRANSIENT,
     null,
     null,
-  );
+  ) as Xdp.Session;
 
   if (!session) {
     console.log("Permission denied");
     return;
   }
 
-  const success = await session.start(parent, null);
+  // @ts-expect-error this function is not yet detected as async
+  const success = await session.start(parent, null) as boolean;
+
   if (!success) {
     console.log("Could not start session");
     return;
@@ -55,7 +67,7 @@ async function startScreencastSession() {
   const paintable_sink = Gst.ElementFactory.make(
     "gtk4paintablesink",
     "paintable_sink",
-  );
+  ) as GstGtk4PaintableSink;
   const glsinkbin = Gst.ElementFactory.make("glsinkbin", "glsinkbin");
 
   // Set up and Link Pipeline
@@ -82,9 +94,7 @@ async function startScreencastSession() {
   source.link(queue);
   queue.link(glsinkbin);
 
-  const paintable = new GObject.Value();
-  paintable_sink.get_property("paintable", paintable);
-  output.paintable = paintable.get_object();
+  output.paintable = paintable_sink.paintable;
 
   // Start the pipeline
   pipeline.set_state(Gst.State.PLAYING);
