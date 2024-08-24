@@ -1,8 +1,10 @@
-const switch_on = workbench.builder.get_object("switch_on");
-const label_on = workbench.builder.get_object("label_on");
+import Gtk from "gi://Gtk?version=4.0";
 
-const switch_off = workbench.builder.get_object("switch_off");
-const label_off = workbench.builder.get_object("label_off");
+const switch_on = workbench.builder.get_object<Gtk.Switch>("switch_on");
+const label_on = workbench.builder.get_object<Gtk.Label>("label_on");
+
+const switch_off = workbench.builder.get_object<Gtk.Switch>("switch_off");
+const label_off = workbench.builder.get_object<Gtk.Label>("label_off");
 
 switch_on.connect("notify::active", () => {
   label_on.label = switch_on.active ? "On" : "Off";
