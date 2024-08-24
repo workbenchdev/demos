@@ -17,7 +17,10 @@ const button_multiple = workbench.builder.get_object("button_multiple");
 
 async function selectFolder() {
   const dialog_for_folder = new Gtk.FileDialog();
-  const file = await dialog_for_folder.select_folder(workbench.window, null);
+  // @ts-expect-error this function is not detected as async
+  const file = await dialog_for_folder.select_folder(workbench.window, null) as
+    | Gio.File
+    | null;
   const info = file.query_info(
     "standard::name",
     Gio.FileQueryInfoFlags.NONE,
@@ -28,7 +31,11 @@ async function selectFolder() {
 
 async function selectMultipleFolders() {
   const dialog = new Gtk.FileDialog();
-  const folders = await dialog.select_multiple_folders(workbench.window, null);
+  // @ts-expect-error this function is not detected as async
+  const folders = await dialog.select_multiple_folders(
+    workbench.window,
+    null,
+  ) as Gio.ListModel | null;
   const selected_items_count = folders.get_n_items();
   console.log(`${selected_items_count} selected folders`);
 }
