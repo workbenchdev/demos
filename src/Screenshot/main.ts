@@ -1,5 +1,6 @@
 import Adw from "gi://Adw";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk?version=4.0";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
 
@@ -7,7 +8,7 @@ const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
 
 const button = workbench.builder.get_object("button");
-const picture = workbench.builder.get_object("picture");
+const picture = workbench.builder.get_object<Gtk.Picture>("picture");
 
 Gio._promisify(
   Xdp.Portal.prototype,
