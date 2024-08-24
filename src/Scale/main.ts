@@ -1,8 +1,8 @@
 import Gtk from "gi://Gtk?version=4.0";
 
-const scale_one = workbench.builder.get_object("one");
-const scale_two = workbench.builder.get_object("two");
-const scale_button = workbench.builder.get_object("button");
+const scale_one = workbench.builder.get_object<Gtk.Scale>("one");
+const scale_two = workbench.builder.get_object<Gtk.Scale>("two");
+const scale_button = workbench.builder.get_object<Gtk.ScaleButton>("button");
 
 const marks = {
   0: "A",
@@ -18,7 +18,7 @@ const volume_icons = [
 ];
 
 for (const [value, label] of Object.entries(marks)) {
-  scale_two.add_mark(value, Gtk.PositionType.RIGHT, label);
+  scale_two.add_mark(Number(value), Gtk.PositionType.RIGHT, label);
 }
 
 scale_two.set_increments(25, 100);
