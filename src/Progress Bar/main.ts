@@ -1,10 +1,13 @@
 import Adw from "gi://Adw";
 import GLib from "gi://GLib";
+import Gtk from "gi://Gtk?version=4.0";
 
-const first_bar = workbench.builder.get_object("first");
-const second_bar = workbench.builder.get_object("second");
-const play = workbench.builder.get_object("play");
-const progress_tracker = workbench.builder.get_object("progress_tracker");
+const first_bar = workbench.builder.get_object<Gtk.ProgressBar>("first");
+const second_bar = workbench.builder.get_object<Gtk.ProgressBar>("second");
+const play = workbench.builder.get_object<Gtk.Button>("play");
+const progress_tracker = workbench.builder.get_object<Gtk.Label>(
+  "progress_tracker",
+);
 
 const target = Adw.PropertyAnimationTarget.new(first_bar, "fraction");
 
