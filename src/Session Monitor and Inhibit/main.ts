@@ -1,4 +1,6 @@
+import Adw from "gi://Adw";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk?version=4.0";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
 
@@ -16,11 +18,11 @@ Gio._promisify(
 
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
-const entry = workbench.builder.get_object("entry");
-const switch_row_logout = workbench.builder.get_object("switch_row_logout");
-const switch_row_idle = workbench.builder.get_object("switch_row_idle");
-const button_start = workbench.builder.get_object("button_start");
-const button_stop = workbench.builder.get_object("button_stop");
+const entry = workbench.builder.get_object<Gtk.Entry>("entry");
+const switch_row_logout = workbench.builder.get_object<Adw.SwitchRow>("switch_row_logout");
+const switch_row_idle = workbench.builder.get_object<Adw.SwitchRow>("switch_row_idle");
+const button_start = workbench.builder.get_object<Gtk.Button>("button_start");
+const button_stop = workbench.builder.get_object<Gtk.Button>("button_stop");
 let ids = [];
 
 button_start.connect("clicked", () => {
@@ -53,7 +55,9 @@ portal.connect(
 );
 
 async function startSession() {
-  const result = await portal.session_monitor_start(parent, null, null);
+  // @ts-expect-error this function is not detected as async
+  const result = await portal.session_monitor_start(parent, null, null) as boolean;
+
   if (result) {
     button_start.sensitive = false;
     button_stop.sensitive = true;
