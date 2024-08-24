@@ -11,6 +11,7 @@ const button = workbench.builder.get_object("button");
 const uri = workbench.resolve("./wallpaper.png");
 
 async function onClicked() {
+  // @ts-expect-error this function is not correctly detected as async
   const success = await portal.set_wallpaper(
     parent,
     uri,
@@ -18,7 +19,7 @@ async function onClicked() {
       Xdp.WallpaperFlags.BACKGROUND |
       Xdp.WallpaperFlags.LOCKSCREEN,
     null,
-  );
+  ) as boolean;
 
   if (success) {
     console.log("Wallpaper set successfully");
