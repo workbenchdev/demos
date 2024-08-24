@@ -1,10 +1,11 @@
 import Adw from "gi://Adw";
+import GObject from "gi://GObject?version=2.0";
 import Gtk from "gi://Gtk?version=4.0";
 
-const entry = workbench.builder.get_object("entry");
-const entry_placeholder = workbench.builder.get_object("entry_placeholder");
-const entry_icon = workbench.builder.get_object("entry_icon");
-const entry_progress = workbench.builder.get_object("entry_progress");
+const entry = workbench.builder.get_object<Gtk.Entry>("entry");
+const entry_placeholder = workbench.builder.get_object<Gtk.Entry>("entry_placeholder");
+const entry_icon = workbench.builder.get_object<Gtk.Entry>("entry_icon");
+const entry_progress = workbench.builder.get_object<Gtk.Entry>("entry_progress");
 
 entry.connect("activate", () => {
   console.log(`Regular Entry: "${entry.text}" entered`);
@@ -52,12 +53,12 @@ animation.connect("done", () => {
   animation.reset();
 });
 
-const entry_completion = workbench.builder.get_object("entry_completion");
+const entry_completion = workbench.builder.get_object<Gtk.Entry>("entry_completion");
 const completion = new Gtk.EntryCompletion();
 
 entry_completion.completion = completion;
 
-const list_store = Gtk.ListStore.new([String]);
+const list_store = Gtk.ListStore.new([GObject.TYPE_STRING]);
 const words = ["a", "app", "apple", "apples", "applets", "application"];
 words.forEach((word) => {
   const iter = list_store.append();
@@ -69,11 +70,11 @@ completion.set_text_column(0);
 completion.inline_completion = true;
 completion.inline_selection = true;
 
-const entry_password = workbench.builder.get_object("entry_password");
-const entry_confirm_password = workbench.builder.get_object(
+const entry_password = workbench.builder.get_object<Gtk.PasswordEntry>("entry_password");
+const entry_confirm_password = workbench.builder.get_object<Gtk.PasswordEntry>(
   "entry_confirm_password",
 );
-const label_password = workbench.builder.get_object("label_password");
+const label_password = workbench.builder.get_object<Gtk.Label>("label_password");
 
 entry_password.connect("activate", () => {
   label_password.label = validate_password(
