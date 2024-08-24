@@ -1,8 +1,8 @@
 import Adw from "gi://Adw";
 
-const tab_view = workbench.builder.get_object("tab_view");
+const tab_view = workbench.builder.get_object<Adw.TabView>("tab_view");
 const button_new_tab = workbench.builder.get_object("button_new_tab");
-const overview = workbench.builder.get_object("overview");
+const overview = workbench.builder.get_object<Adw.TabOverview>("overview");
 const button_overview = workbench.builder.get_object("button_overview");
 let tab_count = 1;
 
