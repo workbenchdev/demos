@@ -1,10 +1,11 @@
+import Gtk from "gi://Gtk?version=4.0";
 import GtkSource from "gi://GtkSource";
 import Spelling from "gi://Spelling";
 
 GtkSource.init();
 
-const buffer = workbench.builder.get_object("buffer");
-const text_view = workbench.builder.get_object("text_view");
+const buffer = workbench.builder.get_object<GtkSource.Buffer>("buffer");
+const text_view = workbench.builder.get_object<Gtk.TextView>("text_view");
 
 // Spell checking setup
 const checker = Spelling.Checker.get_default();
