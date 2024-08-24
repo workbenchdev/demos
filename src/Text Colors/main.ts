@@ -1,8 +1,9 @@
 // Pango is a text layout library. It can e.g. be used for formatting text
 // https://gjs-docs.gnome.org/pango10~1.0/
+import Gtk from "gi://Gtk?version=4.0";
 import Pango from "gi://Pango";
 
-const label = workbench.builder.get_object("label");
+const label = workbench.builder.get_object<Gtk.Label>("label");
 label.connect("notify::label", updateAttributes);
 updateAttributes();
 
