@@ -1,8 +1,8 @@
 import Adw from "gi://Adw";
 
-const dialog = workbench.builder.get_object("dialog");
-const dm_switch = workbench.builder.get_object("dm_switch");
-const subpage = workbench.builder.get_object("subpage");
+const dialog = workbench.builder.get_object<Adw.PreferencesDialog>("dialog");
+const dm_switch = workbench.builder.get_object<Adw.SwitchRow>("dm_switch");
+const subpage = workbench.builder.get_object<Adw.NavigationPage>("subpage");
 const subpage_row = workbench.builder.get_object("subpage_row");
 const subpage_button = workbench.builder.get_object("subpage_button");
 const toast_button = workbench.builder.get_object("toast_button");
