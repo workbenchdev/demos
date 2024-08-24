@@ -4,8 +4,8 @@ import Graphene from "gi://Graphene";
 import Gsk from "gi://Gsk";
 import GObject from "gi://GObject";
 
-const box = workbench.builder.get_object("box");
-const label = workbench.builder.get_object("label");
+const box = workbench.builder.get_object<Gtk.Box>("box");
+const label = workbench.builder.get_object<Gtk.Label>("label");
 
 const Chessboard = GObject.registerClass(
   {
@@ -16,6 +16,19 @@ const Chessboard = GObject.registerClass(
     square_size = 70;
     board_size = 8 * this.square_size;
     piece_size = 1.5 * this.square_size;
+
+    black_squares_color: Gdk.RGBA;
+    white_squares_color: Gdk.RGBA;
+    knight_color: Gdk.RGBA;
+    x: number;
+    y: number;
+    initial_x: number;
+    initial_y: number;
+    knight_path: Gsk.Path;
+    knight_stroke: Gsk.Stroke;
+    knight_bounds: Graphene.Rect;
+    gesture: Gtk.GestureDrag;
+    gesture_started: boolean;
 
     constructor(kwargs) {
       super(kwargs);
@@ -130,8 +143,8 @@ const Chessboard = GObject.registerClass(
       );
     }
 
-    vfunc_measure(_orientation, _for_size) {
-      return [this.board_size, this.board_size, -1, -1];
+    vfunc_measure() {
+      return [this.board_size, this.board_size, -1, -1] as [number, number, number, number];
     }
   },
 );
