@@ -1,10 +1,11 @@
 import Adw from "gi://Adw";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk?version=4.0";
 
-const overlay = workbench.builder.get_object("overlay");
+const overlay = workbench.builder.get_object<Adw.ToastOverlay>("overlay");
 
-const button_simple = workbench.builder.get_object("button_simple");
+const button_simple = workbench.builder.get_object<Gtk.Button>("button_simple");
 function simple() {
   const toast = new Adw.Toast({
     title: "Toasts are delicious!",
