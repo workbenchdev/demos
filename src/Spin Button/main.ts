@@ -1,6 +1,7 @@
 import Gtk from "gi://Gtk?version=4.0";
-const hours = workbench.builder.get_object("hours");
-const minutes = workbench.builder.get_object("minutes");
+
+const hours = workbench.builder.get_object<Gtk.SpinButton>("hours");
+const minutes = workbench.builder.get_object<Gtk.SpinButton>("minutes");
 
 hours.text = "00";
 minutes.text = "00";
