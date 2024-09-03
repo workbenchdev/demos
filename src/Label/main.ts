@@ -1,7 +1,14 @@
-const label = workbench.builder.get_object("label");
-const justification_row = workbench.builder.get_object("justification_row");
-const style_row = workbench.builder.get_object("style_row");
-const single_line_switch = workbench.builder.get_object("single_line_switch");
+import Adw from "gi://Adw";
+import Gtk from "gi://Gtk?version=4.0";
+
+const label = workbench.builder.get_object<Gtk.Label>("label");
+const justification_row = workbench.builder.get_object<Adw.ComboRow>(
+  "justification_row",
+);
+const style_row = workbench.builder.get_object<Adw.ComboRow>("style_row");
+const single_line_switch = workbench.builder.get_object<Adw.SwitchRow>(
+  "single_line_switch",
+);
 
 const style_classes = [
   "none",
