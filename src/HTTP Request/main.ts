@@ -1,5 +1,6 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk?version=4.0";
 import Soup from "gi://Soup";
 
 Gio._promisify(
@@ -9,8 +10,10 @@ Gio._promisify(
 );
 
 const http_session = new Soup.Session();
-const article_text_view = workbench.builder.get_object("article_text_view");
-const article_title = workbench.builder.get_object("article_title");
+const article_text_view = workbench.builder.get_object<Gtk.TextView>(
+  "article_text_view",
+);
+const article_title = workbench.builder.get_object<Gtk.Label>("article_title");
 
 fetchWikipediaTodaysFeaturedArticle().catch(console.error);
 
@@ -25,11 +28,12 @@ async function fetchWikipediaTodaysFeaturedArticle() {
   )}`;
   const message = Soup.Message.new("GET", url);
 
+  // @ts-expect-error undetected async function
   const bytes = await http_session.send_and_read_async(
     message,
     GLib.PRIORITY_DEFAULT,
     null,
-  );
+  ) as GLib.Bytes
 
   if (message.get_status() !== Soup.Status.OK) {
     console.error(`HTTP Status ${message.get_status()}`);
