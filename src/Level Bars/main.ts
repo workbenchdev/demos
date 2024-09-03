@@ -1,18 +1,24 @@
-const bar_continuous = workbench.builder.get_object("bar_continuous");
+import Gtk from "gi://Gtk?version=4.0";
+
+const bar_continuous = workbench.builder.get_object<Gtk.LevelBar>(
+  "bar_continuous",
+);
 
 bar_continuous.add_offset_value("full", 100);
 bar_continuous.add_offset_value("half", 50);
 bar_continuous.add_offset_value("low", 25);
 
-const bar_discrete = workbench.builder.get_object("bar_discrete");
+const bar_discrete = workbench.builder.get_object<Gtk.LevelBar>("bar_discrete");
 
 bar_discrete.add_offset_value("very-weak", 1);
 bar_discrete.add_offset_value("weak", 2);
 bar_discrete.add_offset_value("moderate", 4);
 bar_discrete.add_offset_value("strong", 6);
 
-const entry = workbench.builder.get_object("entry");
-const label_strength = workbench.builder.get_object("label_strength");
+const entry = workbench.builder.get_object<Gtk.Entry>("entry");
+const label_strength = workbench.builder.get_object<Gtk.Label>(
+  "label_strength",
+);
 
 entry.connect("notify::text", () => {
   estimatePasswordStrength();
