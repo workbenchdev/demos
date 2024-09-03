@@ -57,7 +57,8 @@ async function createAdvancedDialog() {
 
   dialog.set_extra_child(entry);
 
-  const response = await dialog.choose(workbench.window, null);
+  // @ts-expect-error this function is not detected as async
+  const response = await dialog.choose(workbench.window, null) as string;
   if (response === "login") {
     console.log(
       `Selected "${response}" response with password "${entry.get_text()}"`,
