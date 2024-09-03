@@ -1,11 +1,15 @@
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk?version=4.0";
 
-const pic_with_frame = workbench.builder.get_object("with_frame");
-const pic_without_frame = workbench.builder.get_object("without_frame");
+const pic_with_frame = workbench.builder.get_object<Gtk.Picture>("with_frame");
+const pic_without_frame = workbench.builder.get_object<Gtk.Picture>(
+  "without_frame",
+);
 
-const textview_with_frame = workbench.builder.get_object("textview_with_frame");
-const textview_without_frame = workbench.builder.get_object(
+const textview_with_frame = workbench.builder.get_object<Gtk.TextView>(
+  "textview_with_frame",
+);
+const textview_without_frame = workbench.builder.get_object<Gtk.TextView>(
   "textview_without_frame",
 );
 
