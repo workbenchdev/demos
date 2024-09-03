@@ -1,8 +1,8 @@
 import Gtk from "gi://Gtk?version=4.0";
 
-const list_view = workbench.builder.get_object("list_view");
-const add = workbench.builder.get_object("add");
-const remove = workbench.builder.get_object("remove");
+const list_view = workbench.builder.get_object<Gtk.ListView>("list_view");
+const add = workbench.builder.get_object<Gtk.Button>("add");
+const remove = workbench.builder.get_object<Gtk.Button>("remove");
 
 //Model
 let item = 1;
@@ -24,7 +24,7 @@ model.model.connect("items-changed", (_list, position, removed, added) => {
 model.connect("selection-changed", () => {
   const selected_item = model.get_selected();
   console.log(
-    `Model item selected from view: ${model.model.get_string(selected_item)}`,
+    `Model item selected from view: ${string_model.get_string(selected_item)}`,
   );
 });
 
@@ -33,11 +33,11 @@ list_view.model = model;
 // Controller
 add.connect("clicked", () => {
   const new_item = `New item ${item}`;
-  model.model.append(new_item);
+  string_model.append(new_item);
   item++;
 });
 
 remove.connect("clicked", () => {
   const selected_item = model.get_selected();
-  model.model.remove(selected_item);
+  string_model.remove(selected_item);
 });
