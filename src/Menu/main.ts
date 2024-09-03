@@ -1,8 +1,9 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk?version=4.0";
 import Pango from "gi://Pango";
 
-const label = workbench.builder.get_object("label");
+const label = workbench.builder.get_object<Gtk.Label>("label");
 
 const text_group = new Gio.SimpleActionGroup();
 label.insert_action_group("text", text_group);
