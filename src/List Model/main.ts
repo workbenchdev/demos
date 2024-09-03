@@ -2,12 +2,12 @@ import Adw from "gi://Adw";
 import Gtk from "gi://Gtk?version=4.0";
 
 const stack = workbench.builder.get_object("stack");
-const list_box = workbench.builder.get_object("list_box");
-const flow_box = workbench.builder.get_object("flow_box");
-const add = workbench.builder.get_object("add");
-const remove = workbench.builder.get_object("remove");
-const list_box_editable = workbench.builder.get_object("list_box_editable");
-const search_entry = workbench.builder.get_object("search_entry");
+const list_box = workbench.builder.get_object<Gtk.ListBox>("list_box");
+const flow_box = workbench.builder.get_object<Gtk.FlowBox>("flow_box");
+const add = workbench.builder.get_object<Gtk.Button>("add");
+const remove = workbench.builder.get_object<Gtk.Button>("remove");
+const list_box_editable = workbench.builder.get_object<Gtk.ListBox>("list_box_editable");
+const search_entry = workbench.builder.get_object<Gtk.SearchEntry>("search_entry");
 
 //Model
 const model = new Gtk.StringList({
@@ -25,7 +25,7 @@ model.connect("items-changed", (_self, position, removed, added) => {
 
 //Filter-Model
 const search_expression = Gtk.PropertyExpression.new(
-  Gtk.StringObject,
+  Gtk.StringObject.$gtype,
   null,
   "string",
 );
