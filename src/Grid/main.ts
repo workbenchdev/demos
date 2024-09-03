@@ -1,3 +1,5 @@
+import Gtk from "gi://Gtk?version=4.0";
+
 const button_ids = [
   "button00",
   "button01",
@@ -28,10 +30,10 @@ function onClicked(button) {
     const pc_is_thinking_row = Math.floor(Math.random() * 3).toString();
     const pc_is_thinking_col = Math.floor(Math.random() * 3).toString();
     //make pc reaction if possible
-    const temp = workbench.builder.get_object(
+    const temp = workbench.builder.get_object<Gtk.Button>(
       `button${pc_is_thinking_row}${pc_is_thinking_col}`,
     );
-    const temp_image = temp.get_child();
+    const temp_image = temp.get_child() as Gtk.Image;
     if (!temp_image.icon_name) {
       //store and show pc reaction
       temp_image.icon_name = "circle-outline-thick-symbolic";
