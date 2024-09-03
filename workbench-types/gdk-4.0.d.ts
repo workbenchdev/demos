@@ -135,6 +135,9 @@ declare module 'gi://Gdk?version=4.0' {
              * The values use the range of 16-235 (for Y) and 16-240 for u and v.
              */
             NARROW,
+            /**
+             * The values use the full range.
+             */
             FULL,
         }
         /**
@@ -4555,7 +4558,7 @@ declare module 'gi://Gdk?version=4.0' {
              */
             LEFT_RESIZABLE,
             /**
-             * the surface is not visible to the user
+             * The surface is not visible to the user.
              */
             SUSPENDED,
         }
@@ -4776,7 +4779,6 @@ declare module 'gi://Gdk?version=4.0' {
              * - 5: PAL
              * - 6,7: BT.601 / NTSC
              * - 9: BT.2020
-             * - 10: CIE XYZ
              * - 12: Display P3
              */
             get color_primaries(): number;
@@ -4791,7 +4793,6 @@ declare module 'gi://Gdk?version=4.0' {
              * - 5: PAL
              * - 6,7: BT.601 / NTSC
              * - 9: BT.2020
-             * - 10: CIE XYZ
              * - 12: Display P3
              */
             get colorPrimaries(): number;
@@ -9452,9 +9453,13 @@ declare module 'gi://Gdk?version=4.0' {
              * according to platform conventions.
              *
              * The right mouse button typically triggers context menus.
+             * On macOS, Control+left mouse button also triggers.
              *
              * This function should always be used instead of simply checking for
-             * event->button == %GDK_BUTTON_SECONDARY.
+             *
+             * ```c
+             * event->button == GDK_BUTTON_SECONDARY
+             * ```
              * @returns %TRUE if the event should trigger a context menu.
              */
             triggers_context_menu(): boolean;
@@ -14470,9 +14475,7 @@ declare module 'gi://Gdk?version=4.0' {
          * Crucially, GTK knows how to convert colors from one color
          * state to another.
          *
-         * `GdkColorState objects are immutable and therefore threadsafe.
-         *
-         * Since 4.16
+         * `GdkColorState` objects are immutable and therefore threadsafe.
          */
         abstract class ColorState {
             static $gtype: GObject.GType<ColorState>;

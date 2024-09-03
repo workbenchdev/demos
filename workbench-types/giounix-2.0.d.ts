@@ -329,6 +329,21 @@ declare module 'gi://GioUnix?version=2.0' {
          */
         function mount_points_get(): [Gio.UnixMountPoint[], number];
         /**
+         * Gets an array of [struct`Gio`.UnixMountPoint]s containing the Unix mount
+         * points listed in `table_path`.
+         *
+         * This is a generalized version of g_unix_mount_points_get(), mainly intended
+         * for internal testing use. Note that g_unix_mount_points_get() may parse
+         * multiple hierarchical table files, so this function is not a direct superset
+         * of its functionality.
+         *
+         * If there is an error reading or parsing the file, `NULL` will be returned
+         * and both out parameters will be set to `0`.
+         * @param table_path path to the mount points table file (for example `/etc/fstab`)
+         * @returns mount   points, or `NULL` if there was an error loading them
+         */
+        function mount_points_get_from_file(table_path: string): [Gio.UnixMountPoint[] | null, number];
+        /**
          * Checks if the unix mounts have changed since a given unix time.
          * @param time guint64 to contain a timestamp.
          * @returns %TRUE if the mounts have changed since @time.
@@ -342,6 +357,21 @@ declare module 'gi://GioUnix?version=2.0' {
          * @returns a #GList of the UNIX mounts.
          */
         function mounts_get(): [Gio.UnixMountEntry[], number];
+        /**
+         * Gets an array of [struct`Gio`.UnixMountEntry]s containing the Unix mounts
+         * listed in `table_path`.
+         *
+         * This is a generalized version of g_unix_mounts_get(), mainly intended for
+         * internal testing use. Note that g_unix_mounts_get() may parse multiple
+         * hierarchical table files, so this function is not a direct superset of its
+         * functionality.
+         *
+         * If there is an error reading or parsing the file, `NULL` will be returned
+         * and both out parameters will be set to `0`.
+         * @param table_path path to the mounts table file (for example `/proc/self/mountinfo`)
+         * @returns mount   entries, or `NULL` if there was an error loading them
+         */
+        function mounts_get_from_file(table_path: string): [Gio.UnixMountEntry[] | null, number];
         interface DesktopAppLaunchCallback {
             (appinfo: Gio.DesktopAppInfo, pid: GLib.Pid): void;
         }
@@ -4087,7 +4117,7 @@ declare module 'gi://GioUnix?version=2.0' {
         }
 
         /**
-         * Defines a Unix mount entry (e.g. <filename>/media/cdrom</filename>).
+         * Defines a Unix mount entry (e.g. `/media/cdrom`).
          * This corresponds roughly to a mtab entry.
          */
         abstract class MountEntry {
@@ -4100,7 +4130,7 @@ declare module 'gi://GioUnix?version=2.0' {
 
         type MountMonitorClass = typeof MountMonitor;
         /**
-         * Defines a Unix mount point (e.g. <filename>/dev</filename>).
+         * Defines a Unix mount point (e.g. `/dev`).
          * This corresponds roughly to a fstab entry.
          */
         abstract class MountPoint {

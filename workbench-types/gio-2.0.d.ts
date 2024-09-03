@@ -706,8 +706,8 @@ declare module 'gi://Gio?version=2.0' {
             MULTIDISK,
             /**
              * The start/stop methods will
-             *    unlock/lock the disk (for example using the ATA <quote>SECURITY
-             *    UNLOCK DEVICE</quote> command)
+             *    unlock/lock the disk (for example using the ATA `SECURITY UNLOCK
+             *    DEVICE` command)
              */
             PASSWORD,
         }
@@ -5389,6 +5389,21 @@ declare module 'gi://Gio?version=2.0' {
          */
         function unix_mount_points_get(): [UnixMountPoint[], number];
         /**
+         * Gets an array of [struct`Gio`.UnixMountPoint]s containing the Unix mount
+         * points listed in `table_path`.
+         *
+         * This is a generalized version of g_unix_mount_points_get(), mainly intended
+         * for internal testing use. Note that g_unix_mount_points_get() may parse
+         * multiple hierarchical table files, so this function is not a direct superset
+         * of its functionality.
+         *
+         * If there is an error reading or parsing the file, `NULL` will be returned
+         * and both out parameters will be set to `0`.
+         * @param table_path path to the mount points table file (for example `/etc/fstab`)
+         * @returns mount   points, or `NULL` if there was an error loading them
+         */
+        function unix_mount_points_get_from_file(table_path: string): [UnixMountPoint[] | null, number];
+        /**
          * Checks if the unix mounts have changed since a given unix time.
          * @param time guint64 to contain a timestamp.
          * @returns %TRUE if the mounts have changed since @time.
@@ -5402,6 +5417,21 @@ declare module 'gi://Gio?version=2.0' {
          * @returns a #GList of the UNIX mounts.
          */
         function unix_mounts_get(): [UnixMountEntry[], number];
+        /**
+         * Gets an array of [struct`Gio`.UnixMountEntry]s containing the Unix mounts
+         * listed in `table_path`.
+         *
+         * This is a generalized version of g_unix_mounts_get(), mainly intended for
+         * internal testing use. Note that g_unix_mounts_get() may parse multiple
+         * hierarchical table files, so this function is not a direct superset of its
+         * functionality.
+         *
+         * If there is an error reading or parsing the file, `NULL` will be returned
+         * and both out parameters will be set to `0`.
+         * @param table_path path to the mounts table file (for example `/proc/self/mountinfo`)
+         * @returns mount   entries, or `NULL` if there was an error loading them
+         */
+        function unix_mounts_get_from_file(table_path: string): [UnixMountEntry[] | null, number];
         interface AsyncReadyCallback<A = GObject.Object> {
             (source_object: A | null, res: AsyncResult, data?: any | null): void;
         }
@@ -7036,10 +7066,12 @@ declare module 'gi://Gio?version=2.0' {
              * [freedesktop.org Startup Notification Protocol](http://standards.freedesktop.org/startup-notification-spec/startup-notification-latest.txt).
              *
              * Support for the XDG Activation Protocol was added in GLib 2.76.
+             * Since GLib 2.82 `info` and `files` can be `NULL`. If that’s not supported by the backend,
+             * the returned token will be `NULL`.
              * @param info the app info
-             * @param files list of [iface@Gio.File] objects
+             * @param files a list of [iface@Gio.File] objects
              */
-            vfunc_get_startup_notify_id(info: AppInfo, files: File[]): string | null;
+            vfunc_get_startup_notify_id(info?: AppInfo | null, files?: File[] | null): string | null;
             /**
              * Called when an application has failed to launch, so that it can cancel
              * the application startup notification started in
@@ -7083,11 +7115,13 @@ declare module 'gi://Gio?version=2.0' {
              * [freedesktop.org Startup Notification Protocol](http://standards.freedesktop.org/startup-notification-spec/startup-notification-latest.txt).
              *
              * Support for the XDG Activation Protocol was added in GLib 2.76.
+             * Since GLib 2.82 `info` and `files` can be `NULL`. If that’s not supported by the backend,
+             * the returned token will be `NULL`.
              * @param info the app info
-             * @param files list of [iface@Gio.File] objects
+             * @param files a list of [iface@Gio.File] objects
              * @returns a startup notification ID for the application, or `NULL` if   not supported.
              */
-            get_startup_notify_id(info: AppInfo, files: File[]): string | null;
+            get_startup_notify_id(info?: AppInfo | null, files?: File[] | null): string | null;
             /**
              * Called when an application has failed to launch, so that it can cancel
              * the application startup notification started in
@@ -37372,6 +37406,8 @@ declare module 'gi://Gio?version=2.0' {
          *
          * ![](menu-example.png)
          *
+         * While this kind of deeply nested menu is no longer considered good UI
+         * practice, it serves as a good example of the concepts in `GMenuModel`.
          * There are 8 ‘menus’ visible in the screenshot: one menubar, two
          * submenus and 5 sections:
          *
@@ -46744,7 +46780,7 @@ declare module 'gi://Gio?version=2.0' {
              * Looks into the system proxy configuration to determine what proxy,
              * if any, to use to connect to `uri`. The returned proxy URIs are of
              * the form `<protocol>://[user[:password]`]`host[:port]` or
-             * `direct://`, where <protocol> could be http, rtsp, socks
+             * `direct://`, where `<protocol>` could be http, rtsp, socks
              * or other proxying protocol.
              *
              * If you don't know what network protocol is being used on the
@@ -46791,7 +46827,7 @@ declare module 'gi://Gio?version=2.0' {
              * Looks into the system proxy configuration to determine what proxy,
              * if any, to use to connect to `uri`. The returned proxy URIs are of
              * the form `<protocol>://[user[:password]`]`host[:port]` or
-             * `direct://`, where <protocol> could be http, rtsp, socks
+             * `direct://`, where `<protocol>` could be http, rtsp, socks
              * or other proxying protocol.
              *
              * If you don't know what network protocol is being used on the
@@ -47718,7 +47754,7 @@ declare module 'gi://Gio?version=2.0' {
              * getsockopt(). (If you need to fetch a  non-integer-valued option,
              * you will need to call getsockopt() directly.)
              *
-             * The [<gio/gnetworking.h>][gio-gnetworking.h]
+             * The [`<gio/gnetworking.h>`](networking.html)
              * header pulls in system headers that will define most of the
              * standard/portable socket options. For unusual socket protocols or
              * platform-dependent options, you may need to include additional
@@ -48328,7 +48364,7 @@ declare module 'gi://Gio?version=2.0' {
              * setsockopt(). (If you need to set a non-integer-valued option,
              * you will need to call setsockopt() directly.)
              *
-             * The [<gio/gnetworking.h>][gio-gnetworking.h]
+             * The [`<gio/gnetworking.h>`](networking.html)
              * header pulls in system headers that will define most of the
              * standard/portable socket options. For unusual socket protocols or
              * platform-dependent options, you may need to include additional
@@ -64157,7 +64193,7 @@ declare module 'gi://Gio?version=2.0' {
         }
 
         /**
-         * Defines a Unix mount entry (e.g. <filename>/media/cdrom</filename>).
+         * Defines a Unix mount entry (e.g. `/media/cdrom`).
          * This corresponds roughly to a mtab entry.
          */
         abstract class UnixMountEntry {
@@ -64170,7 +64206,7 @@ declare module 'gi://Gio?version=2.0' {
 
         type UnixMountMonitorClass = typeof UnixMountMonitor;
         /**
-         * Defines a Unix mount point (e.g. <filename>/dev</filename>).
+         * Defines a Unix mount point (e.g. `/dev`).
          * This corresponds roughly to a fstab entry.
          */
         abstract class UnixMountPoint {
@@ -73808,7 +73844,7 @@ declare module 'gi://Gio?version=2.0' {
              * Looks into the system proxy configuration to determine what proxy,
              * if any, to use to connect to `uri`. The returned proxy URIs are of
              * the form `<protocol>://[user[:password]`]`host[:port]` or
-             * `direct://`, where <protocol> could be http, rtsp, socks
+             * `direct://`, where `<protocol>` could be http, rtsp, socks
              * or other proxying protocol.
              *
              * If you don't know what network protocol is being used on the
@@ -73858,7 +73894,7 @@ declare module 'gi://Gio?version=2.0' {
              * Looks into the system proxy configuration to determine what proxy,
              * if any, to use to connect to `uri`. The returned proxy URIs are of
              * the form `<protocol>://[user[:password]`]`host[:port]` or
-             * `direct://`, where <protocol> could be http, rtsp, socks
+             * `direct://`, where `<protocol>` could be http, rtsp, socks
              * or other proxying protocol.
              *
              * If you don't know what network protocol is being used on the

@@ -1716,6 +1716,9 @@ declare module 'gi://Gsk?version=4.0' {
             get_blur_radius(): number;
             /**
              * Retrieves the color of the inset shadow.
+             *
+             * The value returned by this function will not be correct
+             * if the render node was created for a non-sRGB color.
              * @returns the color of the shadow
              */
             get_color(): Gdk.RGBA;
@@ -1890,6 +1893,9 @@ declare module 'gi://Gsk?version=4.0' {
             get_blur_radius(): number;
             /**
              * Retrieves the color of the outset shadow.
+             *
+             * The value returned by this function will not be correct
+             * if the render node was created for a non-sRGB color.
              * @returns a color
              */
             get_color(): Gdk.RGBA;
@@ -2399,6 +2405,9 @@ declare module 'gi://Gsk?version=4.0' {
 
             /**
              * Retrieves the color used by the text `node`.
+             *
+             * The value returned by this function will not be correct
+             * if the render node was created for a non-sRGB color.
              * @returns the text color
              */
             get_color(): Gdk.RGBA;

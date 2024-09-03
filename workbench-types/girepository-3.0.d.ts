@@ -457,6 +457,7 @@ declare module 'gi://GIRepository?version=3.0' {
              * represents a virtual function.
              */
             WRAPS_VFUNC,
+            IS_ASYNC,
         }
         /**
          * Flags that control how a typelib is loaded.
@@ -787,12 +788,22 @@ declare module 'gi://GIRepository?version=3.0' {
              */
             get_arg(n: number): ArgInfo;
             /**
+             * Gets the callable info for the callable's asynchronous version
+             * @returns a [class@GIRepository.CallableInfo] for the   async function or `NULL` if not defined.
+             */
+            get_async_function(): CallableInfo | null;
+            /**
              * See whether the caller owns the return value of this callable.
              *
              * [type`GIRepository`.Transfer] contains a list of possible transfer values.
              * @returns the transfer mode for the return value of the callable
              */
             get_caller_owns(): Transfer;
+            /**
+             * Gets the info for an async function's corresponding finish function
+             * @returns a [class@GIRepository.CallableInfo] for the   finish function or `NULL` if not defined.
+             */
+            get_finish_function(): CallableInfo | null;
             /**
              * Obtains the ownership transfer for the instance argument.
              *
@@ -820,6 +831,11 @@ declare module 'gi://GIRepository?version=3.0' {
              */
             get_return_type(): TypeInfo;
             /**
+             * Gets the callable info for the callable's synchronous version
+             * @returns a [class@GIRepository.CallableInfo] for the   sync function or `NULL` if not defined.
+             */
+            get_sync_function(): CallableInfo | null;
+            /**
              * Invoke the given `GICallableInfo` by calling the given `function` pointer.
              *
              * The set of arguments passed to `function` will be constructed according to the
@@ -831,6 +847,12 @@ declare module 'gi://GIRepository?version=3.0' {
              * @returns `TRUE` if the callable was executed successfully and didn’t throw   a [type@GLib.Error]; `FALSE` if @error is set
              */
             invoke(_function: any | null, in_args: Argument[], out_args: Argument[]): [boolean, Argument];
+            /**
+             * Gets whether a callable is ‘async’. Async callables have a
+             * [type`Gio`.AsyncReadyCallback] parameter and user data.
+             * @returns true if the callable is async
+             */
+            is_async(): boolean;
             /**
              * Determines if the callable info is a method.
              *
