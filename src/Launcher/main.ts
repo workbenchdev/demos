@@ -12,11 +12,11 @@ Gio._promisify(Gtk.FileDialog.prototype, "open", "open_finish");
 Gio._promisify(Gtk.UriLauncher.prototype, "launch", "launch_finish");
 
 const launch_file = workbench.builder.get_object("launch_file");
-const file_name = workbench.builder.get_object("file_name");
+const file_name = workbench.builder.get_object<Gtk.Label>("file_name");
 const file_location = workbench.builder.get_object("file_location");
 const change_file = workbench.builder.get_object("change_file");
-const uri_launch = workbench.builder.get_object("uri_launch");
-const uri_details = workbench.builder.get_object("uri_details");
+const uri_launch = workbench.builder.get_object<Gtk.Button>("uri_launch");
+const uri_details = workbench.builder.get_object<Gtk.Entry>("uri_details");
 
 //File Launcher
 
@@ -27,6 +27,7 @@ const file_launcher = new Gtk.FileLauncher({
 });
 
 launch_file.connect("clicked", () => {
+  // @ts-expect-error undetected async function
   file_launcher.launch(workbench.window, null).catch(console.error);
 });
 
@@ -42,12 +43,14 @@ file_launcher.connect("notify::file", () => {
 file_location.connect("clicked", () => {
   file_launcher
     .open_containing_folder(workbench.window, null)
+    // @ts-expect-error undetected async function
     .catch(console.error);
 });
 
 change_file.connect("clicked", () => {
   new Gtk.FileDialog()
     .open(workbench.window, null)
+    // @ts-expect-error undetected async function
     .then((file) => {
       file_launcher.file = file;
     })
@@ -59,6 +62,7 @@ change_file.connect("clicked", () => {
 uri_launch.connect("clicked", () => {
   new Gtk.UriLauncher({ uri: uri_details.text })
     .launch(workbench.window, null)
+    // @ts-expect-error undetected async function
     .catch(console.error);
 });
 uri_details.connect("changed", () => {
