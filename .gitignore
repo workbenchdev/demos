@@ -19,6 +19,12 @@ __pycache__
 .idea
 .vscode
 
+# compiled typescript
+out
+
+# extra GIRs from Workbench
+workbench-girs
+
 # Project files - sync with Makefile
 src/*/settings
 src/*/workbench.vala
@@ -33,3 +39,6 @@ src/*/target
 src/*/*.gresource
 src/*/*.gresource.xml
 src/*/jsconfig.json
+
+# All JavaScript files
+src/**/*.js
