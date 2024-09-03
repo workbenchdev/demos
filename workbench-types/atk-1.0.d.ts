@@ -479,7 +479,7 @@ declare module 'gi://Atk?version=1.0' {
             /**
              * An object the user can manipulate to tell the application to do something
              */
-            PUSH_BUTTON,
+            BUTTON,
             /**
              * A specialized check box that will cause other radio buttons in the same group to become unchecked when this one is checked
              */
@@ -899,6 +899,7 @@ declare module 'gi://Atk?version=1.0' {
              * not a valid role, used for finding end of the enumeration
              */
             LAST_DEFINED,
+            PUSH_BUTTON,
         }
         /**
          * Specifies where an object should be placed on the screen when using scroll_to.

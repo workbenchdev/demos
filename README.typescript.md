@@ -36,11 +36,11 @@ export PATH=/usr/lib/sdk/typescript/bin:$PATH
 YARN_GLOBAL_DIR=/tmp/yarn-global
 export PATH="$YARN_GLOBAL_DIR/node_modules/.bin:$PATH"
 
-yarn --global-folder $YARN_GLOBAL_DIR global add @ts-for-gir/cli@4.0.0-beta.14
+yarn --global-folder $YARN_GLOBAL_DIR global add @ts-for-gir/cli@4.0.0-beta.15
 ```
 
 ### Generate modules
 
 ```bash
-ts-for-gir generate -g workbench-girs/ -g /usr/share/gir-1.0/ -o workbench-girs/ --ignoreVersionConflicts
+ts-for-gir generate -g workbench-girs/ -g /usr/share/gir-1.0/ -o workbench-types/ --ignoreVersionConflicts
 ```

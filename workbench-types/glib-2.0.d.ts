@@ -3587,7 +3587,7 @@ declare module 'gi://GLib?version=2.0' {
          * Use this for default priority event sources.
          *
          * In GLib this priority is used when adding timeout functions
-         * with g_timeout_add(). In GDK this priority is used for events
+         * with [func`GLib`.timeout_add]. In GDK this priority is used for events
          * from the X server.
          */
         const PRIORITY_DEFAULT: number;
@@ -3595,7 +3595,7 @@ declare module 'gi://GLib?version=2.0' {
          * Use this for default priority idle functions.
          *
          * In GLib this priority is used when adding idle functions with
-         * g_idle_add().
+         * [func`GLib`.idle_add].
          */
         const PRIORITY_DEFAULT_IDLE: number;
         /**
@@ -3657,13 +3657,13 @@ declare module 'gi://GLib?version=2.0' {
         const SIZEOF_SSIZE_T: number;
         const SIZEOF_VOID_P: number;
         /**
-         * Use this macro as the return value of a #GSourceFunc to leave
-         * the #GSource in the main loop.
+         * Use this macro as the return value of a [callback`GLib`.SourceFunc] to leave
+         * the [struct`GLib`.Source] in the main loop.
          */
         const SOURCE_CONTINUE: boolean;
         /**
-         * Use this macro as the return value of a #GSourceFunc to remove
-         * the #GSource from the main loop.
+         * Use this macro as the return value of a [callback`GLib`.SourceFunc] to remove
+         * the [struct`GLib`.Source] from the main loop.
          */
         const SOURCE_REMOVE: boolean;
         /**
@@ -5039,28 +5039,29 @@ declare module 'gi://GLib?version=2.0' {
          * Sets a function to be called when the child indicated by `pid`
          * exits, at the priority `priority`.
          *
-         * If you obtain `pid` from g_spawn_async() or g_spawn_async_with_pipes()
-         * you will need to pass %G_SPAWN_DO_NOT_REAP_CHILD as flag to
-         * the spawn function for the child watching to work.
+         * If you obtain `pid` from [func`GLib`.spawn_async] or
+         * [func`GLib`.spawn_async_with_pipes] you will need to pass
+         * %G_SPAWN_DO_NOT_REAP_CHILD as flag to the spawn function for the child
+         * watching to work.
          *
-         * In many programs, you will want to call g_spawn_check_wait_status()
+         * In many programs, you will want to call [func`GLib`.spawn_check_wait_status]
          * in the callback to determine whether or not the child exited
          * successfully.
          *
          * Also, note that on platforms where #GPid must be explicitly closed
-         * (see g_spawn_close_pid()) `pid` must not be closed while the source
-         * is still active.  Typically, you should invoke g_spawn_close_pid()
+         * (see [func`GLib`.spawn_close_pid]) `pid` must not be closed while the source
+         * is still active.  Typically, you should invoke [func`GLib`.spawn_close_pid]
          * in the callback function for the source.
          *
          * GLib supports only a single callback per process id.
          * On POSIX platforms, the same restrictions mentioned for
-         * g_child_watch_source_new() apply to this function.
+         * [func`GLib`.child_watch_source_new] apply to this function.
          *
          * This internally creates a main loop source using
-         * g_child_watch_source_new() and attaches it to the main loop context
-         * using g_source_attach(). You can do these steps manually if you
+         * [func`GLib`.child_watch_source_new] and attaches it to the main loop context
+         * using [method`GLib`.Source.attach]. You can do these steps manually if you
          * need greater control.
-         * @param priority the priority of the idle source. Typically this will be in the   range between %G_PRIORITY_DEFAULT_IDLE and %G_PRIORITY_HIGH_IDLE.
+         * @param priority the priority of the idle source. Typically this will be in the   range between [const@GLib.PRIORITY_DEFAULT_IDLE] and   [const@GLib.PRIORITY_HIGH_IDLE].
          * @param pid process to watch. On POSIX the positive pid of a child process. On Windows a handle for a process (which doesn't have to be a child).
          * @param _function function to call
          * @param notify function to call when the idle is removed, or %NULL
@@ -5075,17 +5076,17 @@ declare module 'gi://GLib?version=2.0' {
         /**
          * Creates a new child_watch source.
          *
-         * The source will not initially be associated with any #GMainContext
-         * and must be added to one with g_source_attach() before it will be
-         * executed.
+         * The source will not initially be associated with any
+         * [struct`GLib`.MainContext] and must be added to one with
+         * [method`GLib`.Source.attach] before it will be executed.
          *
          * Note that child watch sources can only be used in conjunction with
          * `g_spawn...` when the %G_SPAWN_DO_NOT_REAP_CHILD flag is used.
          *
          * Note that on platforms where #GPid must be explicitly closed
-         * (see g_spawn_close_pid()) `pid` must not be closed while the
+         * (see [func`GLib`.spawn_close_pid]) `pid` must not be closed while the
          * source is still active. Typically, you will want to call
-         * g_spawn_close_pid() in the callback function for the source.
+         * [func`GLib`.spawn_close_pid] in the callback function for the source.
          *
          * On POSIX platforms, the following restrictions apply to this API
          * due to limitations in POSIX process interfaces:
@@ -5100,8 +5101,8 @@ declare module 'gi://GLib?version=2.0' {
          * * the application must not ignore `SIGCHLD`
          * * Before 2.78, the application could not send a signal (`kill()`) to the
          *   watched `pid` in a race free manner. Since 2.78, you can do that while the
-         *   associated #GMainContext is acquired.
-         * * Before 2.78, even after destroying the #GSource, you could not
+         *   associated [struct`GLib`.MainContext] is acquired.
+         * * Before 2.78, even after destroying the [struct`GLib`.Source], you could not
          *   be sure that `pid` wasn't already reaped. Hence, it was also not
          *   safe to `kill()` or `waitpid()` on the process ID after the child watch
          *   source was gone. Destroying the source before it fired made it
@@ -6337,7 +6338,7 @@ declare module 'gi://GLib?version=2.0' {
         /**
          * Equivalent to the UNIX gettimeofday() function, but portable.
          *
-         * You may find g_get_real_time() to be more convenient.
+         * You may find [func`GLib`.get_real_time] to be more convenient.
          * @param result #GTimeVal structure in which to store current time.
          */
         function get_current_time(result: TimeVal): void;
@@ -6534,12 +6535,12 @@ declare module 'gi://GLib?version=2.0' {
         /**
          * Queries the system wall-clock time.
          *
-         * This call is functionally equivalent to g_get_current_time() except
+         * This call is functionally equivalent to [func`GLib`.get_current_time] except
          * that the return value is often more convenient than dealing with a
          * #GTimeVal.
          *
          * You should only use this call if you are actually interested in the real
-         * wall-clock time.  g_get_monotonic_time() is probably more useful for
+         * wall-clock time. [func`GLib`.get_monotonic_time] is probably more useful for
          * measuring intervals.
          * @returns the number of microseconds since January 1, 1970 UTC.
          */
@@ -7026,8 +7027,9 @@ declare module 'gi://GLib?version=2.0' {
          * of `hash_table` are %NULL-safe.
          *
          * The dictionary implementation optimizes for having all values identical to
-         * their keys, for example by using g_hash_table_add(). When stealing both the
-         * key and the value from such a dictionary, the value will be %NULL.
+         * their keys, for example by using g_hash_table_add(). Before 2.82, when
+         * stealing both the key and the value from such a dictionary, the value was
+         * %NULL. Since 2.82, the returned value and key will be the same.
          * @param hash_table a #GHashTable
          * @param lookup_key the key to look up
          * @returns %TRUE if the key was found in the #GHashTable
@@ -7151,18 +7153,18 @@ declare module 'gi://GLib?version=2.0' {
          * Adds a function to be called whenever there are no higher priority
          * events pending.
          *
-         * If the function returns %G_SOURCE_REMOVE or %FALSE it is automatically
+         * If the function returns [const`GLib`.SOURCE_REMOVE] or %FALSE it is automatically
          * removed from the list of event sources and will not be called again.
          *
          * See [mainloop memory management](main-loop.html#memory-management-of-sources) for details
          * on how to handle the return value and memory management of `data`.
          *
-         * This internally creates a main loop source using g_idle_source_new()
-         * and attaches it to the global #GMainContext using g_source_attach(), so
-         * the callback will be invoked in whichever thread is running that main
-         * context. You can do these steps manually if you need greater control or to
-         * use a custom main context.
-         * @param priority the priority of the idle source. Typically this will be in the   range between %G_PRIORITY_DEFAULT_IDLE and %G_PRIORITY_HIGH_IDLE.
+         * This internally creates a main loop source using [func`GLib`.idle_source_new]
+         * and attaches it to the global [struct`GLib`.MainContext] using
+         * [method`GLib`.Source.attach], so the callback will be invoked in whichever
+         * thread is running that main context. You can do these steps manually if you
+         * need greater control or to use a custom main context.
+         * @param priority the priority of the idle source. Typically this will be in the   range between [const@GLib.PRIORITY_DEFAULT_IDLE] and   [const@GLib.PRIORITY_HIGH_IDLE].
          * @param _function function to call
          * @param notify function to call when the idle is removed, or %NULL
          * @returns the ID (greater than 0) of the event source.
@@ -7177,11 +7179,12 @@ declare module 'gi://GLib?version=2.0' {
         /**
          * Creates a new idle source.
          *
-         * The source will not initially be associated with any #GMainContext
-         * and must be added to one with g_source_attach() before it will be
-         * executed. Note that the default priority for idle sources is
-         * %G_PRIORITY_DEFAULT_IDLE, as compared to other sources which
-         * have a default priority of %G_PRIORITY_DEFAULT.
+         * The source will not initially be associated with any
+         * [struct`GLib`.MainContext] and must be added to one with
+         * [method`GLib`.Source.attach] before it will be executed. Note that the
+         * default priority for idle sources is [const`GLib`.PRIORITY_DEFAULT_IDLE], as
+         * compared to other sources which have a default priority of
+         * [const`GLib`.PRIORITY_DEFAULT].
          * @returns the newly-created idle source
          */
         function idle_source_new(): Source;
@@ -7746,7 +7749,7 @@ declare module 'gi://GLib?version=2.0' {
          * Returns the global-default main context. This is the main context
          * used for main loop functions when a main loop is not explicitly
          * specified, and corresponds to the "main" main loop. See also
-         * g_main_context_get_thread_default().
+         * [func`GLib`.MainContext.get_thread_default].
          * @returns the global-default main context.
          */
         function main_context_default(): MainContext;
@@ -7754,25 +7757,26 @@ declare module 'gi://GLib?version=2.0' {
          * Gets the thread-default #GMainContext for this thread. Asynchronous
          * operations that want to be able to be run in contexts other than
          * the default one should call this method or
-         * g_main_context_ref_thread_default() to get a #GMainContext to add
-         * their #GSources to. (Note that even in single-threaded
-         * programs applications may sometimes want to temporarily push a
-         * non-default context, so it is not safe to assume that this will
-         * always return %NULL if you are running in the default thread.)
+         * [func`GLib`.MainContext.ref_thread_default] to get a
+         * [struct`GLib`.MainContext] to add their [struct`GLib`.Source]s to. (Note that
+         * even in single-threaded programs applications may sometimes want to
+         * temporarily push a non-default context, so it is not safe to assume that
+         * this will always return %NULL if you are running in the default thread.)
          *
          * If you need to hold a reference on the context, use
-         * g_main_context_ref_thread_default() instead.
+         * [func`GLib`.MainContext.ref_thread_default] instead.
          * @returns the thread-default #GMainContext, or %NULL if the thread-default context is the global-default main context.
          */
         function main_context_get_thread_default(): MainContext | null;
         /**
-         * Gets the thread-default #GMainContext for this thread, as with
-         * g_main_context_get_thread_default(), but also adds a reference to
-         * it with g_main_context_ref(). In addition, unlike
-         * g_main_context_get_thread_default(), if the thread-default context
-         * is the global-default context, this will return that #GMainContext
-         * (with a ref added to it) rather than returning %NULL.
-         * @returns the thread-default #GMainContext. Unref     with g_main_context_unref() when you are done with it.
+         * Gets the thread-default [struct`GLib`.MainContext] for this thread, as with
+         * [func`GLib`.MainContext.get_thread_default], but also adds a reference to
+         * it with [method`GLib`.MainContext.ref]. In addition, unlike
+         * [func`GLib`.MainContext.get_thread_default], if the thread-default context
+         * is the global-default context, this will return that
+         * [struct`GLib`.MainContext] (with a ref added to it) rather than returning
+         * %NULL.
+         * @returns the thread-default #GMainContext. Unref     with [method@GLib.MainContext.unref] when you are done with it.
          */
         function main_context_ref_thread_default(): MainContext;
         /**
@@ -7782,11 +7786,11 @@ declare module 'gi://GLib?version=2.0' {
         function main_current_source(): Source | null;
         /**
          * Returns the depth of the stack of calls to
-         * g_main_context_dispatch() on any #GMainContext in the current thread.
+         * [method`GLib`.MainContext.dispatch] on any #GMainContext in the current thread.
          * That is, when called from the toplevel, it gives 0. When
-         * called from within a callback from g_main_context_iteration()
-         * (or g_main_loop_run(), etc.) it returns 1. When called from within
-         * a callback to a recursive call to g_main_context_iteration(),
+         * called from within a callback from [method`GLib`.MainContext.iteration]
+         * (or [method`GLib`.MainLoop.run], etc.) it returns 1. When called from within
+         * a callback to a recursive call to [method`GLib`.MainContext.iteration],
          * it returns 2. And so forth.
          *
          * This function is useful in a situation like the following:
@@ -7829,7 +7833,7 @@ declare module 'gi://GLib?version=2.0' {
          * control the main loop. You might think you can simply use an idle
          * function to make the call to free_allocated_memory(), but that
          * doesn't work, since the idle function could be called from a
-         * recursive callback. This can be fixed by using g_main_depth()
+         * recursive callback. This can be fixed by using [func`GLib`.main_depth]
          *
          *
          * ```c
@@ -7866,12 +7870,12 @@ declare module 'gi://GLib?version=2.0' {
          * ```
          *
          *
-         * There is a temptation to use g_main_depth() to solve
+         * There is a temptation to use [func`GLib`.main_depth] to solve
          * problems with reentrancy. For instance, while waiting for data
          * to be received from the network in response to a menu item,
          * the menu item might be selected again. It might seem that
          * one could make the menu item's callback return immediately
-         * and do nothing if g_main_depth() returns a value greater than 1.
+         * and do nothing if [func`GLib`.main_depth] returns a value greater than 1.
          * However, this should be avoided since the user then sees selecting
          * the menu item do nothing. Furthermore, you'll find yourself adding
          * these checks all over your code, since there are doubtless many,
@@ -9186,20 +9190,21 @@ declare module 'gi://GLib?version=2.0' {
         function slist_push_allocator(allocator: Allocator): void;
         /**
          * Removes the source with the given ID from the default main context. You must
-         * use g_source_destroy() for sources added to a non-default main context.
+         * use [method`GLib`.Source.destroy] for sources added to a non-default main context.
          *
-         * The ID of a #GSource is given by g_source_get_id(), or will be
-         * returned by the functions g_source_attach(), g_idle_add(),
-         * g_idle_add_full(), g_timeout_add(), g_timeout_add_full(),
-         * g_child_watch_add(), g_child_watch_add_full(), g_io_add_watch(), and
-         * g_io_add_watch_full().
+         * The ID of a #GSource is given by [method`GLib`.Source.get_id], or will be
+         * returned by the functions [method`GLib`.Source.attach], [func`GLib`.idle_add],
+         * [func`GLib`.idle_add_full], [func`GLib`.timeout_add],
+         * [func`GLib`.timeout_add_full], [func`GLib`.child_watch_add],
+         * [func`GLib`.child_watch_add_full], [func`GLib`.io_add_watch], and
+         * [func`GLib`.io_add_watch_full].
          *
          * It is a programmer error to attempt to remove a non-existent source.
          *
          * More specifically: source IDs can be reissued after a source has been
          * destroyed and therefore it is never valid to use this function with a
          * source ID which may have already been removed.  An example is when
-         * scheduling an idle to run in another thread with g_idle_add(): the
+         * scheduling an idle to run in another thread with [func`GLib`.idle_add]: the
          * idle may already have run and been removed by the time this function
          * is called on its (now invalid) source ID.  This source ID may have
          * been reissued, leading to the operation being performed against the
@@ -9212,7 +9217,7 @@ declare module 'gi://GLib?version=2.0' {
          * Removes a source from the default main loop context given the
          * source functions and user data. If multiple sources exist with the
          * same source functions and user data, only one will be destroyed.
-         * @param funcs The @source_funcs passed to g_source_new()
+         * @param funcs The @source_funcs passed to [ctor@GLib.Source.new]
          * @param user_data the user data for the callback
          * @returns %TRUE if a source was found and removed.
          */
@@ -9229,7 +9234,7 @@ declare module 'gi://GLib?version=2.0' {
          * Sets the name of a source using its ID.
          *
          * This is a convenience utility to set source names from the return
-         * value of g_idle_add(), g_timeout_add(), etc.
+         * value of [func`GLib`.idle_add], [func`GLib`.timeout_add], etc.
          *
          * It is a programmer error to attempt to set the name of a non-existent
          * source.
@@ -9237,7 +9242,7 @@ declare module 'gi://GLib?version=2.0' {
          * More specifically: source IDs can be reissued after a source has been
          * destroyed and therefore it is never valid to use this function with a
          * source ID which may have already been removed.  An example is when
-         * scheduling an idle to run in another thread with g_idle_add(): the
+         * scheduling an idle to run in another thread with [func`GLib`.idle_add]: the
          * idle may already have run and been removed by the time this function
          * is called on its (now invalid) source ID.  This source ID may have
          * been reissued, leading to the operation being performed against the
@@ -10986,15 +10991,16 @@ declare module 'gi://GLib?version=2.0' {
          * See [mainloop memory management](main-loop.html#memory-management-of-sources) for details
          * on how to handle the return value and memory management of `data`.
          *
-         * This internally creates a main loop source using g_timeout_source_new()
-         * and attaches it to the global #GMainContext using g_source_attach(), so
-         * the callback will be invoked in whichever thread is running that main
-         * context. You can do these steps manually if you need greater control or to
-         * use a custom main context.
+         * This internally creates a main loop source using
+         * [func`GLib`.timeout_source_new] and attaches it to the global
+         * [struct`GLib`.MainContext] using [method`GLib`.Source.attach], so the callback
+         * will be invoked in whichever thread is running that main context. You can do
+         * these steps manually if you need greater control or to use a custom main
+         * context.
          *
          * The interval given is in terms of monotonic time, not wall clock time.
-         * See g_get_monotonic_time().
-         * @param priority the priority of the timeout source. Typically this will be in   the range between %G_PRIORITY_DEFAULT and %G_PRIORITY_HIGH.
+         * See [func`GLib`.get_monotonic_time].
+         * @param priority the priority of the timeout source. Typically this will be in   the range between [const@GLib.PRIORITY_DEFAULT] and   [const@GLib.PRIORITY_HIGH].
          * @param interval the time between calls to the function, in milliseconds   (1/1000ths of a second)
          * @param _function function to call
          * @param notify function to call when the timeout is removed, or %NULL
@@ -11009,17 +11015,17 @@ declare module 'gi://GLib?version=2.0' {
         /**
          * Sets a function to be called at regular intervals, with `priority`.
          *
-         * The function is called repeatedly until it returns %G_SOURCE_REMOVE
+         * The function is called repeatedly until it returns [const`GLib`.SOURCE_REMOVE]
          * or %FALSE, at which point the timeout is automatically destroyed and
          * the function will not be called again.
          *
-         * Unlike g_timeout_add(), this function operates at whole second granularity.
-         * The initial starting point of the timer is determined by the implementation
-         * and the implementation is expected to group multiple timers together so that
-         * they fire all at the same time. To allow this grouping, the `interval` to the
-         * first timer is rounded and can deviate up to one second from the specified
-         * interval. Subsequent timer iterations will generally run at the specified
-         * interval.
+         * Unlike [func`GLib`.timeout_add], this function operates at whole second
+         * granularity. The initial starting point of the timer is determined by the
+         * implementation and the implementation is expected to group multiple timers
+         * together so that they fire all at the same time. To allow this grouping, the
+         * `interval` to the first timer is rounded and can deviate up to one second
+         * from the specified interval. Subsequent timer iterations will generally run
+         * at the specified interval.
          *
          * Note that timeout functions may be delayed, due to the processing of other
          * event sources. Thus they should not be relied on for precise timing.
@@ -11029,24 +11035,25 @@ declare module 'gi://GLib?version=2.0' {
          * See [mainloop memory management](main-loop.html#memory-management-of-sources) for details
          * on how to handle the return value and memory management of `data`.
          *
-         * If you want timing more precise than whole seconds, use g_timeout_add()
-         * instead.
+         * If you want timing more precise than whole seconds, use
+         * [func`GLib`.timeout_add] instead.
          *
          * The grouping of timers to fire at the same time results in a more power
          * and CPU efficient behavior so if your timer is in multiples of seconds
          * and you don't require the first timer exactly one second from now, the
-         * use of g_timeout_add_seconds() is preferred over g_timeout_add().
+         * use of [func`GLib`.timeout_add_seconds] is preferred over
+         * [func`GLib`.timeout_add].
          *
          * This internally creates a main loop source using
-         * g_timeout_source_new_seconds() and attaches it to the main loop context
-         * using g_source_attach(). You can do these steps manually if you need
-         * greater control.
+         * [func`GLib`.timeout_source_new_seconds] and attaches it to the main loop
+         * context using [method`GLib`.Source.attach]. You can do these steps manually
+         * if you need greater control.
          *
          * It is safe to call this function from any thread.
          *
          * The interval given is in terms of monotonic time, not wall clock
-         * time.  See g_get_monotonic_time().
-         * @param priority the priority of the timeout source. Typically this will be in   the range between %G_PRIORITY_DEFAULT and %G_PRIORITY_HIGH.
+         * time. See [func`GLib`.get_monotonic_time].
+         * @param priority the priority of the timeout source. Typically this will be in   the range between [const@GLib.PRIORITY_DEFAULT] and   [const@GLib.PRIORITY_HIGH].
          * @param interval the time between calls to the function, in seconds
          * @param _function function to call
          * @param notify function to call when the timeout is removed, or %NULL
@@ -11061,12 +11068,12 @@ declare module 'gi://GLib?version=2.0' {
         /**
          * Creates a new timeout source.
          *
-         * The source will not initially be associated with any #GMainContext
-         * and must be added to one with g_source_attach() before it will be
+         * The source will not initially be associated with any [struct`GLib`.MainContext]
+         * and must be added to one with [method`GLib`.Source.attach] before it will be
          * executed.
          *
          * The interval given is in terms of monotonic time, not wall clock
-         * time.  See g_get_monotonic_time().
+         * time.  See [func`GLib`.get_monotonic_time].
          * @param interval the timeout interval in milliseconds.
          * @returns the newly-created timeout source
          */
@@ -11074,15 +11081,15 @@ declare module 'gi://GLib?version=2.0' {
         /**
          * Creates a new timeout source.
          *
-         * The source will not initially be associated with any #GMainContext
-         * and must be added to one with g_source_attach() before it will be
-         * executed.
+         * The source will not initially be associated with any
+         * [struct`GLib`.MainContext] and must be added to one with
+         * [method`GLib`.Source.attach] before it will be executed.
          *
          * The scheduling granularity/accuracy of this timeout source will be
          * in seconds.
          *
          * The interval given is in terms of monotonic time, not wall clock time.
-         * See g_get_monotonic_time().
+         * See [func`GLib`.get_monotonic_time].
          * @param interval the timeout interval in seconds
          * @returns the newly-created timeout source
          */
@@ -13225,13 +13232,13 @@ declare module 'gi://GLib?version=2.0' {
             LEVEL_MASK,
         }
         /**
-         * Flags to pass to g_main_context_new_with_flags() which affect the behaviour
-         * of a #GMainContext.
+         * Flags to pass to [ctor`GLib`.MainContext.new_with_flags] which affect the
+         * behaviour of a [struct`GLib`.MainContext].
          */
 
         /**
-         * Flags to pass to g_main_context_new_with_flags() which affect the behaviour
-         * of a #GMainContext.
+         * Flags to pass to [ctor`GLib`.MainContext.new_with_flags] which affect the
+         * behaviour of a [struct`GLib`.MainContext].
          */
         export namespace MainContextFlags {
             export const $gtype: GObject.GType<MainContextFlags>;
@@ -17170,8 +17177,9 @@ declare module 'gi://GLib?version=2.0' {
              * of `hash_table` are %NULL-safe.
              *
              * The dictionary implementation optimizes for having all values identical to
-             * their keys, for example by using g_hash_table_add(). When stealing both the
-             * key and the value from such a dictionary, the value will be %NULL.
+             * their keys, for example by using g_hash_table_add(). Before 2.82, when
+             * stealing both the key and the value from such a dictionary, the value was
+             * %NULL. Since 2.82, the returned value and key will be the same.
              * @param hash_table a #GHashTable
              * @param lookup_key the key to look up
              */
@@ -18551,30 +18559,31 @@ declare module 'gi://GLib?version=2.0' {
              * Returns the global-default main context. This is the main context
              * used for main loop functions when a main loop is not explicitly
              * specified, and corresponds to the "main" main loop. See also
-             * g_main_context_get_thread_default().
+             * [func`GLib`.MainContext.get_thread_default].
              */
             static ['default'](): MainContext;
             /**
              * Gets the thread-default #GMainContext for this thread. Asynchronous
              * operations that want to be able to be run in contexts other than
              * the default one should call this method or
-             * g_main_context_ref_thread_default() to get a #GMainContext to add
-             * their #GSources to. (Note that even in single-threaded
-             * programs applications may sometimes want to temporarily push a
-             * non-default context, so it is not safe to assume that this will
-             * always return %NULL if you are running in the default thread.)
+             * [func`GLib`.MainContext.ref_thread_default] to get a
+             * [struct`GLib`.MainContext] to add their [struct`GLib`.Source]s to. (Note that
+             * even in single-threaded programs applications may sometimes want to
+             * temporarily push a non-default context, so it is not safe to assume that
+             * this will always return %NULL if you are running in the default thread.)
              *
              * If you need to hold a reference on the context, use
-             * g_main_context_ref_thread_default() instead.
+             * [func`GLib`.MainContext.ref_thread_default] instead.
              */
             static get_thread_default(): MainContext | null;
             /**
-             * Gets the thread-default #GMainContext for this thread, as with
-             * g_main_context_get_thread_default(), but also adds a reference to
-             * it with g_main_context_ref(). In addition, unlike
-             * g_main_context_get_thread_default(), if the thread-default context
-             * is the global-default context, this will return that #GMainContext
-             * (with a ref added to it) rather than returning %NULL.
+             * Gets the thread-default [struct`GLib`.MainContext] for this thread, as with
+             * [func`GLib`.MainContext.get_thread_default], but also adds a reference to
+             * it with [method`GLib`.MainContext.ref]. In addition, unlike
+             * [func`GLib`.MainContext.get_thread_default], if the thread-default context
+             * is the global-default context, this will return that
+             * [struct`GLib`.MainContext] (with a ref added to it) rather than returning
+             * %NULL.
              */
             static ref_thread_default(): MainContext;
 
@@ -18585,12 +18594,13 @@ declare module 'gi://GLib?version=2.0' {
              * If some other thread is the owner of the context,
              * returns %FALSE immediately. Ownership is properly
              * recursive: the owner can require ownership again
-             * and will release ownership when g_main_context_release()
-             * is called as many times as g_main_context_acquire().
+             * and will release ownership when [method`GLib`.MainContext.release]
+             * is called as many times as [method`GLib`.MainContext.acquire].
              *
              * You must be the owner of a context before you
-             * can call g_main_context_prepare(), g_main_context_query(),
-             * g_main_context_check(), g_main_context_dispatch(), g_main_context_release().
+             * can call [method`GLib`.MainContext.prepare], [method`GLib`.MainContext.query],
+             * [method`GLib`.MainContext.check], [method`GLib`.MainContext.dispatch],
+             * [method`GLib`.MainContext.release].
              *
              * Since 2.76 `context` can be %NULL to use the global-default
              * main context.
@@ -18600,24 +18610,24 @@ declare module 'gi://GLib?version=2.0' {
             /**
              * Adds a file descriptor to the set of file descriptors polled for
              * this context. This will very seldom be used directly. Instead
-             * a typical event source will use g_source_add_unix_fd() instead.
+             * a typical event source will use `g_source_add_unix_fd` instead.
              * @param fd a #GPollFD structure holding information about a file      descriptor to watch.
-             * @param priority the priority for this file descriptor which should be      the same as the priority used for g_source_attach() to ensure that the      file descriptor is polled whenever the results may be needed.
+             * @param priority the priority for this file descriptor which should be      the same as the priority used for [method@GLib.Source.attach] to ensure      that the file descriptor is polled whenever the results may be needed.
              */
             add_poll(fd: PollFD, priority: number): void;
             /**
              * Passes the results of polling back to the main loop. You should be
              * careful to pass `fds` and its length `n_fds` as received from
-             * g_main_context_query(), as this functions relies on assumptions
+             * [method`GLib`.MainContext.query], as this functions relies on assumptions
              * on how `fds` is filled.
              *
              * You must have successfully acquired the context with
-             * g_main_context_acquire() before you may call this function.
+             * [method`GLib`.MainContext.acquire] before you may call this function.
              *
              * Since 2.76 `context` can be %NULL to use the global-default
              * main context.
              * @param max_priority the maximum numerical priority of sources to check
-             * @param fds array of #GPollFD's that was passed to       the last call to g_main_context_query()
+             * @param fds array of #GPollFD's that was passed to       the last call to [method@GLib.MainContext.query]
              * @returns %TRUE if some sources are ready to be dispatched.
              */
             check(max_priority: number, fds: PollFD[]): boolean;
@@ -18625,7 +18635,7 @@ declare module 'gi://GLib?version=2.0' {
              * Dispatches all pending sources.
              *
              * You must have successfully acquired the context with
-             * g_main_context_acquire() before you may call this function.
+             * [method`GLib`.MainContext.acquire] before you may call this function.
              *
              * Since 2.76 `context` can be %NULL to use the global-default
              * main context.
@@ -18635,7 +18645,7 @@ declare module 'gi://GLib?version=2.0' {
              * Finds a source with the given source functions and user data.  If
              * multiple sources exist with the same source function and user data,
              * the first one found will be returned.
-             * @param funcs the @source_funcs passed to g_source_new().
+             * @param funcs the @source_funcs passed to [ctor@GLib.Source.new].
              * @param user_data the user data from the callback.
              * @returns the source, if one was found, otherwise %NULL
              */
@@ -18648,12 +18658,12 @@ declare module 'gi://GLib?version=2.0' {
              * More specifically: source IDs can be reissued after a source has been
              * destroyed and therefore it is never valid to use this function with a
              * source ID which may have already been removed.  An example is when
-             * scheduling an idle to run in another thread with g_idle_add(): the
+             * scheduling an idle to run in another thread with [func`GLib`.idle_add]: the
              * idle may already have run and been removed by the time this function
              * is called on its (now invalid) source ID.  This source ID may have
              * been reissued, leading to the operation being performed against the
              * wrong source.
-             * @param source_id the source ID, as returned by g_source_get_id().
+             * @param source_id the source ID, as returned by [method@GLib.Source.get_id].
              * @returns the #GSource
              */
             find_source_by_id(source_id: number): Source;
@@ -18669,7 +18679,7 @@ declare module 'gi://GLib?version=2.0' {
              * Invokes a function in such a way that `context` is owned during the
              * invocation of `function`.
              *
-             * This function is the same as g_main_context_invoke() except that it
+             * This function is the same as [method`GLib`.MainContext.invoke] except that it
              * lets you specify the priority in case `function` ends up being
              * scheduled as an idle and also lets you give a #GDestroyNotify for `data`.
              *
@@ -18682,7 +18692,7 @@ declare module 'gi://GLib?version=2.0' {
             invoke_full(priority: number, _function: SourceFunc, notify?: DestroyNotify | null): void;
             /**
              * Determines whether this thread holds the (recursive)
-             * ownership of this #GMainContext. This is useful to
+             * ownership of this [struct`GLib`.MainContext]. This is useful to
              * know before waiting on another thread that may be
              * blocking to get ownership of `context`.
              * @returns %TRUE if current thread is owner of @context.
@@ -18699,7 +18709,7 @@ declare module 'gi://GLib?version=2.0' {
              * given moment without further waiting.
              *
              * Note that even when `may_block` is %TRUE, it is still possible for
-             * g_main_context_iteration() to return %FALSE, since the wait may
+             * [method`GLib`.MainContext.iteration] to return %FALSE, since the wait may
              * be interrupted for other reasons than an event source becoming ready.
              * @param may_block whether the call may block.
              * @returns %TRUE if events were dispatched.
@@ -18717,10 +18727,10 @@ declare module 'gi://GLib?version=2.0' {
             pop_thread_default(): void;
             /**
              * Prepares to poll sources within a main loop. The resulting information
-             * for polling is determined by calling g_main_context_query ().
+             * for polling is determined by calling [method`GLib`.MainContext.query].
              *
              * You must have successfully acquired the context with
-             * g_main_context_acquire() before you may call this function.
+             * [method`GLib`.MainContext.acquire] before you may call this function.
              * @returns %TRUE if some source is ready to be dispatched               prior to polling.
              */
             prepare(): [boolean, number];
@@ -18731,32 +18741,33 @@ declare module 'gi://GLib?version=2.0' {
              * started in this thread to run under `context` and deliver their
              * results to its main loop, rather than running under the global
              * default main context in the main thread. Note that calling this function
-             * changes the context returned by g_main_context_get_thread_default(),
-             * not the one returned by g_main_context_default(), so it does not affect
-             * the context used by functions like g_idle_add().
+             * changes the context returned by [func`GLib`.MainContext.get_thread_default],
+             * not the one returned by [func`GLib`.MainContext.default], so it does not
+             * affect the context used by functions like [func`GLib`.idle_add].
              *
              * Normally you would call this function shortly after creating a new
-             * thread, passing it a #GMainContext which will be run by a
-             * #GMainLoop in that thread, to set a new default context for all
+             * thread, passing it a [struct`GLib`.MainContext] which will be run by a
+             * [struct`GLib`.MainLoop] in that thread, to set a new default context for all
              * async operations in that thread. In this case you may not need to
-             * ever call g_main_context_pop_thread_default(), assuming you want the
-             * new #GMainContext to be the default for the whole lifecycle of the
-             * thread.
+             * ever call [method`GLib`.MainContext.pop_thread_default], assuming you want
+             * the new [struct`GLib`.MainContext] to be the default for the whole lifecycle
+             * of the thread.
              *
              * If you don't have control over how the new thread was created (e.g.
              * in the new thread isn't newly created, or if the thread life
              * cycle is managed by a #GThreadPool), it is always suggested to wrap
-             * the logic that needs to use the new #GMainContext inside a
-             * g_main_context_push_thread_default() / g_main_context_pop_thread_default()
-             * pair, otherwise threads that are re-used will end up never explicitly
-             * releasing the #GMainContext reference they hold.
+             * the logic that needs to use the new [struct`GLib`.MainContext] inside a
+             * [method`GLib`.MainContext.push_thread_default] /
+             * [method`GLib`.MainContext.pop_thread_default] pair, otherwise threads that
+             * are re-used will end up never explicitly releasing the
+             * [struct`GLib`.MainContext] reference they hold.
              *
              * In some cases you may want to schedule a single operation in a
              * non-default context, or temporarily use a non-default context in
              * the main thread. In that case, you can wrap the call to the
              * asynchronous operation inside a
-             * g_main_context_push_thread_default() /
-             * g_main_context_pop_thread_default() pair, but it is up to you to
+             * [method`GLib`.MainContext.push_thread_default] /
+             * [method`GLib`.MainContext.pop_thread_default] pair, but it is up to you to
              * ensure that no other asynchronous operations accidentally get
              * started while the non-default context is active.
              *
@@ -18768,44 +18779,45 @@ declare module 'gi://GLib?version=2.0' {
             /**
              * Determines information necessary to poll this main loop. You should
              * be careful to pass the resulting `fds` array and its length `n_fds`
-             * as is when calling g_main_context_check(), as this function relies
+             * as is when calling [method`GLib`.MainContext.check], as this function relies
              * on assumptions made when the array is filled.
              *
              * You must have successfully acquired the context with
-             * g_main_context_acquire() before you may call this function.
+             * [method`GLib`.MainContext.acquire] before you may call this function.
              * @param max_priority maximum priority source to check
              * @returns the number of records actually stored in @fds,   or, if more than @n_fds records need to be stored, the number   of records that need to be stored.
              */
             query(max_priority: number): [number, number, PollFD[]];
             /**
-             * Increases the reference count on a #GMainContext object by one.
+             * Increases the reference count on a [struct`GLib`.MainContext] object by one.
              * @returns the @context that was passed in (since 2.6)
              */
             ref(): MainContext;
             /**
              * Releases ownership of a context previously acquired by this thread
-             * with g_main_context_acquire(). If the context was acquired multiple
-             * times, the ownership will be released only when g_main_context_release()
+             * with [method`GLib`.MainContext.acquire]. If the context was acquired multiple
+             * times, the ownership will be released only when [method`GLib`.MainContext.release]
              * is called as many times as it was acquired.
              *
              * You must have successfully acquired the context with
-             * g_main_context_acquire() before you may call this function.
+             * [method`GLib`.MainContext.acquire] before you may call this function.
              */
             release(): void;
             /**
              * Removes file descriptor from the set of file descriptors to be
              * polled for a particular context.
-             * @param fd a #GPollFD descriptor previously added with g_main_context_add_poll()
+             * @param fd a #GPollFD descriptor previously added with   [method@GLib.MainContext.add_poll]
              */
             remove_poll(fd: PollFD): void;
             /**
-             * Decreases the reference count on a #GMainContext object by one. If
+             * Decreases the reference count on a [struct`GLib`.MainContext] object by one.
+             * If
              * the result is zero, free the context and free all associated memory.
              */
             unref(): void;
             /**
              * Tries to become the owner of the specified context,
-             * as with g_main_context_acquire(). But if another thread
+             * as with [method`GLib`.MainContext.acquire]. But if another thread
              * is the owner, atomically drop `mutex` and wait on `cond` until
              * that owner releases ownership or until `cond` is signaled, then
              * try again (once) to become the owner.
@@ -18815,14 +18827,14 @@ declare module 'gi://GLib?version=2.0' {
              */
             wait(cond: Cond, mutex: Mutex): boolean;
             /**
-             * If `context` is currently blocking in g_main_context_iteration()
+             * If `context` is currently blocking in [method`GLib`.MainContext.iteration]
              * waiting for a source to become ready, cause it to stop blocking
              * and return.  Otherwise, cause the next invocation of
-             * g_main_context_iteration() to return without blocking.
+             * [method`GLib`.MainContext.iteration] to return without blocking.
              *
-             * This API is useful for low-level control over #GMainContext; for
+             * This API is useful for low-level control over [struct`GLib`.MainContext]; for
              * example, integrating it with main loop implementations such as
-             * #GMainLoop.
+             * [struct`GLib`.MainLoop].
              *
              * Another related use for this function is when implementing a main
              * loop with a termination condition, computed from multiple threads:
@@ -18868,37 +18880,38 @@ declare module 'gi://GLib?version=2.0' {
             // Methods
 
             /**
-             * Returns the #GMainContext of `loop`.
-             * @returns the #GMainContext of @loop
+             * Returns the [struct`GLib`.MainContext] of `loop`.
+             * @returns the [struct@GLib.MainContext] of @loop
              */
             get_context(): MainContext;
             /**
-             * Checks to see if the main loop is currently being run via g_main_loop_run().
+             * Checks to see if the main loop is currently being run via
+             * [method`GLib`.MainLoop.run].
              * @returns %TRUE if the mainloop is currently being run.
              */
             is_running(): boolean;
             /**
-             * Stops a #GMainLoop from running. Any calls to g_main_loop_run()
-             * for the loop will return.
+             * Stops a [struct`GLib`.MainLoop] from running. Any calls to
+             * [method`GLib`.MainLoop.run] for the loop will return.
              *
              * Note that sources that have already been dispatched when
-             * g_main_loop_quit() is called will still be executed.
+             * [method`GLib`.MainLoop.quit] is called will still be executed.
              */
             quit(): void;
             /**
-             * Increases the reference count on a #GMainLoop object by one.
+             * Increases the reference count on a [struct`GLib`.MainLoop] object by one.
              * @returns @loop
              */
             ref(): MainLoop;
             /**
-             * Runs a main loop until g_main_loop_quit() is called on the loop.
+             * Runs a main loop until [method`GLib`.MainLoop.quit] is called on the loop.
              * If this is called for the thread of the loop's #GMainContext,
              * it will process events from the loop, otherwise it will
              * simply wait.
              */
             run(): void;
             /**
-             * Decreases the reference count on a #GMainLoop object by one. If
+             * Decreases the reference count on a [struct`GLib`.MainLoop] object by one. If
              * the result is zero, free the loop and free all associated memory.
              */
             unref(): void;
@@ -18949,7 +18962,7 @@ declare module 'gi://GLib?version=2.0' {
              * If the file is empty then %NULL is returned.
              * @returns the contents of @file, or %NULL.
              */
-            get_contents(): string;
+            get_contents(): string | null;
             /**
              * Returns the length of the contents of a #GMappedFile.
              * @returns the length of the contents of @file.
@@ -19314,7 +19327,7 @@ declare module 'gi://GLib?version=2.0' {
              * Retrieves the text matching the capturing parentheses named `name`.
              *
              * If `name` is a valid sub pattern name but it didn't match anything
-             * (e.g. sub pattern "X", matching "b" against "(?P<X>a)?b")
+             * (e.g. sub pattern `"X"`, matching `"b"` against `"(?P<X>a)?b"`)
              * then an empty string is returned.
              *
              * The string is fetched from the string passed to the match function,
@@ -19327,7 +19340,7 @@ declare module 'gi://GLib?version=2.0' {
              * Retrieves the position in bytes of the capturing parentheses named `name`.
              *
              * If `name` is a valid sub pattern name but it didn't match anything
-             * (e.g. sub pattern "X", matching "b" against "(?P<X>a)?b")
+             * (e.g. sub pattern `"X"`, matching `"b"` against `"(?P<X>a)?b"`)
              * then `start_pos` and `end_pos` are set to -1 and %TRUE is returned.
              * @param name name of the subexpression
              * @returns %TRUE if the position was fetched, %FALSE otherwise.     If the position cannot be fetched, @start_pos and @end_pos     are left unchanged.
@@ -21220,15 +21233,15 @@ declare module 'gi://GLib?version=2.0' {
              * Using the standard algorithm for regular expression matching only
              * the longest match in the `string` is retrieved, it is not possible
              * to obtain all the available matches. For instance matching
-             * "<a> <b> <c>" against the pattern "<.*>"
-             * you get "<a> <b> <c>".
+             * `"<a> <b> <c>"` against the pattern `"<.*>"`
+             * you get `"<a> <b> <c>"`.
              *
              * This function uses a different algorithm (called DFA, i.e. deterministic
              * finite automaton), so it can retrieve all the possible matches, all
              * starting at the same point in the string. For instance matching
-             * "<a> <b> <c>" against the pattern "<.*>;"
-             * you would obtain three matches: "<a> <b> <c>",
-             * "<a> <b>" and "<a>".
+             * `"<a> <b> <c>"` against the pattern `"<.*>"`
+             * you would obtain three matches: `"<a> <b> <c>"`,
+             * `"<a> <b>"` and `"<a>"`.
              *
              * The number of matched strings is retrieved using
              * g_match_info_get_match_count(). To obtain the matched strings and
@@ -21336,13 +21349,13 @@ declare module 'gi://GLib?version=2.0' {
             ref(): Regex;
             /**
              * Replaces all occurrences of the pattern in `regex` with the
-             * replacement text. Backreferences of the form '\number' or
-             * '\g<number>' in the replacement text are interpolated by the
-             * number-th captured subexpression of the match, '\g<name>' refers
-             * to the captured subexpression with the given name. '\0' refers
-             * to the complete match, but '\0' followed by a number is the octal
-             * representation of a character. To include a literal '\' in the
-             * replacement, write '\\\\'.
+             * replacement text. Backreferences of the form `\number` or
+             * `\g<number>` in the replacement text are interpolated by the
+             * number-th captured subexpression of the match, `\g<name>` refers
+             * to the captured subexpression with the given name. `\0` refers
+             * to the complete match, but `\0` followed by a number is the octal
+             * representation of a character. To include a literal `\` in the
+             * replacement, write `\\\\`.
              *
              * There are also escapes that changes the case of the following text:
              *
@@ -22282,20 +22295,21 @@ declare module 'gi://GLib?version=2.0' {
 
             /**
              * Removes the source with the given ID from the default main context. You must
-             * use g_source_destroy() for sources added to a non-default main context.
+             * use [method`GLib`.Source.destroy] for sources added to a non-default main context.
              *
-             * The ID of a #GSource is given by g_source_get_id(), or will be
-             * returned by the functions g_source_attach(), g_idle_add(),
-             * g_idle_add_full(), g_timeout_add(), g_timeout_add_full(),
-             * g_child_watch_add(), g_child_watch_add_full(), g_io_add_watch(), and
-             * g_io_add_watch_full().
+             * The ID of a #GSource is given by [method`GLib`.Source.get_id], or will be
+             * returned by the functions [method`GLib`.Source.attach], [func`GLib`.idle_add],
+             * [func`GLib`.idle_add_full], [func`GLib`.timeout_add],
+             * [func`GLib`.timeout_add_full], [func`GLib`.child_watch_add],
+             * [func`GLib`.child_watch_add_full], [func`GLib`.io_add_watch], and
+             * [func`GLib`.io_add_watch_full].
              *
              * It is a programmer error to attempt to remove a non-existent source.
              *
              * More specifically: source IDs can be reissued after a source has been
              * destroyed and therefore it is never valid to use this function with a
              * source ID which may have already been removed.  An example is when
-             * scheduling an idle to run in another thread with g_idle_add(): the
+             * scheduling an idle to run in another thread with [func`GLib`.idle_add]: the
              * idle may already have run and been removed by the time this function
              * is called on its (now invalid) source ID.  This source ID may have
              * been reissued, leading to the operation being performed against the
@@ -22307,7 +22321,7 @@ declare module 'gi://GLib?version=2.0' {
              * Removes a source from the default main loop context given the
              * source functions and user data. If multiple sources exist with the
              * same source functions and user data, only one will be destroyed.
-             * @param funcs The @source_funcs passed to g_source_new()
+             * @param funcs The @source_funcs passed to [ctor@GLib.Source.new]
              * @param user_data the user data for the callback
              */
             static remove_by_funcs_user_data(funcs: SourceFuncs, user_data?: any | null): boolean;
@@ -22322,7 +22336,7 @@ declare module 'gi://GLib?version=2.0' {
              * Sets the name of a source using its ID.
              *
              * This is a convenience utility to set source names from the return
-             * value of g_idle_add(), g_timeout_add(), etc.
+             * value of [func`GLib`.idle_add], [func`GLib`.timeout_add], etc.
              *
              * It is a programmer error to attempt to set the name of a non-existent
              * source.
@@ -22330,7 +22344,7 @@ declare module 'gi://GLib?version=2.0' {
              * More specifically: source IDs can be reissued after a source has been
              * destroyed and therefore it is never valid to use this function with a
              * source ID which may have already been removed.  An example is when
-             * scheduling an idle to run in another thread with g_idle_add(): the
+             * scheduling an idle to run in another thread with [func`GLib`.idle_add]: the
              * idle may already have run and been removed by the time this function
              * is called on its (now invalid) source ID.  This source ID may have
              * been reissued, leading to the operation being performed against the
@@ -22344,8 +22358,8 @@ declare module 'gi://GLib?version=2.0' {
 
             /**
              * Adds `child_source` to `source` as a "polled" source; when `source` is
-             * added to a #GMainContext, `child_source` will be automatically added
-             * with the same priority, when `child_source` is triggered, it will
+             * added to a [struct`GLib`.MainContext], `child_source` will be automatically
+             * added with the same priority, when `child_source` is triggered, it will
              * cause `source` to dispatch (in addition to calling its own
              * callback), and when `source` is destroyed, it will destroy
              * `child_source` as well. (`source` will also still be dispatched if
@@ -22358,24 +22372,25 @@ declare module 'gi://GLib?version=2.0' {
              * `source` will hold a reference on `child_source` while `child_source`
              * is attached to it.
              *
-             * This API is only intended to be used by implementations of #GSource.
-             * Do not call this API on a #GSource that you did not create.
+             * This API is only intended to be used by implementations of
+             * [struct`GLib`.Source]. Do not call this API on a [struct`GLib`.Source] that
+             * you did not create.
              * @param child_source a second #GSource that @source should "poll"
              */
             add_child_source(child_source: Source): void;
             /**
              * Adds a file descriptor to the set of file descriptors polled for
-             * this source. This is usually combined with g_source_new() to add an
+             * this source. This is usually combined with [ctor`GLib`.Source.new] to add an
              * event source. The event source's check function will typically test
              * the `revents` field in the #GPollFD struct and return %TRUE if events need
              * to be processed.
              *
-             * This API is only intended to be used by implementations of #GSource.
-             * Do not call this API on a #GSource that you did not create.
+             * This API is only intended to be used by implementations of [struct`GLib`.Source].
+             * Do not call this API on a [struct`GLib`.Source] that you did not create.
              *
              * Using this API forces the linear scanning of event sources on each
              * main loop iteration.  Newly-written event sources should try to use
-             * g_source_add_unix_fd() instead of this API.
+             * `g_source_add_unix_fd` instead of this API.
              * @param fd a #GPollFD structure holding information about a file      descriptor to watch.
              */
             add_poll(fd: PollFD): void;
@@ -22383,8 +22398,8 @@ declare module 'gi://GLib?version=2.0' {
              * Monitors `fd` for the IO events in `events`.
              *
              * The tag returned by this function can be used to remove or modify the
-             * monitoring of the fd using g_source_remove_unix_fd() or
-             * g_source_modify_unix_fd().
+             * monitoring of the fd using [method`GLib`.Source.remove_unix_fd] or
+             * [method`GLib`.Source.modify_unix_fd].
              *
              * It is not necessary to remove the fd before destroying the source; it
              * will be cleaned up automatically.
@@ -22399,8 +22414,8 @@ declare module 'gi://GLib?version=2.0' {
              */
             add_unix_fd(fd: number, events: IOCondition): any;
             /**
-             * Adds a #GSource to a `context` so that it will be executed within
-             * that context. Remove it by calling g_source_destroy().
+             * Adds a [struct`GLib`.Source] to a `context` so that it will be executed within
+             * that context. Remove it by calling [method`GLib`.Source.destroy].
              *
              * This function is safe to call from any thread, regardless of which thread
              * the `context` is running in.
@@ -22409,62 +22424,64 @@ declare module 'gi://GLib?version=2.0' {
              */
             attach(context?: MainContext | null): number;
             /**
-             * Removes a source from its #GMainContext, if any, and mark it as
+             * Removes a source from its [struct`GLib`.MainContext], if any, and mark it as
              * destroyed.  The source cannot be subsequently added to another
              * context. It is safe to call this on sources which have already been
              * removed from their context.
              *
-             * This does not unref the #GSource: if you still hold a reference, use
-             * g_source_unref() to drop it.
+             * This does not unref the [struct`GLib`.Source]: if you still hold a reference,
+             * use [method`GLib`.Source.unref] to drop it.
              *
              * This function is safe to call from any thread, regardless of which thread
-             * the #GMainContext is running in.
+             * the [struct`GLib`.MainContext] is running in.
              *
-             * If the source is currently attached to a #GMainContext, destroying it
-             * will effectively unset the callback similar to calling g_source_set_callback().
-             * This can mean, that the data's #GDestroyNotify gets called right away.
+             * If the source is currently attached to a [struct`GLib`.MainContext],
+             * destroying it will effectively unset the callback similar to calling
+             * [method`GLib`.Source.set_callback]. This can mean, that the data's
+             * #GDestroyNotify gets called right away.
              */
             destroy(): void;
             /**
              * Checks whether a source is allowed to be called recursively.
-             * see g_source_set_can_recurse().
+             * see [method`GLib`.Source.set_can_recurse].
              * @returns whether recursion is allowed.
              */
             get_can_recurse(): boolean;
             /**
-             * Gets the #GMainContext with which the source is associated.
+             * Gets the [struct`GLib`.MainContext] with which the source is associated.
              *
              * You can call this on a source that has been destroyed, provided
-             * that the #GMainContext it was attached to still exists (in which
-             * case it will return that #GMainContext). In particular, you can
+             * that the [struct`GLib`.MainContext] it was attached to still exists (in which
+             * case it will return that [struct`GLib`.MainContext]). In particular, you can
              * always call this function on the source returned from
-             * g_main_current_source(). But calling this function on a source
-             * whose #GMainContext has been destroyed is an error.
+             * [func`GLib`.main_current_source]. But calling this function on a source
+             * whose [struct`GLib`.MainContext] has been destroyed is an error.
              * @returns the #GMainContext with which the               source is associated, or %NULL if the context has not               yet been added to a source.
              */
             get_context(): MainContext | null;
             /**
              * This function ignores `source` and is otherwise the same as
-             * g_get_current_time().
+             * [func`GLib`.get_current_time].
              * @param timeval #GTimeVal structure in which to store current time.
              */
             get_current_time(timeval: TimeVal): void;
             /**
              * Returns the numeric ID for a particular source. The ID of a source
              * is a positive integer which is unique within a particular main loop
-             * context. The reverse
-             * mapping from ID to source is done by g_main_context_find_source_by_id().
+             * context. The reverse mapping from ID to source is done by
+             * [method`GLib`.MainContext.find_source_by_id].
              *
              * You can only call this function while the source is associated to a
-             * #GMainContext instance; calling this function before g_source_attach()
-             * or after g_source_destroy() yields undefined behavior. The ID returned
-             * is unique within the #GMainContext instance passed to g_source_attach().
+             * [struct`GLib`.MainContext] instance; calling this function before
+             * [method`GLib`.Source.attach] or after [method`GLib`.Source.destroy] yields
+             * undefined behavior. The ID returned is unique within the
+             * [struct`GLib`.MainContext] instance passed to [method`GLib`.Source.attach].
              * @returns the ID (greater than 0) for the source
              */
             get_id(): number;
             /**
              * Gets a name for the source, used in debugging and profiling.  The
-             * name may be #NULL if it has never been set with g_source_set_name().
+             * name may be #NULL if it has never been set with [method`GLib`.Source.set_name].
              * @returns the name of the source
              */
             get_name(): string | null;
@@ -22475,7 +22492,7 @@ declare module 'gi://GLib?version=2.0' {
             get_priority(): number;
             /**
              * Gets the "ready time" of `source,` as set by
-             * g_source_set_ready_time().
+             * [method`GLib`.Source.set_ready_time].
              *
              * Any time before or equal to the current monotonic time (including 0)
              * is an indication that the source will fire immediately.
@@ -22484,12 +22501,12 @@ declare module 'gi://GLib?version=2.0' {
             get_ready_time(): number;
             /**
              * Gets the time to be used when checking this source. The advantage of
-             * calling this function over calling g_get_monotonic_time() directly is
+             * calling this function over calling [func`GLib`.get_monotonic_time] directly is
              * that when checking multiple sources, GLib can cache a single value
              * instead of having to repeatedly get the system monotonic time.
              *
              * The time here is the system monotonic time, if available, or some
-             * other reasonable alternative otherwise.  See g_get_monotonic_time().
+             * other reasonable alternative otherwise.  See [func`GLib`.get_monotonic_time].
              * @returns the monotonic time in microseconds
              */
             get_time(): number;
@@ -22572,26 +22589,26 @@ declare module 'gi://GLib?version=2.0' {
              *
              *
              * Calls to this function from a thread other than the one acquired by the
-             * #GMainContext the #GSource is attached to are typically redundant, as the
-             * source could be destroyed immediately after this function returns. However,
-             * once a source is destroyed it cannot be un-destroyed, so this function can be
-             * used for opportunistic checks from any thread.
+             * [struct`GLib`.MainContext] the #GSource is attached to are typically
+             * redundant, as the source could be destroyed immediately after this function
+             * returns. However, once a source is destroyed it cannot be un-destroyed, so
+             * this function can be used for opportunistic checks from any thread.
              * @returns %TRUE if the source has been destroyed
              */
             is_destroyed(): boolean;
             /**
              * Updates the event mask to watch for the fd identified by `tag`.
              *
-             * `tag` is the tag returned from g_source_add_unix_fd().
+             * `tag` is the tag returned from [method`GLib`.Source.add_unix_fd].
              *
              * If you want to remove a fd, don't set its event mask to zero.
-             * Instead, call g_source_remove_unix_fd().
+             * Instead, call [method`GLib`.Source.remove_unix_fd].
              *
              * This API is only intended to be used by implementations of #GSource.
              * Do not call this API on a #GSource that you did not create.
              *
              * As the name suggests, this function is not available on Windows.
-             * @param tag the tag from g_source_add_unix_fd()
+             * @param tag the tag from [method@GLib.Source.add_unix_fd]
              * @param new_events the new event mask to watch
              */
             modify_unix_fd(tag: any, new_events: IOCondition): void;
@@ -22606,7 +22623,7 @@ declare module 'gi://GLib?version=2.0' {
              * Do not call this API on a #GSource that you did not create.
              *
              * As the name suggests, this function is not available on Windows.
-             * @param tag the tag from g_source_add_unix_fd()
+             * @param tag the tag from [method@GLib.Source.add_unix_fd]
              * @returns the conditions reported on the fd
              */
             query_unix_fd(tag: any): IOCondition;
@@ -22620,20 +22637,20 @@ declare module 'gi://GLib?version=2.0' {
              *
              * This API is only intended to be used by implementations of #GSource.
              * Do not call this API on a #GSource that you did not create.
-             * @param child_source a #GSource previously passed to     g_source_add_child_source().
+             * @param child_source a #GSource previously passed to     [method@GLib.Source.add_child_source].
              */
             remove_child_source(child_source: Source): void;
             /**
              * Removes a file descriptor from the set of file descriptors polled for
              * this source.
              *
-             * This API is only intended to be used by implementations of #GSource.
-             * Do not call this API on a #GSource that you did not create.
-             * @param fd a #GPollFD structure previously passed to g_source_add_poll().
+             * This API is only intended to be used by implementations of [struct`GLib`.Source].
+             * Do not call this API on a [struct`GLib`.Source] that you did not create.
+             * @param fd a #GPollFD structure previously passed to [method@GLib.Source.add_poll].
              */
             remove_poll(fd: PollFD): void;
             /**
-             * Reverses the effect of a previous call to g_source_add_unix_fd().
+             * Reverses the effect of a previous call to [method`GLib`.Source.add_unix_fd].
              *
              * You only need to call this if you want to remove an fd from being
              * watched while keeping the same source around.  In the normal case you
@@ -22643,7 +22660,7 @@ declare module 'gi://GLib?version=2.0' {
              * Do not call this API on a #GSource that you did not create.
              *
              * As the name suggests, this function is not available on Windows.
-             * @param tag the tag from g_source_add_unix_fd()
+             * @param tag the tag from [method@GLib.Source.add_unix_fd]
              */
             remove_unix_fd(tag: any): void;
             /**
@@ -22652,20 +22669,21 @@ declare module 'gi://GLib?version=2.0' {
              *
              * The exact type of `func` depends on the type of source; ie. you
              * should not count on `func` being called with `data` as its first
-             * parameter. Cast `func` with G_SOURCE_FUNC() to avoid warnings about
+             * parameter. Cast `func` with [func`GLib`.SOURCE_FUNC] to avoid warnings about
              * incompatible function types.
              *
              * See [mainloop memory management](main-loop.html#memory-management-of-sources) for details
              * on how to handle memory management of `data`.
              *
              * Typically, you won't use this function. Instead use functions specific
-             * to the type of source you are using, such as g_idle_add() or g_timeout_add().
+             * to the type of source you are using, such as [func`GLib`.idle_add] or
+             * [func`GLib`.timeout_add].
              *
              * It is safe to call this function multiple times on a source which has already
              * been attached to a context. The changes will take effect for the next time
              * the source is dispatched after this call returns.
              *
-             * Note that g_source_destroy() for a currently attached source has the effect
+             * Note that [method`GLib`.Source.destroy] for a currently attached source has the effect
              * of also unsetting the callback.
              * @param func a callback function
              * @param notify a function to call when @data is no longer in use, or %NULL.
@@ -22674,7 +22692,7 @@ declare module 'gi://GLib?version=2.0' {
             /**
              * Sets the callback function storing the data as a refcounted callback
              * "object". This is used internally. Note that calling
-             * g_source_set_callback_indirect() assumes
+             * [method`GLib`.Source.set_callback_indirect] assumes
              * an initial reference count on `callback_data,` and thus
              * `callback_funcs->`unref will eventually be called once more
              * than `callback_funcs->`ref.
@@ -22714,11 +22732,11 @@ declare module 'gi://GLib?version=2.0' {
              * to include details like the event type in the source name.
              *
              * Use caution if changing the name while another thread may be
-             * accessing it with g_source_get_name(); that function does not copy
+             * accessing it with [method`GLib`.Source.get_name]; that function does not copy
              * the value, and changing the value will free it while the other thread
              * may be attempting to use it.
              *
-             * Also see g_source_set_static_name().
+             * Also see [method`GLib`.Source.set_static_name].
              * @param name debug name for the source
              */
             set_name(name: string): void;
@@ -22753,7 +22771,7 @@ declare module 'gi://GLib?version=2.0' {
              * then the order of dispatch is undefined.
              *
              * It is a no-op to call this function on a #GSource which has already been
-             * destroyed with g_source_destroy().
+             * destroyed with [method`GLib`.Source.destroy].
              *
              * This API is only intended to be used by implementations of #GSource.
              * Do not call this API on a #GSource that you did not create.
@@ -22761,7 +22779,7 @@ declare module 'gi://GLib?version=2.0' {
              */
             set_ready_time(ready_time: number): void;
             /**
-             * A variant of g_source_set_name() that does not
+             * A variant of [method`GLib`.Source.set_name] that does not
              * duplicate the `name,` and can only be used with
              * string literals.
              * @param name debug name for the source
