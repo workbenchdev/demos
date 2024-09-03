@@ -1,5 +1,6 @@
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk?version=4.0";
+import Pango from "gi://Pango";
 
 Gio._promisify(
   Gtk.FontDialog.prototype,
@@ -7,7 +8,7 @@ Gio._promisify(
   "choose_family_finish",
 );
 
-const font_dialog_button = workbench.builder.get_object("font_dialog_button");
+const font_dialog_button = workbench.builder.get_object<Gtk.FontDialogButton>("font_dialog_button");
 const custom_button = workbench.builder.get_object("custom_button");
 
 const dialog_standard = new Gtk.FontDialog({
@@ -29,10 +30,11 @@ const dialog_custom = new Gtk.FontDialog({
 custom_button.connect("clicked", () => onClicked().catch(console.error));
 
 async function onClicked() {
+  // @ts-expect-error undetected async function
   const family = await dialog_custom.choose_family(
     workbench.window,
     null,
     null,
-  );
+  ) as Pango.FontFamily;
   console.log(`Font Family: ${family.get_name()}`);
 }
