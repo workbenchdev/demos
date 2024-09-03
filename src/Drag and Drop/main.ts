@@ -3,13 +3,16 @@ import GObject from "gi://GObject";
 import Gdk from "gi://Gdk?version=4.0";
 import Gtk from "gi://Gtk?version=4.0";
 
-const list = workbench.builder.get_object("list");
-const drop_target = Gtk.DropTarget.new(Gtk.ListBoxRow, Gdk.DragAction.MOVE);
+const list = workbench.builder.get_object<Gtk.ListBox>("list");
+const drop_target = Gtk.DropTarget.new(Gtk.ListBoxRow.$gtype, Gdk.DragAction.MOVE);
 
 list.add_controller(drop_target);
 
 // Iterate over ListBox children
-for (const row of list) {
+// @ts-expect-error Gtk.ListBox is iterable
+// See: https://github.com/gjsify/ts-for-gir/issues/193
+for (const object of list) {
+  const row = object as Adw.ActionRow;
   let drag_x;
   let drag_y;
 
@@ -28,7 +31,7 @@ for (const row of list) {
     drag_y = y;
 
     const value = new GObject.Value();
-    value.init(Gtk.ListBoxRow);
+    value.init(Gtk.ListBoxRow.$gtype);
     value.set_object(row);
 
     return Gdk.ContentProvider.new_for_value(value);
@@ -68,7 +71,7 @@ for (const row of list) {
 }
 
 // Drop Handling
-drop_target.connect("drop", (_drop, value, _x, y) => {
+drop_target.connect("drop", (_drop, value: Gtk.Widget, _x, y) => {
   const target_row = list.get_row_at_y(y);
   const target_index = target_row.get_index();
 
