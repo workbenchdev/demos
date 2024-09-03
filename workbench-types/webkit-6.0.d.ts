@@ -2019,6 +2019,10 @@ declare module 'gi://WebKit?version=6.0' {
                 (): WebView;
             }
 
+            interface WillClose {
+                (): void;
+            }
+
             // Constructor properties interface
 
             interface ConstructorProps extends GObject.Object.ConstructorProps {
@@ -2060,6 +2064,9 @@ declare module 'gi://WebKit?version=6.0' {
             connect(signal: 'create-web-view', callback: (_source: this) => WebView): number;
             connect_after(signal: 'create-web-view', callback: (_source: this) => WebView): number;
             emit(signal: 'create-web-view'): void;
+            connect(signal: 'will-close', callback: (_source: this) => void): number;
+            connect_after(signal: 'will-close', callback: (_source: this) => void): number;
+            emit(signal: 'will-close'): void;
 
             // Methods
 

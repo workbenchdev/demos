@@ -161,6 +161,10 @@ declare module 'gi://Polkit?version=1.0' {
              * means that the method used for checking authorization is likely to block for a long time.
              */
             ALLOW_USER_INTERACTION,
+            /**
+             * Check access against policy even for root user.
+             */
+            ALWAYS_CHECK,
         }
         module ActionDescription {
             // Constructor properties interface
@@ -250,6 +254,10 @@ declare module 'gi://Polkit?version=1.0' {
                 (): void;
             }
 
+            interface SessionsChanged {
+                (): void;
+            }
+
             // Constructor properties interface
 
             interface ConstructorProps
@@ -322,6 +330,9 @@ declare module 'gi://Polkit?version=1.0' {
             connect(signal: 'changed', callback: (_source: this) => void): number;
             connect_after(signal: 'changed', callback: (_source: this) => void): number;
             emit(signal: 'changed'): void;
+            connect(signal: 'sessions-changed', callback: (_source: this) => void): number;
+            connect_after(signal: 'sessions-changed', callback: (_source: this) => void): number;
+            emit(signal: 'sessions-changed'): void;
 
             // Static methods
 
