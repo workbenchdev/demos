@@ -1,8 +1,13 @@
+import Gtk from "gi://Gtk?version=4.0";
 import Soup from "gi://Soup";
 
-const button_server = workbench.builder.get_object("button_server");
-const linkbutton = workbench.builder.get_object("linkbutton");
-const label_greetings = workbench.builder.get_object("label_greetings");
+const button_server = workbench.builder.get_object<Gtk.ToggleButton>(
+  "button_server",
+);
+const linkbutton = workbench.builder.get_object<Gtk.LinkButton>("linkbutton");
+const label_greetings = workbench.builder.get_object<Gtk.Label>(
+  "label_greetings",
+);
 
 function handler(_server, msg, _path, _query) {
   msg.set_status(Soup.Status.OK, null);
