@@ -11,7 +11,9 @@ Gio._promisify(
 const button_single = workbench.builder.get_object("button_single");
 const button_image = workbench.builder.get_object("button_image");
 const button_multiple = workbench.builder.get_object("button_multiple");
-const file_filter_image = workbench.builder.get_object("file_filter_image");
+const file_filter_image = workbench.builder.get_object<Gtk.FileFilter>(
+  "file_filter_image",
+);
 
 async function openFile() {
   const file_dialog = new Gtk.FileDialog();
@@ -27,8 +29,12 @@ async function openImageFile() {
 
 async function openMultipleFiles() {
   const file_dialog = new Gtk.FileDialog();
-  const files = await file_dialog.open_multiple(workbench.window, null);
+  // @ts-expect-error undetected async function
+  const files = await file_dialog.open_multiple(workbench.window, null) as
+    | Gio.ListModel
+    | null;
   console.log(`Selected Files (${files.get_n_items()}):`);
+  // @ts-expect-error https://github.com/gjsify/ts-for-gir/issues/193
   for (const file of files) {
     console.log("  ", getFileName(file));
   }
