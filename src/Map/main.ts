@@ -1,7 +1,7 @@
 import Gtk from "gi://Gtk?version=4.0";
 import Shumate from "gi://Shumate";
 
-const map_widget = workbench.builder.get_object("map_widget");
+const map_widget = workbench.builder.get_object<Shumate.SimpleMap>("map_widget");
 const registry = Shumate.MapSourceRegistry.new_with_defaults();
 
 // Use OpenStreetMap as the source
@@ -20,7 +20,7 @@ const marker_layer = new Shumate.MarkerLayer({
   selection_mode: Gtk.SelectionMode.SINGLE,
 });
 
-const marker = workbench.builder.get_object("marker");
+const marker = workbench.builder.get_object<Shumate.Marker>("marker");
 marker.set_location(0, 0);
 marker_layer.add_marker(marker);
 map_widget.map.add_layer(marker_layer);
@@ -28,7 +28,7 @@ map_widget.map.add_layer(marker_layer);
 const gesture = new Gtk.GestureClick();
 map_widget.add_controller(gesture);
 
-const button_marker = workbench.builder.get_object("button_marker");
+const button_marker = workbench.builder.get_object<Gtk.ToggleButton>("button_marker");
 
 gesture.connect("pressed", (_self, _n_press, x, y) => {
   if (button_marker.active) {
@@ -38,9 +38,9 @@ gesture.connect("pressed", (_self, _n_press, x, y) => {
   }
 });
 
-const entry_latitude = workbench.builder.get_object("entry_latitude");
-const entry_longitude = workbench.builder.get_object("entry_longitude");
-const button_go = workbench.builder.get_object("button_go");
+const entry_latitude = workbench.builder.get_object<Gtk.Entry>("entry_latitude");
+const entry_longitude = workbench.builder.get_object<Gtk.Entry>("entry_longitude");
+const button_go = workbench.builder.get_object<Gtk.Button>("button_go");
 
 button_go.connect("clicked", () => {
   go_to_location();
@@ -55,8 +55,8 @@ entry_longitude.connect("activate", () => {
 });
 
 function go_to_location() {
-  const latitude = entry_latitude.text;
-  const longitude = entry_longitude.text;
+  const latitude = Number(entry_latitude.text);
+  const longitude = Number(entry_longitude.text);
   if (isNaN(latitude) || isNaN(longitude)) {
     console.log("Please enter valid coordinates");
     return;
