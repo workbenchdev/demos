@@ -1,5 +1,10 @@
-const drawingArea = workbench.builder.get_object("drawing_area");
-const scaleRotate = workbench.builder.get_object("scale");
+import Gtk from "gi://Gtk?version=4.0";
+import cairo from "cairo";
+
+const drawingArea = workbench.builder.get_object<Gtk.DrawingArea>(
+  "drawing_area",
+);
+const scaleRotate = workbench.builder.get_object<Gtk.Scale>("scale");
 
 const triangle = [
   [100, 100],
@@ -8,7 +13,9 @@ const triangle = [
 ];
 var angle = 0;
 
-drawingArea.set_draw_func((_self, cr, _width, _height) => {
+// TS: the `cairo.Context` type is broken here
+// See: https://github.com/gjsify/ts-for-gir/issues/194
+drawingArea.set_draw_func((_self, cr: cairo.Context, _width, _height) => {
   // Draw triangle in context
   cr.translate(150, 150);
   cr.rotate(angle);
@@ -20,6 +27,9 @@ drawingArea.set_draw_func((_self, cr, _width, _height) => {
   cr.setSourceRGBA(1, 0, 1, 1);
   cr.stroke();
   // Freeing the context before returning from the callback
+
+  // @ts-expect-error this function is not exposed
+  // See: https://github.com/gjsify/ts-for-gir/issues/194
   cr.$dispose();
 });
 
