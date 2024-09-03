@@ -1,4 +1,6 @@
+import Adw from "gi://Adw";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk?version=4.0";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
 
@@ -11,23 +13,31 @@ Gio._promisify(
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
 
-const revealer = workbench.builder.get_object("revealer");
-const start = workbench.builder.get_object("start");
-const close = workbench.builder.get_object("close");
-const distance_threshold = workbench.builder.get_object("distance_threshold");
-const time_threshold = workbench.builder.get_object("time_threshold");
-const accuracy_button = workbench.builder.get_object("accuracy_button");
+const revealer = workbench.builder.get_object<Gtk.Revealer>("revealer");
+const start = workbench.builder.get_object<Gtk.Button>("start");
+const close = workbench.builder.get_object<Gtk.Button>("close");
+const distance_threshold = workbench.builder.get_object<Adw.SpinRow>(
+  "distance_threshold",
+);
+const time_threshold = workbench.builder.get_object<Adw.SpinRow>(
+  "time_threshold",
+);
+const accuracy_button = workbench.builder.get_object<Adw.ComboRow>(
+  "accuracy_button",
+);
 
-const latitude_label = workbench.builder.get_object("latitude");
-const longitude_label = workbench.builder.get_object("longitude");
-const accuracy_label = workbench.builder.get_object("accuracy");
-const altitude_label = workbench.builder.get_object("altitude");
-const speed_label = workbench.builder.get_object("speed");
-const heading_label = workbench.builder.get_object("heading");
-const description_label = workbench.builder.get_object("description");
-const timestamp_label = workbench.builder.get_object("timestamp");
+const latitude_label = workbench.builder.get_object<Gtk.Label>("latitude");
+const longitude_label = workbench.builder.get_object<Gtk.Label>("longitude");
+const accuracy_label = workbench.builder.get_object<Gtk.Label>("accuracy");
+const altitude_label = workbench.builder.get_object<Gtk.Label>("altitude");
+const speed_label = workbench.builder.get_object<Gtk.Label>("speed");
+const heading_label = workbench.builder.get_object<Gtk.Label>("heading");
+const description_label = workbench.builder.get_object<Gtk.Label>(
+  "description",
+);
+const timestamp_label = workbench.builder.get_object<Gtk.Label>("timestamp");
 
-let locationAccuracy = Xdp.LocationAccuracy.Exact;
+let locationAccuracy = Xdp.LocationAccuracy.EXACT;
 let distanceThresholdValue = distance_threshold.value;
 let timeThresholdValue = time_threshold.value;
 
@@ -51,7 +61,8 @@ accuracy_button.connect("notify::selected-item", () => {
   console.log("Accuracy changed");
   portal.location_monitor_stop();
   revealer.reveal_child = false;
-  const accuracy_flag = accuracy_button.selected_item.get_string();
+  const accuracy_flag = (accuracy_button.selected_item as Gtk.StringObject)
+    .get_string();
   locationAccuracy = Xdp.LocationAccuracy[accuracy_flag];
   startSession();
 });
@@ -59,6 +70,7 @@ accuracy_button.connect("notify::selected-item", () => {
 async function startSession() {
   start.sensitive = false;
   close.sensitive = true;
+  // @ts-expect-error undetected async function
   const result = await portal.location_monitor_start(
     parent,
     distanceThresholdValue,
@@ -66,7 +78,7 @@ async function startSession() {
     locationAccuracy,
     Xdp.LocationMonitorFlags.NONE,
     null,
-  );
+  ) as boolean;
   if (result === true) {
     console.log("Location access granted");
     revealer.reveal_child = true;
