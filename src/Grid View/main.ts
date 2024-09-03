@@ -1,6 +1,6 @@
 import Gtk from "gi://Gtk?version=4.0";
 
-const grid_view = workbench.builder.get_object("grid_view");
+const grid_view = workbench.builder.get_object<Gtk.GridView>("grid_view");
 const add = workbench.builder.get_object("add");
 const remove = workbench.builder.get_object("remove");
 
@@ -13,7 +13,7 @@ const string_model = new Gtk.StringList({
 const model = new Gtk.SingleSelection({ model: string_model });
 
 const factory_for_grid_view = new Gtk.SignalListItemFactory();
-factory_for_grid_view.connect("setup", (_self, listItem) => {
+factory_for_grid_view.connect("setup", (_self, listItem: Gtk.ListItem) => {
   const listBox = new Gtk.Box({
     width_request: 160,
     height_request: 160,
@@ -27,12 +27,12 @@ factory_for_grid_view.connect("setup", (_self, listItem) => {
   listBox.append(label);
   listItem.set_child(listBox);
 });
-factory_for_grid_view.connect("bind", (_self, listItem) => {
+factory_for_grid_view.connect("bind", (_self, listItem: Gtk.ListItem) => {
   const listBox = listItem.get_child();
-  const modelItem = listItem.get_item();
-  const labelWidget = listBox.get_last_child();
+  const modelItem = listItem.get_item() as Gtk.StringObject;
+  const labelWidget = listBox.get_last_child() as Gtk.Label;
 
-  labelWidget.label = modelItem.string;
+  labelWidget.label = modelItem.string
 });
 
 //View
@@ -47,7 +47,7 @@ model.model.connect("items-changed", (_list, position, removed, added) => {
 model.connect("selection-changed", () => {
   const selected_item = model.get_selected();
   console.log(
-    `Model item selected from view: ${model.model.get_string(selected_item)}`,
+    `Model item selected from view: ${string_model.get_string(selected_item)}`,
   );
 });
 
@@ -57,11 +57,11 @@ grid_view.factory = factory_for_grid_view;
 // Controller
 add.connect("clicked", () => {
   const new_item = `New item ${item}`;
-  model.model.append(new_item);
+  string_model.append(new_item);
   item++;
 });
 
 remove.connect("clicked", () => {
   const selected_item = model.get_selected();
-  model.model.remove(selected_item);
+  string_model.remove(selected_item);
 });
