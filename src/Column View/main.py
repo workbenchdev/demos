@@ -59,7 +59,7 @@ def _on_factory_setup(_factory, list_item):
 
 def _on_factory_bind(_factory, list_item, what):
     label_widget = list_item.get_child()
-    book = list_item.get_item().get_item()
+    book = list_item.get_item()
     label_widget.set_label(str(getattr(book, what)))
 
 
@@ -70,35 +70,14 @@ col2.get_factory().connect("bind", _on_factory_bind, "author")
 col3.get_factory().connect("setup", _on_factory_setup)
 col3.get_factory().connect("bind", _on_factory_bind, "year")
 
-
-# Custom Sorter is required because PyGObject doesn't currently support
-# Gtk.Expression: https://gitlab.gnome.org/GNOME/pygobject/-/issues/356
-
-
-def model_func(_item):
-    pass
-
-
-tree_model = Gtk.TreeListModel.new(data_model, False, True, model_func)
-tree_sorter = Gtk.TreeListRowSorter.new(column_view.get_sorter())
-sorter_model = Gtk.SortListModel(model=tree_model, sorter=tree_sorter)
+sorter_model = Gtk.SortListModel.new(model=data_model, sorter=column_view.get_sorter())
 selection = Gtk.SingleSelection.new(model=sorter_model)
 column_view.set_model(model=selection)
 
+col1_exp = Gtk.PropertyExpression.new(Book, None, "title")
+col2_exp = Gtk.PropertyExpression.new(Book, None, "author")
+col3_exp = Gtk.PropertyExpression.new(Book, None, "year")
 
-def str_sorter(object_a, object_b, column) -> bool:
-    a = getattr(object_a, column).lower()
-    b = getattr(object_b, column).lower()
-    return (a > b) - (a < b)
-
-
-def int_sorter(object_a, object_b, column) -> bool:
-    print(object_a)
-    a = getattr(object_a, column)
-    b = getattr(object_b, column)
-    return (a > b) - (a < b)
-
-
-col1.set_sorter(Gtk.CustomSorter.new(str_sorter, "title"))
-col2.set_sorter(Gtk.CustomSorter.new(str_sorter, "author"))
-col3.set_sorter(Gtk.CustomSorter.new(int_sorter, "year"))
+col1.set_sorter(Gtk.StringSorter.new(col1_exp))
+col2.set_sorter(Gtk.StringSorter.new(col2_exp))
+col3.set_sorter(Gtk.NumericSorter.new(col3_exp))
