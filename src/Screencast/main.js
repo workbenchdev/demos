@@ -82,9 +82,8 @@ async function startScreencastSession() {
   source.link(queue);
   queue.link(glsinkbin);
 
-  const paintable = new GObject.Value();
-  paintable_sink.get_property("paintable", paintable);
-  output.paintable = paintable.get_object();
+  const paintable = paintable_sink.get_property("paintable");
+  output.paintable = paintable;
 
   // Start the pipeline
   pipeline.set_state(Gst.State.PLAYING);
