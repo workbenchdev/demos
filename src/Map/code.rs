@@ -2,11 +2,9 @@ use crate::workbench;
 use glib::clone;
 use gtk::glib;
 use gtk::prelude::*;
-use shumate::ffi::{
-    SHUMATE_MAX_LATITUDE, SHUMATE_MAX_LONGITUDE, SHUMATE_MIN_LATITUDE, SHUMATE_MIN_LONGITUDE,
-};
 use shumate::prelude::*;
 use shumate::MAP_SOURCE_OSM_MAPNIK;
+use shumate::{MAX_LATITUDE, MAX_LONGITUDE, MIN_LATITUDE, MIN_LONGITUDE};
 
 pub fn main() {
     gtk::init().unwrap();
@@ -81,13 +79,13 @@ pub fn go_to_location(
         return;
     }
 
-    if latitude > SHUMATE_MAX_LATITUDE || latitude < SHUMATE_MIN_LATITUDE {
-        println!("Latitudes must be between {SHUMATE_MIN_LATITUDE} and {SHUMATE_MAX_LATITUDE}!");
+    if latitude > MAX_LATITUDE || latitude < MIN_LATITUDE {
+        println!("Latitudes must be between {MIN_LATITUDE} and {MAX_LATITUDE}!");
         return;
     }
 
-    if latitude > SHUMATE_MAX_LONGITUDE || latitude < SHUMATE_MIN_LONGITUDE {
-        println!("Longitudes must be between {SHUMATE_MIN_LONGITUDE} and {SHUMATE_MAX_LONGITUDE}!");
+    if latitude > MAX_LONGITUDE || latitude < MIN_LONGITUDE {
+        println!("Longitudes must be between {MIN_LONGITUDE} and {MAX_LONGITUDE}!");
         return;
     }
 

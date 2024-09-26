@@ -1,4 +1,4 @@
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 import Shumate from "gi://Shumate";
 
 const map_widget = workbench.builder.get_object("map_widget");

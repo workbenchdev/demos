@@ -1,4 +1,4 @@
-import Gdk from "gi://Gdk";
+import Gdk from "gi://Gdk?version=4.0";
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";

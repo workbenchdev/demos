@@ -6,10 +6,11 @@ on:
 
 jobs:
   CI:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3
         with:
+          fetch-depth: 0 # required for make test
           submodules: "recursive"
 
       - name: Install host dependencies
@@ -25,13 +26,6 @@ jobs:
           key: ${{ runner.os }}-flatpak-dependencies-${{ github.run_id }}
           restore-keys: |
             ${{ runner.os }}-flatpak-dependencies-
-      - name: Restore .flatpak-builder
-        uses: actions/cache/restore@v3
-        with:
-          path: Workbench/.flatpak-builder
-          key: ${{ runner.os }}-flatpak-builder-${{ github.run_id }}
-          restore-keys: |
-            ${{ runner.os }}-flatpak-builder-
 
       - run: mutter --wayland --no-x11 --headless --wayland-display=wayland-0 --virtual-monitor 1280x720 > /tmp/mutter.log 2>&1 &
       - run: make ci
@@ -44,9 +38,3 @@ jobs:
         with:
           path: ~/.local/share/flatpak
           key: ${{ runner.os }}-flatpak-dependencies-${{ github.run_id }}
-      - name: Save .flatpak-builder
-        uses: actions/cache/save@v3
-        if: always()
-        with:
-          path: Workbench/.flatpak-builder
-          key: ${{ runner.os }}-flatpak-builder-${{ github.run_id }}

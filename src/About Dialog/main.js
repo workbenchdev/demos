@@ -1,6 +1,6 @@
 import { gettext as _ } from "gettext";
 import Adw from "gi://Adw";
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 
 const button = workbench.builder.get_object("button");
 
@@ -25,7 +25,7 @@ function openAboutDialog() {
 
   dialog.add_link(
     _("Documentation"),
-    "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/class.AboutDialog.html",
+    "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.6/class.AboutDialog.html",
   );
 
   dialog.add_legal_section(

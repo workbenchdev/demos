@@ -1,4 +1,4 @@
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 
 const list_view = workbench.builder.get_object("list_view");
 const add = workbench.builder.get_object("add");

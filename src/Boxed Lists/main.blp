@@ -44,7 +44,7 @@ Adw.StatusPage {
 
           [suffix]
           ToggleButton activatable_toggle {
-            icon-name: "hand-touch-symbolic";
+            icon-name: "list-add-symbolic";
             valign: center;
           }
         }
@@ -80,17 +80,18 @@ Adw.StatusPage {
           };
         }
 
-        Adw.ComboRow {
+        Adw.ComboRow drop_down {
           title: _("Choose an Item");
           subtitle: _("List of options from a drop down");
+          enable-search: true;
 
           model: StringList list {
             strings [
-              "This",
-              "Is",
-              "A",
-              "String",
-              "List"
+              "Cat",
+              "Dog",
+              "Hippo",
+              "Duck",
+              "Dodo"
             ]
           };
         }
@@ -112,7 +113,7 @@ Adw.StatusPage {
       LinkButton {
         margin-top: 24;
         label: _("API Reference");
-        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/boxed-lists.html";
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.6/boxed-lists.html";
       }
 
       LinkButton {

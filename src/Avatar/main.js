@@ -1,6 +1,6 @@
-import Gdk from "gi://Gdk";
+import Gdk from "gi://Gdk?version=4.0";
 import Gio from "gi://Gio";
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 
 Gio._promisify(Gtk.FileDialog.prototype, "open", "open_finish");
 

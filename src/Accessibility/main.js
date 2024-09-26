@@ -1,6 +1,6 @@
 import GObject from "gi://GObject";
-import Gdk from "gi://Gdk";
-import Gtk from "gi://Gtk";
+import Gdk from "gi://Gdk?version=4.0";
+import Gtk from "gi://Gtk?version=4.0";
 
 const button = workbench.builder.get_object("custom_button");
 
@@ -22,6 +22,9 @@ key_controller.connect("key-released", (_controller, keyval) => {
 });
 button.add_controller(key_controller);
 
+/**
+ * @param {Gtk.Button} button
+ */
 function toggleButton(button) {
   let checked = (button.get_state_flags() & Gtk.StateFlags.CHECKED) !== 0;
   let pressed;

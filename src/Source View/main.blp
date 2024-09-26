@@ -10,15 +10,24 @@ Adw.StatusPage {
     orientation: vertical;
     halign: center;
 
-    ScrolledWindow scrolled_window {
+    ScrolledWindow {
       height-request: 180;
       width-request: 600;
       has-frame: true;
+
+      GtkSource.View {
+        auto-indent: true;
+        indent-width: 2;
+        show-line-numbers: true;
+        monospace: true;
+
+        buffer: GtkSource.Buffer buffer {};
+      }
     }
 
     LinkButton {
-      label: _("API Reference");
-      uri: "https://gnome.pages.gitlab.gnome.org/gtksourceview/gtksourceview5/class.View.html";
+      label: _("Documentation");
+      uri: "https://gnome.pages.gitlab.gnome.org/gtksourceview/gtksourceview5/";
     }
   }
 }

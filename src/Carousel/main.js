@@ -1,5 +1,5 @@
 import Adw from "gi://Adw";
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 
 const root_box = workbench.builder.get_object("root_box");
 const carousel = workbench.builder.get_object("carousel");

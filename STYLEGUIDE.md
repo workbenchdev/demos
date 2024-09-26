@@ -11,6 +11,7 @@
 - Prefer properties like `Gtk.Box:spacing` to `Gtk.Widget:margin-top` for layout
 - Avoid hard-coded height and width, except for e.g. images with fixed geometry
 - Prefer HIG terms (Radio Groups, Checkboxes) over technical ones (Checkbuttons)
+- If you need icons, it is possible to use custom icons but prefer included [Adwaita icons set](ttps://gitlab.gnome.org/GNOME/adwaita-icon-theme/-/tree/master/Adwaita/symbolic/actions?ref_type=heads).
 
 ## CSS
 
