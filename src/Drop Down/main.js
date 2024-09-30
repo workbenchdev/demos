@@ -37,7 +37,7 @@ const KeyValuePair = GObject.registerClass(
       ),
     },
   },
-  class KeyValuePair extends GObject.Object { },
+  class KeyValuePair extends GObject.Object {},
 );
 
 const model = new Gio.ListStore({ item_type: KeyValuePair });

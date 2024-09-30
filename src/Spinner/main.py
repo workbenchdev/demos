@@ -9,12 +9,12 @@ spinner: Gtk.Spinner = workbench.builder.get_object("spinner")
 
 
 def button_clicked(_widget):
-    if spinner.get_spinning():
+    if spinner.get_visible():
         button.set_icon_name("media-playback-start")
-        spinner.set_spinning(False)
+        spinner.set_visible(False)
     else:
-        button.set_icon_name("media-playback-pause")
-        spinner.set_spinning(True)
+        button.set_icon_name("media-playback-stop")
+        spinner.set_visible(True)
 
 
 button.connect("clicked", button_clicked)

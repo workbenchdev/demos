@@ -25,7 +25,7 @@ public void on_button_clicked () {
     };
     dialog.add_link (
                      "Documentation",
-                     "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/class.AboutDialog.html"
+                     "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.6/class.AboutDialog.html"
     );
     dialog.add_legal_section (
                               "Fonts",

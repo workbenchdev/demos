@@ -3,5 +3,5 @@
   "description": "Use buttons in boxed lists",
   "panels": ["ui", "preview"],
   "autorun": true,
-  "runtime-version": "master"
+  "runtime-version": "47"
 }

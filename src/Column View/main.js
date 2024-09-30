@@ -36,7 +36,7 @@ const Book = GObject.registerClass(
       ),
     },
   },
-  class Book extends GObject.Object { },
+  class Book extends GObject.Object {},
 );
 
 // Create the model
