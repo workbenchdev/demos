@@ -2,7 +2,7 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, GObject, Gio
+from gi.repository import Gtk, GObject, Gio
 import workbench
 
 list_view = workbench.builder.get_object("list_view")
@@ -10,31 +10,24 @@ factory = workbench.builder.get_object("factory")
 
 
 class TreeNode(GObject.Object):
-    def __init__(self, _title, children=None):
+    def __init__(self, _title, _children=None):
         super().__init__()
-        self.children = children or []
+        self.children = _children or []
         self.title = _title
 
 
-class TreeWidget(Adw.Bin):
+class TreeWidget(Gtk.Box):
     def __init__(self):
-        super().__init__()
-
-        box = Gtk.Box(
-            spacing=6, margin_start=3, margin_end=10, margin_top=6, margin_bottom=6
+        super().__init__(
+            spacing=6, margin_start=6, margin_end=12, margin_top=6, margin_bottom=6
         )
 
         self.expander = Gtk.TreeExpander.new()
 
         self.label = Gtk.Label(xalign=0, ellipsize=3)
 
-        box.append(self.expander)
-        box.append(self.label)
-
-        self.set_child(box)
-
-    def set_text(self, text):
-        self.label.set_text(text)
+        self.append(self.expander)
+        self.append(self.label)
 
 
 def create_model_func(item):
@@ -49,13 +42,12 @@ def on_setup(_, list_item):
 
 
 def on_bind(_, list_item):
-    item = list_item.get_item()
+    list_row = list_item.get_item()
     widget = list_item.get_child()
-    widget.expander.set_list_row(item)
+    item = list_row.get_item()
 
-    item = list_item.get_item().get_item()
-
-    widget.set_text(item.title)
+    widget.expander.set_list_row(list_row)
+    widget.label.set_label(item.title)
 
 
 factory.connect("setup", on_setup)
@@ -85,3 +77,4 @@ tree_list_model.set_autoexpand(False)
 selection_model = Gtk.NoSelection(model=tree_list_model)
 
 list_view.set_model(selection_model)
+
