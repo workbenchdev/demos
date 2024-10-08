@@ -27,10 +27,15 @@ Adw.StatusPage {
         }
       }
 
-      ListView list_view {
-        factory: SignalListItemFactory item_factory {};
+      ScrolledWindow {
+        height-request: 330;
+        has-frame: true;
 
-        header-factory: SignalListItemFactory header_factory {};
+        child: ListView list_view {
+          factory: SignalListItemFactory item_factory {};
+
+          header-factory: SignalListItemFactory header_factory {};
+        };
       }
     }
   }

@@ -2,7 +2,7 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, GObject, Gio
+from gi.repository import Gtk
 import workbench
 
 list_view = workbench.builder.get_object("list_view")
@@ -10,28 +10,14 @@ item_factory = workbench.builder.get_object("item_factory")
 header_factory = workbench.builder.get_object("header_factory")
 
 
-class CustomModel(GObject.GObject, Gio.ListModel, Gtk.SectionModel):
+class CustomModel(Gtk.StringList, Gtk.SectionModel):
     def __init__(self):
         super().__init__()
-        self.internal_list = Gtk.StringList()
 
     def do_get_section(self, position):
         start = (position // 5) * 5
         end = start + 5
-        print(position)
         return (start, end)
-
-    def do_get_item(self, position):
-        return self.internal_list[position]
-
-    def do_get_n_items(self):
-        return len(self.internal_list)
-
-    def do_get_item_type(self):
-        return GObject.Object
-
-    def append(self, item):
-        self.internal_list.append(item)
 
 
 def on_setup_item(_, list_item):
