@@ -9,7 +9,7 @@ grid_view = workbench.builder.get_object("grid_view")
 add = workbench.builder.get_object("add")
 remove = workbench.builder.get_object("remove")
 
-item = 4
+item = 1
 
 string_model = Gtk.StringList.new(
     ["Default Item 1", "Default Item 2", "Default Item 3"]
