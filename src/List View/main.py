@@ -13,13 +13,15 @@ string_model = Gtk.StringList.new(
     ["Default Item 1", "Default Item 2", "Default Item 3"]
 )
 
-item = 4
+item = 1
 
 model = Gtk.SingleSelection(model=string_model)
 
 
 def on_item_changed(_list, position, removed, added):
-    print(f"position: {position}, Item removed? {removed != 0}, Item added? {added != 0}")
+    print(
+        f"position: {position}, Item removed? {removed != 0}, Item added? {added != 0}"
+    )
 
 
 def on_selection_changed(*_):
@@ -47,4 +49,3 @@ def on_remove_clicked(*_):
 
 add.connect("clicked", on_add_clicked)
 remove.connect("clicked", on_remove_clicked)
-
