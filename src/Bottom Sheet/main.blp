@@ -16,17 +16,19 @@ Adw.Bin {
         orientation: vertical;
         spacing: 12;
         halign: center;
+
         LinkButton {
           label: _("API Reference");
           uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.BottomSheet.html";
         }
+
         Adw.Clamp {
           child: Adw.PreferencesGroup {
             Adw.SwitchRow {
               active: bind bottom_sheet.full-width bidirectional;
               title: "Full Width";
             }
-            
+
             Adw.SwitchRow {
               active: bind bottom_sheet.can-open bidirectional;
               title: "Can Open";
