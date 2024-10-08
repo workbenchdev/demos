@@ -77,4 +77,3 @@ tree_list_model.set_autoexpand(False)
 selection_model = Gtk.NoSelection(model=tree_list_model)
 
 list_view.set_model(selection_model)
-
