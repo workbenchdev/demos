@@ -71,4 +71,3 @@ def on_remove_clicked(*_):
 
 add.connect("clicked", on_add_clicked)
 remove.connect("clicked", on_remove_clicked)
-
