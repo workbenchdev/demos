@@ -44,13 +44,13 @@ function initDatabase() {
   // Perform automatic migration
   repository.automatic_migrate_sync(1, [ItemClass]);
 }
-/*
+
 function closeDatabase() {
   if (adapter) {
     adapter.close_sync();
   }
 }
-*/
+
 initDatabase();
 
 const text_entry = workbench.builder.get_object("text_entry");
