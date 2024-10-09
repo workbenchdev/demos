@@ -34,7 +34,7 @@ let adapter, repository;
 
 function initDatabase() {
   adapter = new Gom.Adapter();
-  adapter.open_sync(":memory:");
+  adapter.open_sync(workbench.resolve("/gom-js-test.db"));
   repository = new Gom.Repository({ adapter: adapter });
 
   // Set up table and primary key
@@ -44,21 +44,13 @@ function initDatabase() {
   // Perform automatic migration
   repository.automatic_migrate_sync(1, [ItemClass]);
 }
-
+/*
 function closeDatabase() {
   if (adapter) {
     adapter.close_sync();
   }
 }
-
-function showToast(overlay, message) {
-  const toast = new Adw.Toast({
-    title: message,
-    timeout: 2,
-  });
-  overlay.add_toast(toast);
-}
-
+*/
 initDatabase();
 
 const text_entry = workbench.builder.get_object("text_entry");
@@ -66,7 +58,6 @@ const id_entry = workbench.builder.get_object("id_entry");
 const insert_button = workbench.builder.get_object("insert_button");
 const search_entry = workbench.builder.get_object("search_entry");
 const result_label = workbench.builder.get_object("result_label");
-const overlay = workbench.builder.get_object("overlay");
 const data_model = new Gio.ListStore({ item_type: ItemClass });
 const column_view = workbench.builder.get_object("column_view");
 const col1 = workbench.builder.get_object("col1");
@@ -79,11 +70,8 @@ insert_button.connect("clicked", () => {
   const success = item.save_sync();
 
   if (success) {
-    showToast(overlay, "Item inserted successfully");
     data_model.append(item);
     id_entry.set_range(1, ++count);
-  } else {
-    showToast(overlay, "Failed to insert item");
   }
 });
 
