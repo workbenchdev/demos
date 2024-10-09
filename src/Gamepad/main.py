@@ -46,7 +46,7 @@ def on_absolute_axis_event(device, event):
         print(f"{device.get_name()}: moved axis {axis} to {value}")
 
 
-def on_device(device):
+def on_device(_, device):
     print("Device connected:", device.get_name())
 
     # Face and Shoulder Buttons
@@ -65,11 +65,11 @@ def on_device(device):
     stack.set_visible_child_name("watch")
 
 
-def on_device_disconnected(device):
+def on_device_disconnected(_, device):
     print(f"Device Disconnected: {device.get_name()}")
 
     devices.remove(device)
-    stack.set_visible_child_name("connect" if devices.size < 1 else "watch")
+    stack.set_visible_child_name("connect" if len(devices) < 1 else "watch")
 
 
 monitor = Manette.Monitor()
@@ -78,7 +78,7 @@ monitor_iter = monitor.iterate()
 while True:
     has_next, device = monitor_iter.next()
     if device:
-        on_device(device)
+        on_device(None, device)
     if not has_next:
         break
 
