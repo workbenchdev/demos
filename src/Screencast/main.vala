@@ -42,7 +42,6 @@ async void start_screencast_session (Xdp.Portal portal, Xdp.Parent parent) throw
     uint node_id = streams.get_child_value (0).get_child_value (0).get_uint32 ();
     if (node_id == 0) {
         throw new MessageError.FAILED (@"No available node");
-        // stderr.printf ("No available node id\n");
     }
 
     source.set_property ("path", node_id);
@@ -77,7 +76,8 @@ async void on_button_clicked () {
 }
 
 public void main (string[] args) {
-    // Gst.init (ref args);
+    unowned string[] arguments = null;
+    Gst.init (ref arguments);
     portal = new Xdp.Portal ();
     parent = Xdp.parent_new_gtk (workbench.window);
     output = (Gtk.Picture) workbench.builder.get_object ("output");
