@@ -1,0 +1,6 @@
+{
+  "category": "platform",
+  "description": "Capture mouse, keyboard and touch",
+  "panels": ["code", "preview"],
+  "autorun": true
+}
