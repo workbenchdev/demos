@@ -1,4 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
 private bool auto_scrolling = false;
 
 public void main () {

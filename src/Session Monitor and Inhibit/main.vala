@@ -1,4 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libportal-gtk4
 private Xdp.Portal portal;
 private Gtk.Button button_start;
 private Gtk.Button button_stop;

@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 void on_closed (Gtk.Popover popover) {
     message (@"$(popover.name) closed.");
 }
