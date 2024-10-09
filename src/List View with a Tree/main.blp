@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: _("List View with TreeListModel");
+  title: _("List View with a Tree");
   description: _("Arrange items in a tree like structure");
   valign: start;
 
@@ -12,6 +12,15 @@ Adw.StatusPage {
     Box {
       orientation: vertical;
       spacing: 18;
+
+      ScrolledWindow {
+        has-frame: true;
+        height-request: 320;
+
+        child: ListView list_view {
+          factory: SignalListItemFactory factory {};
+        };
+      }
 
       Box {
         halign: center;
@@ -25,15 +34,6 @@ Adw.StatusPage {
           label: _("Documentation");
           uri: "https://docs.gtk.org/gtk4/section-list-widget.html#displaying-trees";
         }
-      }
-
-      ScrolledWindow {
-        has-frame: true;
-        height-request: 320;
-
-        child: ListView list_view {
-          factory: SignalListItemFactory factory {};
-        };
       }
     }
   }

@@ -31,6 +31,8 @@ class TreeWidget(Gtk.Box):
 
 
 def create_model_func(item):
+    if item.children == []:
+        return None
     child_model = Gio.ListStore.new(TreeNode)
     for child in item.children:
         child_model.append(child)
