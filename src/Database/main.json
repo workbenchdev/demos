@@ -1,0 +1,6 @@
+{
+  "category": "platform",
+  "description": "Search, load and store data in a database",
+  "panels": ["code", "preview"],
+  "autorun": true
+}
