@@ -1,7 +1,6 @@
 import gi
 
 gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
 from gi.repository import Gtk, GObject, Gio
 import workbench
 
@@ -24,7 +23,7 @@ class TreeWidget(Gtk.Box):
 
         self.expander = Gtk.TreeExpander.new()
 
-        self.label = Gtk.Label(xalign=0, ellipsize=3)
+        self.label = Gtk.Label(halign=Gtk.Align.START)
 
         self.append(self.expander)
         self.append(self.label)
