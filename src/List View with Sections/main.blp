@@ -13,6 +13,17 @@ Adw.StatusPage {
       orientation: vertical;
       spacing: 18;
 
+      ScrolledWindow {
+        height-request: 330;
+        has-frame: true;
+
+        child: ListView list_view {
+          factory: SignalListItemFactory item_factory {};
+
+          header-factory: SignalListItemFactory header_factory {};
+        };
+      }
+
       Box {
         halign: center;
 
@@ -25,17 +36,6 @@ Adw.StatusPage {
           label: _("Documentation");
           uri: "https://docs.gtk.org/gtk4/section-list-widget.html#sections";
         }
-      }
-
-      ScrolledWindow {
-        height-request: 330;
-        has-frame: true;
-
-        child: ListView list_view {
-          factory: SignalListItemFactory item_factory {};
-
-          header-factory: SignalListItemFactory header_factory {};
-        };
       }
     }
   }
