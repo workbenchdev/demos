@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg gio-2.0
-
 public void main () {
     var dialog = (Adw.Dialog) workbench.builder.get_object ("dialog");
     var button = (Gtk.Button) workbench.builder.get_object ("button");

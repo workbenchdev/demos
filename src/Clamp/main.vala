@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 private Gtk.Button button_increase;
 private Gtk.Button button_decrease;
 private Adw.Clamp clamp;

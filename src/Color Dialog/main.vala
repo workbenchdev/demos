@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 private Gtk.ColorDialogButton color_dialog_button;
 private Gtk.Button custom_button;
 private Gtk.ColorDialog dialog_custom;
