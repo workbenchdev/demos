@@ -17,7 +17,7 @@ Adw.StatusPage {
 
       Entry text_entry {
         placeholder-text: _("Enter Text");
-        width-request: 300;
+        hexpand: true;
       }
 
       Button insert_button {
@@ -32,6 +32,7 @@ Adw.StatusPage {
       Box {
         orientation: vertical;
         spacing: 12;
+        hexpand: true;
 
         Label {
           label: _("Search by Text");
@@ -39,8 +40,6 @@ Adw.StatusPage {
 
         SearchEntry search_entry {
           search-delay: 100;
-          placeholder-text: _("Enter Text");
-          width-request: 250;
         }
       }
 
@@ -49,46 +48,36 @@ Adw.StatusPage {
         orientation: vertical;
 
         Label {
-          label: _("Search by ID");
+          label: _("Find by ID");
         }
 
-        SpinButton id_entry {
-          halign: center;
-          orientation: horizontal;
-          wrap: false;
-          climb-rate: 1;
-
-          adjustment: Adjustment {
-            step-increment: 1;
-            value: 0;
-          };
+        SearchEntry id_entry {
+          search-delay: 100;
         }
       }
     }
 
-    Frame {
+    ScrolledWindow {
+      height-request: 340;
+      has-frame: true;
+
       ColumnView column_view {
         show-column-separators: true;
 
-        ColumnViewColumn col1 {
+        ColumnViewColumn column_text {
           title: _("Text");
           expand: true;
 
           factory: SignalListItemFactory {};
         }
 
-        ColumnViewColumn col2 {
+        ColumnViewColumn column_id {
           title: _("ID");
           expand: true;
 
           factory: SignalListItemFactory {};
         }
       }
-    }
-
-    Label result_label {
-      wrap: true;
-      width-request: 250;
     }
   }
 }
