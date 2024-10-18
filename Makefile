@@ -20,7 +20,8 @@ format:
 
 test:
 # list folders that have changed and run workbench-cli ci on them
-	git diff --dirstat=files,0 origin/main src | sed 's/^[ 0-9.]\+% //g' | uniq | xargs -d '\n' flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench.Devel ci
+# $$ is for the Makefile only - use $ otherwise
+	git diff --name-only origin/main src | awk -F/ '{print $$1 FS $$2}' | uniq | xargs -d '\n' flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench.Devel ci
 
 all:
 	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench.Devel ci src/*

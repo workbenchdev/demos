@@ -1,4 +1,3 @@
-import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 import Gst from "gi://Gst";
 import Xdp from "gi://Xdp";
