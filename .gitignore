@@ -34,3 +34,4 @@ src/*/*.gresource
 src/*/*.gresource.xml
 src/*/jsconfig.json
 src/*/rustc-ice-*.txt
+src/*/*.sqlite*
