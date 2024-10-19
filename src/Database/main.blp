@@ -3,7 +3,7 @@ using Adw 1;
 
 Adw.StatusPage {
   title: _("Database");
-  description: _("Search, load and store data in a database");
+  description: _("Search, load and store data using SQLite");
 
   Box {
     orientation: vertical;
@@ -77,6 +77,21 @@ Adw.StatusPage {
 
           factory: SignalListItemFactory {};
         }
+      }
+    }
+
+    Box {
+      orientation: horizontal;
+      halign: center;
+
+      LinkButton {
+        label: _("API Reference");
+        uri: "https://gjs-docs.gnome.org/gom10~1.0/";
+      }
+
+      LinkButton {
+        label: _("SQLite");
+        uri: "https://www.sqlite.org/";
       }
     }
   }

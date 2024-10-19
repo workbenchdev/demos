@@ -12,13 +12,11 @@ Gio._promisify(
   "automatic_migrate_finish",
 );
 Gio._promisify(Gom.Repository.prototype, "find_async", "find_finish");
-Gio._promisify(Gom.Repository.prototype, "find_one_async", "find_one_finish");
 
 Gio._promisify(Gom.Resource.prototype, "save_async", "save_finish");
 Gio._promisify(Gom.ResourceGroup.prototype, "fetch_async", "fetch_finish");
 
 const text_entry = workbench.builder.get_object("text_entry");
-const id_entry = workbench.builder.get_object("id_entry");
 const insert_button = workbench.builder.get_object("insert_button");
 const search_entry = workbench.builder.get_object("search_entry");
 const column_view = workbench.builder.get_object("column_view");
@@ -64,11 +62,7 @@ async function initDatabase() {
 
   // Perform automatic migration
   await repository.automatic_migrate_async(1, [ItemClass]);
-
-  await search();
 }
-
-initDatabase().catch(console.error);
 
 async function onInsert() {
   const text = text_entry.text;
@@ -79,38 +73,15 @@ async function onInsert() {
     return;
   }
 
-  data_model.append(item);
+  await load();
 }
 
-insert_button.connect("clicked", () => {
-  onInsert().catch(console.error);
-});
-
-async function findById() {
-  const { text } = id_entry;
-  if (!text) {
-    return;
-  }
+async function load() {
+  const text = search_entry.text || "";
 
   data_model.remove_all();
-  const id = parseInt(text);
-  const filter = Gom.Filter.new_eq(ItemClass, "id", id);
-  const found_item = await repository.find_one_async(ItemClass, filter);
-  if (found_item) {
-    data_model.append(found_item);
-  }
-}
-
-id_entry.connect("search-changed", () => {
-  findById().catch(console.error);
-});
-
-async function search() {
-  data_model.remove_all();
-  const filter_text = search_entry.text.trim();
-
   // Create a filter for Text matching
-  const filter = Gom.Filter.new_glob(ItemClass, "text", `*${filter_text}*`);
+  const filter = Gom.Filter.new_glob(ItemClass, "text", `*${text}*`);
   const resource_group = await repository.find_async(ItemClass, filter);
 
   await resource_group.fetch_async(0, resource_group.count);
@@ -119,10 +90,6 @@ async function search() {
     if (item) data_model.append(item);
   }
 }
-
-search_entry.connect("search-changed", () => {
-  search().catch(console.error);
-});
 
 column_text.factory.connect("setup", (_self, list_item) => {
   const label = new Gtk.Label({
@@ -155,3 +122,19 @@ column_id.factory.connect("bind", (_self, list_item) => {
 column_view.model = new Gtk.SingleSelection({
   model: data_model,
 });
+
+try {
+  await initDatabase();
+
+  search_entry.connect("search-changed", () => {
+    load().catch(console.error);
+  });
+
+  insert_button.connect("clicked", () => {
+    onInsert().catch(console.error);
+  });
+
+  await load();
+} catch (err) {
+  console.error(err);
+}
