@@ -1,7 +1,7 @@
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk?version=4.0";
 
-const stack = workbench.builder.get_object("stack");
+const stack = workbench.builder.get_object<Gtk.Stack>("stack");
 const list_box = workbench.builder.get_object<Gtk.ListBox>("list_box");
 const flow_box = workbench.builder.get_object<Gtk.FlowBox>("flow_box");
 const add = workbench.builder.get_object<Gtk.Button>("add");
