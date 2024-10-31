@@ -1,0 +1,24 @@
+import Adw from "gi://Adw";
+import Gtk from "gi://Gtk?version=4.0";
+
+const banner = workbench.builder.get_object<Adw.Banner>("banner");
+const overlay = workbench.builder.get_object<Adw.ToastOverlay>("overlay");
+const button_show_banner = workbench.builder.get_object<Gtk.Button>("button_show_banner");
+
+function alert() {
+  const toast = new Adw.Toast({
+    title: "Troubleshoot successful!",
+    timeout: 3,
+  });
+
+  overlay.add_toast(toast);
+}
+
+banner.connect("button-clicked", () => {
+  alert();
+  banner.revealed = false;
+});
+
+button_show_banner.connect("clicked", () => {
+  banner.revealed = true;
+});
