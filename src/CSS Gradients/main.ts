@@ -23,7 +23,7 @@ const button_color_3 = workbench.builder.get_object<Gtk.ColorDialogButton>(
 const gtksource_buffer = workbench.builder.get_object<GtkSource.Buffer>(
   "gtksource_buffer",
 );
-const button_copy_css = workbench.builder.get_object("button_copy_css");
+const button_copy_css = workbench.builder.get_object<Gtk.Button>("button_copy_css");
 
 combo_row_gradient_type.connect("notify::selected", update);
 spin_row_angle.connect("notify::value", update);
