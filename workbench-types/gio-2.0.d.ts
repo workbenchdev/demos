@@ -1621,7 +1621,7 @@ declare module 'gi://Gio?version=2.0' {
             // Static methods
 
             /**
-             * Gets the #GResource Error Quark.
+             * Gets the [struct`Gio`.Resource] Error Quark.
              */
             static quark(): GLib.Quark;
         }
@@ -5029,34 +5029,35 @@ declare module 'gi://Gio?version=2.0' {
          */
         function resolver_error_quark(): GLib.Quark;
         /**
-         * Gets the #GResource Error Quark.
-         * @returns a #GQuark
+         * Gets the [struct`Gio`.Resource] Error Quark.
+         * @returns a [type@GLib.Quark]
          */
         function resource_error_quark(): GLib.Quark;
         /**
-         * Loads a binary resource bundle and creates a #GResource representation of it, allowing
-         * you to query it for data.
+         * Loads a binary resource bundle and creates a [struct`Gio`.Resource]
+         * representation of it, allowing you to query it for data.
          *
          * If you want to use this resource in the global resource namespace you need
-         * to register it with g_resources_register().
+         * to register it with [func`Gio`.resources_register].
          *
          * If `filename` is empty or the data in it is corrupt,
          * %G_RESOURCE_ERROR_INTERNAL will be returned. If `filename` doesn’t exist, or
-         * there is an error in reading it, an error from g_mapped_file_new() will be
-         * returned.
+         * there is an error in reading it, an error from [ctor`GLib`.MappedFile.new]
+         * will be returned.
          * @param filename the path of a filename to load, in the GLib filename encoding
-         * @returns a new #GResource, or %NULL on error
+         * @returns a new [struct@Gio.Resource], or `NULL` on error
          */
         function resource_load(filename: string): Resource;
         /**
          * Returns all the names of children at the specified `path` in the set of
          * globally registered resources.
-         * The return result is a %NULL terminated list of strings which should
-         * be released with g_strfreev().
+         *
+         * The return result is a `NULL` terminated list of strings which should
+         * be released with [func`GLib`.strfreev].
          *
          * `lookup_flags` controls the behaviour of the lookup.
-         * @param path A pathname inside the resource
-         * @param lookup_flags A #GResourceLookupFlags
+         * @param path A path name inside the resource
+         * @param lookup_flags A [flags@Gio.ResourceLookupFlags]
          * @returns an array of constant strings
          */
         function resources_enumerate_children(path: string, lookup_flags: ResourceLookupFlags): string[];
@@ -5065,52 +5066,61 @@ declare module 'gi://Gio?version=2.0' {
          * globally registered resources and if found returns information about it.
          *
          * `lookup_flags` controls the behaviour of the lookup.
-         * @param path A pathname inside the resource
-         * @param lookup_flags A #GResourceLookupFlags
-         * @returns %TRUE if the file was found. %FALSE if there were errors
+         * @param path A path name inside the resource
+         * @param lookup_flags A [flags@Gio.ResourceLookupFlags]
+         * @returns `TRUE` if the file was found, `FALSE` if there were errors
          */
         function resources_get_info(path: string, lookup_flags: ResourceLookupFlags): [boolean, number, number];
         /**
+         * Returns whether the specified `path` in the set of
+         * globally registered resources has children.
+         * @param path A pathname
+         * @returns %TRUE if @patch has children
+         */
+        function resources_has_children(path: string): boolean;
+        /**
          * Looks for a file at the specified `path` in the set of
-         * globally registered resources and returns a #GBytes that
+         * globally registered resources and returns a [struct`GLib`.Bytes] that
          * lets you directly access the data in memory.
          *
          * The data is always followed by a zero byte, so you
          * can safely use the data as a C string. However, that byte
-         * is not included in the size of the GBytes.
+         * is not included in the size of the [struct`GLib`.Bytes].
          *
          * For uncompressed resource files this is a pointer directly into
-         * the resource bundle, which is typically in some readonly data section
+         * the resource bundle, which is typically in some read-only data section
          * in the program binary. For compressed files we allocate memory on
          * the heap and automatically uncompress the data.
          *
          * `lookup_flags` controls the behaviour of the lookup.
-         * @param path A pathname inside the resource
-         * @param lookup_flags A #GResourceLookupFlags
-         * @returns #GBytes or %NULL on error.     Free the returned object with g_bytes_unref()
+         * @param path A path name inside the resource
+         * @param lookup_flags A [flags@Gio.ResourceLookupFlags]
+         * @returns [struct@GLib.Bytes] or `NULL` on error
          */
         function resources_lookup_data(path: string, lookup_flags: ResourceLookupFlags): GLib.Bytes;
         /**
          * Looks for a file at the specified `path` in the set of
-         * globally registered resources and returns a #GInputStream
+         * globally registered resources and returns a [class`Gio`.InputStream]
          * that lets you read the data.
          *
          * `lookup_flags` controls the behaviour of the lookup.
-         * @param path A pathname inside the resource
-         * @param lookup_flags A #GResourceLookupFlags
-         * @returns #GInputStream or %NULL on error.     Free the returned object with g_object_unref()
+         * @param path A path name inside the resource
+         * @param lookup_flags A [flags@Gio.ResourceLookupFlags]
+         * @returns [class@Gio.InputStream] or `NULL` on error
          */
         function resources_open_stream(path: string, lookup_flags: ResourceLookupFlags): InputStream;
         /**
          * Registers the resource with the process-global set of resources.
+         *
          * Once a resource is registered the files in it can be accessed
-         * with the global resource lookup functions like g_resources_lookup_data().
-         * @param resource A #GResource
+         * with the global resource lookup functions like
+         * [func`Gio`.resources_lookup_data].
+         * @param resource A [struct@Gio.Resource]
          */
         function resources_register(resource: Resource): void;
         /**
          * Unregisters the resource from the process-global set of resources.
-         * @param resource A #GResource
+         * @param resource A [struct@Gio.Resource]
          */
         function resources_unregister(resource: Resource): void;
         /**
@@ -5234,7 +5244,7 @@ declare module 'gi://Gio?version=2.0' {
         /**
          * Gets a #GUnixMountEntry for a given mount path. If `time_read`
          * is set, it will be filled with a unix timestamp for checking
-         * if the mounts have changed since with g_unix_mounts_changed_since().
+         * if the mounts have changed since with g_unix_mount_entries_changed_since().
          *
          * If more mounts have the same mount path, the last matching mount
          * is returned.
@@ -5258,9 +5268,65 @@ declare module 'gi://Gio?version=2.0' {
          */
         function unix_mount_copy(mount_entry: UnixMountEntry): UnixMountEntry;
         /**
+         * Checks if the unix mounts have changed since a given unix time.
+         * @param time guint64 to contain a timestamp.
+         * @returns %TRUE if the mounts have changed since @time. Since 2.84
+         */
+        function unix_mount_entries_changed_since(time: number): boolean;
+        /**
+         * Gets a #GList of #GUnixMountEntry containing the unix mounts.
+         * If `time_read` is set, it will be filled with the mount
+         * timestamp, allowing for checking if the mounts have changed
+         * with g_unix_mount_entries_changed_since().
+         * @returns a #GList of the UNIX mounts.
+         */
+        function unix_mount_entries_get(): [UnixMountEntry[], number];
+        /**
+         * Gets an array of [struct`Gio`.UnixMountEntry]s containing the Unix mounts
+         * listed in `table_path`.
+         *
+         * This is a generalized version of g_unix_mount_entries_get(), mainly intended for
+         * internal testing use. Note that g_unix_mount_entries_get() may parse multiple
+         * hierarchical table files, so this function is not a direct superset of its
+         * functionality.
+         *
+         * If there is an error reading or parsing the file, `NULL` will be returned
+         * and both out parameters will be set to `0`.
+         * @param table_path path to the mounts table file (for example `/proc/self/mountinfo`)
+         * @returns mount   entries, or `NULL` if there was an error loading them
+         */
+        function unix_mount_entries_get_from_file(table_path: string): [UnixMountEntry[] | null, number];
+        /**
+         * Gets a #GUnixMountEntry for a given mount path. If `time_read`
+         * is set, it will be filled with a unix timestamp for checking
+         * if the mounts have changed since with g_unix_mount_entries_changed_since().
+         *
+         * If more mounts have the same mount path, the last matching mount
+         * is returned.
+         *
+         * This will return %NULL if there is no mount point at `mount_path`.
+         * @param mount_path path for a possible unix mount.
+         * @returns a #GUnixMountEntry.
+         */
+        function unix_mount_entry_at(mount_path: string): [UnixMountEntry | null, number];
+        /**
          * Gets a #GUnixMountEntry for a given file path. If `time_read`
          * is set, it will be filled with a unix timestamp for checking
-         * if the mounts have changed since with g_unix_mounts_changed_since().
+         * if the mounts have changed since with g_unix_mount_entries_changed_since().
+         *
+         * If more mounts have the same mount path, the last matching mount
+         * is returned.
+         *
+         * This will return %NULL if looking up the mount entry fails, if
+         * `file_path` doesn’t exist or there is an I/O error.
+         * @param file_path file path on some unix mount.
+         * @returns a #GUnixMountEntry.
+         */
+        function unix_mount_entry_for(file_path: string): [UnixMountEntry | null, number];
+        /**
+         * Gets a #GUnixMountEntry for a given file path. If `time_read`
+         * is set, it will be filled with a unix timestamp for checking
+         * if the mounts have changed since with g_unix_mount_entries_changed_since().
          *
          * If more mounts have the same mount path, the last matching mount
          * is returned.
@@ -5413,7 +5479,7 @@ declare module 'gi://Gio?version=2.0' {
          * Gets a #GList of #GUnixMountEntry containing the unix mounts.
          * If `time_read` is set, it will be filled with the mount
          * timestamp, allowing for checking if the mounts have changed
-         * with g_unix_mounts_changed_since().
+         * with g_unix_mount_entries_changed_since().
          * @returns a #GList of the UNIX mounts.
          */
         function unix_mounts_get(): [UnixMountEntry[], number];
@@ -5421,8 +5487,8 @@ declare module 'gi://Gio?version=2.0' {
          * Gets an array of [struct`Gio`.UnixMountEntry]s containing the Unix mounts
          * listed in `table_path`.
          *
-         * This is a generalized version of g_unix_mounts_get(), mainly intended for
-         * internal testing use. Note that g_unix_mounts_get() may parse multiple
+         * This is a generalized version of g_unix_mount_entries_get(), mainly intended for
+         * internal testing use. Note that g_unix_mount_entries_get() may parse multiple
          * hierarchical table files, so this function is not a direct superset of its
          * functionality.
          *
@@ -12815,9 +12881,9 @@ declare module 'gi://Gio?version=2.0' {
              * Request an asynchronous read of `count` bytes from the stream into the
              * buffer starting at `buffer`.
              *
-             * This is the asynchronous equivalent of g_input_stream_read_all().
+             * This is the asynchronous equivalent of [method`InputStream`.read_all].
              *
-             * Call g_input_stream_read_all_finish() to collect the result.
+             * Call [method`InputStream`.read_all_finish] to collect the result.
              *
              * Any outstanding I/O request with higher priority (lower numerical
              * value) will be executed before an outstanding request with lower
@@ -12833,7 +12899,7 @@ declare module 'gi://Gio?version=2.0' {
             ): Uint8Array;
             /**
              * Finishes an asynchronous stream read operation started with
-             * g_input_stream_read_all_async().
+             * [method`InputStream`.read_all_async].
              *
              * As a special exception to the normal conventions for functions that
              * use #GError, if this function returns %FALSE (and sets `error)` then
@@ -33331,9 +33397,9 @@ declare module 'gi://Gio?version=2.0' {
              * Request an asynchronous read of `count` bytes from the stream into the
              * buffer starting at `buffer`.
              *
-             * This is the asynchronous equivalent of g_input_stream_read_all().
+             * This is the asynchronous equivalent of [method`InputStream`.read_all].
              *
-             * Call g_input_stream_read_all_finish() to collect the result.
+             * Call [method`InputStream`.read_all_finish] to collect the result.
              *
              * Any outstanding I/O request with higher priority (lower numerical
              * value) will be executed before an outstanding request with lower
@@ -33349,7 +33415,7 @@ declare module 'gi://Gio?version=2.0' {
             ): Uint8Array;
             /**
              * Finishes an asynchronous stream read operation started with
-             * g_input_stream_read_all_async().
+             * [method`InputStream`.read_all_async].
              *
              * As a special exception to the normal conventions for functions that
              * use #GError, if this function returns %FALSE (and sets `error)` then
@@ -34588,9 +34654,9 @@ declare module 'gi://Gio?version=2.0' {
              * Request an asynchronous read of `count` bytes from the stream into the
              * buffer starting at `buffer`.
              *
-             * This is the asynchronous equivalent of g_input_stream_read_all().
+             * This is the asynchronous equivalent of [method`InputStream`.read_all].
              *
-             * Call g_input_stream_read_all_finish() to collect the result.
+             * Call [method`InputStream`.read_all_finish] to collect the result.
              *
              * Any outstanding I/O request with higher priority (lower numerical
              * value) will be executed before an outstanding request with lower
@@ -34606,7 +34672,7 @@ declare module 'gi://Gio?version=2.0' {
             ): Uint8Array;
             /**
              * Finishes an asynchronous stream read operation started with
-             * g_input_stream_read_all_async().
+             * [method`InputStream`.read_all_async].
              *
              * As a special exception to the normal conventions for functions that
              * use #GError, if this function returns %FALSE (and sets `error)` then
@@ -43016,6 +43082,70 @@ declare module 'gi://Gio?version=2.0' {
          *
          * ## Build system integration
          *
+         * ### Meson
+         *
+         * GSettings is natively supported by Meson's [GNOME module](https://mesonbuild.com/Gnome-module.html).
+         *
+         * You can install the schemas as any other data file:
+         *
+         * ```
+         * install_data(
+         *   'org.foo.MyApp.gschema.xml',
+         *   install_dir: get_option('datadir') / 'glib-2.0/schemas',
+         * )
+         * ```
+         *
+         * You can use `gnome.post_install()` function to compile the schemas on
+         * installation:
+         *
+         * ```
+         * gnome = import('gnome')
+         * gnome.post_install(
+         *   glib_compile_schemas: true,
+         * )
+         * ```
+         *
+         * If an enumerated type defined in a C header file is to be used in a GSettings
+         * schema, it can either be defined manually using an `<enum>` element in the
+         * schema XML, or it can be extracted automatically from the C header. This
+         * approach is preferred, as it ensures the two representations are always
+         * synchronised. To do so, you will need to use the `gnome.mkenums()` function
+         * with the following templates:
+         *
+         * ```
+         * schemas_enums = gnome.mkenums('org.foo.MyApp.enums.xml',
+         *   comments: '<!-- `comment@` -->',
+         *   fhead: '<schemalist>',
+         *   vhead: '  <`type@` id="org.foo.MyApp.`EnumName@`">',
+         *   vprod: '    <value nick="`valuenick@`" value="`valuenum@`"/>',
+         *   vtail: '  </`type@`>',
+         *   ftail: '</schemalist>',
+         *   sources: enum_sources,
+         *   install_header: true,
+         *   install_dir: get_option('datadir') / 'glib-2.0/schemas',
+         * )
+         * ```
+         *
+         * It is recommended to validate your schemas as part of the test suite for
+         * your application:
+         *
+         * ```
+         * test('validate-schema',
+         *   find_program('glib-compile-schemas'),
+         *   args: ['--strict', '--dry-run', meson.current_source_dir()],
+         * )
+         * ```
+         *
+         * If your application allows running uninstalled, you should also use the
+         * `gnome.compile_schemas()` function to compile the schemas in the current
+         * build directory:
+         *
+         * ```
+         * gnome.compile_schemas()
+         * ```
+         *
+         * ### Autotools
+         *
          * GSettings comes with autotools integration to simplify compiling and
          * installing schemas. To add GSettings support to an application, add the
          * following to your `configure.ac`:
@@ -43031,25 +43161,6 @@ declare module 'gi://Gio?version=2.0' {
          *
          * `GSETTINGS_RULES@`
          * ```
-         *
-         * No changes are needed to the build system to mark a schema XML file for
-         * translation. Assuming it sets the `gettext-domain` attribute, a schema may
-         * be marked for translation by adding it to `POTFILES.in`, assuming gettext
-         * 0.19 is in use (the preferred method for translation):
-         * ```
-         * data/org.foo.MyApp.gschema.xml
-         * ```
-         *
-         * Alternatively, if intltool 0.50.1 is in use:
-         * ```
-         * [type: gettext/gsettings]data/org.foo.MyApp.gschema.xml
-         * ```
-         *
-         * GSettings will use gettext to look up translations for the `<summary>` and
-         * `<description>` elements, and also any `<default>` elements which have a
-         * `l10n` attribute set. Translations must not be included in the `.gschema.xml`
-         * file by the build system, for example by using intltool XML rules with a
-         * `.gschema.xml.in` template.
          *
          * If an enumerated type defined in a C header file is to be used in a GSettings
          * schema, it can either be defined manually using an `<enum>` element in the
@@ -43067,6 +43178,28 @@ declare module 'gi://Gio?version=2.0' {
          * automatically included in the schema compilation, install and uninstall
          * rules. It should not be committed to version control or included in
          * `EXTRA_DIST`.
+         *
+         * ## Localization
+         *
+         * No changes are needed to the build system to mark a schema XML file for
+         * translation. Assuming it sets the `gettext-domain` attribute, a schema may
+         * be marked for translation by adding it to `POTFILES.in`, assuming gettext
+         * 0.19 or newer is in use (the preferred method for translation):
+         * ```
+         * data/org.foo.MyApp.gschema.xml
+         * ```
+         *
+         * Alternatively, if intltool 0.50.1 is in use:
+         * ```
+         * [type: gettext/gsettings]data/org.foo.MyApp.gschema.xml
+         * ```
+         *
+         * GSettings will use gettext to look up translations for the `<summary>` and
+         * `<description>` elements, and also any `<default>` elements which have a
+         * `l10n` attribute set.
+         *
+         * Translations **must not** be included in the `.gschema.xml` file by the build
+         * system, for example by using a rule to generate the XML file from a template.
          */
         class Settings extends GObject.Object {
             static $gtype: GObject.GType<Settings>;
@@ -57711,9 +57844,9 @@ declare module 'gi://Gio?version=2.0' {
              * Request an asynchronous read of `count` bytes from the stream into the
              * buffer starting at `buffer`.
              *
-             * This is the asynchronous equivalent of g_input_stream_read_all().
+             * This is the asynchronous equivalent of [method`InputStream`.read_all].
              *
-             * Call g_input_stream_read_all_finish() to collect the result.
+             * Call [method`InputStream`.read_all_finish] to collect the result.
              *
              * Any outstanding I/O request with higher priority (lower numerical
              * value) will be executed before an outstanding request with lower
@@ -57729,7 +57862,7 @@ declare module 'gi://Gio?version=2.0' {
             ): Uint8Array;
             /**
              * Finishes an asynchronous stream read operation started with
-             * g_input_stream_read_all_async().
+             * [method`InputStream`.read_all_async].
              *
              * As a special exception to the normal conventions for functions that
              * use #GError, if this function returns %FALSE (and sets `error)` then
@@ -63395,16 +63528,16 @@ declare module 'gi://Gio?version=2.0' {
             // Static methods
 
             /**
-             * Loads a binary resource bundle and creates a #GResource representation of it, allowing
-             * you to query it for data.
+             * Loads a binary resource bundle and creates a [struct`Gio`.Resource]
+             * representation of it, allowing you to query it for data.
              *
              * If you want to use this resource in the global resource namespace you need
-             * to register it with g_resources_register().
+             * to register it with [func`Gio`.resources_register].
              *
              * If `filename` is empty or the data in it is corrupt,
              * %G_RESOURCE_ERROR_INTERNAL will be returned. If `filename` doesn’t exist, or
-             * there is an error in reading it, an error from g_mapped_file_new() will be
-             * returned.
+             * there is an error in reading it, an error from [ctor`GLib`.MappedFile.new]
+             * will be returned.
              * @param filename the path of a filename to load, in the GLib filename encoding
              */
             static load(filename: string): Resource;
@@ -63413,8 +63546,10 @@ declare module 'gi://Gio?version=2.0' {
 
             /**
              * Registers the resource with the process-global set of resources.
+             *
              * Once a resource is registered the files in it can be accessed
-             * with the global resource lookup functions like g_resources_lookup_data().
+             * with the global resource lookup functions like
+             * [func`Gio`.resources_lookup_data].
              */
             _register(): void;
             /**
@@ -63423,15 +63558,16 @@ declare module 'gi://Gio?version=2.0' {
             _unregister(): void;
             /**
              * Returns all the names of children at the specified `path` in the resource.
-             * The return result is a %NULL terminated list of strings which should
-             * be released with g_strfreev().
              *
-             * If `path` is invalid or does not exist in the #GResource,
+             * The return result is a `NULL` terminated list of strings which should
+             * be released with [func`GLib`.strfreev].
+             *
+             * If `path` is invalid or does not exist in the [struct`Gio`.Resource],
              * %G_RESOURCE_ERROR_NOT_FOUND will be returned.
              *
              * `lookup_flags` controls the behaviour of the lookup.
-             * @param path A pathname inside the resource
-             * @param lookup_flags A #GResourceLookupFlags
+             * @param path A path name inside the resource
+             * @param lookup_flags A [flags@Gio.ResourceLookupFlags]
              * @returns an array of constant strings
              */
             enumerate_children(path: string, lookup_flags: ResourceLookupFlags): string[];
@@ -63440,51 +63576,70 @@ declare module 'gi://Gio?version=2.0' {
              * if found returns information about it.
              *
              * `lookup_flags` controls the behaviour of the lookup.
-             * @param path A pathname inside the resource
-             * @param lookup_flags A #GResourceLookupFlags
-             * @returns %TRUE if the file was found. %FALSE if there were errors
+             *
+             * The only error this can return is %G_RESOURCE_ERROR_NOT_FOUND, if `path` was
+             * not found in `resource`.
+             * @param path A path name inside the resource
+             * @param lookup_flags A [flags@Gio.ResourceLookupFlags]
+             * @returns `TRUE` if the file was found, `FALSE` if there were errors
              */
             get_info(path: string, lookup_flags: ResourceLookupFlags): [boolean, number, number];
             /**
+             * Returns whether the specified `path` in the resource
+             * has children.
+             * @param path A pathname inside the resource
+             * @returns %TRUE if @path has children
+             */
+            has_children(path: string): boolean;
+            /**
              * Looks for a file at the specified `path` in the resource and
-             * returns a #GBytes that lets you directly access the data in
+             * returns a [struct`GLib`.Bytes] that lets you directly access the data in
              * memory.
              *
              * The data is always followed by a zero byte, so you
              * can safely use the data as a C string. However, that byte
-             * is not included in the size of the GBytes.
+             * is not included in the size of the [struct`GLib`.Bytes].
              *
              * For uncompressed resource files this is a pointer directly into
-             * the resource bundle, which is typically in some readonly data section
-             * in the program binary. For compressed files we allocate memory on
-             * the heap and automatically uncompress the data.
+             * the resource bundle, which is typically in some read-only data section
+             * in the program binary. For compressed files, memory is allocated on
+             * the heap and the data is automatically uncompressed.
              *
              * `lookup_flags` controls the behaviour of the lookup.
-             * @param path A pathname inside the resource
-             * @param lookup_flags A #GResourceLookupFlags
-             * @returns #GBytes or %NULL on error.     Free the returned object with g_bytes_unref()
+             *
+             * This can return error %G_RESOURCE_ERROR_NOT_FOUND if `path` was not found in
+             * `resource,` or %G_RESOURCE_ERROR_INTERNAL if decompression of a compressed
+             * resource failed.
+             * @param path A path name inside the resource
+             * @param lookup_flags A [flags@Gio.ResourceLookupFlags]
+             * @returns [struct@GLib.Bytes] or `NULL` on error
              */
             lookup_data(path: string, lookup_flags: ResourceLookupFlags): GLib.Bytes;
             /**
              * Looks for a file at the specified `path` in the resource and
-             * returns a #GInputStream that lets you read the data.
+             * returns a [class`Gio`.InputStream] that lets you read the data.
              *
              * `lookup_flags` controls the behaviour of the lookup.
-             * @param path A pathname inside the resource
-             * @param lookup_flags A #GResourceLookupFlags
-             * @returns #GInputStream or %NULL on error.     Free the returned object with g_object_unref()
+             *
+             * The only error this can return is %G_RESOURCE_ERROR_NOT_FOUND, if `path` was
+             * not found in `resource`.
+             * @param path A path name inside the resource
+             * @param lookup_flags A [flags@Gio.ResourceLookupFlags]
+             * @returns [class@Gio.InputStream] or `NULL` on error
              */
             open_stream(path: string, lookup_flags: ResourceLookupFlags): InputStream;
             /**
-             * Atomically increments the reference count of `resource` by one. This
-             * function is MT-safe and may be called from any thread.
-             * @returns The passed in #GResource
+             * Atomically increments the reference count of `resource` by one.
+             *
+             * This function is threadsafe and may be called from any thread.
+             * @returns The passed in [struct@Gio.Resource]
              */
             ref(): Resource;
             /**
-             * Atomically decrements the reference count of `resource` by one. If the
-             * reference count drops to 0, all memory allocated by the resource is
-             * released. This function is MT-safe and may be called from any
+             * Atomically decrements the reference count of `resource` by one.
+             *
+             * If the reference count drops to 0, all memory allocated by the resource is
+             * released. This function is threadsafe and may be called from any
              * thread.
              */
             unref(): void;
@@ -64028,7 +64183,7 @@ declare module 'gi://Gio?version=2.0' {
         }
 
         /**
-         * #GStaticResource is an opaque data structure and can only be accessed
+         * `GStaticResource` is an opaque data structure and can only be accessed
          * using the following functions.
          */
         class StaticResource {
@@ -64041,28 +64196,30 @@ declare module 'gi://Gio?version=2.0' {
             // Methods
 
             /**
-             * Finalized a GResource initialized by g_static_resource_init().
+             * Finalizes a [struct`Gio`.Resource] initialized by
+             * [method`Gio`.StaticResource.init].
              *
              * This is normally used by code generated by
-             * [glib-compile-resources][glib-compile-resources]
+             * [`glib-compile-resources`](glib-compile-resources.html)
              * and is not typically used by other code.
              */
             fini(): void;
             /**
-             * Gets the GResource that was registered by a call to g_static_resource_init().
+             * Gets the [struct`Gio`.Resource] that was registered by a call to
+             * [method`Gio`.StaticResource.init].
              *
              * This is normally used by code generated by
-             * [glib-compile-resources][glib-compile-resources]
+             * [`glib-compile-resources`](glib-compile-resources.html)
              * and is not typically used by other code.
-             * @returns a #GResource
+             * @returns a [struct@Gio.Resource]
              */
             get_resource(): Resource;
             /**
-             * Initializes a GResource from static data using a
-             * GStaticResource.
+             * Initializes a [struct`Gio`.Resource] from static data using a
+             * [struct`Gio`.StaticResource].
              *
              * This is normally used by code generated by
-             * [glib-compile-resources][glib-compile-resources]
+             * [`glib-compile-resources`](glib-compile-resources.html)
              * and is not typically used by other code.
              */
             init(): void;
@@ -64202,6 +64359,127 @@ declare module 'gi://Gio?version=2.0' {
             // Constructors
 
             _init(...args: any[]): void;
+
+            // Static methods
+
+            /**
+             * Gets a #GUnixMountEntry for a given mount path. If `time_read`
+             * is set, it will be filled with a unix timestamp for checking
+             * if the mounts have changed since with g_unix_mount_entries_changed_since().
+             *
+             * If more mounts have the same mount path, the last matching mount
+             * is returned.
+             *
+             * This will return %NULL if there is no mount point at `mount_path`.
+             * @param mount_path path for a possible unix mount.
+             */
+            static at(mount_path: string): [UnixMountEntry | null, number];
+            /**
+             * Gets a #GUnixMountEntry for a given file path. If `time_read`
+             * is set, it will be filled with a unix timestamp for checking
+             * if the mounts have changed since with g_unix_mount_entries_changed_since().
+             *
+             * If more mounts have the same mount path, the last matching mount
+             * is returned.
+             *
+             * This will return %NULL if looking up the mount entry fails, if
+             * `file_path` doesn’t exist or there is an I/O error.
+             * @param file_path file path on some unix mount.
+             */
+            static ['for'](file_path: string): [UnixMountEntry | null, number];
+
+            // Methods
+
+            /**
+             * Compares two unix mounts.
+             * @param mount2 second #GUnixMountEntry to compare.
+             * @returns 1, 0 or -1 if @mount1 is greater than, equal to, or less than @mount2, respectively.
+             */
+            compare(mount2: UnixMountEntry): number;
+            /**
+             * Makes a copy of `mount_entry`.
+             * @returns a new #GUnixMountEntry
+             */
+            copy(): UnixMountEntry;
+            /**
+             * Frees a unix mount.
+             */
+            free(): void;
+            /**
+             * Gets the device path for a unix mount.
+             * @returns a string containing the device path.
+             */
+            get_device_path(): string;
+            /**
+             * Gets the filesystem type for the unix mount.
+             * @returns a string containing the file system type.
+             */
+            get_fs_type(): string;
+            /**
+             * Gets the mount path for a unix mount.
+             * @returns the mount path for @mount_entry.
+             */
+            get_mount_path(): string;
+            /**
+             * Gets a comma-separated list of mount options for the unix mount. For example,
+             * `rw,relatime,seclabel,data=ordered`.
+             *
+             * This is similar to g_unix_mount_point_get_options(), but it takes
+             * a #GUnixMountEntry as an argument.
+             * @returns a string containing the options, or %NULL if not available.
+             */
+            get_options(): string | null;
+            /**
+             * Gets the root of the mount within the filesystem. This is useful e.g. for
+             * mounts created by bind operation, or btrfs subvolumes.
+             *
+             * For example, the root path is equal to "/" for mount created by
+             * "mount /dev/sda1 /mnt/foo" and "/bar" for
+             * "mount --bind /mnt/foo/bar /mnt/bar".
+             * @returns a string containing the root, or %NULL if not supported.
+             */
+            get_root_path(): string | null;
+            /**
+             * Guesses whether a Unix mount can be ejected.
+             * @returns %TRUE if @mount_entry is deemed to be ejectable.
+             */
+            guess_can_eject(): boolean;
+            /**
+             * Guesses the icon of a Unix mount.
+             * @returns a #GIcon
+             */
+            guess_icon(): Icon;
+            /**
+             * Guesses the name of a Unix mount.
+             * The result is a translated string.
+             * @returns A newly allocated string that must     be freed with g_free()
+             */
+            guess_name(): string;
+            /**
+             * Guesses whether a Unix mount should be displayed in the UI.
+             * @returns %TRUE if @mount_entry is deemed to be displayable.
+             */
+            guess_should_display(): boolean;
+            /**
+             * Guesses the symbolic icon of a Unix mount.
+             * @returns a #GIcon
+             */
+            guess_symbolic_icon(): Icon;
+            /**
+             * Checks if a unix mount is mounted read only.
+             * @returns %TRUE if @mount_entry is read only.
+             */
+            is_readonly(): boolean;
+            /**
+             * Checks if a Unix mount is a system mount. This is the Boolean OR of
+             * g_unix_is_system_fs_type(), g_unix_is_system_device_path() and
+             * g_unix_is_mount_path_system_internal() on `mount_entry’`s properties.
+             *
+             * The definition of what a ‘system’ mount entry is may change over time as new
+             * file system types and device paths are ignored.
+             * @returns %TRUE if the unix mount is for a system path.
+             */
+            is_system_internal(): boolean;
         }
 
         type UnixMountMonitorClass = typeof UnixMountMonitor;
@@ -69667,8 +69945,11 @@ declare module 'gi://Gio?version=2.0' {
              */
             query_default_handler_finish(result: AsyncResult): AppInfo;
             /**
-             * Utility function to check if a particular file exists. This is
-             * implemented using g_file_query_info() and as such does blocking I/O.
+             * Utility function to check if a particular file exists.
+             *
+             * The fallback implementation of this API is using [method`Gio`.File.query_info]
+             * and therefore may do blocking I/O. To asynchronously query the existence
+             * of a file, use [method`Gio`.File.query_info_async].
              *
              * Note that in many cases it is [racy to first check for file existence](https://en.wikipedia.org/wiki/Time_of_check_to_time_of_use)
              * and then execute something based on the outcome of that, because the
@@ -70462,7 +70743,7 @@ declare module 'gi://Gio?version=2.0' {
              * Sends `file` to the "Trashcan", if possible. This is similar to
              * deleting it, but the user can recover it before emptying the trashcan.
              * Trashing is disabled for system mounts by default (see
-             * g_unix_mount_is_system_internal()), so this call can return the
+             * g_unix_mount_entry_is_system_internal()), so this call can return the
              * %G_IO_ERROR_NOT_SUPPORTED error. Since GLib 2.66, the `x-gvfs-notrash` unix
              * mount option can be used to disable g_file_trash() support for particular
              * mounts, the %G_IO_ERROR_NOT_SUPPORTED error will be returned in that case.
@@ -71494,6 +71775,35 @@ declare module 'gi://Gio?version=2.0' {
              */
             vfunc_prefix_matches(file: File): boolean;
             /**
+             * Utility function to check if a particular file exists.
+             *
+             * The fallback implementation of this API is using [method`Gio`.File.query_info]
+             * and therefore may do blocking I/O. To asynchronously query the existence
+             * of a file, use [method`Gio`.File.query_info_async].
+             *
+             * Note that in many cases it is [racy to first check for file existence](https://en.wikipedia.org/wiki/Time_of_check_to_time_of_use)
+             * and then execute something based on the outcome of that, because the
+             * file might have been created or removed in between the operations. The
+             * general approach to handling that is to not check, but just do the
+             * operation and handle the errors as they come.
+             *
+             * As an example of race-free checking, take the case of reading a file,
+             * and if it doesn't exist, creating it. There are two racy versions: read
+             * it, and on error create it; and: check if it exists, if not create it.
+             * These can both result in two processes creating the file (with perhaps
+             * a partially written file as the result). The correct approach is to
+             * always try to create the file with g_file_create() which will either
+             * atomically create the file or fail with a %G_IO_ERROR_EXISTS error.
+             *
+             * However, in many cases an existence check is useful in a user interface,
+             * for instance to make a menu item sensitive/insensitive, so that you don't
+             * have to fool users that something is possible and then just show an error
+             * dialog. If you do this, you should make sure to also handle the errors
+             * that can happen due to races when you execute the operation.
+             * @param cancellable optional #GCancellable object,   %NULL to ignore
+             */
+            vfunc_query_exists(cancellable?: Cancellable | null): boolean;
+            /**
              * Similar to g_file_query_info(), but obtains information
              * about the filesystem the `file` is on, rather than the file itself.
              * For instance the amount of space available and the type of
@@ -72010,7 +72320,7 @@ declare module 'gi://Gio?version=2.0' {
              * Sends `file` to the "Trashcan", if possible. This is similar to
              * deleting it, but the user can recover it before emptying the trashcan.
              * Trashing is disabled for system mounts by default (see
-             * g_unix_mount_is_system_internal()), so this call can return the
+             * g_unix_mount_entry_is_system_internal()), so this call can return the
              * %G_IO_ERROR_NOT_SUPPORTED error. Since GLib 2.66, the `x-gvfs-notrash` unix
              * mount option can be used to disable g_file_trash() support for particular
              * mounts, the %G_IO_ERROR_NOT_SUPPORTED error will be returned in that case.

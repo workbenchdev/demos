@@ -4336,7 +4336,7 @@ declare module 'gi://GtkSource?version=5' {
              * function.
              * @param io_priority the I/O priority of the request. E.g. %G_PRIORITY_LOW,   %G_PRIORITY_DEFAULT or %G_PRIORITY_HIGH.
              * @param cancellable optional #GCancellable object, %NULL to ignore.
-             * @param progress_callback function to call back with   progress information, or %NULL if progress information is not needed.
+             * @param progress_callback function to call back with progress information, or %NULL if progress   information is not needed.
              * @param progress_callback_notify function to call on   @progress_callback_data when the @progress_callback is no longer needed, or   %NULL.
              * @param callback a #GAsyncReadyCallback to call when the request is   satisfied.
              */
@@ -4476,7 +4476,7 @@ declare module 'gi://GtkSource?version=5' {
              * See the [iface`Gio`.AsyncResult] documentation to know how to use this function.
              * @param io_priority the I/O priority of the request. E.g. %G_PRIORITY_LOW,   %G_PRIORITY_DEFAULT or %G_PRIORITY_HIGH.
              * @param cancellable optional #GCancellable object, %NULL to ignore.
-             * @param progress_callback function to call back with   progress information, or %NULL if progress information is not needed.
+             * @param progress_callback function to call back with progress information, or %NULL if progress   information is not needed.
              * @param progress_callback_notify function to call on   @progress_callback_data when the @progress_callback is no longer needed, or   %NULL.
              * @param callback a #GAsyncReadyCallback to call when the request is   satisfied.
              */
@@ -15288,6 +15288,10 @@ declare module 'gi://GtkSource?version=5' {
              * style scheme files.
              *
              * If `path` is %NULL, the search path is reset to default.
+             *
+             * Since GtkSourceView 5.16 this function will allow you to provide
+             * paths in the form of "resource:///" URIs to embedded `GResource`s.
+             * They must contain the path of a directory within the `GResource`.
              * @param path a %NULL-terminated array of   strings or %NULL.
              */
             set_search_path(path?: string[] | null): void;
@@ -20611,7 +20615,7 @@ declare module 'gi://GtkSource?version=5' {
              * is after having just inserted a newline (\n) character but can be other
              * situations such as a manually requested indentation or reformatting.
              *
-             * See [iface`Indenter`.is_trigger] for how to trigger indentation on
+             * See [vfunc`GtkSource`.Indenter.is_trigger] for how to trigger indentation on
              * various characters inserted into the buffer.
              *
              * The implementor of this function is expected to keep `iter` valid across
@@ -20653,7 +20657,7 @@ declare module 'gi://GtkSource?version=5' {
              * is after having just inserted a newline (\n) character but can be other
              * situations such as a manually requested indentation or reformatting.
              *
-             * See [iface`Indenter`.is_trigger] for how to trigger indentation on
+             * See [vfunc`GtkSource`.Indenter.is_trigger] for how to trigger indentation on
              * various characters inserted into the buffer.
              *
              * The implementor of this function is expected to keep `iter` valid across

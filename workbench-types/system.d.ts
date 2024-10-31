@@ -42,7 +42,7 @@ declare module 'system' {
      * @param o Any Object
      * @returns A hexadecimal string (e.g. `0xb4f170f0`)
      */
-    export function addressOf(o: any): string;
+    export function addressOf(o: object): string;
 
     /**
      * Return the memory address of any GObject as a string.
@@ -148,7 +148,7 @@ declare module 'system' {
      * returns a non-zero error code, then `make` aborts the build.
      * @param code An exit code
      */
-    export function exit(code: number): void;
+    export function exit(code: number): never;
 
     /**
      * The System module provides common low-level facilities such as access to

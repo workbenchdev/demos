@@ -69,34 +69,19 @@ declare module 'gi://Dex?version=1' {
          * An asynchronous `pread()` wrapper.
          * @param aio_context
          * @param fd
-         * @param buffer
-         * @param count
          * @param offset
          * @returns a future that will resolve when the   read completes or rejects with error.
          */
-        function aio_read(
-            aio_context: AioContext,
-            fd: number,
-            buffer: any | null,
-            count: number,
-            offset: number,
-        ): Future;
+        function aio_read(aio_context: AioContext, fd: number, offset: number): [Future, Uint8Array];
         /**
          * An asynchronous `pwrite()` wrapper.
          * @param aio_context
          * @param fd
          * @param buffer
-         * @param count
          * @param offset
          * @returns a future that will resolve when the   write completes or rejects with error.
          */
-        function aio_write(
-            aio_context: AioContext,
-            fd: number,
-            buffer: any | null,
-            count: number,
-            offset: number,
-        ): Future;
+        function aio_write(aio_context: AioContext, fd: number, buffer: Uint8Array | string, offset: number): Future;
         /**
          * Wrapper for g_bus_get().
          * @param bus_type
@@ -118,12 +103,12 @@ declare module 'gi://Dex?version=1' {
          */
         function dbus_connection_call(
             connection: Gio.DBusConnection,
-            bus_name: string,
+            bus_name: string | null,
             object_path: string,
             interface_name: string,
             method_name: string,
-            parameters: GLib.Variant,
-            reply_type: GLib.VariantType,
+            parameters: GLib.Variant | null,
+            reply_type: GLib.VariantType | null,
             flags: Gio.DBusCallFlags,
             timeout_msec: number,
         ): Future;
@@ -143,12 +128,12 @@ declare module 'gi://Dex?version=1' {
          */
         function dbus_connection_call_with_unix_fd_list(
             connection: Gio.DBusConnection,
-            bus_name: string,
+            bus_name: string | null,
             object_path: string,
             interface_name: string,
             method_name: string,
-            parameters: GLib.Variant,
-            reply_type: GLib.VariantType,
+            parameters: GLib.Variant | null,
+            reply_type: GLib.VariantType | null,
             flags: Gio.DBusCallFlags,
             timeout_msec: number,
             fd_list?: Gio.UnixFDList | null,
@@ -224,7 +209,7 @@ declare module 'gi://Dex?version=1' {
         function file_read(file: Gio.File, io_priority: number): Future;
         function file_replace(
             file: Gio.File,
-            etag: string,
+            etag: string | null,
             make_backup: boolean,
             flags: Gio.FileCreateFlags,
             io_priority: number,
@@ -233,12 +218,7 @@ declare module 'gi://Dex?version=1' {
         function get_page_size(): number;
         function init(): void;
         function input_stream_close(self: Gio.InputStream, io_priority: number): Future;
-        function input_stream_read(
-            self: Gio.InputStream,
-            buffer: any | null,
-            count: number,
-            io_priority: number,
-        ): Future;
+        function input_stream_read(self: Gio.InputStream, io_priority: number): [Future, Uint8Array];
         function input_stream_read_bytes(self: Gio.InputStream, count: number, io_priority: number): Future;
         function input_stream_skip(self: Gio.InputStream, count: number, io_priority: number): Future;
         function io_stream_close(io_stream: Gio.IOStream, io_priority: number): Future;
@@ -249,12 +229,7 @@ declare module 'gi://Dex?version=1' {
             flags: Gio.OutputStreamSpliceFlags,
             io_priority: number,
         ): Future;
-        function output_stream_write(
-            self: Gio.OutputStream,
-            buffer: any | null,
-            count: number,
-            io_priority: number,
-        ): Future;
+        function output_stream_write(self: Gio.OutputStream, buffer: Uint8Array | string, io_priority: number): Future;
         function output_stream_write_bytes(
             self: Gio.OutputStream,
             bytes: GLib.Bytes | Uint8Array,
@@ -320,7 +295,7 @@ declare module 'gi://Dex?version=1' {
             /**
              * Gets the cancellable for the async pair.
              *
-             * If the DexAsyncPair is discarded by it's callers, then it will automatically
+             * If the DexAsyncPair is discarded by its callers, then it will automatically
              * be cancelled using g_cancellable_cancel().
              * @returns a #GCancellable
              */
@@ -1140,7 +1115,7 @@ declare module 'gi://Dex?version=1' {
             /**
              * Awaits on `future` and returns the result as an double.
              *
-             * The resolved value must be of type %G_TYPE_INT or `error` is set.
+             * The resolved value must be of type %G_TYPE_DOUBLE or `error` is set.
              * @returns an double, or 0 in case of failure and @error is set.
              */
             await_double(): number;
@@ -1152,6 +1127,13 @@ declare module 'gi://Dex?version=1' {
              */
             await_enum(): number;
             /**
+             * Awaits on `future` and returns the resultint file-descriptor.
+             *
+             * The resolved value must be of type %DEX_TYPE_FD or `error` is set.
+             * @returns a valid file descriptor or -1. you may get -1 without   error being set if there was no rejected future.
+             */
+            await_fd(): number;
+            /**
              * Awaits on `future` and returns the flags result.
              *
              * If the result is not a %G_TYPE_FLAGS, `error` is set.
@@ -1161,7 +1143,7 @@ declare module 'gi://Dex?version=1' {
             /**
              * Awaits on `future` and returns the result as an float.
              *
-             * The resolved value must be of type %G_TYPE_INT or `error` is set.
+             * The resolved value must be of type %G_TYPE_FLOAT or `error` is set.
              * @returns an float, or 0 in case of failure and @error is set.
              */
             await_float(): number;
@@ -1200,14 +1182,14 @@ declare module 'gi://Dex?version=1' {
             /**
              * Awaits on `future` and returns the result as an uint.
              *
-             * The resolved value must be of type %G_TYPE_INT or `error` is set.
+             * The resolved value must be of type %G_TYPE_UINT or `error` is set.
              * @returns an uint, or 0 in case of failure and @error is set.
              */
             await_uint(): number;
             /**
              * Awaits on `future` and returns the result as an uint64.
              *
-             * The resolved value must be of type %G_TYPE_INT64 or `error` is set.
+             * The resolved value must be of type %G_TYPE_UINT64 or `error` is set.
              * @returns an uint64, or 0 in case of failure and @error is set.
              */
             await_uint64(): number;
@@ -1377,17 +1359,18 @@ declare module 'gi://Dex?version=1' {
             resolve(value: GObject.Value | any): void;
             resolve_boolean(value: boolean): void;
             resolve_double(value: number): void;
+            resolve_fd(fd: number): void;
             resolve_float(value: number): void;
             resolve_int(value: number): void;
             resolve_int64(value: number): void;
             resolve_long(value: number): void;
-            resolve_object(object?: any | null): void;
+            resolve_object(object?: GObject.Object | null): void;
             resolve_string(value: string): void;
             resolve_uint(value: number): void;
             resolve_uint64(value: number): void;
             resolve_ulong(value: number): void;
             /**
-             * If `variant` is floating, it's reference is consumed.
+             * If `variant` is floating, its reference is consumed.
              * @param variant a #GVariant
              */
             resolve_variant(variant?: GLib.Variant | null): void;
@@ -1453,14 +1436,14 @@ declare module 'gi://Dex?version=1' {
             /**
              * Request `scheduler` to spawn a #DexFiber.
              *
-             * The fiber will have it's own stack and cooperatively schedules among other
+             * The fiber will have its own stack and cooperatively schedules among other
              * fibers sharing the schaeduler.
              *
              * If `stack_size` is 0, it will set to a sensible default. Otherwise, it is
              * rounded up to the nearest page size.
              * @param stack_size stack size in bytes or 0
              * @param func a #DexFiberFunc
-             * @returns a #DexFuture that will resolve or reject when   @func completes (or it's resulting #DexFuture completes).
+             * @returns a #DexFuture that will resolve or reject when   @func completes (or its resulting #DexFuture completes).
              */
             spawn(stack_size: number, func: FiberFunc): Future;
         }

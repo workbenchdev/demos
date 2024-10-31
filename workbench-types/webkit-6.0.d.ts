@@ -7717,6 +7717,8 @@ declare module 'gi://WebKit?version=6.0' {
                 serifFontFamily: string;
                 user_agent: string;
                 userAgent: string;
+                webrtc_udp_ports_range: string;
+                webrtcUdpPortsRange: string;
                 zoom_text_only: boolean;
                 zoomTextOnly: boolean;
             }
@@ -8538,6 +8540,28 @@ declare module 'gi://WebKit?version=6.0' {
             get userAgent(): string;
             set userAgent(val: string);
             /**
+             * Allow customization of the WebRTC UDP ports range.
+             *
+             * In some constrained environments where a firewall blocks UDP network traffic excepted on a
+             * specific port range, this settings can be used to give hints to the WebRTC backend regarding
+             * which ports to allocate. The format is min-port:max-port, so for instance 20000:30000. The
+             * default empty string value means the OS will use no hints from the WebRTC backend. Using 0
+             * for one of the values is allowed and means the value is unspecified.
+             */
+            get webrtc_udp_ports_range(): string;
+            set webrtc_udp_ports_range(val: string);
+            /**
+             * Allow customization of the WebRTC UDP ports range.
+             *
+             * In some constrained environments where a firewall blocks UDP network traffic excepted on a
+             * specific port range, this settings can be used to give hints to the WebRTC backend regarding
+             * which ports to allocate. The format is min-port:max-port, so for instance 20000:30000. The
+             * default empty string value means the OS will use no hints from the WebRTC backend. Using 0
+             * for one of the values is allowed and means the value is unspecified.
+             */
+            get webrtcUdpPortsRange(): string;
+            set webrtcUdpPortsRange(val: string);
+            /**
              * Whether #WebKitWebView:zoom-level affects only the
              * text of the page or all the contents. Other contents containing text
              * like form controls will be also affected by zoom factor when
@@ -8914,6 +8938,11 @@ declare module 'gi://WebKit?version=6.0' {
              */
             get_user_agent(): string;
             /**
+             * Get the [property`Settings:`webrtc-udp-ports-range] property.
+             * @returns The WebRTC UDP ports range, or %NULL if un-set.
+             */
+            get_webrtc_udp_ports_range(): string;
+            /**
              * Get the #WebKitSettings:zoom-text-only property.
              * @returns %TRUE If zoom level of the view should only affect the text    or %FALSE if all view contents should be scaled.
              */
@@ -9219,6 +9248,11 @@ declare module 'gi://WebKit?version=6.0' {
                 application_name?: string | null,
                 application_version?: string | null,
             ): void;
+            /**
+             * Set the [property`Settings:`webrtc-udp-ports-range] property.
+             * @param udp_port_range Value to be set
+             */
+            set_webrtc_udp_ports_range(udp_port_range: string): void;
             /**
              * Set the #WebKitSettings:zoom-text-only property.
              * @param zoom_text_only Value to be set

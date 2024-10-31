@@ -2679,6 +2679,34 @@ declare module 'gi://GLib?version=2.0' {
              * Nag Mundari. Since 2.74
              */
             NAG_MUNDARI,
+            /**
+             * Todhri. Since: 2.84
+             */
+            TODHRI,
+            /**
+             * Garay. Since: 2.84
+             */
+            GARAY,
+            /**
+             * Tulu-Tigalari. Since: 2.84
+             */
+            TULU_TIGALARI,
+            /**
+             * Sunuwar. Since: 2.84
+             */
+            SUNUWAR,
+            /**
+             * Gurung Khema. Since: 2.84
+             */
+            GURUNG_KHEMA,
+            /**
+             * Kirat Rai. Since: 2.84
+             */
+            KIRAT_RAI,
+            /**
+             * Ol Onal. Since: 2.84
+             */
+            OL_ONAL,
         }
         /**
          * These are the possible character classifications from the
@@ -3766,6 +3794,8 @@ declare module 'gi://GLib?version=2.0' {
         const VERSION_MIN_REQUIRED: number;
         const WIN32_MSG_HANDLE: number;
         const macro__has_attribute___noreturn__: number;
+        const macro__has_attribute_ifunc: number;
+        const macro__has_attribute_no_sanitize_address: number;
         /**
          * A wrapper for the POSIX access() function. This function is used to
          * test a pathname for one or several of read, write or execute
@@ -5492,7 +5522,7 @@ declare module 'gi://GLib?version=2.0' {
          * @param slen buffer size
          * @param format format string
          * @param date valid #GDate
-         * @returns number of characters written to the buffer, or 0 the buffer was too small
+         * @returns number of characters written to the buffer, or `0` if the buffer was too small
          */
         function date_strftime(s: string, slen: number, format: string, date: Date): number;
         /**
@@ -8658,6 +8688,18 @@ declare module 'gi://GLib?version=2.0' {
          */
         function ref_string_acquire(str: string): string;
         /**
+         * Compares two ref-counted strings for byte-by-byte equality.
+         *
+         * It can be passed to [func`GLib`.HashTable.new] as the key equality function,
+         * and behaves exactly the same as [func`GLib`.str_equal] (or `strcmp()`), but
+         * can return slightly faster as it can check the string lengths before checking
+         * all the bytes.
+         * @param str1 a reference counted string
+         * @param str2 a reference counted string
+         * @returns `TRUE` if the strings are equal, otherwise `FALSE`
+         */
+        function ref_string_equal(str1: string, str2: string): boolean;
+        /**
          * Retrieves the length of `str`.
          * @param str a reference counted string
          * @returns the length of the given string, in bytes
@@ -11173,17 +11215,20 @@ declare module 'gi://GLib?version=2.0' {
          */
         function try_realloc_n(mem: any | null, n_blocks: number, n_block_bytes: number): any | null;
         /**
-         * Convert a string from UCS-4 to UTF-16. A 0 character will be
-         * added to the result after the converted text.
+         * Convert a string from UCS-4 to UTF-16.
+         *
+         * A nul character (U+0000) will be added to the result after the converted text.
          * @param str a UCS-4 encoded string
-         * @returns a pointer to a newly allocated UTF-16 string.     This value must be freed with g_free(). If an error occurs,     %NULL will be returned and @error set.
+         * @returns a pointer to a newly allocated UTF-16 string.   This value must be freed with [func@GLib.free].
          */
         function ucs4_to_utf16(str: number[]): [number, number, number];
         /**
          * Convert a string from a 32-bit fixed width representation as UCS-4.
-         * to UTF-8. The result will be terminated with a 0 byte.
+         * to UTF-8.
+         *
+         * The result will be terminated with a nul byte.
          * @param str a UCS-4 encoded string
-         * @returns a pointer to a newly allocated UTF-8 string.     This value must be freed with g_free(). If an error occurs,     %NULL will be returned and @error set. In that case, @items_read     will be set to the position of the first invalid input character.
+         * @returns a pointer to a newly allocated UTF-8 string.   This value must be freed with [func@GLib.free]. If an error occurs,   @items_read will be set to the position of the first invalid input   character.
          */
         function ucs4_to_utf8(str: number[]): [string, number, number];
         /**
@@ -11502,11 +11547,12 @@ declare module 'gi://GLib?version=2.0' {
          */
         function unichar_type(c: number): UnicodeType;
         /**
-         * Checks whether `ch` is a valid Unicode character. Some possible
-         * integer values of `ch` will not be valid. 0 is considered a valid
-         * character, though it's normally a string terminator.
+         * Checks whether `ch` is a valid Unicode character.
+         *
+         * Some possible integer values of `ch` will not be valid. U+0000 is considered a
+         * valid character, though it’s normally a string terminator.
          * @param ch a Unicode character
-         * @returns %TRUE if @ch is a valid Unicode character
+         * @returns `TRUE` if @ch is a valid Unicode character
          */
         function unichar_validate(ch: number): boolean;
         /**
@@ -12110,28 +12156,30 @@ declare module 'gi://GLib?version=2.0' {
          */
         function usleep(microseconds: number): void;
         /**
-         * Convert a string from UTF-16 to UCS-4. The result will be
-         * nul-terminated.
+         * Convert a string from UTF-16 to UCS-4.
+         *
+         * The result will be nul-terminated.
          * @param str a UTF-16 encoded string
-         * @returns a pointer to a newly allocated UCS-4 string.     This value must be freed with g_free(). If an error occurs,     %NULL will be returned and @error set.
+         * @returns a pointer to a newly allocated UCS-4 string.   This value must be freed with [func@GLib.free].
          */
         function utf16_to_ucs4(str: number[]): [number, number, number];
         /**
-         * Convert a string from UTF-16 to UTF-8. The result will be
-         * terminated with a 0 byte.
+         * Convert a string from UTF-16 to UTF-8.
+         *
+         * The result will be terminated with a nul byte.
          *
          * Note that the input is expected to be already in native endianness,
          * an initial byte-order-mark character is not handled specially.
-         * g_convert() can be used to convert a byte buffer of UTF-16 data of
+         * [func`GLib`.convert] can be used to convert a byte buffer of UTF-16 data of
          * ambiguous endianness.
          *
          * Further note that this function does not validate the result
-         * string; it may e.g. include embedded NUL characters. The only
+         * string; it may (for example) include embedded nul characters. The only
          * validation done by this function is to ensure that the input can
-         * be correctly interpreted as UTF-16, i.e. it doesn't contain
+         * be correctly interpreted as UTF-16, i.e. it doesn’t contain
          * unpaired surrogates or partial character sequences.
          * @param str a UTF-16 encoded string
-         * @returns a pointer to a newly allocated UTF-8 string.     This value must be freed with g_free(). If an error occurs,     %NULL will be returned and @error set.
+         * @returns a pointer to a newly allocated UTF-8 string.   This value must be freed with [func@GLib.free].
          */
         function utf16_to_utf8(str: number[]): [string, number, number];
         /**
@@ -12177,9 +12225,13 @@ declare module 'gi://GLib?version=2.0' {
          * original keys with g_utf8_collate().
          *
          * Note that this function depends on the [current locale][setlocale].
+         *
+         * Note that the returned string is not guaranteed to be in any
+         * encoding, especially UTF-8. The returned value is meant to be
+         * used only for comparisons.
          * @param str a UTF-8 encoded string.
          * @param len length of @str, in bytes, or -1 if @str is nul-terminated.
-         * @returns a newly allocated string. This string should   be freed with g_free() when you are done with it.
+         * @returns a newly allocated string.   The contents of the string are only meant to be used when sorting.   This string should be freed with g_free() when you are done with it.
          */
         function utf8_collate_key(str: string, len: number): string;
         /**
@@ -12194,9 +12246,13 @@ declare module 'gi://GLib?version=2.0' {
          * is sorted as "file1" "file5" "file10".
          *
          * Note that this function depends on the [current locale][setlocale].
+         *
+         * Note that the returned string is not guaranteed to be in any
+         * encoding, especially UTF-8. The returned value is meant to be
+         * used only for comparisons.
          * @param str a UTF-8 encoded string.
          * @param len length of @str, in bytes, or -1 if @str is nul-terminated.
-         * @returns a newly allocated string. This string should   be freed with g_free() when you are done with it.
+         * @returns a newly allocated string.   The contents of the string are only meant to be used when sorting.   This string should be freed with g_free() when you are done with it.
          */
         function utf8_collate_key_for_filename(str: string, len: number): string;
         /**
@@ -12206,18 +12262,18 @@ declare module 'gi://GLib?version=2.0' {
          * is made to see if the character found is actually valid other than
          * it starts with an appropriate byte.
          *
-         * If `end` is %NULL, the return value will never be %NULL: if the end of the
+         * If `end` is `NULL`, the return value will never be `NULL`: if the end of the
          * string is reached, a pointer to the terminating nul byte is returned. If
-         * `end` is non-%NULL, the return value will be %NULL if the end of the string
+         * `end` is non-`NULL`, the return value will be `NULL` if the end of the string
          * is reached.
          * @param p a pointer to a position within a UTF-8 encoded string
-         * @param end a pointer to the byte following the end of the string,     or %NULL to indicate that the string is nul-terminated
-         * @returns a pointer to the found character or %NULL if @end is    set and is reached
+         * @param end a pointer to the byte following the end of the string,     or `NULL` to indicate that the string is nul-terminated
+         * @returns a pointer to the found character or `NULL` if @end is    set and is reached
          */
         function utf8_find_next_char(p: string, end?: string | null): string | null;
         /**
          * Given a position `p` with a UTF-8 encoded string `str,` find the start
-         * of the previous UTF-8 character starting before `p`. Returns %NULL if no
+         * of the previous UTF-8 character starting before `p`. Returns `NULL` if no
          * UTF-8 characters are present in `str` before `p`.
          *
          * `p` does not have to be at the beginning of a UTF-8 character. No check
@@ -12225,7 +12281,7 @@ declare module 'gi://GLib?version=2.0' {
          * it starts with an appropriate byte.
          * @param str pointer to the beginning of a UTF-8 encoded string
          * @param p pointer to some position within @str
-         * @returns a pointer to the found character or %NULL.
+         * @returns a pointer to the found character
          */
         function utf8_find_prev_char(str: string, p: string): string | null;
         /**
@@ -12233,7 +12289,7 @@ declare module 'gi://GLib?version=2.0' {
          *
          * If `p` does not point to a valid UTF-8 encoded character, results
          * are undefined. If you are not sure that the bytes are complete
-         * valid Unicode characters, you should use g_utf8_get_char_validated()
+         * valid Unicode characters, you should use [func`GLib`.utf8_get_char_validated]
          * instead.
          * @param p a pointer to Unicode character encoded as UTF-8
          * @returns the resulting character
@@ -12241,16 +12297,17 @@ declare module 'gi://GLib?version=2.0' {
         function utf8_get_char(p: string): number;
         /**
          * Convert a sequence of bytes encoded as UTF-8 to a Unicode character.
+         *
          * This function checks for incomplete characters, for invalid characters
          * such as characters that are out of the range of Unicode, and for
          * overlong encodings of valid characters.
          *
-         * Note that g_utf8_get_char_validated() returns (gunichar)-2 if
+         * Note that [func`GLib`.utf8_get_char_validated] returns `(gunichar)-2` if
          * `max_len` is positive and any of the bytes in the first UTF-8 character
          * sequence are nul.
          * @param p a pointer to Unicode character encoded as UTF-8
-         * @param max_len the maximum number of bytes to read, or -1 if @p is nul-terminated
-         * @returns the resulting character. If @p points to a partial     sequence at the end of a string that could begin a valid     character (or if @max_len is zero), returns (gunichar)-2;     otherwise, if @p does not point to a valid UTF-8 encoded     Unicode character, returns (gunichar)-1.
+         * @param max_len the maximum number of bytes to read, or `-1` if @p is nul-terminated
+         * @returns the resulting character. If @p points to a partial   sequence at the end of a string that could begin a valid   character (or if @max_len is zero), returns `(gunichar)-2`;   otherwise, if @p does not point to a valid UTF-8 encoded   Unicode character, returns `(gunichar)-1`.
          */
         function utf8_get_char_validated(p: string, max_len: number): number;
         /**
@@ -12264,7 +12321,7 @@ declare module 'gi://GLib?version=2.0' {
          * assumption that it is close enough to ASCII or UTF-8 to be mostly
          * readable as-is.
          * @param str string to coerce into UTF-8
-         * @param len the maximum length of @str to use, in bytes. If @len < 0,     then the string is nul-terminated.
+         * @param len the maximum length of @str to use, in bytes. If @len is negative,   then the string is nul-terminated.
          * @returns a valid UTF-8 string whose content resembles @str
          */
         function utf8_make_valid(str: string, len: number): string;
@@ -12309,9 +12366,9 @@ declare module 'gi://GLib?version=2.0' {
          * instead of forwards if `offset` is in the last fourth of the string,
          * since moving forward is about 3 times faster than moving backward.
          *
-         * Note that this function doesn't abort when reaching the end of `str`.
+         * Note that this function doesn’t abort when reaching the end of `str`.
          * Therefore you should be sure that `offset` is within string boundaries
-         * before calling that function. Call g_utf8_strlen() when unsure.
+         * before calling that function. Call [func`GLib`.utf8_strlen] when unsure.
          * This limitation exists as this function is called frequently during
          * text rendering and therefore has to be as fast as possible.
          * @param str a UTF-8 encoded string
@@ -12336,7 +12393,8 @@ declare module 'gi://GLib?version=2.0' {
          * `p` does not have to be at the beginning of a UTF-8 character. No check
          * is made to see if the character found is actually valid other than
          * it starts with an appropriate byte. If `p` might be the first
-         * character of the string, you must use g_utf8_find_prev_char() instead.
+         * character of the string, you must use [func`GLib`.utf8_find_prev_char]
+         * instead.
          * @param p a pointer to a position within a UTF-8 encoded string
          * @returns a pointer to the found character
          */
@@ -12344,11 +12402,12 @@ declare module 'gi://GLib?version=2.0' {
         /**
          * Finds the leftmost occurrence of the given Unicode character
          * in a UTF-8 encoded string, while limiting the search to `len` bytes.
-         * If `len` is -1, allow unbounded search.
+         *
+         * If `len` is `-1`, allow unbounded search.
          * @param p a nul-terminated UTF-8 encoded string
          * @param len the maximum length of @p
          * @param c a Unicode character
-         * @returns %NULL if the string does not contain the character,     otherwise, a pointer to the start of the leftmost occurrence     of the character in the string.
+         * @returns `NULL` if the string does not contain   the character, otherwise, a pointer to the start of the leftmost occurrence   of the character in the string.
          */
         function utf8_strchr(p: string, len: number, c: number): string | null;
         /**
@@ -12363,18 +12422,20 @@ declare module 'gi://GLib?version=2.0' {
         function utf8_strdown(str: string, len: number): string;
         /**
          * Computes the length of the string in characters, not including
-         * the terminating nul character. If the `max'`th byte falls in the
+         * the terminating nul character. If the `max’`th byte falls in the
          * middle of a character, the last (partial) character is not counted.
          * @param p pointer to the start of a UTF-8 encoded string
-         * @param max the maximum number of bytes to examine. If @max       is less than 0, then the string is assumed to be       nul-terminated. If @max is 0, @p will not be examined and       may be %NULL. If @max is greater than 0, up to @max       bytes are examined
+         * @param max the maximum number of bytes to examine. If @max   is less than 0, then the string is assumed to be   nul-terminated. If @max is 0, @p will not be examined and   may be `NULL`. If @max is greater than 0, up to @max   bytes are examined
          * @returns the length of the string in characters
          */
         function utf8_strlen(p: string, max: number): number;
         /**
-         * Like the standard C strncpy() function, but copies a given number
-         * of characters instead of a given number of bytes. The `src` string
-         * must be valid UTF-8 encoded text. (Use g_utf8_validate() on all
-         * text before trying to use UTF-8 utility functions with it.)
+         * Like the standard C [`strncpy()`](man:strncpy) function, but copies a given
+         * number of characters instead of a given number of bytes.
+         *
+         * The `src` string must be valid UTF-8 encoded text. (Use
+         * [func`GLib`.utf8_validate] on all text before trying to use UTF-8 utility
+         * functions with it.)
          *
          * Note you must ensure `dest` is at least 4 * `n` + 1 to fit the
          * largest possible UTF-8 characters
@@ -12387,17 +12448,19 @@ declare module 'gi://GLib?version=2.0' {
         /**
          * Find the rightmost occurrence of the given Unicode character
          * in a UTF-8 encoded string, while limiting the search to `len` bytes.
-         * If `len` is -1, allow unbounded search.
+         *
+         * If `len` is `-1`, allow unbounded search.
          * @param p a nul-terminated UTF-8 encoded string
          * @param len the maximum length of @p
          * @param c a Unicode character
-         * @returns %NULL if the string does not contain the character,     otherwise, a pointer to the start of the rightmost occurrence     of the character in the string.
+         * @returns `NULL` if the string does not contain   the character, otherwise, a pointer to the start of the rightmost   occurrence of the character in the string.
          */
         function utf8_strrchr(p: string, len: number, c: number): string | null;
         /**
-         * Reverses a UTF-8 string. `str` must be valid UTF-8 encoded text.
-         * (Use g_utf8_validate() on all text before trying to use UTF-8
-         * utility functions with it.)
+         * Reverses a UTF-8 string.
+         *
+         * `str` must be valid UTF-8 encoded text. (Use [func`GLib`.utf8_validate] on all
+         * text before trying to use UTF-8 utility functions with it.)
          *
          * This function is intended for programmatic uses of reversed strings.
          * It pays no attention to decomposed characters, combining marks, byte
@@ -12405,11 +12468,11 @@ declare module 'gi://GLib?version=2.0' {
          * characters which might need special handling when reversing a string
          * for display purposes.
          *
-         * Note that unlike g_strreverse(), this function returns
-         * newly-allocated memory, which should be freed with g_free() when
+         * Note that unlike [func`GLib`.strreverse], this function returns
+         * newly-allocated memory, which should be freed with [func`GLib`.free] when
          * no longer needed.
          * @param str a UTF-8 encoded string
-         * @param len the maximum length of @str to use, in bytes. If @len < 0,     then the string is nul-terminated.
+         * @param len the maximum length of @str to use, in bytes. If @len is negative,   then the string is nul-terminated.
          * @returns a newly-allocated string which is the reverse of @str
          */
         function utf8_strreverse(str: string, len: number): string;
@@ -12433,35 +12496,38 @@ declare module 'gi://GLib?version=2.0' {
          * @param str a UTF-8 encoded string
          * @param start_pos a character offset within @str
          * @param end_pos another character offset within @str,   or `-1` to indicate the end of the string
-         * @returns a newly allocated copy of the requested     substring. Free with g_free() when no longer needed.
+         * @returns a newly allocated copy of the requested   substring. Free with [func@GLib.free] when no longer needed.
          */
         function utf8_substring(str: string, start_pos: number, end_pos: number): string;
         /**
-         * Convert a string from UTF-8 to a 32-bit fixed width
-         * representation as UCS-4. A trailing 0 character will be added to the
-         * string after the converted text.
+         * Convert a string from UTF-8 to a 32-bit fixed width representation as UCS-4.
+         *
+         * A trailing nul character (U+0000) will be added to the string after the
+         * converted text.
          * @param str a UTF-8 encoded string
-         * @param len the maximum length of @str to use, in bytes. If @len < 0,     then the string is nul-terminated.
-         * @returns a pointer to a newly allocated UCS-4 string.     This value must be freed with g_free(). If an error occurs,     %NULL will be returned and @error set.
+         * @param len the maximum length of @str to use, in bytes. If @len is negative,   then the string is nul-terminated.
+         * @returns a pointer to a newly allocated UCS-4 string.   This value must be freed with [func@GLib.free].
          */
         function utf8_to_ucs4(str: string, len: number): [number, number, number];
         /**
          * Convert a string from UTF-8 to a 32-bit fixed width
          * representation as UCS-4, assuming valid UTF-8 input.
-         * This function is roughly twice as fast as g_utf8_to_ucs4()
-         * but does no error checking on the input. A trailing 0 character
+         *
+         * This function is roughly twice as fast as [func`GLib`.utf8_to_ucs4]
+         * but does no error checking on the input. A trailing nul character (U+0000)
          * will be added to the string after the converted text.
          * @param str a UTF-8 encoded string
-         * @param len the maximum length of @str to use, in bytes. If @len < 0,     then the string is nul-terminated.
-         * @returns a pointer to a newly allocated UCS-4 string.     This value must be freed with g_free().
+         * @param len the maximum length of @str to use, in bytes. If @len is negative,   then the string is nul-terminated.
+         * @returns a pointer to a newly allocated UCS-4 string.   This value must be freed with [func@GLib.free].
          */
         function utf8_to_ucs4_fast(str: string, len: number): [number, number];
         /**
-         * Convert a string from UTF-8 to UTF-16. A 0 character will be
-         * added to the result after the converted text.
+         * Convert a string from UTF-8 to UTF-16.
+         *
+         * A nul character (U+0000) will be added to the result after the converted text.
          * @param str a UTF-8 encoded string
-         * @param len the maximum length (number of bytes) of @str to use.     If @len < 0, then the string is nul-terminated.
-         * @returns a pointer to a newly allocated UTF-16 string.     This value must be freed with g_free(). If an error occurs,     %NULL will be returned and @error set.
+         * @param len the maximum length (number of bytes) of @str to use.   If @len is negative, then the string is nul-terminated.
+         * @returns a pointer to a newly allocated UTF-16 string.   This value must be freed with [func@GLib.free].
          */
         function utf8_to_utf16(str: string, len: number): [number, number, number];
         /**
@@ -12476,32 +12542,34 @@ declare module 'gi://GLib?version=2.0' {
          */
         function utf8_truncate_middle(string: string, truncate_length: number): string;
         /**
-         * Validates UTF-8 encoded text. `str` is the text to validate;
-         * if `str` is nul-terminated, then `max_len` can be -1, otherwise
-         * `max_len` should be the number of bytes to validate.
-         * If `end` is non-%NULL, then the end of the valid range
-         * will be stored there (i.e. the start of the first invalid
-         * character if some bytes were invalid, or the end of the text
-         * being validated otherwise).
+         * Validates UTF-8 encoded text.
          *
-         * Note that g_utf8_validate() returns %FALSE if `max_len` is
-         * positive and any of the `max_len` bytes are nul.
+         * `str` is the text to validate; if `str` is nul-terminated, then `max_len` can be
+         * `-1`, otherwise `max_len` should be the number of bytes to validate.
          *
-         * Returns %TRUE if all of `str` was valid. Many GLib and GTK
+         * If `end` is non-`NULL`, then the end of the valid range will be stored there.
+         * This is the first byte of the first invalid character if some bytes were
+         * invalid, or the end of the text being validated otherwise — either the
+         * trailing nul byte, or the first byte beyond `max_len` (if it’s positive).
+         *
+         * Note that `g_utf8_validate()` returns `FALSE` if `max_len` is  positive and
+         * any of the `max_len` bytes are nul.
+         *
+         * Returns `TRUE` if all of `str` was valid. Many GLib and GTK
          * routines require valid UTF-8 as input; so data read from a file
-         * or the network should be checked with g_utf8_validate() before
+         * or the network should be checked with `g_utf8_validate()` before
          * doing anything else with it.
          * @param str a pointer to character data
-         * @returns %TRUE if the text was valid UTF-8
+         * @returns `TRUE` if the text was valid UTF-8
          */
         function utf8_validate(str: Uint8Array | string): [boolean, string];
         /**
          * Validates UTF-8 encoded text.
          *
-         * As with g_utf8_validate(), but `max_len` must be set, and hence this function
-         * will always return %FALSE if any of the bytes of `str` are nul.
+         * As with [func`GLib`.utf8_validate], but `max_len` must be set, and hence this
+         * function will always return `FALSE` if any of the bytes of `str` are nul.
          * @param str a pointer to character data
-         * @returns %TRUE if the text was valid UTF-8
+         * @returns `TRUE` if the text was valid UTF-8
          */
         function utf8_validate_len(str: Uint8Array | string): [boolean, string];
         /**
@@ -12656,15 +12724,18 @@ declare module 'gi://GLib?version=2.0' {
         function variant_type_checked_(type_string: string): VariantType;
         function variant_type_string_get_depth_(type_string: string): number;
         /**
-         * Checks if `type_string` is a valid GVariant type string.  This call is
-         * equivalent to calling g_variant_type_string_scan() and confirming
-         * that the following character is a nul terminator.
+         * Checks if `type_string` is a valid
+         * [GVariant type string](./struct.VariantType.html#gvariant-type-strings).
+         *
+         * This call is equivalent to calling [func`GLib`.VariantType.string_scan] and
+         * confirming that the following character is a nul terminator.
          * @param type_string a pointer to any string
-         * @returns %TRUE if @type_string is exactly one valid type string Since 2.24
+         * @returns true if @type_string is exactly one valid type string Since 2.24
          */
         function variant_type_string_is_valid(type_string: string): boolean;
         /**
          * Scan for a single complete and valid GVariant type string in `string`.
+         *
          * The memory pointed to by `limit` (or bytes beyond it) is never
          * accessed.
          *
@@ -12676,10 +12747,10 @@ declare module 'gi://GLib?version=2.0' {
          * string does not end before `limit` then %FALSE is returned.
          *
          * For the simple case of checking if a string is a valid type string,
-         * see g_variant_type_string_is_valid().
+         * see [func`GLib`.VariantType.string_is_valid].
          * @param string a pointer to any string
-         * @param limit the end of @string, or %NULL
-         * @returns %TRUE if a valid type string was found
+         * @param limit the end of @string
+         * @returns true if a valid type string was found
          */
         function variant_type_string_scan(string: string, limit: string | null): [boolean, string];
         interface CacheDestroyFunc {
@@ -15140,30 +15211,33 @@ declare module 'gi://GLib?version=2.0' {
         }
 
         /**
-         * A simple refcounted data type representing an immutable sequence of zero or
-         * more bytes from an unspecified origin.
+         * A simple reference counted data type representing an immutable sequence of
+         * zero or more bytes from an unspecified origin.
          *
-         * The purpose of a #GBytes is to keep the memory region that it holds
+         * The purpose of a `GBytes` is to keep the memory region that it holds
          * alive for as long as anyone holds a reference to the bytes.  When
          * the last reference count is dropped, the memory is released. Multiple
-         * unrelated callers can use byte data in the #GBytes without coordinating
+         * unrelated callers can use byte data in the `GBytes` without coordinating
          * their activities, resting assured that the byte data will not change or
          * move while they hold a reference.
          *
-         * A #GBytes can come from many different origins that may have
+         * A `GBytes` can come from many different origins that may have
          * different procedures for freeing the memory region.  Examples are
-         * memory from g_malloc(), from memory slices, from a #GMappedFile or
-         * memory from other allocators.
+         * memory from [func`GLib`.malloc], from memory slices, from a
+         * [struct`GLib`.MappedFile] or memory from other allocators.
          *
-         * #GBytes work well as keys in #GHashTable. Use g_bytes_equal() and
-         * g_bytes_hash() as parameters to g_hash_table_new() or g_hash_table_new_full().
-         * #GBytes can also be used as keys in a #GTree by passing the g_bytes_compare()
-         * function to g_tree_new().
+         * `GBytes` work well as keys in [struct`GLib`.HashTable]. Use
+         * [method`GLib`.Bytes.equal] and [method`GLib`.Bytes.hash] as parameters to
+         * [func`GLib`.HashTable.new] or [func`GLib`.HashTable.new_full].
+         * `GBytes` can also be used as keys in a [struct`GLib`.Tree] by passing the
+         * [method`GLib`.Bytes.compare] function to [ctor`GLib`.Tree.new].
          *
          * The data pointed to by this bytes must not be modified. For a mutable
-         * array of bytes see #GByteArray. Use g_bytes_unref_to_array() to create a
-         * mutable array for a #GBytes sequence. To create an immutable #GBytes from
-         * a mutable #GByteArray, use the g_byte_array_free_to_bytes() function.
+         * array of bytes see [struct`GLib`.ByteArray]. Use
+         * [method`GLib`.Bytes.unref_to_array] to create a mutable array for a `GBytes`
+         * sequence. To create an immutable `GBytes` from a mutable
+         * [struct`GLib`.ByteArray], use the [func`GLib`.ByteArray.free_to_bytes]
+         * function.
          */
         class Bytes {
             static $gtype: GObject.GType<Bytes>;
@@ -15180,38 +15254,42 @@ declare module 'gi://GLib?version=2.0' {
             // Methods
 
             /**
-             * Compares the two #GBytes values.
+             * Compares the two [struct`GLib`.Bytes] values.
              *
-             * This function can be used to sort GBytes instances in lexicographical order.
+             * This function can be used to sort `GBytes` instances in lexicographical
+             * order.
              *
              * If `bytes1` and `bytes2` have different length but the shorter one is a
              * prefix of the longer one then the shorter one is considered to be less than
              * the longer one. Otherwise the first byte where both differ is used for
              * comparison. If `bytes1` has a smaller value at that position it is
              * considered less, otherwise greater than `bytes2`.
-             * @param bytes2 a pointer to a #GBytes to compare with @bytes1
-             * @returns a negative value if @bytes1 is less than @bytes2, a positive value          if @bytes1 is greater than @bytes2, and zero if @bytes1 is equal to          @bytes2
+             * @param bytes2 a pointer to a [struct@GLib.Bytes] to compare with @bytes1
+             * @returns a negative value if @bytes1 is less than @bytes2, a positive value   if @bytes1 is greater than @bytes2, and zero if @bytes1 is equal to @bytes2
              */
             compare(bytes2: Bytes | Uint8Array): number;
             /**
-             * Compares the two #GBytes values being pointed to and returns
-             * %TRUE if they are equal.
+             * Compares the two [struct`GLib`.Bytes] values being pointed to and returns
+             * `TRUE` if they are equal.
              *
-             * This function can be passed to g_hash_table_new() as the `key_equal_func`
-             * parameter, when using non-%NULL #GBytes pointers as keys in a #GHashTable.
-             * @param bytes2 a pointer to a #GBytes to compare with @bytes1
-             * @returns %TRUE if the two keys match.
+             * This function can be passed to [func`GLib`.HashTable.new] as the
+             * `key_equal_func` parameter, when using non-`NULL` `GBytes` pointers as keys in
+             * a [struct`GLib`.HashTable].
+             * @param bytes2 a pointer to a [struct@GLib.Bytes] to compare with @bytes1
+             * @returns `TRUE` if the two keys match.
              */
             equal(bytes2: Bytes | Uint8Array): boolean;
             /**
-             * Get the byte data in the #GBytes. This data should not be modified.
+             * Get the byte data in the [struct`GLib`.Bytes].
              *
-             * This function will always return the same pointer for a given #GBytes.
+             * This data should not be modified.
              *
-             * %NULL may be returned if `size` is 0. This is not guaranteed, as the #GBytes
-             * may represent an empty string with `data` non-%NULL and `size` as 0. %NULL will
-             * not be returned if `size` is non-zero.
-             * @returns a pointer to the byte data, or %NULL
+             * This function will always return the same pointer for a given `GBytes`.
+             *
+             * `NULL` may be returned if `size` is 0. This is not guaranteed, as the `GBytes`
+             * may represent an empty string with `data` non-`NULL` and `size` as 0. `NULL`
+             * will not be returned if `size` is non-zero.
+             * @returns a pointer to the byte data
              */
             get_data(): Uint8Array | null;
             /**
@@ -15221,81 +15299,87 @@ declare module 'gi://GLib?version=2.0' {
              * and contains `n_elements` many elements of `element_size` size.
              *
              * `n_elements` may be zero, but `element_size` must always be non-zero.
-             * Ideally, `element_size` is a static constant (eg: sizeof a struct).
+             * Ideally, `element_size` is a static constant (eg: `sizeof` a struct).
              *
              * This function does careful bounds checking (including checking for
-             * arithmetic overflows) and returns a non-%NULL pointer if the
+             * arithmetic overflows) and returns a non-`NULL` pointer if the
              * specified region lies entirely within the `bytes`. If the region is
-             * in some way out of range, or if an overflow has occurred, then %NULL
+             * in some way out of range, or if an overflow has occurred, then `NULL`
              * is returned.
              *
              * Note: it is possible to have a valid zero-size region. In this case,
              * the returned pointer will be equal to the base pointer of the data of
-             * `bytes,` plus `offset`.  This will be non-%NULL except for the case
+             * `bytes,` plus `offset`.  This will be non-`NULL` except for the case
              * where `bytes` itself was a zero-sized region.  Since it is unlikely
              * that you will be using this function to check for a zero-sized region
-             * in a zero-sized `bytes,` %NULL effectively always means "error".
+             * in a zero-sized `bytes,` `NULL` effectively always means ‘error’.
              * @param element_size a non-zero element size
              * @param offset an offset to the start of the region within the @bytes
              * @param n_elements the number of elements in the region
-             * @returns the requested region, or %NULL in case of an error
+             * @returns the requested region, or `NULL` in case of an error
              */
             get_region(element_size: number, offset: number, n_elements: number): any | null;
             /**
-             * Get the size of the byte data in the #GBytes.
+             * Get the size of the byte data in the [struct`GLib`.Bytes].
              *
-             * This function will always return the same value for a given #GBytes.
+             * This function will always return the same value for a given `GBytes`.
              * @returns the size
              */
             get_size(): number;
             /**
-             * Creates an integer hash code for the byte data in the #GBytes.
+             * Creates an integer hash code for the byte data in the [struct`GLib`.Bytes].
              *
-             * This function can be passed to g_hash_table_new() as the `key_hash_func`
-             * parameter, when using non-%NULL #GBytes pointers as keys in a #GHashTable.
+             * This function can be passed to [func`GLib`.HashTable.new] as the
+             * `key_hash_func` parameter, when using non-`NULL` `GBytes` pointers as keys in
+             * a [struct`GLib`.HashTable].
              * @returns a hash value corresponding to the key.
              */
             hash(): number;
             /**
-             * Creates a #GBytes which is a subsection of another #GBytes. The `offset` +
-             * `length` may not be longer than the size of `bytes`.
+             * Creates a [struct`GLib`.Bytes] which is a subsection of another `GBytes`.
              *
-             * A reference to `bytes` will be held by the newly created #GBytes until
+             * The `offset` + `length` may not be longer than the size of `bytes`.
+             *
+             * A reference to `bytes` will be held by the newly created `GBytes` until
              * the byte data is no longer needed.
              *
              * Since 2.56, if `offset` is 0 and `length` matches the size of `bytes,` then
              * `bytes` will be returned with the reference count incremented by 1. If `bytes`
-             * is a slice of another #GBytes, then the resulting #GBytes will reference
-             * the same #GBytes instead of `bytes`. This allows consumers to simplify the
-             * usage of #GBytes when asynchronously writing to streams.
+             * is a slice of another `GBytes`, then the resulting `GBytes` will reference
+             * the same `GBytes` instead of `bytes`. This allows consumers to simplify the
+             * usage of `GBytes` when asynchronously writing to streams.
              * @param offset offset which subsection starts at
              * @param length length of subsection
-             * @returns a new #GBytes
+             * @returns a new [struct@GLib.Bytes]
              */
             new_from_bytes(offset: number, length: number): Bytes;
             /**
              * Increase the reference count on `bytes`.
-             * @returns the #GBytes
+             * @returns the [struct@GLib.Bytes]
              */
             ref(): Bytes;
             /**
-             * Releases a reference on `bytes`.  This may result in the bytes being
-             * freed. If `bytes` is %NULL, it will return immediately.
+             * Releases a reference on `bytes`.
+             *
+             * This may result in the bytes being freed. If `bytes` is `NULL`, it will
+             * return immediately.
              */
             unref(): void;
             /**
-             * Unreferences the bytes, and returns a new mutable #GByteArray containing
-             * the same byte data.
+             * Unreferences the bytes, and returns a new mutable [struct`GLib`.ByteArray]
+             * containing the same byte data.
              *
              * As an optimization, the byte data is transferred to the array without copying
-             * if this was the last reference to bytes and bytes was created with
-             * g_bytes_new(), g_bytes_new_take() or g_byte_array_free_to_bytes(). In all
-             * other cases the data is copied.
+             * if this was the last reference to `bytes` and `bytes` was created with
+             * [ctor`GLib`.Bytes.new], [ctor`GLib`.Bytes.new_take] or
+             * [func`GLib`.ByteArray.free_to_bytes] and the buffer was larger than the size
+             * [struct`GLib`.Bytes] may internalize within its allocation. In all other cases
+             * the data is copied.
              *
              * Do not use it if `bytes` contains more than %G_MAXUINT
-             * bytes. #GByteArray stores the length of its data in #guint, which
-             * may be shorter than #gsize, that `bytes` is using.
-             * @returns a new mutable #GByteArray containing the same byte data
+             * bytes. [struct`GLib`.ByteArray] stores the length of its data in `guint`,
+             * which may be shorter than `gsize`, that `bytes` is using.
+             * @returns a new mutable [struct@GLib.ByteArray] containing   the same byte data
              */
             unref_to_array(): Uint8Array;
             /**
@@ -15303,10 +15387,12 @@ declare module 'gi://GLib?version=2.0' {
              * contents.
              *
              * As an optimization, the byte data is returned without copying if this was
-             * the last reference to bytes and bytes was created with g_bytes_new(),
-             * g_bytes_new_take() or g_byte_array_free_to_bytes(). In all other cases the
-             * data is copied.
-             * @returns a pointer to the same byte data, which should be          freed with g_free()
+             * the last reference to `bytes` and `bytes` was created with
+             * [ctor`GLib`.Bytes.new], [ctor`GLib`.Bytes.new_take] or
+             * [func`GLib`.ByteArray.free_to_bytes] and the buffer was larger than the size
+             * [struct`GLib`.Bytes] may internalize within its allocation. In all other cases
+             * the data is copied.
+             * @returns a pointer to the same byte data, which should be freed with [func@GLib.free]
              */
             unref_to_data(): Uint8Array;
             toArray(): Uint8Array;
@@ -16835,6 +16921,7 @@ declare module 'gi://GLib?version=2.0' {
             domain: Quark;
             code: number;
             message: string;
+            stack: string;
 
             // Constructors
 
@@ -17627,7 +17714,8 @@ declare module 'gi://GLib?version=2.0' {
             /**
              * This returns the string that #GIOChannel uses to determine
              * where in the file a line break occurs. A value of %NULL
-             * indicates autodetection.
+             * indicates autodetection. Since 2.84, the return value is always
+             * nul-terminated.
              * @returns The line termination string. This value   is owned by GLib and must not be freed.
              */
             get_line_term(): [string, number];
@@ -18776,6 +18864,49 @@ declare module 'gi://GLib?version=2.0' {
              * see g_file_supports_thread_contexts().
              */
             push_thread_default(): void;
+            /**
+             * Push `main_context` as the new thread-default main context for the current
+             * thread, using [method`GLib`.MainContext.push_thread_default], and return a
+             * new [alias`GLib`.MainContextPusher]. Pop with g_main_context_pusher_free().
+             * Using [method`GLib`.MainContext.pop_thread_default] on `main_context` while a
+             * [alias`GLib`.MainContextPusher] exists for it can lead to undefined behaviour.
+             *
+             * Using two [alias`GLib`.MainContextPusher]s in the same scope is not allowed,
+             * as it leads to an undefined pop order.
+             *
+             * This is intended to be used with g_autoptr().  Note that g_autoptr()
+             * is only available when using GCC or clang, so the following example
+             * will only work with those compilers:
+             *
+             * ```
+             * typedef struct
+             * {
+             *   ...
+             *   GMainContext *context;
+             *   ...
+             * } MyObject;
+             *
+             * static void
+             * my_object_do_stuff (MyObject *self)
+             * {
+             *   g_autoptr(GMainContextPusher) pusher = g_main_context_pusher_new (self->context);
+             *
+             *   // Code with main context as the thread default here
+             *
+             *   if (cond)
+             *     // No need to pop
+             *     return;
+             *
+             *   // Optionally early pop
+             *   g_clear_pointer (&pusher, g_main_context_pusher_free);
+             *
+             *   // Code with main context no longer the thread default here
+             * }
+             * ```
+             *
+             * @returns a #GMainContextPusher
+             */
+            pusher_new(): MainContextPusher;
             /**
              * Determines information necessary to poll this main loop. You should
              * be careful to pass the resulting `fds` array and its length `n_fds`
@@ -26776,14 +26907,17 @@ declare module 'gi://GLib?version=2.0' {
             static checked_(type_string: string): VariantType;
             static string_get_depth_(type_string: string): number;
             /**
-             * Checks if `type_string` is a valid GVariant type string.  This call is
-             * equivalent to calling g_variant_type_string_scan() and confirming
-             * that the following character is a nul terminator.
+             * Checks if `type_string` is a valid
+             * [GVariant type string](./struct.VariantType.html#gvariant-type-strings).
+             *
+             * This call is equivalent to calling [func`GLib`.VariantType.string_scan] and
+             * confirming that the following character is a nul terminator.
              * @param type_string a pointer to any string
              */
             static string_is_valid(type_string: string): boolean;
             /**
              * Scan for a single complete and valid GVariant type string in `string`.
+             *
              * The memory pointed to by `limit` (or bytes beyond it) is never
              * accessed.
              *
@@ -26795,47 +26929,50 @@ declare module 'gi://GLib?version=2.0' {
              * string does not end before `limit` then %FALSE is returned.
              *
              * For the simple case of checking if a string is a valid type string,
-             * see g_variant_type_string_is_valid().
+             * see [func`GLib`.VariantType.string_is_valid].
              * @param string a pointer to any string
-             * @param limit the end of @string, or %NULL
+             * @param limit the end of @string
              */
             static string_scan(string: string, limit: string | null): [boolean, string];
 
             // Methods
 
             /**
-             * Makes a copy of a #GVariantType.  It is appropriate to call
-             * g_variant_type_free() on the return value.  `type` may not be %NULL.
-             * @returns a new #GVariantType Since 2.24
+             * Makes a copy of a [type`GLib`.VariantType].
+             *
+             * It is appropriate to call [method`GLib`.VariantType.free] on the return value.
+             * `type` may not be `NULL`.
+             * @returns a new [type@GLib.VariantType] Since 2.24
              */
             copy(): VariantType;
             /**
-             * Returns a newly-allocated copy of the type string corresponding to
-             * `type`.  The returned string is nul-terminated.  It is appropriate to
-             * call g_free() on the return value.
+             * Returns a newly-allocated copy of the type string corresponding to `type`.
+             *
+             * The returned string is nul-terminated.  It is appropriate to call
+             * [func`GLib`.free] on the return value.
              * @returns the corresponding type string Since 2.24
              */
             dup_string(): string;
             /**
-             * Determines the element type of an array or maybe type.
+             * Determines the element type of an array or ‘maybe’ type.
              *
-             * This function may only be used with array or maybe types.
+             * This function may only be used with array or ‘maybe’ types.
              * @returns the element type of @type Since 2.24
              */
             element(): VariantType;
             /**
              * Compares `type1` and `type2` for equality.
              *
-             * Only returns %TRUE if the types are exactly equal.  Even if one type
-             * is an indefinite type and the other is a subtype of it, %FALSE will
+             * Only returns true if the types are exactly equal.  Even if one type
+             * is an indefinite type and the other is a subtype of it, false will
              * be returned if they are not exactly equal.  If you want to check for
-             * subtypes, use g_variant_type_is_subtype_of().
+             * subtypes, use [method`GLib`.VariantType.is_subtype_of].
              *
-             * The argument types of `type1` and `type2` are only #gconstpointer to
-             * allow use with #GHashTable without function pointer casting.  For
-             * both arguments, a valid #GVariantType must be provided.
-             * @param type2 a #GVariantType
-             * @returns %TRUE if @type1 and @type2 are exactly equal Since 2.24
+             * The argument types of `type1` and `type2` are only `gconstpointer` to
+             * allow use with [type`GLib`.HashTable] without function pointer casting.  For
+             * both arguments, a valid [type`GLib`.VariantType] must be provided.
+             * @param type2 another type to compare
+             * @returns true if @type1 and @type2 are exactly equal Since 2.24
              */
             equal(type2: VariantType): boolean;
             /**
@@ -26844,52 +26981,54 @@ declare module 'gi://GLib?version=2.0' {
              *
              * This function may only be used with tuple or dictionary entry types,
              * but must not be used with the generic tuple type
-             * %G_VARIANT_TYPE_TUPLE.
+             * `G_VARIANT_TYPE_TUPLE`.
              *
              * In the case of a dictionary entry type, this returns the type of
              * the key.
              *
-             * %NULL is returned in case of `type` being %G_VARIANT_TYPE_UNIT.
+             * `NULL` is returned in case of `type` being `G_VARIANT_TYPE_UNIT`.
              *
-             * This call, together with g_variant_type_next() provides an iterator
+             * This call, together with [method`GLib`.VariantType.next] provides an iterator
              * interface over tuple and dictionary entry types.
-             * @returns the first item type of @type, or %NULL Since 2.24
+             * @returns the first item type of @type, or `NULL`   if the type has no item types Since 2.24
              */
-            first(): VariantType;
+            first(): VariantType | null;
             /**
-             * Frees a #GVariantType that was allocated with
-             * g_variant_type_copy(), g_variant_type_new() or one of the container
-             * type constructor functions.
+             * Frees a [type`GLib`.VariantType] that was allocated with
+             * [method`GLib`.VariantType.copy], [ctor`GLib`.VariantType.new] or one of the
+             * container type constructor functions.
              *
-             * In the case that `type` is %NULL, this function does nothing.
+             * In the case that `type` is `NULL`, this function does nothing.
              *
              * Since 2.24
              */
             free(): void;
             /**
-             * Returns the length of the type string corresponding to the given
-             * `type`.  This function must be used to determine the valid extent of
-             * the memory region returned by g_variant_type_peek_string().
+             * Returns the length of the type string corresponding to the given `type`.
+             *
+             * This function must be used to determine the valid extent of
+             * the memory region returned by [method`GLib`.VariantType.peek_string].
              * @returns the length of the corresponding type string Since 2.24
              */
             get_string_length(): number;
             /**
              * Hashes `type`.
              *
-             * The argument type of `type` is only #gconstpointer to allow use with
-             * #GHashTable without function pointer casting.  A valid
-             * #GVariantType must be provided.
+             * The argument type of `type` is only `gconstpointer` to allow use with
+             * [type`GLib`.HashTable] without function pointer casting.  A valid
+             * [type`GLib`.VariantType] must be provided.
              * @returns the hash value Since 2.24
              */
             hash(): number;
             /**
-             * Determines if the given `type` is an array type.  This is true if the
-             * type string for `type` starts with an 'a'.
+             * Determines if the given `type` is an array type.
              *
-             * This function returns %TRUE for any indefinite type for which every
-             * definite subtype is an array type -- %G_VARIANT_TYPE_ARRAY, for
+             * This is true if the type string for `type` starts with an `a`.
+             *
+             * This function returns true for any indefinite type for which every
+             * definite subtype is an array type — `G_VARIANT_TYPE_ARRAY`, for
              * example.
-             * @returns %TRUE if @type is an array type Since 2.24
+             * @returns true if @type is an array type Since 2.24
              */
             is_array(): boolean;
             /**
@@ -26900,9 +27039,9 @@ declare module 'gi://GLib?version=2.0' {
              *
              * Only a basic type may be used as the key of a dictionary entry.
              *
-             * This function returns %FALSE for all indefinite types except
-             * %G_VARIANT_TYPE_BASIC.
-             * @returns %TRUE if @type is a basic type Since 2.24
+             * This function returns `FALSE` for all indefinite types except
+             * `G_VARIANT_TYPE_BASIC`.
+             * @returns true if @type is a basic type Since 2.24
              */
             is_basic(): boolean;
             /**
@@ -26911,70 +27050,73 @@ declare module 'gi://GLib?version=2.0' {
              * Container types are any array, maybe, tuple, or dictionary
              * entry types plus the variant type.
              *
-             * This function returns %TRUE for any indefinite type for which every
-             * definite subtype is a container -- %G_VARIANT_TYPE_ARRAY, for
+             * This function returns true for any indefinite type for which every
+             * definite subtype is a container — `G_VARIANT_TYPE_ARRAY`, for
              * example.
-             * @returns %TRUE if @type is a container type Since 2.24
+             * @returns true if @type is a container type Since 2.24
              */
             is_container(): boolean;
             /**
              * Determines if the given `type` is definite (ie: not indefinite).
              *
              * A type is definite if its type string does not contain any indefinite
-             * type characters ('*', '?', or 'r').
+             * type characters (`*`, `?`, or `r`).
              *
-             * A #GVariant instance may not have an indefinite type, so calling
-             * this function on the result of g_variant_get_type() will always
-             * result in %TRUE being returned.  Calling this function on an
-             * indefinite type like %G_VARIANT_TYPE_ARRAY, however, will result in
-             * %FALSE being returned.
-             * @returns %TRUE if @type is definite Since 2.24
+             * A [type`GLib`.Variant] instance may not have an indefinite type, so calling
+             * this function on the result of [method`GLib`.Variant.get_type] will always
+             * result in true being returned.  Calling this function on an
+             * indefinite type like `G_VARIANT_TYPE_ARRAY`, however, will result in
+             * `FALSE` being returned.
+             * @returns true if @type is definite Since 2.24
              */
             is_definite(): boolean;
             /**
-             * Determines if the given `type` is a dictionary entry type.  This is
-             * true if the type string for `type` starts with a '{'.
+             * Determines if the given `type` is a dictionary entry type.
              *
-             * This function returns %TRUE for any indefinite type for which every
-             * definite subtype is a dictionary entry type --
-             * %G_VARIANT_TYPE_DICT_ENTRY, for example.
-             * @returns %TRUE if @type is a dictionary entry type Since 2.24
+             * This is true if the type string for `type` starts with a `{`.
+             *
+             * This function returns true for any indefinite type for which every
+             * definite subtype is a dictionary entry type —
+             * `G_VARIANT_TYPE_DICT_ENTRY`, for example.
+             * @returns true if @type is a dictionary entry type Since 2.24
              */
             is_dict_entry(): boolean;
             /**
-             * Determines if the given `type` is a maybe type.  This is true if the
-             * type string for `type` starts with an 'm'.
+             * Determines if the given `type` is a ‘maybe’ type.
              *
-             * This function returns %TRUE for any indefinite type for which every
-             * definite subtype is a maybe type -- %G_VARIANT_TYPE_MAYBE, for
+             * This is true if the type string for `type` starts with an `m`.
+             *
+             * This function returns true for any indefinite type for which every
+             * definite subtype is a ‘maybe’ type — `G_VARIANT_TYPE_MAYBE`, for
              * example.
-             * @returns %TRUE if @type is a maybe type Since 2.24
+             * @returns true if @type is a ‘maybe’ type Since 2.24
              */
             is_maybe(): boolean;
             /**
              * Checks if `type` is a subtype of `supertype`.
              *
-             * This function returns %TRUE if `type` is a subtype of `supertype`.  All
+             * This function returns true if `type` is a subtype of `supertype`.  All
              * types are considered to be subtypes of themselves.  Aside from that,
              * only indefinite types can have subtypes.
-             * @param supertype a #GVariantType
-             * @returns %TRUE if @type is a subtype of @supertype Since 2.24
+             * @param supertype type of potential supertype
+             * @returns true if @type is a subtype of @supertype Since 2.24
              */
             is_subtype_of(supertype: VariantType): boolean;
             /**
-             * Determines if the given `type` is a tuple type.  This is true if the
-             * type string for `type` starts with a '(' or if `type` is
-             * %G_VARIANT_TYPE_TUPLE.
+             * Determines if the given `type` is a tuple type.
              *
-             * This function returns %TRUE for any indefinite type for which every
-             * definite subtype is a tuple type -- %G_VARIANT_TYPE_TUPLE, for
+             * This is true if the type string for `type` starts with a `(` or if `type` is
+             * `G_VARIANT_TYPE_TUPLE`.
+             *
+             * This function returns true for any indefinite type for which every
+             * definite subtype is a tuple type — `G_VARIANT_TYPE_TUPLE`, for
              * example.
-             * @returns %TRUE if @type is a tuple type Since 2.24
+             * @returns true if @type is a tuple type Since 2.24
              */
             is_tuple(): boolean;
             /**
              * Determines if the given `type` is the variant type.
-             * @returns %TRUE if @type is the variant type Since 2.24
+             * @returns true if @type is the variant type Since 2.24
              */
             is_variant(): boolean;
             /**
@@ -26982,7 +27124,7 @@ declare module 'gi://GLib?version=2.0' {
              *
              * This function may only be used with a dictionary entry type.  Other
              * than the additional restriction, this call is equivalent to
-             * g_variant_type_first().
+             * [method`GLib`.VariantType.first].
              * @returns the key type of the dictionary entry Since 2.24
              */
             key(): VariantType;
@@ -26992,10 +27134,10 @@ declare module 'gi://GLib?version=2.0' {
              *
              * This function may only be used with tuple or dictionary entry types,
              * but must not be used with the generic tuple type
-             * %G_VARIANT_TYPE_TUPLE.
+             * `G_VARIANT_TYPE_TUPLE`.
              *
              * In the case of a dictionary entry type, this function will always
-             * return 2.
+             * return `2`.
              * @returns the number of items in @type Since 2.24
              */
             n_items(): number;
@@ -27004,16 +27146,16 @@ declare module 'gi://GLib?version=2.0' {
              * type.
              *
              * `type` must be the result of a previous call to
-             * g_variant_type_first() or g_variant_type_next().
+             * [method`GLib`.VariantType.first] or [method`GLib`.VariantType.next].
              *
              * If called on the key type of a dictionary entry then this call
              * returns the value type.  If called on the value type of a dictionary
-             * entry then this call returns %NULL.
+             * entry then this call returns `NULL`.
              *
-             * For tuples, %NULL is returned when `type` is the last item in a tuple.
-             * @returns the next #GVariantType after @type, or %NULL Since 2.24
+             * For tuples, `NULL` is returned when `type` is the last item in the tuple.
+             * @returns the next type after @type, or `NULL` if   there are no further types Since 2.24
              */
-            next(): VariantType;
+            next(): VariantType | null;
             /**
              * Determines the value type of a dictionary entry type.
              *

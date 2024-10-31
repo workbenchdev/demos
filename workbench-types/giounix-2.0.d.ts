@@ -89,7 +89,7 @@ declare module 'gi://GioUnix?version=2.0' {
         /**
          * Gets a #GUnixMountEntry for a given mount path. If `time_read`
          * is set, it will be filled with a unix timestamp for checking
-         * if the mounts have changed since with g_unix_mounts_changed_since().
+         * if the mounts have changed since with g_unix_mount_entries_changed_since().
          *
          * If more mounts have the same mount path, the last matching mount
          * is returned.
@@ -113,9 +113,170 @@ declare module 'gi://GioUnix?version=2.0' {
          */
         function mount_copy(mount_entry: Gio.UnixMountEntry): Gio.UnixMountEntry;
         /**
+         * Checks if the unix mounts have changed since a given unix time.
+         * @param time guint64 to contain a timestamp.
+         * @returns %TRUE if the mounts have changed since @time. Since 2.84
+         */
+        function mount_entries_changed_since(time: number): boolean;
+        /**
+         * Gets a #GList of #GUnixMountEntry containing the unix mounts.
+         * If `time_read` is set, it will be filled with the mount
+         * timestamp, allowing for checking if the mounts have changed
+         * with g_unix_mount_entries_changed_since().
+         * @returns a #GList of the UNIX mounts.
+         */
+        function mount_entries_get(): [Gio.UnixMountEntry[], number];
+        /**
+         * Gets an array of [struct`Gio`.UnixMountEntry]s containing the Unix mounts
+         * listed in `table_path`.
+         *
+         * This is a generalized version of g_unix_mount_entries_get(), mainly intended for
+         * internal testing use. Note that g_unix_mount_entries_get() may parse multiple
+         * hierarchical table files, so this function is not a direct superset of its
+         * functionality.
+         *
+         * If there is an error reading or parsing the file, `NULL` will be returned
+         * and both out parameters will be set to `0`.
+         * @param table_path path to the mounts table file (for example `/proc/self/mountinfo`)
+         * @returns mount   entries, or `NULL` if there was an error loading them
+         */
+        function mount_entries_get_from_file(table_path: string): [Gio.UnixMountEntry[] | null, number];
+        /**
+         * Gets a #GUnixMountEntry for a given mount path. If `time_read`
+         * is set, it will be filled with a unix timestamp for checking
+         * if the mounts have changed since with g_unix_mount_entries_changed_since().
+         *
+         * If more mounts have the same mount path, the last matching mount
+         * is returned.
+         *
+         * This will return %NULL if there is no mount point at `mount_path`.
+         * @param mount_path path for a possible unix mount.
+         * @returns a #GUnixMountEntry.
+         */
+        function mount_entry_at(mount_path: string): [Gio.UnixMountEntry | null, number];
+        /**
+         * Compares two unix mounts.
+         * @param mount1 first #GUnixMountEntry to compare.
+         * @param mount2 second #GUnixMountEntry to compare.
+         * @returns 1, 0 or -1 if @mount1 is greater than, equal to, or less than @mount2, respectively.
+         */
+        function mount_entry_compare(mount1: Gio.UnixMountEntry, mount2: Gio.UnixMountEntry): number;
+        /**
+         * Makes a copy of `mount_entry`.
+         * @param mount_entry a #GUnixMountEntry.
+         * @returns a new #GUnixMountEntry
+         */
+        function mount_entry_copy(mount_entry: Gio.UnixMountEntry): Gio.UnixMountEntry;
+        /**
          * Gets a #GUnixMountEntry for a given file path. If `time_read`
          * is set, it will be filled with a unix timestamp for checking
-         * if the mounts have changed since with g_unix_mounts_changed_since().
+         * if the mounts have changed since with g_unix_mount_entries_changed_since().
+         *
+         * If more mounts have the same mount path, the last matching mount
+         * is returned.
+         *
+         * This will return %NULL if looking up the mount entry fails, if
+         * `file_path` doesn’t exist or there is an I/O error.
+         * @param file_path file path on some unix mount.
+         * @returns a #GUnixMountEntry.
+         */
+        function mount_entry_for(file_path: string): [Gio.UnixMountEntry | null, number];
+        /**
+         * Frees a unix mount.
+         * @param mount_entry a #GUnixMountEntry.
+         */
+        function mount_entry_free(mount_entry: Gio.UnixMountEntry): void;
+        /**
+         * Gets the device path for a unix mount.
+         * @param mount_entry a #GUnixMount.
+         * @returns a string containing the device path.
+         */
+        function mount_entry_get_device_path(mount_entry: Gio.UnixMountEntry): string;
+        /**
+         * Gets the filesystem type for the unix mount.
+         * @param mount_entry a #GUnixMount.
+         * @returns a string containing the file system type.
+         */
+        function mount_entry_get_fs_type(mount_entry: Gio.UnixMountEntry): string;
+        /**
+         * Gets the mount path for a unix mount.
+         * @param mount_entry input #GUnixMountEntry to get the mount path for.
+         * @returns the mount path for @mount_entry.
+         */
+        function mount_entry_get_mount_path(mount_entry: Gio.UnixMountEntry): string;
+        /**
+         * Gets a comma-separated list of mount options for the unix mount. For example,
+         * `rw,relatime,seclabel,data=ordered`.
+         *
+         * This is similar to g_unix_mount_point_get_options(), but it takes
+         * a #GUnixMountEntry as an argument.
+         * @param mount_entry a #GUnixMountEntry.
+         * @returns a string containing the options, or %NULL if not available.
+         */
+        function mount_entry_get_options(mount_entry: Gio.UnixMountEntry): string | null;
+        /**
+         * Gets the root of the mount within the filesystem. This is useful e.g. for
+         * mounts created by bind operation, or btrfs subvolumes.
+         *
+         * For example, the root path is equal to "/" for mount created by
+         * "mount /dev/sda1 /mnt/foo" and "/bar" for
+         * "mount --bind /mnt/foo/bar /mnt/bar".
+         * @param mount_entry a #GUnixMountEntry.
+         * @returns a string containing the root, or %NULL if not supported.
+         */
+        function mount_entry_get_root_path(mount_entry: Gio.UnixMountEntry): string | null;
+        /**
+         * Guesses whether a Unix mount can be ejected.
+         * @param mount_entry a #GUnixMountEntry
+         * @returns %TRUE if @mount_entry is deemed to be ejectable.
+         */
+        function mount_entry_guess_can_eject(mount_entry: Gio.UnixMountEntry): boolean;
+        /**
+         * Guesses the icon of a Unix mount.
+         * @param mount_entry a #GUnixMountEntry
+         * @returns a #GIcon
+         */
+        function mount_entry_guess_icon(mount_entry: Gio.UnixMountEntry): Gio.Icon;
+        /**
+         * Guesses the name of a Unix mount.
+         * The result is a translated string.
+         * @param mount_entry a #GUnixMountEntry
+         * @returns A newly allocated string that must     be freed with g_free()
+         */
+        function mount_entry_guess_name(mount_entry: Gio.UnixMountEntry): string;
+        /**
+         * Guesses whether a Unix mount should be displayed in the UI.
+         * @param mount_entry a #GUnixMountEntry
+         * @returns %TRUE if @mount_entry is deemed to be displayable.
+         */
+        function mount_entry_guess_should_display(mount_entry: Gio.UnixMountEntry): boolean;
+        /**
+         * Guesses the symbolic icon of a Unix mount.
+         * @param mount_entry a #GUnixMountEntry
+         * @returns a #GIcon
+         */
+        function mount_entry_guess_symbolic_icon(mount_entry: Gio.UnixMountEntry): Gio.Icon;
+        /**
+         * Checks if a unix mount is mounted read only.
+         * @param mount_entry a #GUnixMount.
+         * @returns %TRUE if @mount_entry is read only.
+         */
+        function mount_entry_is_readonly(mount_entry: Gio.UnixMountEntry): boolean;
+        /**
+         * Checks if a Unix mount is a system mount. This is the Boolean OR of
+         * g_unix_is_system_fs_type(), g_unix_is_system_device_path() and
+         * g_unix_is_mount_path_system_internal() on `mount_entry’`s properties.
+         *
+         * The definition of what a ‘system’ mount entry is may change over time as new
+         * file system types and device paths are ignored.
+         * @param mount_entry a #GUnixMount.
+         * @returns %TRUE if the unix mount is for a system path.
+         */
+        function mount_entry_is_system_internal(mount_entry: Gio.UnixMountEntry): boolean;
+        /**
+         * Gets a #GUnixMountEntry for a given file path. If `time_read`
+         * is set, it will be filled with a unix timestamp for checking
+         * if the mounts have changed since with g_unix_mount_entries_changed_since().
          *
          * If more mounts have the same mount path, the last matching mount
          * is returned.
@@ -353,7 +514,7 @@ declare module 'gi://GioUnix?version=2.0' {
          * Gets a #GList of #GUnixMountEntry containing the unix mounts.
          * If `time_read` is set, it will be filled with the mount
          * timestamp, allowing for checking if the mounts have changed
-         * with g_unix_mounts_changed_since().
+         * with g_unix_mount_entries_changed_since().
          * @returns a #GList of the UNIX mounts.
          */
         function mounts_get(): [Gio.UnixMountEntry[], number];
@@ -361,8 +522,8 @@ declare module 'gi://GioUnix?version=2.0' {
          * Gets an array of [struct`Gio`.UnixMountEntry]s containing the Unix mounts
          * listed in `table_path`.
          *
-         * This is a generalized version of g_unix_mounts_get(), mainly intended for
-         * internal testing use. Note that g_unix_mounts_get() may parse multiple
+         * This is a generalized version of g_unix_mount_entries_get(), mainly intended for
+         * internal testing use. Note that g_unix_mount_entries_get() may parse multiple
          * hierarchical table files, so this function is not a direct superset of its
          * functionality.
          *
@@ -1884,9 +2045,9 @@ declare module 'gi://GioUnix?version=2.0' {
              * Request an asynchronous read of `count` bytes from the stream into the
              * buffer starting at `buffer`.
              *
-             * This is the asynchronous equivalent of g_input_stream_read_all().
+             * This is the asynchronous equivalent of [method`InputStream`.read_all].
              *
-             * Call g_input_stream_read_all_finish() to collect the result.
+             * Call [method`InputStream`.read_all_finish] to collect the result.
              *
              * Any outstanding I/O request with higher priority (lower numerical
              * value) will be executed before an outstanding request with lower
@@ -1902,7 +2063,7 @@ declare module 'gi://GioUnix?version=2.0' {
             ): Uint8Array;
             /**
              * Finishes an asynchronous stream read operation started with
-             * g_input_stream_read_all_async().
+             * [method`InputStream`.read_all_async].
              *
              * As a special exception to the normal conventions for functions that
              * use #GError, if this function returns %FALSE (and sets `error)` then
@@ -4126,6 +4287,125 @@ declare module 'gi://GioUnix?version=2.0' {
             // Constructors
 
             _init(...args: any[]): void;
+
+            // Static methods
+
+            /**
+             * Gets a #GUnixMountEntry for a given mount path. If `time_read`
+             * is set, it will be filled with a unix timestamp for checking
+             * if the mounts have changed since with g_unix_mount_entries_changed_since().
+             *
+             * If more mounts have the same mount path, the last matching mount
+             * is returned.
+             *
+             * This will return %NULL if there is no mount point at `mount_path`.
+             * @param mount_path path for a possible unix mount.
+             */
+            static at(mount_path: string): [Gio.UnixMountEntry | null, number];
+            /**
+             * Compares two unix mounts.
+             * @param mount1 first #GUnixMountEntry to compare.
+             * @param mount2 second #GUnixMountEntry to compare.
+             */
+            static compare(mount1: Gio.UnixMountEntry, mount2: Gio.UnixMountEntry): number;
+            /**
+             * Makes a copy of `mount_entry`.
+             * @param mount_entry a #GUnixMountEntry.
+             */
+            static copy(mount_entry: Gio.UnixMountEntry): Gio.UnixMountEntry;
+            /**
+             * Gets a #GUnixMountEntry for a given file path. If `time_read`
+             * is set, it will be filled with a unix timestamp for checking
+             * if the mounts have changed since with g_unix_mount_entries_changed_since().
+             *
+             * If more mounts have the same mount path, the last matching mount
+             * is returned.
+             *
+             * This will return %NULL if looking up the mount entry fails, if
+             * `file_path` doesn’t exist or there is an I/O error.
+             * @param file_path file path on some unix mount.
+             */
+            static ['for'](file_path: string): [Gio.UnixMountEntry | null, number];
+            /**
+             * Frees a unix mount.
+             * @param mount_entry a #GUnixMountEntry.
+             */
+            static free(mount_entry: Gio.UnixMountEntry): void;
+            /**
+             * Gets the device path for a unix mount.
+             * @param mount_entry a #GUnixMount.
+             */
+            static get_device_path(mount_entry: Gio.UnixMountEntry): string;
+            /**
+             * Gets the filesystem type for the unix mount.
+             * @param mount_entry a #GUnixMount.
+             */
+            static get_fs_type(mount_entry: Gio.UnixMountEntry): string;
+            /**
+             * Gets the mount path for a unix mount.
+             * @param mount_entry input #GUnixMountEntry to get the mount path for.
+             */
+            static get_mount_path(mount_entry: Gio.UnixMountEntry): string;
+            /**
+             * Gets a comma-separated list of mount options for the unix mount. For example,
+             * `rw,relatime,seclabel,data=ordered`.
+             *
+             * This is similar to g_unix_mount_point_get_options(), but it takes
+             * a #GUnixMountEntry as an argument.
+             * @param mount_entry a #GUnixMountEntry.
+             */
+            static get_options(mount_entry: Gio.UnixMountEntry): string | null;
+            /**
+             * Gets the root of the mount within the filesystem. This is useful e.g. for
+             * mounts created by bind operation, or btrfs subvolumes.
+             *
+             * For example, the root path is equal to "/" for mount created by
+             * "mount /dev/sda1 /mnt/foo" and "/bar" for
+             * "mount --bind /mnt/foo/bar /mnt/bar".
+             * @param mount_entry a #GUnixMountEntry.
+             */
+            static get_root_path(mount_entry: Gio.UnixMountEntry): string | null;
+            /**
+             * Guesses whether a Unix mount can be ejected.
+             * @param mount_entry a #GUnixMountEntry
+             */
+            static guess_can_eject(mount_entry: Gio.UnixMountEntry): boolean;
+            /**
+             * Guesses the icon of a Unix mount.
+             * @param mount_entry a #GUnixMountEntry
+             */
+            static guess_icon(mount_entry: Gio.UnixMountEntry): Gio.Icon;
+            /**
+             * Guesses the name of a Unix mount.
+             * The result is a translated string.
+             * @param mount_entry a #GUnixMountEntry
+             */
+            static guess_name(mount_entry: Gio.UnixMountEntry): string;
+            /**
+             * Guesses whether a Unix mount should be displayed in the UI.
+             * @param mount_entry a #GUnixMountEntry
+             */
+            static guess_should_display(mount_entry: Gio.UnixMountEntry): boolean;
+            /**
+             * Guesses the symbolic icon of a Unix mount.
+             * @param mount_entry a #GUnixMountEntry
+             */
+            static guess_symbolic_icon(mount_entry: Gio.UnixMountEntry): Gio.Icon;
+            /**
+             * Checks if a unix mount is mounted read only.
+             * @param mount_entry a #GUnixMount.
+             */
+            static is_readonly(mount_entry: Gio.UnixMountEntry): boolean;
+            /**
+             * Checks if a Unix mount is a system mount. This is the Boolean OR of
+             * g_unix_is_system_fs_type(), g_unix_is_system_device_path() and
+             * g_unix_is_mount_path_system_internal() on `mount_entry’`s properties.
+             *
+             * The definition of what a ‘system’ mount entry is may change over time as new
+             * file system types and device paths are ignored.
+             * @param mount_entry a #GUnixMount.
+             */
+            static is_system_internal(mount_entry: Gio.UnixMountEntry): boolean;
         }
 
         type MountMonitorClass = typeof MountMonitor;
