@@ -13,11 +13,17 @@ generate the types from within Workbench's sandbox automatically.
 First enter the Build Terminal. On VSCode you can easily do this by pressing
 `Ctrl+P` then selecting `Flatpak: Enter Build Terminal`.
 
+You can also enter Workbench Terminal using the following command:
+
+```bash
+flatpak run --command=bash --filesystem=$(pwd) re.sonny.Workbench.Devel
+```
+
 Then you can copy all the GIRs build from Workbench
 
 ```bash
-mkdir -p demos/workbench-girs
-cp /app/share/gir-1.0/* demos/workbench-girs
+mkdir -p workbench-girs
+cp /app/share/gir-1.0/* workbench-girs
 ```
 
 ### 1. Enter the flatpak sandbox
@@ -36,7 +42,7 @@ export PATH=/usr/lib/sdk/typescript/bin:$PATH
 YARN_GLOBAL_DIR=/tmp/yarn-global
 export PATH="$YARN_GLOBAL_DIR/node_modules/.bin:$PATH"
 
-yarn --global-folder $YARN_GLOBAL_DIR global add @ts-for-gir/cli@4.0.0-beta.15
+yarn --global-folder $YARN_GLOBAL_DIR global add @ts-for-gir/cli@4.0.0-beta.16
 ```
 
 ### Generate modules
