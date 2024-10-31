@@ -7,7 +7,7 @@ const box_menu_parent = workbench.builder.get_object<Gtk.Box>(
   "box_menu_parent",
 );
 const label_emoji = workbench.builder.get_object<Gtk.Label>("label_emoji");
-const gesture_click = workbench.builder.get_object("gesture_click");
+const gesture_click = workbench.builder.get_object<Gtk.GestureClick>("gesture_click");
 const popover_menu = workbench.builder.get_object<Gtk.PopoverMenu>(
   "popover_menu",
 );
