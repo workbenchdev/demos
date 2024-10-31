@@ -3,7 +3,7 @@ import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 
 const list_view = workbench.builder.get_object<Gtk.ListView>("list_view");
-const factory = workbench.builder.get_object("factory");
+const factory = workbench.builder.get_object<Gtk.SignalListItemFactory>("factory");
 
 class TreeNode extends GObject.Object {
   constructor(public title: string, public children: TreeNode[]) {
