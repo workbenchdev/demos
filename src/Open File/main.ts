@@ -8,9 +8,9 @@ Gio._promisify(
   "open_multiple_finish",
 );
 
-const button_single = workbench.builder.get_object("button_single");
-const button_image = workbench.builder.get_object("button_image");
-const button_multiple = workbench.builder.get_object("button_multiple");
+const button_single = workbench.builder.get_object<Gtk.Button>("button_single");
+const button_image = workbench.builder.get_object<Gtk.Button>("button_image");
+const button_multiple = workbench.builder.get_object<Gtk.Button>("button_multiple");
 const file_filter_image = workbench.builder.get_object<Gtk.FileFilter>(
   "file_filter_image",
 );
