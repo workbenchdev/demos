@@ -2,41 +2,43 @@ import Gtk from "gi://Gtk";
 import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 
-const list_view = workbench.builder.get_object("list_view");
+const list_view = workbench.builder.get_object<Gtk.ListView>("list_view");
 const factory = workbench.builder.get_object("factory");
 
-const TreeNode = GObject.registerClass(
-  class TreeNode extends GObject.Object {
-    constructor(title, children) {
-      super();
-      this.title = title;
-      this.children = children;
-    }
-  },
-);
+class TreeNode extends GObject.Object {
+  constructor(public title: string, public children: TreeNode[]) {
+    super();
+  }
 
-const TreeWidget = GObject.registerClass(
-  class TreeWidget extends Gtk.Box {
-    constructor(...args) {
-      super(...args);
-      this.spacing = 6;
-      this.margin_start = 6;
-      this.margin_end = 12;
-      this.margin_top = 6;
-      this.margin_bottom = 6;
+  static {
+    GObject.registerClass(this);
+  }
+}
 
-      this.expander = new Gtk.TreeExpander();
-      this.label = new Gtk.Label({ halign: Gtk.Align.START });
+class TreeWidget extends Gtk.Box {
+  expander = new Gtk.TreeExpander();
+  label = new Gtk.Label({ halign: Gtk.Align.START });
 
-      this.append(this.expander);
-      this.append(this.label);
-    }
-  },
-);
+  constructor(args?: Partial<Gtk.Box.ConstructorProps>) {
+    super(args);
+    this.spacing = 6;
+    this.margin_start = 6;
+    this.margin_end = 12;
+    this.margin_top = 6;
+    this.margin_bottom = 6;
+
+    this.append(this.expander);
+    this.append(this.label);
+  }
+
+  static {
+    GObject.registerClass(this);
+  }
+}
 
 function create_model_func(item) {
   if (item.children.length < 1) return null;
-  const child_model = new Gio.ListStore(TreeNode);
+  const child_model = Gio.ListStore.new(TreeNode.$gtype);
   for (const child of item.children) {
     child_model.append(child);
   }
@@ -68,7 +70,7 @@ const root_model = new TreeNode("Root", [
   ]),
 ]);
 
-const tree_model = new Gio.ListStore(TreeNode);
+const tree_model = Gio.ListStore.new(TreeNode.$gtype);
 tree_model.append(root_model);
 
 const tree_list_model = Gtk.TreeListModel.new(
