@@ -1,9 +1,10 @@
+import Gtk from "gi://Gtk?version=4.0";
 import Adw from "gi://Adw";
 
 const tab_view = workbench.builder.get_object<Adw.TabView>("tab_view");
-const button_new_tab = workbench.builder.get_object("button_new_tab");
+const button_new_tab = workbench.builder.get_object<Gtk.Button>("button_new_tab");
 const overview = workbench.builder.get_object<Adw.TabOverview>("overview");
-const button_overview = workbench.builder.get_object("button_overview");
+const button_overview = workbench.builder.get_object<Gtk.Button>("button_overview");
 let tab_count = 1;
 
 overview.connect("create-tab", () => {
