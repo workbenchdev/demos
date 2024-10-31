@@ -2,11 +2,11 @@ import Gdk from "gi://Gdk?version=4.0";
 import Gtk from "gi://Gtk?version=4.0";
 
 const textview = workbench.builder.get_object<Gtk.TextView>("textview");
-const select = workbench.builder.get_object("select");
-const copy = workbench.builder.get_object("copy");
-const cut = workbench.builder.get_object("cut");
-const clear = workbench.builder.get_object("clear");
-const paste = workbench.builder.get_object("paste");
+const select = workbench.builder.get_object<Gtk.Button>("select");
+const copy = workbench.builder.get_object<Gtk.Button>("copy");
+const cut = workbench.builder.get_object<Gtk.Button>("cut");
+const clear = workbench.builder.get_object<Gtk.Button>("clear");
+const paste = workbench.builder.get_object<Gtk.Button>("paste");
 
 const display = Gdk.Display.get_default();
 const clipboard = display.get_clipboard();
