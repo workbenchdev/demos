@@ -29,7 +29,7 @@ const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
 
 const output = workbench.builder.get_object<Gtk.Picture>("output");
-const button = workbench.builder.get_object("button");
+const button = workbench.builder.get_object<Gtk.Button>("button");
 
 button.connect("clicked", () => {
   accessCamera().catch(console.error);
