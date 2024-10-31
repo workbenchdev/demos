@@ -1,12 +1,13 @@
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
+import Gtk from "gi://Gtk?version=4.0";
 
 Gio._promisify(Xdp.Portal.prototype, "set_wallpaper", "set_wallpaper_finish");
 
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
-const button = workbench.builder.get_object("button");
+const button = workbench.builder.get_object<Gtk.Button>("button");
 
 const uri = workbench.resolve("./wallpaper.png");
 
