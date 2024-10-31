@@ -6,7 +6,7 @@ import Gtk from "gi://Gtk?version=4.0";
 Gio._promisify(Gtk.FileDialog.prototype, "open", "open_finish");
 
 const avatar_image = workbench.builder.get_object<Adw.Avatar>("avatar_image");
-const button = workbench.builder.get_object("button");
+const button = workbench.builder.get_object<Gtk.Button>("button");
 
 const file_filter = new Gtk.FileFilter();
 file_filter.add_pixbuf_formats();
