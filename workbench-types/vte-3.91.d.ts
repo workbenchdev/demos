@@ -186,6 +186,112 @@ declare module 'gi://Vte?version=3.91' {
              */
             HTML,
         }
+        /**
+         * An enum containing the IDs of the always-installed termprops.
+         */
+
+        /**
+         * An enum containing the IDs of the always-installed termprops.
+         */
+        export namespace PropertyId {
+            export const $gtype: GObject.GType<PropertyId>;
+        }
+
+        enum PropertyId {
+            /**
+             * the ID of the %VTE_TERMPROP_CURRENT_DIRECTORY_URI termprop
+             */
+            CURRENT_DIRECTORY_URI,
+            /**
+             * the ID of the %VTE_TERMPROP_CURRENT_FILE_URI termprop
+             */
+            CURRENT_FILE_URI,
+            /**
+             * the ID of the %VTE_TERMPROP_XTERM_TITLE termprop
+             */
+            XTERM_TITLE,
+            /**
+             * the ID of the %VTE_TERMPROP_CONTAINER_NAME termprop
+             */
+            CONTAINER_NAME,
+            /**
+             * the ID of the %VTE_TERMPROP_CONTAINER_RUNTIME termprop
+             */
+            CONTAINER_RUNTIME,
+            /**
+             * the ID of the %VTE_TERMPROP_CONTAINER_UID termprop
+             */
+            CONTAINER_UID,
+            /**
+             * the ID of the %VTE_TERMPROP_SHELL_PRECMD termprop
+             */
+            SHELL_PRECMD,
+            /**
+             * the ID of the %VTE_TERMPROP_SHELL_PREEXEC termprop
+             */
+            SHELL_PREEXEC,
+            /**
+             * the ID of the %VTE_TERMPROP_SHELL_POSTEXEC termprop
+             */
+            SHELL_POSTEXEC,
+        }
+        /**
+         * An enumeration type describing types of properties.
+         */
+
+        /**
+         * An enumeration type describing types of properties.
+         */
+        export namespace PropertyType {
+            export const $gtype: GObject.GType<PropertyType>;
+        }
+
+        enum PropertyType {
+            /**
+             * no value, use for signalling
+             */
+            VALUELESS,
+            /**
+             * a bool
+             */
+            BOOL,
+            /**
+             * a signed 64-bit integer
+             */
+            INT,
+            /**
+             * an unsigned 64-bit integer
+             */
+            UINT,
+            /**
+             * a finite double-precision floating point number
+             */
+            DOUBLE,
+            /**
+             * a color
+             */
+            RGB,
+            /**
+             * a color with alpha
+             */
+            RGBA,
+            /**
+             * a string
+             */
+            STRING,
+            /**
+             * binary data
+             */
+            DATA,
+            /**
+             * a UUID
+             */
+            UUID,
+            /**
+             * a URI
+             */
+            URI,
+        }
         class PtyError extends GLib.Error {
             static $gtype: GObject.GType<PtyError>;
 
@@ -337,9 +443,71 @@ declare module 'gi://Vte?version=3.91' {
          * This is supported on Linux only.
          */
         const SPAWN_REQUIRE_SYSTEMD_SCOPE: number;
+        /**
+         * A %VTE_PROPERTY_STRING termprop that stores the name of the
+         * container.
+         */
+        const TERMPROP_CONTAINER_NAME: string;
+        /**
+         * A %VTE_PROPERTY_STRING termprop that stores the runtime of the
+         * container.
+         */
+        const TERMPROP_CONTAINER_RUNTIME: string;
+        /**
+         * A %VTE_PROPERTY_UINT termprop that stores the user ID of the
+         * container.
+         */
+        const TERMPROP_CONTAINER_UID: string;
+        /**
+         * A %VTE_PROPERTY_URI termprop that stores the current directory
+         * URI as set by OSC 7.
+         * Use this with vte_terminal_ref_termprop_uri() instead of using
+         * vte_terminal_get_current_directory_uri().
+         *
+         * Note that this termprop is not settable via the termprop OSC.
+         */
+        const TERMPROP_CURRENT_DIRECTORY_URI: string;
+        /**
+         * A %VTE_PROPERTY_URI termprop that stores the current file URI
+         * as set by OSC 6.
+         * Use this with vte_terminal_ref_termprop_uri() instead of using
+         * vte_terminal_get_current_file_uri().
+         *
+         * Note that this termprop is not settable via the termprop OSC.
+         */
+        const TERMPROP_CURRENT_FILE_URI: string;
+        /**
+         * The string prefix that any termprop's name must start with to be installed
+         * by vte_install_termprop().
+         */
+        const TERMPROP_NAME_PREFIX: string;
+        /**
+         * An ephemeral %VTE_PROPERTY_UINT termprop that signals that the shell
+         * has executed the commands entered at the prompt and these commands
+         * have returned. The termprop value is the exit code.
+         */
+        const TERMPROP_SHELL_POSTEXEC: string;
+        /**
+         * A %VTE_PROPERTY_VALUELESS termprop that signals that the shell
+         * is going to prompt.
+         */
+        const TERMPROP_SHELL_PRECMD: string;
+        /**
+         * A %VTE_PROPERTY_VALUELESS termprop that signals that the shell
+         * is preparing to execute the command entered at the prompt.
+         */
+        const TERMPROP_SHELL_PREEXEC: string;
+        /**
+         * A %VTE_PROPERTY_STRING termprop that stores the xterm window title
+         * as set by OSC 0 and OSC 2.
+         * Use this with vte_terminal_get_termprop_string() instead of using
+         * vte_terminal_get_window_title().
+         *
+         * Note that this termprop is not settable via the termprop OSC.
+         */
+        const TERMPROP_XTERM_TITLE: string;
         const TEST_FLAGS_ALL: number;
         const TEST_FLAGS_NONE: number;
-        function event_context_get_type(): GObject.GType;
         /**
          * Queries whether the legacy encoding `encoding` is supported.
          *
@@ -396,18 +564,77 @@ declare module 'gi://Vte?version=3.91' {
          */
         function get_minor_version(): number;
         /**
+         * Gets the names of the installed termprops in an unspecified order.
+         * @returns the names of the installed   termprops, or %NULL if there are no termprops
+         */
+        function get_termprops(): string[] | null;
+        /**
          * Gets the user's shell, or %NULL. In the latter case, the
          * system default (usually "/bin/sh") should be used.
          * @returns a newly allocated string with the   user's shell, or %NULL
          */
         function get_user_shell(): string;
         /**
+         * Installs a new terminal property that can be set by the application.
+         *
+         * `name` must follow the rules for termprop names as laid out above; it
+         * must have at least 4 components, the first two of which must be "vte",
+         * and "ext". Use the %VTE_TERMPROP_NAME_PREFIX macro which defines this
+         * name prefix.
+         *
+         * You should use an identifier for your terminal as the first component
+         * after the prefix, as a namespace marker.
+         *
+         * It is a programming error to call this function with a `name` that does
+         * not meet these requirements.
+         *
+         * It is a programming error to call this function after any #VteTerminal
+         * instances have been created.
+         *
+         * It is a programming error to call this function if the named termprop
+         * is already installed with a different type or flags.
+         * @param name a namespaced property name
+         * @param type a #VtePropertyType to use for the property
+         * @param flags flags from #VtePropertyFlags
+         * @returns an ID for the termprop
+         */
+        function install_termprop(name: string, type: PropertyType, flags: PropertyFlags): number;
+        /**
+         * Installs a new terminal property `name` as an alias for the terminal
+         * property `target_name`.
+         * @param name a namespaced property name
+         * @param target_name the target property name
+         * @returns the ID for the termprop @target_name
+         */
+        function install_termprop_alias(name: string, target_name: string): number;
+        /**
          * Error domain for VTE PTY errors. Errors in this domain will be from the #VtePtyError
          * enumeration. See #GError for more information on error domains.
          * @returns the error domain for VTE PTY errors
          */
         function pty_error_quark(): GLib.Quark;
+        /**
+         * Gets the property type of the termprop. For properties installed by
+         * vte_install_termprop(), the name starts with "vte.ext.".
+         *
+         * For an alias termprop (see vte_install_termprop_alias()), `resolved_name`
+         * will be name of the alias' target termprop; otherwise it will be `name`.
+         * @param name a termprop name
+         * @returns %TRUE iff the termprop exists, and then @prop, @type and   @flags will be filled in
+         */
+        function query_termprop(name: string): [boolean, string, number, PropertyType | null, PropertyFlags | null];
+        /**
+         * Like vte_query_termprop() except that it takes the termprop by ID.
+         * See that function for more information.
+         *
+         * For an alias termprop (see vte_install_termprop_alias()), `resolved_name`
+         * will be name of the alias' target termprop; otherwise it will be `name`.
+         * @param prop a termprop ID
+         * @returns %TRUE iff the termprop exists, and then @name, @type and   @flags will be filled in
+         */
+        function query_termprop_by_id(prop: number): [boolean, string, PropertyType | null, PropertyFlags | null];
         function regex_error_quark(): GLib.Quark;
+        function uuid_validate_string(str: string, len: number, fmt: UuidFormat): boolean;
         interface SelectionFunc {
             (terminal: Terminal, column: number, row: number): boolean;
         }
@@ -446,6 +673,27 @@ declare module 'gi://Vte?version=3.91' {
              * mask of all feature flags
              */
             FLAGS_MASK,
+        }
+        /**
+         * A flags type.
+         */
+
+        /**
+         * A flags type.
+         */
+        export namespace PropertyFlags {
+            export const $gtype: GObject.GType<PropertyFlags>;
+        }
+
+        enum PropertyFlags {
+            /**
+             * no flags, default
+             */
+            NONE,
+            /**
+             * denotes an ephemeral termprop
+             */
+            EPHEMERAL,
         }
 
         export namespace PtyFlags {
@@ -487,6 +735,17 @@ declare module 'gi://Vte?version=3.91' {
              * the default flags
              */
             DEFAULT,
+        }
+
+        export namespace UuidFormat {
+            export const $gtype: GObject.GType<UuidFormat>;
+        }
+
+        enum UuidFormat {
+            SIMPLE,
+            BRACED,
+            URN,
+            ANY,
         }
         module Pty {
             // Constructor properties interface
@@ -562,18 +821,22 @@ declare module 'gi://Vte?version=3.91' {
              * @param argv child's argument vector
              * @param envv a list of environment   variables to be added to the environment before starting the process, or %NULL
              * @param spawn_flags flags from #GSpawnFlags
+             * @param child_setup an extra child setup function to run in the child just before exec(), or %NULL
              * @param child_setup_data_destroy a #GDestroyNotify for @child_setup_data, or %NULL
              * @param timeout a timeout value in ms, -1 for the default timeout, or G_MAXINT to wait indefinitely
              * @param cancellable a #GCancellable, or %NULL
+             * @param callback a #GAsyncReadyCallback, or %NULL
              */
             spawn_async(
                 working_directory: string | null,
                 argv: string[],
                 envv: string[] | null,
                 spawn_flags: GLib.SpawnFlags,
+                child_setup: GLib.SpawnChildSetupFunc | null,
                 child_setup_data_destroy: GLib.DestroyNotify | null,
                 timeout: number,
                 cancellable?: Gio.Cancellable | null,
+                callback?: Gio.AsyncReadyCallback<this> | null,
             ): void;
             spawn_finish(result: Gio.AsyncResult): [boolean, GLib.Pid | null];
             /**
@@ -614,9 +877,11 @@ declare module 'gi://Vte?version=3.91' {
              * @param fds an array of file descriptors, or %NULL
              * @param map_fds an array of integers, or %NULL
              * @param spawn_flags flags from #GSpawnFlags
+             * @param child_setup an extra child setup function to run in the child just before exec(), or %NULL
              * @param child_setup_data_destroy a #GDestroyNotify for @child_setup_data, or %NULL
              * @param timeout a timeout value in ms, -1 for the default timeout, or G_MAXINT to wait indefinitely
              * @param cancellable a #GCancellable, or %NULL
+             * @param callback a #GAsyncReadyCallback, or %NULL
              */
             spawn_with_fds_async(
                 working_directory: string | null,
@@ -625,9 +890,11 @@ declare module 'gi://Vte?version=3.91' {
                 fds: number[] | null,
                 map_fds: number[] | null,
                 spawn_flags: GLib.SpawnFlags,
+                child_setup: GLib.SpawnChildSetupFunc | null,
                 child_setup_data_destroy: GLib.DestroyNotify | null,
                 timeout: number,
                 cancellable?: Gio.Cancellable | null,
+                callback?: Gio.AsyncReadyCallback<this> | null,
             ): void;
 
             // Inherited methods
@@ -1229,6 +1496,14 @@ declare module 'gi://Vte?version=3.91' {
                 (context?: EventContext | null): void;
             }
 
+            interface TermpropChanged {
+                (name: string): void;
+            }
+
+            interface TermpropsChanged {
+                (props: number[]): boolean;
+            }
+
             interface WindowTitleChanged {
                 (): void;
             }
@@ -1238,6 +1513,7 @@ declare module 'gi://Vte?version=3.91' {
             interface ConstructorProps
                 extends Gtk.Widget.ConstructorProps,
                     Gtk.Accessible.ConstructorProps,
+                    Gtk.AccessibleText.ConstructorProps,
                     Gtk.Buildable.ConstructorProps,
                     Gtk.ConstraintTarget.ConstructorProps,
                     Gtk.Scrollable.ConstructorProps {
@@ -1271,10 +1547,14 @@ declare module 'gi://Vte?version=3.91' {
                 cursorShape: CursorShape;
                 delete_binding: EraseBinding;
                 deleteBinding: EraseBinding;
+                enable_a11y: boolean;
+                enableA11y: boolean;
                 enable_bidi: boolean;
                 enableBidi: boolean;
                 enable_fallback_scrolling: boolean;
                 enableFallbackScrolling: boolean;
+                enable_legacy_osc777: boolean;
+                enableLegacyOsc777: boolean;
                 enable_shaping: boolean;
                 enableShaping: boolean;
                 enable_sixel: boolean;
@@ -1322,7 +1602,7 @@ declare module 'gi://Vte?version=3.91' {
 
         class Terminal
             extends Gtk.Widget
-            implements Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.Scrollable
+            implements Gtk.Accessible, Gtk.AccessibleText, Gtk.Buildable, Gtk.ConstraintTarget, Gtk.Scrollable
         {
             static $gtype: GObject.GType<Terminal>;
 
@@ -1509,6 +1789,16 @@ declare module 'gi://Vte?version=3.91' {
             get deleteBinding(): EraseBinding;
             set deleteBinding(val: EraseBinding);
             /**
+             * Controls whether or not a11y is enabled for the widget.
+             */
+            get enable_a11y(): boolean;
+            set enable_a11y(val: boolean);
+            /**
+             * Controls whether or not a11y is enabled for the widget.
+             */
+            get enableA11y(): boolean;
+            set enableA11y(val: boolean);
+            /**
              * Controls whether or not the terminal will perform bidirectional text rendering.
              */
             get enable_bidi(): boolean;
@@ -1522,6 +1812,18 @@ declare module 'gi://Vte?version=3.91' {
             set enable_fallback_scrolling(val: boolean);
             get enableFallbackScrolling(): boolean;
             set enableFallbackScrolling(val: boolean);
+            /**
+             * Whether legacy OSC 777 sequences are translated to
+             * their corresponding termprops.
+             */
+            get enable_legacy_osc777(): boolean;
+            set enable_legacy_osc777(val: boolean);
+            /**
+             * Whether legacy OSC 777 sequences are translated to
+             * their corresponding termprops.
+             */
+            get enableLegacyOsc777(): boolean;
+            set enableLegacyOsc777(val: boolean);
             /**
              * Controls whether or not the terminal will shape Arabic text.
              */
@@ -1902,6 +2204,12 @@ declare module 'gi://Vte?version=3.91' {
                 callback: (_source: this, context: EventContext | null) => void,
             ): number;
             emit(signal: 'setup-context-menu', context?: EventContext | null): void;
+            connect(signal: 'termprop-changed', callback: (_source: this, name: string) => void): number;
+            connect_after(signal: 'termprop-changed', callback: (_source: this, name: string) => void): number;
+            emit(signal: 'termprop-changed', name: string): void;
+            connect(signal: 'termprops-changed', callback: (_source: this, props: number[]) => boolean): number;
+            connect_after(signal: 'termprops-changed', callback: (_source: this, props: number[]) => boolean): number;
+            emit(signal: 'termprops-changed', props: number[]): void;
             connect(signal: 'window-title-changed', callback: (_source: this) => void): number;
             connect_after(signal: 'window-title-changed', callback: (_source: this) => void): number;
             emit(signal: 'window-title-changed'): void;
@@ -1941,6 +2249,8 @@ declare module 'gi://Vte?version=3.91' {
             vfunc_restore_window(): void;
             vfunc_selection_changed(): void;
             vfunc_setup_context_menu(context: EventContext): void;
+            vfunc_termprop_changed(prop: string): void;
+            vfunc_termprops_changed(props: number, n_props: number): boolean;
             vfunc_window_title_changed(): void;
 
             // Methods
@@ -2008,6 +2318,34 @@ declare module 'gi://Vte?version=3.91' {
              * selection.
              */
             copy_primary(): void;
+            /**
+             * Returns the value of a %VTE_PROPERTY_STRING termprop, or %NULL if
+             *   `prop` is unset, or `prop` is not a registered property.
+             * @param prop a termprop name
+             * @returns the property's value, or %NULL
+             */
+            dup_termprop_string(prop: string): [string | null, number];
+            /**
+             * Like vte_terminal_dup_termprop_string() except that it takes the termprop
+             * by ID. See that function for more information.
+             * @param prop a termprop ID
+             * @returns the property's value, or %NULL
+             */
+            dup_termprop_string_by_id(prop: number): [string | null, number];
+            /**
+             * Returns the value of a %VTE_PROPERTY_UUID termprop as a #VteUuid, or %NULL if
+             *   `prop` is unset, or `prop` is not a registered property.
+             * @param prop a termprop name
+             * @returns the property's value as a #VteUuid, or %NULL
+             */
+            dup_termprop_uuid(prop: string): Uuid;
+            /**
+             * Like vte_terminal_dup_termprop_uuid() except that it takes the termprop
+             * by ID. See that function for more information.
+             * @param prop a termprop ID
+             * @returns the property's value as a #VteUuid, or %NULL
+             */
+            dup_termprop_uuid_by_id(prop: number): Uuid;
             /**
              * Interprets `data` as if it were data received from a child process.
              * @param data a string in the terminal's current encoding
@@ -2096,11 +2434,17 @@ declare module 'gi://Vte?version=3.91' {
              */
             get_cursor_shape(): CursorShape;
             /**
+             * Checks whether the terminal communicates with a11y backends
+             * @returns %TRUE if a11y is enabled, %FALSE if not
+             */
+            get_enable_a11y(): boolean;
+            /**
              * Checks whether the terminal performs bidirectional text rendering.
              * @returns %TRUE if BiDi is enabled, %FALSE if not
              */
             get_enable_bidi(): boolean;
             get_enable_fallback_scrolling(): boolean;
+            get_enable_legacy_osc777(): boolean;
             /**
              * Checks whether the terminal shapes Arabic text.
              * @returns %TRUE if Arabic shaping is enabled, %FALSE if not
@@ -2159,6 +2503,147 @@ declare module 'gi://Vte?version=3.91' {
             get_scroll_on_output(): boolean;
             get_scroll_unit_is_pixels(): boolean;
             get_scrollback_lines(): number;
+            /**
+             * For a %VTE_PROPERTY_BOOL termprop, sets `value` to `prop'`s value,
+             *   or to %FALSE if `prop` is unset, or `prop` is not a registered property.
+             * @param prop a termprop name
+             * @returns %TRUE iff the termprop is set
+             */
+            get_termprop_bool(prop: string): [boolean, boolean];
+            /**
+             * Like vte_terminal_get_termprop_bool() except that it takes the termprop
+             * by ID. See that function for more information.
+             * @param prop a termprop ID
+             * @returns %TRUE iff the termprop is set
+             */
+            get_termprop_bool_by_id(prop: number): [boolean, boolean];
+            /**
+             * Returns the value of a %VTE_PROPERTY_DATA termprop, or %NULL if
+             *   `prop` is unset, or `prop` is not a registered property.
+             * @param prop a termprop name
+             * @returns the property's value, or %NULL
+             */
+            get_termprop_data(prop: string): Uint8Array;
+            /**
+             * Like vte_terminal_get_termprop_data() except that it takes the termprop
+             * by ID. See that function for more information.
+             * @param prop a termprop ID
+             * @returns the property's value, or %NULL
+             */
+            get_termprop_data_by_id(prop: number): Uint8Array;
+            /**
+             * For a %VTE_PROPERTY_DOUBLE termprop, sets `value` to `prop'`s value,
+             *   which is finite; or to 0.0 if `prop` is unset, or `prop` is not a
+             *   registered property.
+             * @param prop a termprop name
+             * @returns %TRUE iff the termprop is set
+             */
+            get_termprop_double(prop: string): [boolean, number];
+            /**
+             * Like vte_terminal_get_termprop_double() except that it takes the termprop
+             * by ID. See that function for more information.
+             * @param prop a termprop ID
+             * @returns %TRUE iff the termprop is set
+             */
+            get_termprop_double_by_id(prop: number): [boolean, number];
+            /**
+             * For a %VTE_PROPERTY_INT termprop, sets `value` to `prop'`s value,
+             * or to 0 if `prop` is unset, or if `prop` is not a registered property.
+             *
+             * If only a subset or range of values are acceptable for the given property,
+             * the caller must validate the returned value and treat any out-of-bounds
+             * value as if the termprop had no value; in particular it *must not* clamp
+             * the values to the expected range.
+             * @param prop a termprop name
+             * @returns %TRUE iff the termprop is set
+             */
+            get_termprop_int(prop: string): [boolean, number];
+            /**
+             * Like vte_terminal_get_termprop_int() except that it takes the termprop
+             * by ID. See that function for more information.
+             * @param prop a termprop ID
+             * @returns %TRUE iff the termprop is set
+             */
+            get_termprop_int_by_id(prop: number): [boolean, number];
+            /**
+             * Stores the value of a %VTE_PROPERTY_RGB or %VTE_PROPERTY_RGBA termprop in `color` and
+             * returns %TRUE if the termprop is set, or stores rgb(0,0,0) or rgba(0,0,0,1) in `color`
+             * and returns %FALSE if the termprop is unset.
+             * @param prop a termprop name
+             * @returns %TRUE iff the termprop is set
+             */
+            get_termprop_rgba(prop: string): [boolean, Gdk.RGBA | null];
+            /**
+             * Like vte_terminal_get_termprop_rgba() except that it takes the termprop
+             * by ID. See that function for more information.
+             * @param prop a termprop ID
+             * @returns %TRUE iff the termprop is set
+             */
+            get_termprop_rgba_by_id(prop: number): [boolean, Gdk.RGBA | null];
+            /**
+             * Returns the value of a %VTE_PROPERTY_STRING termprop, or %NULL if
+             *   `prop` is unset, or `prop` is not a registered property.
+             * @param prop a termprop name
+             * @returns the property's value, or %NULL
+             */
+            get_termprop_string(prop: string): [string | null, number];
+            /**
+             * Like vte_terminal_get_termprop_string() except that it takes the termprop
+             * by ID. See that function for more information.
+             * @param prop a termprop ID
+             * @returns the property's value, or %NULL
+             */
+            get_termprop_string_by_id(prop: number): [string | null, number];
+            /**
+             * For a %VTE_PROPERTY_UINT termprop, sets `value` to `prop'`s value,
+             * or to 0 if `prop` is unset, or `prop` is not a registered property.
+             *
+             * If only a subset or range of values are acceptable for the given property,
+             * the caller must validate the returned value and treat any out-of-bounds
+             * value as if the termprop had no value; in particular it *must not* clamp
+             * the values to the expected range.
+             * @param prop a termprop name
+             * @returns %TRUE iff the termprop is set
+             */
+            get_termprop_uint(prop: string): [boolean, number];
+            /**
+             * Like vte_terminal_get_termprop_uint() except that it takes the termprop
+             * by ID. See that function for more information.
+             * @param prop a termprop ID
+             * @returns %TRUE iff the termprop is set
+             */
+            get_termprop_uint_by_id(prop: number): [boolean, number];
+            /**
+             * Returns %TRUE with the value of `prop` stored in `value` (if not %NULL) if,
+             *   the termprop has a value, or %FALSE if `prop` is unset, or `prop` is not
+             *   a registered property; in that case `value` will not be set.
+             *
+             * The value type returned depends on the termprop type:
+             * * A %VTE_PROPERTY_VALUELESS termprop stores no value, and returns %FALSE
+             *   from this function.
+             * * A %VTE_PROPERTY_BOOL termprop stores a %G_TYPE_BOOLEAN value.
+             * * A %VTE_PROPERTY_INT termprop stores a %G_TYPE_INT64 value.
+             * * A %VTE_PROPERTY_UINT termprop stores a %G_TYPE_UINT64 value.
+             * * A %VTE_PROPERTY_DOUBLE termprop stores a %G_TYPE_DOUBLE value.
+             * * A %VTE_PROPERTY_RGB termprop stores a boxed #GdkRGBA value with alpha 1.0 on gtk3,
+             *    and nothing on gtk4.
+             * * A %VTE_PROPERTY_RGBA termprop stores a boxed #GdkRGBA value on gtk3,
+             *    and nothing on gtk4.
+             * * A %VTE_PROPERTY_STRING termprop stores a %G_TYPE_STRING value.
+             * * A %VTE_PROPERTY_DATA termprop stores a boxed #GBytes value.
+             * * A %VTE_PROPERTY_UUID termprop stores a boxed #VteUuid value.
+             * * A %VTE_PROPERTY_URI termprop stores a boxed #GUri value.
+             * @param prop a termprop name
+             * @returns %TRUE iff the property has a value, with @gvalue containig   the property's value.
+             */
+            get_termprop_value(prop: string): [boolean, GObject.Value | null];
+            /**
+             * Like vte_terminal_get_termprop_value() except that it takes the termprop
+             * by ID. See that function for more information.
+             * @param prop a termprop ID
+             * @returns %TRUE iff the property has a value, with @gvalue containig   the property's value.
+             */
+            get_termprop_value_by_id(prop: number): [boolean, GObject.Value | null];
             /**
              * Extracts a view of the visible part of the terminal.
              *
@@ -2352,6 +2837,64 @@ declare module 'gi://Vte?version=3.91' {
              * @returns a new #VtePty
              */
             pty_new_sync(flags: PtyFlags, cancellable?: Gio.Cancellable | null): Pty;
+            /**
+             * Returns the value of a %VTE_PROPERTY_DATA termprop as a #GBytes, or %NULL if
+             *   `prop` is unset, or `prop` is not a registered property.
+             * @param prop a termprop name
+             * @returns the property's value as a #GBytes, or %NULL
+             */
+            ref_termprop_data_bytes(prop: string): GLib.Bytes;
+            /**
+             * Like vte_terminal_ref_termprop_data_bytes() except that it takes the termprop
+             * by ID. See that function for more information.
+             * @param prop a termprop ID
+             * @returns the property's value as a #GBytes, or %NULL
+             */
+            ref_termprop_data_bytes_by_id(prop: number): GLib.Bytes;
+            /**
+             * Returns the value of a %VTE_PROPERTY_URI termprop as a #GUri, or %NULL if
+             *   `prop` is unset, or `prop` is not a registered property.
+             * @param prop a termprop name
+             * @returns the property's value as a #GUri, or %NULL
+             */
+            ref_termprop_uri(prop: string): GLib.Uri;
+            /**
+             * Like vte_terminal_ref_termprop_uri() except that it takes the termprop
+             * by ID. See that function for more information.
+             * @param prop a termprop ID
+             * @returns the property's value as a #GUri, or %NULL
+             */
+            ref_termprop_uri_by_id(prop: number): GLib.Uri;
+            /**
+             * Returns the value of `prop` as a #GVariant, or %NULL if
+             *   `prop` unset, or `prop` is not a registered property.
+             *
+             * The #GVariantType of the returned #GVariant depends on the termprop type:
+             * * A %VTE_PROPERTY_VALUELESS termprop returns a %G_VARIANT_TYPE_UNIT variant.
+             * * A %VTE_PROPERTY_BOOL termprop returns a %G_VARIANT_TYPE_BOOLEAN variant.
+             * * A %VTE_PROPERTY_INT termprop returns a %G_VARIANT_TYPE_INT64 variant.
+             * * A %VTE_PROPERTY_UINT termprop returns a %G_VARIANT_TYPE_UINT64 variant.
+             * * A %VTE_PROPERTY_DOUBLE termprop returns a %G_VARIANT_TYPE_DOUBLE variant.
+             * * A %VTE_PROPERTY_RGB or %VTE_PROPERTY_RGBA termprop returns a "(ddddv)"
+             *   tuple containing the red, green, blue, and alpha (1.0 for %VTE_PROPERTY_RGB)
+             *   components of the color and a variant of unspecified contents
+             * * A %VTE_PROPERTY_STRING termprop returns a %G_VARIANT_TYPE_STRING variant.
+             * * A %VTE_PROPERTY_DATA termprop returns a "ay" variant (which is *not* a bytestring!).
+             * * A %VTE_PROPERTY_UUID termprop returns a %G_VARIANT_TYPE_STRING variant
+             *   containing a string representation of the UUID in simple form.
+             * * A %VTE_PROPERTY_URI termprop returns a %G_VARIANT_TYPE_STRING variant
+             *   containing a string representation of the URI
+             * @param prop a termprop name
+             * @returns a floating #GVariant, or %NULL
+             */
+            ref_termprop_variant(prop: string): GLib.Variant;
+            /**
+             * Like vte_terminal_ref_termprop_variant() except that it takes the termprop
+             * by ID. See that function for more information.
+             * @param prop a termprop ID
+             * @returns a floating #GVariant, or %NULL
+             */
+            ref_termprop_variant_by_id(prop: number): GLib.Variant;
             /**
              * Resets as much of the terminal's internal state as possible, discarding any
              * unprocessed input data, resetting character attributes, cursor state,
@@ -2559,6 +3102,11 @@ declare module 'gi://Vte?version=3.91' {
              */
             set_delete_binding(binding: EraseBinding): void;
             /**
+             * Controls whether or not the terminal will communicate with a11y backends.
+             * @param enable_a11y %TRUE to enable a11y support
+             */
+            set_enable_a11y(enable_a11y: boolean): void;
+            /**
              * Controls whether or not the terminal will perform bidirectional text rendering.
              * @param enable_bidi %TRUE to enable BiDi support
              */
@@ -2573,6 +3121,12 @@ declare module 'gi://Vte?version=3.91' {
              * @param enable whether to enable fallback scrolling
              */
             set_enable_fallback_scrolling(enable: boolean): void;
+            /**
+             * Sets whether legacy OSC 777 sequences are translated to
+             * their corresponding termprops.
+             * @param enable whether to enable legacy OSC 777
+             */
+            set_enable_legacy_osc777(enable: boolean): void;
             /**
              * Controls whether or not the terminal will shape Arabic text.
              * @param enable_shaping %TRUE to enable Arabic shaping
@@ -2697,6 +3251,11 @@ declare module 'gi://Vte?version=3.91' {
              */
             set_size(columns: number, rows: number): void;
             /**
+             * Suppress emissions of signals and property notifications
+             * that are deprecated.
+             */
+            set_suppress_legacy_signals(): void;
+            /**
              * Controls whether or not the terminal will allow blinking text.
              * @param text_blink_mode the #VteTextBlinkMode to use
              */
@@ -2754,9 +3313,11 @@ declare module 'gi://Vte?version=3.91' {
              * @param argv child's argument vector
              * @param envv a list of environment   variables to be added to the environment before starting the process, or %NULL
              * @param spawn_flags flags from #GSpawnFlags
+             * @param child_setup an extra child setup function to run in the child just before exec(), or %NULL
              * @param child_setup_data_destroy a #GDestroyNotify for @child_setup_data, or %NULL
              * @param timeout a timeout value in ms, -1 for the default timeout, or G_MAXINT to wait indefinitely
              * @param cancellable a #GCancellable, or %NULL
+             * @param callback a #VteTerminalSpawnAsyncCallback, or %NULL
              */
             spawn_async(
                 pty_flags: PtyFlags,
@@ -2764,9 +3325,11 @@ declare module 'gi://Vte?version=3.91' {
                 argv: string[],
                 envv: string[] | null,
                 spawn_flags: GLib.SpawnFlags,
+                child_setup: GLib.SpawnChildSetupFunc | null,
                 child_setup_data_destroy: GLib.DestroyNotify | null,
                 timeout: number,
                 cancellable?: Gio.Cancellable | null,
+                callback?: TerminalSpawnAsyncCallback | null,
             ): void;
             /**
              * Starts the specified command under a newly-allocated controlling
@@ -2862,9 +3425,11 @@ declare module 'gi://Vte?version=3.91' {
              * @param fds an array of file descriptors, or %NULL
              * @param map_fds an array of integers, or %NULL
              * @param spawn_flags flags from #GSpawnFlags
+             * @param child_setup an extra child setup function to run in the child just before exec(), or %NULL
              * @param child_setup_data_destroy a #GDestroyNotify for @child_setup_data, or %NULL
              * @param timeout a timeout value in ms, -1 for the default timeout, or G_MAXINT to wait indefinitely
              * @param cancellable a #GCancellable, or %NULL
+             * @param callback a #VteTerminalSpawnAsyncCallback, or %NULL
              */
             spawn_with_fds_async(
                 pty_flags: PtyFlags,
@@ -2874,9 +3439,11 @@ declare module 'gi://Vte?version=3.91' {
                 fds: number[] | null,
                 map_fds: number[] | null,
                 spawn_flags: GLib.SpawnFlags,
+                child_setup: GLib.SpawnChildSetupFunc | null,
                 child_setup_data_destroy: GLib.DestroyNotify | null,
                 timeout: number,
                 cancellable?: Gio.Cancellable | null,
+                callback?: TerminalSpawnAsyncCallback | null,
             ): void;
             /**
              * Clears the current selection.
@@ -3141,6 +3708,121 @@ declare module 'gi://Vte?version=3.91' {
              * @param state platform state to query
              */
             vfunc_get_platform_state(state: Gtk.AccessiblePlatformState): boolean;
+            /**
+             * Updates the position of the caret.
+             *
+             * Implementations of the `GtkAccessibleText` interface should call this
+             * function every time the caret has moved, in order to notify assistive
+             * technologies.
+             */
+            update_caret_position(): void;
+            /**
+             * Notifies assistive technologies of a change in contents.
+             *
+             * Implementations of the `GtkAccessibleText` interface should call this
+             * function every time their contents change as the result of an operation,
+             * like an insertion or a removal.
+             *
+             * Note: If the change is a deletion, this function must be called *before*
+             * removing the contents, if it is an insertion, it must be called *after*
+             * inserting the new contents.
+             * @param change the type of change in the contents
+             * @param start the starting offset of the change, in characters
+             * @param end the end offset of the change, in characters
+             */
+            update_contents(change: Gtk.AccessibleTextContentChange, start: number, end: number): void;
+            /**
+             * Updates the boundary of the selection.
+             *
+             * Implementations of the `GtkAccessibleText` interface should call this
+             * function every time the selection has moved, in order to notify assistive
+             * technologies.
+             */
+            update_selection_bound(): void;
+            /**
+             * Retrieves the text attributes inside the accessible object.
+             *
+             * Each attribute is composed by:
+             *
+             * - a range
+             * - a name
+             * - a value
+             *
+             * It is left to the implementation to determine the serialization format
+             * of the value to a string.
+             *
+             * GTK provides support for various text attribute names and values, but
+             * implementations of this interface are free to add their own attributes.
+             *
+             * If this function returns true, `n_ranges` will be set to a value
+             * greater than or equal to one, `ranges` will be set to a newly
+             * allocated array of [struct#Gtk.AccessibleTextRange].
+             * @param offset the offset, in characters
+             */
+            vfunc_get_attributes(
+                offset: number,
+            ): [boolean, Gtk.AccessibleTextRange[] | null, string[] | null, string[] | null];
+            /**
+             * Retrieves the position of the caret inside the accessible object.
+             */
+            vfunc_get_caret_position(): number;
+            /**
+             * Retrieve the current contents of the accessible object within
+             * the given range.
+             *
+             * If `end` is `G_MAXUINT`, the end of the range is the full content
+             * of the accessible object.
+             * @param start the beginning of the range, in characters
+             * @param end the end of the range, in characters
+             */
+            vfunc_get_contents(start: number, end: number): GLib.Bytes;
+            /**
+             * Retrieve the current contents of the accessible object starting
+             * from the given offset, and using the given granularity.
+             *
+             * The `start` and `end` values contain the boundaries of the text.
+             * @param offset the offset, in characters
+             * @param granularity the granularity of the query
+             */
+            vfunc_get_contents_at(
+                offset: number,
+                granularity: Gtk.AccessibleTextGranularity,
+            ): [GLib.Bytes, number, number];
+            /**
+             * Retrieves the default text attributes inside the accessible object.
+             *
+             * Each attribute is composed by:
+             *
+             * - a name
+             * - a value
+             *
+             * It is left to the implementation to determine the serialization format
+             * of the value to a string.
+             *
+             * GTK provides support for various text attribute names and values, but
+             * implementations of this interface are free to add their own attributes.
+             */
+            vfunc_get_default_attributes(): [string[] | null, string[] | null];
+            /**
+             * Obtains the extents of a range of text, in widget coordinates.
+             * @param start the start offset, in characters
+             * @param end the end offset, in characters, @extents (out caller-allocates): return location for the extents
+             * @param extents
+             */
+            vfunc_get_extents(start: number, end: number, extents: Graphene.Rect): boolean;
+            /**
+             * Gets the text offset at a given point.
+             * @param point a point in widget coordinates of @self
+             */
+            vfunc_get_offset(point: Graphene.Point): [boolean, number];
+            /**
+             * Retrieves the selection ranges in the accessible object.
+             *
+             * If this function returns true, `n_ranges` will be set to a value
+             * greater than or equal to one, and `ranges` will be set to a newly
+             * allocated array of [struct#Gtk.AccessibleTextRange].
+             */
+            vfunc_get_selection(): [boolean, Gtk.AccessibleTextRange[] | null];
             /**
              * Gets the ID of the `buildable` object.
              *
@@ -3788,6 +4470,32 @@ declare module 'gi://Vte?version=3.91' {
             // Constructors
 
             _init(...args: any[]): void;
+        }
+
+        class Uuid {
+            static $gtype: GObject.GType<Uuid>;
+
+            // Constructors
+
+            constructor(properties?: Partial<{}>);
+            _init(...args: any[]): void;
+
+            static new_from_string(str: string, len: number, fmt: UuidFormat): Uuid;
+
+            static new_v4(): Uuid;
+
+            // Static methods
+
+            static validate_string(str: string, len: number, fmt: UuidFormat): boolean;
+
+            // Methods
+
+            dup(): Uuid;
+            equal(other: Uuid): boolean;
+            free(): void;
+            free_to_string(fmt: UuidFormat, len: number): string;
+            new_v5(data: string, len: number): Uuid;
+            to_string(fmt: UuidFormat, len: number): string;
         }
 
         /**

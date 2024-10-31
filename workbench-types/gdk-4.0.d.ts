@@ -2975,6 +2975,11 @@ declare module 'gi://Gdk?version=4.0' {
         const KEY_circle: number;
         const KEY_club: number;
         const KEY_colon: number;
+        const KEY_combining_acute: number;
+        const KEY_combining_belowdot: number;
+        const KEY_combining_grave: number;
+        const KEY_combining_hook: number;
+        const KEY_combining_tilde: number;
         const KEY_comma: number;
         const KEY_containsas: number;
         const KEY_copyright: number;
@@ -2991,6 +2996,7 @@ declare module 'gi://Gdk?version=4.0' {
         const KEY_dead_E: number;
         const KEY_dead_I: number;
         const KEY_dead_O: number;
+        const KEY_dead_SCHWA: number;
         const KEY_dead_U: number;
         const KEY_dead_a: number;
         const KEY_dead_abovecomma: number;
@@ -3021,6 +3027,7 @@ declare module 'gi://Gdk?version=4.0' {
         const KEY_dead_e: number;
         const KEY_dead_grave: number;
         const KEY_dead_greek: number;
+        const KEY_dead_hamza: number;
         const KEY_dead_hook: number;
         const KEY_dead_horn: number;
         const KEY_dead_i: number;
@@ -3033,6 +3040,7 @@ declare module 'gi://Gdk?version=4.0' {
         const KEY_dead_ogonek: number;
         const KEY_dead_perispomeni: number;
         const KEY_dead_psili: number;
+        const KEY_dead_schwa: number;
         const KEY_dead_semivoiced_sound: number;
         const KEY_dead_small_schwa: number;
         const KEY_dead_stroke: number;
@@ -3127,6 +3135,8 @@ declare module 'gi://Gdk?version=4.0' {
         const KEY_grave: number;
         const KEY_greater: number;
         const KEY_greaterthanequal: number;
+        const KEY_guillemetleft: number;
+        const KEY_guillemetright: number;
         const KEY_guillemotleft: number;
         const KEY_guillemotright: number;
         const KEY_h: number;
@@ -3370,6 +3380,7 @@ declare module 'gi://Gdk?version=4.0' {
         const KEY_opentribulletdown: number;
         const KEY_opentribulletup: number;
         const KEY_ordfeminine: number;
+        const KEY_ordmasculine: number;
         const KEY_oslash: number;
         const KEY_otilde: number;
         const KEY_overbar: number;
@@ -3627,6 +3638,21 @@ declare module 'gi://Gdk?version=4.0' {
          * @param rgba a `GdkRGBA`
          */
         function cairo_set_source_rgba(cr: cairo.Context, rgba: RGBA): void;
+        /**
+         * Returns the color state object representing the oklab color space.
+         *
+         * This is a perceptually uniform color state.
+         * @returns the color state object for oklab
+         */
+        function color_state_get_oklab(): ColorState;
+        /**
+         * Returns the color state object representing the oklch color space.
+         *
+         * This is the polar variant of oklab, in which the hue is encoded as
+         * a polar coordinate.
+         * @returns the color state object for oklch
+         */
+        function color_state_get_oklch(): ColorState;
         /**
          * Returns the color state object representing the linear rec2100 color space.
          *
@@ -13003,7 +13029,18 @@ declare module 'gi://Gdk?version=4.0' {
          *
          * `GdkTexture` is an immutable object: That means you cannot change
          * anything about it other than increasing the reference count via
-         * [method`GObject`.Object.ref], and consequently, it is a thread-safe object.
+         * [method`GObject`.Object.ref], and consequently, it is a threadsafe object.
+         *
+         * GDK provides a number of threadsafe texture loading functions:
+         * [ctor`Gdk`.Texture.new_from_resource],
+         * [ctor`Gdk`.Texture.new_from_bytes],
+         * [ctor`Gdk`.Texture.new_from_file],
+         * [ctor`Gdk`.Texture.new_from_filename],
+         * [ctor`Gdk`.Texture.new_for_pixbuf]. Note that these are meant for loading
+         * icons and resources that are shipped with the toolkit or application. It
+         * is recommended that you use a dedicated image loading framework such as
+         * [glycin](https://lib.rs/crates/glycin), if you need to load untrusted image
+         * data.
          */
         abstract class Texture extends GObject.Object implements Paintable, Gio.Icon, Gio.LoadableIcon {
             static $gtype: GObject.GType<Texture>;
@@ -14486,6 +14523,19 @@ declare module 'gi://Gdk?version=4.0' {
 
             // Static methods
 
+            /**
+             * Returns the color state object representing the oklab color space.
+             *
+             * This is a perceptually uniform color state.
+             */
+            static get_oklab(): ColorState;
+            /**
+             * Returns the color state object representing the oklch color space.
+             *
+             * This is the polar variant of oklab, in which the hue is encoded as
+             * a polar coordinate.
+             */
+            static get_oklch(): ColorState;
             /**
              * Returns the color state object representing the linear rec2100 color space.
              *

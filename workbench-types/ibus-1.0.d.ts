@@ -25,6 +25,80 @@ declare module 'gi://IBus?version=1.0' {
          */
 
         /**
+         * Type of Pre-edit style as the semantic name.
+         * The Wayland specs prefers to express the semantic values rather than RGB
+         * values and text-input protocol version 1 defines some values:
+         * https://gitlab.freedesktop.org/wayland/wayland-protocols/-/blob/main/unstable/text-input/text-input-unstable-v1.xml?ref_type=heads#L251
+         *
+         * IBus compiled the values for major input method engines:
+         * https://github.com/ibus/ibus/wiki/Wayland-Colors
+         */
+
+        /**
+         * Type of Pre-edit style as the semantic name.
+         * The Wayland specs prefers to express the semantic values rather than RGB
+         * values and text-input protocol version 1 defines some values:
+         * https://gitlab.freedesktop.org/wayland/wayland-protocols/-/blob/main/unstable/text-input/text-input-unstable-v1.xml?ref_type=heads#L251
+         *
+         * IBus compiled the values for major input method engines:
+         * https://github.com/ibus/ibus/wiki/Wayland-Colors
+         */
+        export namespace AttrPreedit {
+            export const $gtype: GObject.GType<AttrPreedit>;
+        }
+
+        enum AttrPreedit {
+            /**
+             * Default style for composing text.
+             */
+            DEFAULT,
+            /**
+             * Style should be the same as in non-composing text.
+             */
+            NONE,
+            /**
+             * Most language engines wish to draw underline in
+             *                           the typed whole preedit string except for the
+             *                           prediction string. (Chinese, Japanese,
+             *                           Typing-booster)
+             */
+            WHOLE,
+            /**
+             * Modifying an active segment is distinguished
+             *                               against whole the preedit text. (Hangul,
+             *                               Japanese)
+             */
+            SELECTION,
+            /**
+             * A prediction string can be appended after the
+             *                                typed string. (Typing-booster)
+             */
+            PREDICTION,
+            /**
+             * A prefix string can be an informative color.
+             *                            (Table)
+             */
+            PREFIX,
+            /**
+             * A suffix string can be an informative color.
+             *                            (Table)
+             */
+            SUFFIX,
+            /**
+             * An detected typo could be an error color
+             *                                    with a spelling check or the word could
+             *                                    not be found in a dictionary. The
+             *                                    underline color also might be more
+             *                                    visible. (Typing-booster, Table)
+             */
+            ERROR_SPELLING,
+            /**
+             * A wrong compose key could be an error
+             *                                   color. (Typing-booster)
+             */
+            ERROR_COMPOSE,
+        }
+        /**
          * Type enumeration of IBusText attribute.
          */
 
@@ -81,6 +155,31 @@ declare module 'gi://IBus?version=1.0' {
              * Error underline
              */
             ERROR,
+        }
+        /**
+         * Type enumeration of IBusBusGlobalBindingType.
+         */
+
+        /**
+         * Type enumeration of IBusBusGlobalBindingType.
+         */
+        export namespace BusGlobalBindingType {
+            export const $gtype: GObject.GType<BusGlobalBindingType>;
+        }
+
+        enum BusGlobalBindingType {
+            /**
+             * Any types
+             */
+            ANY,
+            /**
+             * IME switcher
+             */
+            IME_SWITCHER,
+            /**
+             * Emoji typing
+             */
+            EMOJI_TYPING,
         }
 
         export namespace BusRequestNameReply {
@@ -5455,6 +5554,10 @@ declare module 'gi://IBus?version=1.0' {
                 (name: string): void;
             }
 
+            interface GlobalShortcutKeyResponded {
+                (type: number, is_pressed: boolean, is_backward: boolean): void;
+            }
+
             interface NameOwnerChanged {
                 (name: string, old_owner: string, new_owner: string): void;
             }
@@ -5520,6 +5623,20 @@ declare module 'gi://IBus?version=1.0' {
             connect(signal: 'global-engine-changed', callback: (_source: this, name: string) => void): number;
             connect_after(signal: 'global-engine-changed', callback: (_source: this, name: string) => void): number;
             emit(signal: 'global-engine-changed', name: string): void;
+            connect(
+                signal: 'global-shortcut-key-responded',
+                callback: (_source: this, type: number, is_pressed: boolean, is_backward: boolean) => void,
+            ): number;
+            connect_after(
+                signal: 'global-shortcut-key-responded',
+                callback: (_source: this, type: number, is_pressed: boolean, is_backward: boolean) => void,
+            ): number;
+            emit(
+                signal: 'global-shortcut-key-responded',
+                type: number,
+                is_pressed: boolean,
+                is_backward: boolean,
+            ): void;
             connect(
                 signal: 'name-owner-changed',
                 callback: (_source: this, name: string, old_owner: string, new_owner: string) => void,
@@ -6038,6 +6155,34 @@ declare module 'gi://IBus?version=1.0' {
              * @returns %TRUE if no IPC errros. %FALSE otherwise.
              */
             set_global_engine_async_finish(res: Gio.AsyncResult): boolean;
+            /**
+             * Set global shorcut keys for the Wayland session.
+             * @param gtype A #IBusBusGlobalBindingType.
+             * @param keys A %NULL-terminated array of #IBusProcessKeyEventData.        keycode is used for the selecting direction and the forward direction        in case of 0, otherwise the backward direction.
+             * @returns %TRUE if the global shortcut keys are set. %FALSE otherwise.
+             */
+            set_global_shortcut_keys(gtype: BusGlobalBindingType, keys: ProcessKeyEventData[]): boolean;
+            /**
+             * Sete global shorcut keys for the Wayland session asynchronously.
+             * @param gtype A #IBusBusGlobalBindingType.
+             * @param keys A %NULL-terminated array of #IBusProcessKeyEventData.
+             * @param timeout_msec The timeout in milliseconds or -1 to use the default timeout.
+             * @param cancellable A #GCancellable or %NULL.
+             * @param callback A #GAsyncReadyCallback to call when the request is satisfied      or %NULL if you don't care about the result of the method invocation.
+             */
+            set_global_shortcut_keys_async(
+                gtype: BusGlobalBindingType,
+                keys: ProcessKeyEventData[],
+                timeout_msec: number,
+                cancellable?: Gio.Cancellable | null,
+                callback?: Gio.AsyncReadyCallback<this> | null,
+            ): void;
+            /**
+             * Finishes an operation started with ibus_bus_set_global_shortcut_keys_async().
+             * @param res A #GAsyncResult obtained from the #GAsyncReadyCallback passed to   ibus_bus_set_global_shortcut_keys_async().
+             * @returns %TRUE if the global shortcut keys are set. %FALSE otherwise.
+             */
+            set_global_shortcut_keys_async_finish(res: Gio.AsyncResult): boolean;
             /**
              * Set org.freedesktop.DBus.Properties.
              * @param property_name property name in org.freedesktop.DBus.Properties.Set
@@ -8543,6 +8688,14 @@ declare module 'gi://IBus?version=1.0' {
              */
             needs_surrounding_text(): boolean;
             /**
+             * Call this API after ibus_input_context_process_key_event() returns
+             * to retrieve commit-text and forwar-key-event signals during
+             * calling ibus_input_context_process_key_event().
+             *
+             * See also ibus_input_context_set_post_process_key_event().
+             */
+            post_process_key_event(): void;
+            /**
              * Pass a handwriting stroke to an input method engine.
              *
              * In this API, a coordinate (0.0, 0.0) represents the top-left corner of an area for
@@ -8682,6 +8835,7 @@ declare module 'gi://IBus?version=1.0' {
              * @param name A name of the engine.
              */
             set_engine(name: string): void;
+            set_post_process_key_event(enable: boolean): void;
             set_surrounding_text(text: Text, cursor_pos: number, anchor_pos: number): void;
 
             // Inherited methods
@@ -11147,6 +11301,7 @@ declare module 'gi://IBus?version=1.0' {
              * The connection of service object.
              */
             get connection(): Gio.DBusConnection;
+            set connection(val: Gio.DBusConnection);
             /**
              * The path of service object.
              */
@@ -11170,6 +11325,7 @@ declare module 'gi://IBus?version=1.0' {
             // Static methods
 
             static add_interfaces(xml_data: string): boolean;
+            static free_interfaces(depth: number): number;
 
             // Virtual methods
 

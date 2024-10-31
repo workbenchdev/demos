@@ -12,6 +12,7 @@ import './vte-3.91.d.ts';
 import './spelling-1.d.ts';
 import './shumate-1.0.d.ts';
 import './jsonrpc-1.0.d.ts';
+import './gom-1.0.d.ts';
 import './xrandr-1.3.d.ts';
 import './xlib-2.0.d.ts';
 import './xft-2.0.d.ts';

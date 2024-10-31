@@ -8433,9 +8433,9 @@ declare module 'gi://Soup?version=3.0' {
              * Request an asynchronous read of `count` bytes from the stream into the
              * buffer starting at `buffer`.
              *
-             * This is the asynchronous equivalent of g_input_stream_read_all().
+             * This is the asynchronous equivalent of [method`InputStream`.read_all].
              *
-             * Call g_input_stream_read_all_finish() to collect the result.
+             * Call [method`InputStream`.read_all_finish] to collect the result.
              *
              * Any outstanding I/O request with higher priority (lower numerical
              * value) will be executed before an outstanding request with lower
@@ -8451,7 +8451,7 @@ declare module 'gi://Soup?version=3.0' {
             ): Uint8Array;
             /**
              * Finishes an asynchronous stream read operation started with
-             * g_input_stream_read_all_async().
+             * [method`InputStream`.read_all_async].
              *
              * As a special exception to the normal conventions for functions that
              * use #GError, if this function returns %FALSE (and sets `error)` then
@@ -8799,9 +8799,11 @@ declare module 'gi://Soup?version=3.0' {
         }
 
         /**
-         * A HTTP server.
-         *
-         * #SoupServer implements a simple HTTP server.
+         * #SoupServer provides a basic implementation of an HTTP server. The
+         * recommended usage of this server is for internal use, tasks like
+         * a mock server for tests, a private service for IPC, etc. It is not
+         * recommended to be exposed to untrusted clients as it may be vulnerable
+         * to denial of service attacks or other exploits.
          *
          * To begin, create a server using [ctor`Server`.new]. Add at least one
          * handler by calling [method`Server`.add_handler] or
@@ -9550,7 +9552,7 @@ declare module 'gi://Soup?version=3.0' {
             /**
              * Retrieves the [class`Gio`.SocketAddress] associated with the remote end
              * of a connection.
-             * @returns the #GSocketAddress   associated with the remote end of a connection, it may be   %NULL if you used [class@Server.accept_iostream].
+             * @returns the #GSocketAddress   associated with the remote end of a connection, it may be   %NULL if you used [method@Server.accept_iostream].
              */
             get_remote_address(): Gio.SocketAddress | null;
             /**
