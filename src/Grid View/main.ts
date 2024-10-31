@@ -1,8 +1,8 @@
 import Gtk from "gi://Gtk?version=4.0";
 
 const grid_view = workbench.builder.get_object<Gtk.GridView>("grid_view");
-const add = workbench.builder.get_object("add");
-const remove = workbench.builder.get_object("remove");
+const add = workbench.builder.get_object<Gtk.Button>("add");
+const remove = workbench.builder.get_object<Gtk.Button>("remove");
 
 //Model
 let item = 1;
