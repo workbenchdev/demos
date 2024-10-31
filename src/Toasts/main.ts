@@ -31,7 +31,7 @@ function advanced() {
   overlay.add_toast(toast);
 }
 
-workbench.builder.get_object("button_advanced").connect("clicked", advanced);
+workbench.builder.get_object<Gtk.Button>("button_advanced").connect("clicked", advanced);
 
 const action_console = new Gio.SimpleAction({
   name: "undo",
