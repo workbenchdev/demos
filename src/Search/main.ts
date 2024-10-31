@@ -1,7 +1,7 @@
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk?version=4.0";
 
-const button = workbench.builder.get_object("button_search");
+const button = workbench.builder.get_object<Gtk.ToggleButton>("button_search");
 const searchbar = workbench.builder.get_object<Gtk.SearchBar>("searchbar");
 const searchentry = workbench.builder.get_object<Gtk.SearchEntry>(
   "searchentry",
