@@ -1,4 +1,5 @@
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk?version=4.0";
 
 const { application, builder } = workbench;
 
@@ -16,7 +17,7 @@ notification.add_button("Decline", "app.notification-decline");
 const icon = new Gio.ThemedIcon({ name: "object-rotate-right-symbolic" });
 notification.set_icon(icon);
 
-builder.get_object("button_simple").connect("clicked", () => {
+builder.get_object<Gtk.Button>("button_simple").connect("clicked", () => {
   application.send_notification("lunch-is-ready", notification);
 });
 
