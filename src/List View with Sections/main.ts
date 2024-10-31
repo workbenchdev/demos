@@ -1,7 +1,7 @@
 import Gtk from "gi://Gtk";
 import GObject from "gi://GObject";
 
-const list_view = workbench.builder.get_object("list_view");
+const list_view = workbench.builder.get_object<Gtk.ListView>("list_view");
 const item_factory = workbench.builder.get_object("item_factory");
 const header_factory = workbench.builder.get_object("header_factory");
 
