@@ -3,12 +3,13 @@ import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
+import Gtk from "gi://Gtk?version=4.0";
 
 Gio._promisify(Xdp.Portal.prototype, "pick_color", "pick_color_finish");
 
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
-const button = workbench.builder.get_object("button");
+const button = workbench.builder.get_object<Gtk.Button>("button");
 
 async function onClicked() {
   // result is a GVariant of the form (ddd), containing red, green and blue components in the range [0,1]
