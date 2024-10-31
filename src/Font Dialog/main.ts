@@ -9,7 +9,7 @@ Gio._promisify(
 );
 
 const font_dialog_button = workbench.builder.get_object<Gtk.FontDialogButton>("font_dialog_button");
-const custom_button = workbench.builder.get_object("custom_button");
+const custom_button = workbench.builder.get_object<Gtk.Button>("custom_button");
 
 const dialog_standard = new Gtk.FontDialog({
   title: "Select a Font",
