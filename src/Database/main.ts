@@ -16,38 +16,54 @@ Gio._promisify(Gom.Repository.prototype, "find_async", "find_finish");
 Gio._promisify(Gom.Resource.prototype, "save_async", "save_finish");
 Gio._promisify(Gom.ResourceGroup.prototype, "fetch_async", "fetch_finish");
 
-const text_entry = workbench.builder.get_object("text_entry");
+const text_entry = workbench.builder.get_object<Gtk.Entry>("text_entry");
 const insert_button = workbench.builder.get_object("insert_button");
-const search_entry = workbench.builder.get_object("search_entry");
-const column_view = workbench.builder.get_object("column_view");
-const column_text = workbench.builder.get_object("column_text");
-const column_id = workbench.builder.get_object("column_id");
-
-const ItemClass = GObject.registerClass(
-  {
-    Properties: {
-      id: GObject.ParamSpec.int(
-        "id",
-        "ID",
-        "An ID",
-        GObject.ParamFlags.READWRITE | GObject.ParamFlags.CONSTRUCT,
-        0,
-        GLib.MAXINT32,
-        0,
-      ),
-      text: GObject.ParamSpec.string(
-        "text",
-        "Text",
-        "Some Text",
-        GObject.ParamFlags.READWRITE | GObject.ParamFlags.CONSTRUCT,
-        "",
-      ),
-    },
-  },
-  class ItemClass extends Gom.Resource {},
+const search_entry = workbench.builder.get_object<Gtk.SearchEntry>(
+  "search_entry",
+);
+const column_view = workbench.builder.get_object<Gtk.ColumnView>("column_view");
+const column_text = workbench.builder.get_object<Gtk.ColumnViewColumn>(
+  "column_text",
+);
+const column_id = workbench.builder.get_object<Gtk.ColumnViewColumn>(
+  "column_id",
 );
 
-const data_model = new Gio.ListStore({ item_type: ItemClass });
+interface ItemClassConstructorProps extends Gom.Resource.ConstructorProps {
+  id: number;
+  text: string;
+}
+
+class ItemClass extends Gom.Resource {
+  constructor(props?: Partial<ItemClassConstructorProps>) {
+    super(props);
+  }
+
+  static {
+    GObject.registerClass({
+      Properties: {
+        id: GObject.ParamSpec.int(
+          "id",
+          "ID",
+          "An ID",
+          GObject.ParamFlags.READWRITE | GObject.ParamFlags.CONSTRUCT,
+          0,
+          GLib.MAXINT32,
+          0,
+        ),
+        text: GObject.ParamSpec.string(
+          "text",
+          "Text",
+          "Some Text",
+          GObject.ParamFlags.READWRITE | GObject.ParamFlags.CONSTRUCT,
+          "",
+        ),
+      },
+    }, this);
+  }
+}
+
+const data_model = new Gio.ListStore({ item_type: ItemClass.$gtype });
 let adapter;
 let repository;
 
@@ -67,7 +83,8 @@ async function initDatabase() {
 async function onInsert() {
   const text = text_entry.text;
   const item = new ItemClass({ repository, text });
-  const success = await item.save_async();
+  // @ts-expect-error this function has not been detected as async
+  const success = await item.save_async() as boolean;
   if (!success) {
     console.error("Failed to insert");
     return;
@@ -81,7 +98,7 @@ async function load() {
 
   data_model.remove_all();
   // Create a filter for Text matching
-  const filter = Gom.Filter.new_glob(ItemClass, "text", `*${text}*`);
+  const filter = Gom.Filter.new_glob(ItemClass.$gtype, "text", `*${text}*`);
   const resource_group = await repository.find_async(ItemClass, filter);
 
   await resource_group.fetch_async(0, resource_group.count);
