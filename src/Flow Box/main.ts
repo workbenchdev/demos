@@ -1,7 +1,7 @@
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk?version=4.0";
 
-const flowbox = workbench.builder.get_object("flowbox");
+const flowbox = workbench.builder.get_object<Gtk.FlowBox>("flowbox");
 
 for (let code = 128513; code <= 128591; code++) {
   addEmoji(flowbox, String.fromCodePoint(code));
