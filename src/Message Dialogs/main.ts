@@ -4,9 +4,9 @@ import Gtk from "gi://Gtk?version=4.0";
 
 Gio._promisify(Adw.AlertDialog.prototype, "choose", "choose_finish");
 
-const button_confirmation = workbench.builder.get_object("button_confirmation");
-const button_error = workbench.builder.get_object("button_error");
-const button_advanced = workbench.builder.get_object("button_advanced");
+const button_confirmation = workbench.builder.get_object<Gtk.Button>("button_confirmation");
+const button_error = workbench.builder.get_object<Gtk.Button>("button_error");
+const button_advanced = workbench.builder.get_object<Gtk.Button>("button_advanced");
 
 async function createConfirmationDialog() {
   const dialog = new Adw.AlertDialog({
