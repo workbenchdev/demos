@@ -11,10 +11,10 @@ Gio._promisify(
 Gio._promisify(Gtk.FileDialog.prototype, "open", "open_finish");
 Gio._promisify(Gtk.UriLauncher.prototype, "launch", "launch_finish");
 
-const launch_file = workbench.builder.get_object("launch_file");
+const launch_file = workbench.builder.get_object<Gtk.Button>("launch_file");
 const file_name = workbench.builder.get_object<Gtk.Label>("file_name");
-const file_location = workbench.builder.get_object("file_location");
-const change_file = workbench.builder.get_object("change_file");
+const file_location = workbench.builder.get_object<Gtk.Button>("file_location");
+const change_file = workbench.builder.get_object<Gtk.Button>("change_file");
 const uri_launch = workbench.builder.get_object<Gtk.Button>("uri_launch");
 const uri_details = workbench.builder.get_object<Gtk.Entry>("uri_details");
 
