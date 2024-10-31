@@ -1,9 +1,9 @@
 import Gtk from "gi://Gtk?version=4.0";
 
 const interactive_box = workbench.builder.get_object<Gtk.Box>("interactive_box");
-const button_append = workbench.builder.get_object("button_append");
-const button_prepend = workbench.builder.get_object("button_prepend");
-const button_remove = workbench.builder.get_object("button_remove");
+const button_append = workbench.builder.get_object<Gtk.Button>("button_append");
+const button_prepend = workbench.builder.get_object<Gtk.Button>("button_prepend");
+const button_remove = workbench.builder.get_object<Gtk.Button>("button_remove");
 let count = 0;
 
 button_append.connect("clicked", append);
