@@ -6,9 +6,9 @@ import Gtk from "gi://Gtk?version=4.0";
 Gio._promisify(Gtk.FileLauncher.prototype, "launch", "launch_finish");
 
 const edit_entry = workbench.builder.get_object<Gtk.TextView>("edit_entry");
-const view_file = workbench.builder.get_object("view_file");
-const delete_file = workbench.builder.get_object("delete_file");
-const edit_file = workbench.builder.get_object("edit_file");
+const view_file = workbench.builder.get_object<Gtk.Button>("view_file");
+const delete_file = workbench.builder.get_object<Gtk.Button>("delete_file");
+const edit_file = workbench.builder.get_object<Gtk.Button>("edit_file");
 const file_name = workbench.builder.get_object<Gtk.Label>("file_name");
 const { buffer } = edit_entry;
 const file = Gio.File.new_for_uri(workbench.resolve("workbench.txt"));
