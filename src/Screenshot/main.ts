@@ -7,7 +7,7 @@ import XdpGtk from "gi://XdpGtk4";
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
 
-const button = workbench.builder.get_object("button");
+const button = workbench.builder.get_object<Gtk.Button>("button");
 const picture = workbench.builder.get_object<Gtk.Picture>("picture");
 
 Gio._promisify(
