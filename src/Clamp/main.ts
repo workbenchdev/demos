@@ -1,7 +1,8 @@
+import Gtk from "gi://Gtk?version=4.0";
 import Adw1 from "gi://Adw";
 
-const button_increase = workbench.builder.get_object("button_increase");
-const button_decrease = workbench.builder.get_object("button_decrease");
+const button_increase = workbench.builder.get_object<Gtk.Button>("button_increase");
+const button_decrease = workbench.builder.get_object<Gtk.Button>("button_decrease");
 const clamp = workbench.builder.get_object<Adw1.Clamp>("clamp");
 
 function increase() {
