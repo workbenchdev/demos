@@ -17,7 +17,7 @@ Gio._promisify(Gom.Resource.prototype, "save_async", "save_finish");
 Gio._promisify(Gom.ResourceGroup.prototype, "fetch_async", "fetch_finish");
 
 const text_entry = workbench.builder.get_object<Gtk.Entry>("text_entry");
-const insert_button = workbench.builder.get_object("insert_button");
+const insert_button = workbench.builder.get_object<Gtk.Button>("insert_button");
 const search_entry = workbench.builder.get_object<Gtk.SearchEntry>(
   "search_entry",
 );
