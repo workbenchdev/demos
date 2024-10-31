@@ -1,3 +1,4 @@
+import Gtk from "gi://Gtk?version=4.0";
 import Adw from "gi://Adw";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
@@ -56,7 +57,7 @@ scale_action.connect("notify::state", (action) => {
 
 demo_group.add_action(scale_action);
 
-const text = workbench.builder.get_object("text");
+const text = workbench.builder.get_object<Gtk.Label>("text");
 
 const alignment_action = new Gio.PropertyAction({
   name: "text-align",
