@@ -2,7 +2,7 @@ import Gtk from "gi://Gtk?version=4.0";
 import Manette from "gi://Manette";
 
 const stack = workbench.builder.get_object<Gtk.Stack>("stack");
-const button_rumble = workbench.builder.get_object("button_rumble");
+const button_rumble = workbench.builder.get_object<Gtk.Button>("button_rumble");
 
 const devices = new Set<Manette.Device>();
 
