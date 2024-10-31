@@ -8,7 +8,7 @@ Gio._promisify(
   "replace_contents_finish",
 );
 
-const button = workbench.builder.get_object("button");
+const button = workbench.builder.get_object<Gtk.Button>("button");
 
 async function saveFile() {
   const file_dialog = new Gtk.FileDialog({
