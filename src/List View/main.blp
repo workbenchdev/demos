@@ -16,20 +16,6 @@ Adw.StatusPage {
       Box {
         halign: center;
 
-        LinkButton {
-          label: _("API Reference");
-          uri: "https://docs.gtk.org/gtk4/class.ListView.html";
-        }
-
-        LinkButton {
-          label: _("Documentation");
-          uri: "https://docs.gtk.org/gtk4/section-list-widget.html";
-        }
-      }
-
-      Box {
-        halign: center;
-
         styles [
           "linked"
         ]
@@ -45,35 +31,39 @@ Adw.StatusPage {
         }
       }
 
-      Gtk.Stack stack {
-        transition-type: crossfade;
-        vexpand: true;
+      ScrolledWindow {
+        hscrollbar-policy: never;
+        propagate-natural-height: true;
+        has-frame: true;
+        valign: start;
 
-        Gtk.StackPage {
-          name: "listview";
-          title: _("List View");
-
-          child: ScrolledWindow {
-            hscrollbar-policy: never;
-            propagate-natural-height: true;
-            has-frame: true;
-            valign: start;
-
-            ListView list_view {
-              factory: BuilderListItemFactory {
-                template ListItem {
-                  child: Gtk.Box {
-                    Gtk.Label {
-                      label: bind template.item as <StringObject>.string;
-                      height-request: 50;
-                      margin-start: 12;
-                      margin-end: 12;
-                    }
-                  };
+        ListView list_view {
+          factory: BuilderListItemFactory {
+            template ListItem {
+              child: Gtk.Box {
+                Gtk.Label {
+                  label: bind template.item as <StringObject>.string;
+                  height-request: 50;
+                  margin-start: 12;
+                  margin-end: 12;
                 }
               };
             }
           };
+        }
+      }
+
+      Box {
+        halign: center;
+
+        LinkButton {
+          label: _("API Reference");
+          uri: "https://docs.gtk.org/gtk4/class.ListView.html";
+        }
+
+        LinkButton {
+          label: _("Documentation");
+          uri: "https://docs.gtk.org/gtk4/section-list-widget.html";
         }
       }
     }
