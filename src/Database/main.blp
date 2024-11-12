@@ -42,23 +42,11 @@ Adw.StatusPage {
           search-delay: 100;
         }
       }
-
-      Box {
-        spacing: 12;
-        orientation: vertical;
-
-        Label {
-          label: _("Find by ID");
-        }
-
-        SearchEntry id_entry {
-          search-delay: 100;
-        }
-      }
     }
 
     ScrolledWindow {
       height-request: 340;
+      width-request: 340;
       has-frame: true;
 
       ColumnView column_view {
