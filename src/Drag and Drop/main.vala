@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
-
 public void main() {
     var list = workbench.builder.get_object("list") as Gtk.ListBox;
     var drop_target = new Gtk.DropTarget(typeof (Adw.ActionRow), Gdk.DragAction.MOVE);

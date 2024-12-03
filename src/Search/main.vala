@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 private int results_count = 0;
 private Gtk.ListBox listbox;
 private Gtk.SearchEntry search_entry;

@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
-
 public void main () {
     var dialog = (Adw.PreferencesDialog) workbench.builder.get_object ("dialog");
     var dm_switch = (Adw.SwitchRow) workbench.builder.get_object ("dm_switch");

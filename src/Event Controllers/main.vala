@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 private bool ctrl_pressed = false;
 
 public void main () {

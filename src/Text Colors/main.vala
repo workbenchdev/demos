@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 /*
  * Pango is a text layout library. It can e.g. be used for formatting text
  * https://valadoc.org/pango/Pango.html

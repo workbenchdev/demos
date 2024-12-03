@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 public void main () {
 
     var pic_with_frame = (Gtk.Picture) workbench.builder.get_object ("with_frame");

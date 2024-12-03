@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 public void main () {
     var banner = (Adw.Banner) workbench.builder.get_object ("banner");
     var overlay = (Adw.ToastOverlay) workbench.builder.get_object ("overlay");

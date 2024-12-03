@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
-
 public void main () {
     var button_confirmation = (Gtk.Button) workbench.builder.get_object ("button_confirmation");
     var button_error = (Gtk.Button) workbench.builder.get_object ("button_error");

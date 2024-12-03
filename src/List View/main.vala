@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 private Gtk.ListView list_view;
 private Gtk.Button add;
 private Gtk.Button remove_button;

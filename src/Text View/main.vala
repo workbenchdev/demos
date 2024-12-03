@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
-
 void main () {
     var textview = (Gtk.TextView) workbench.builder.get_object ("textview");
     var select = (Gtk.Button) workbench.builder.get_object ("select");
