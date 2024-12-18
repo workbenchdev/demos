@@ -28,8 +28,8 @@ class Book(GObject.Object):
     def author(self) -> str:
         return self._author
 
-    @GObject.Property(type=str)
-    def year(self) -> str:
+    @GObject.Property(type=int)
+    def year(self) -> int:
         return self._year
 
 
