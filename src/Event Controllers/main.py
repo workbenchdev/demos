@@ -84,6 +84,7 @@ ctrl_button.connect("clicked", on_clicked)
 
 # Detect pointer button press and release events
 gesture_click = Gtk.GestureClick(button=0)
+gesture_click.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
 window.add_controller(gesture_click)
 gesture_click.connect("pressed", on_pressed)
 gesture_click.connect("released", on_released)

@@ -47,6 +47,7 @@ public void main () {
     var gesture_click = new Gtk.GestureClick () {
         button = 0
     };
+    gesture_click.propagation_phase = Gtk.PropagationPhase.CAPTURE;
     ((Gtk.Widget) window).add_controller (gesture_click);
 
     gesture_click.pressed.connect ((gesture, n_press, x, y) => {
