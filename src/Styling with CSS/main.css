@@ -1,25 +1,25 @@
 #css_text {
-  color: @blue_1; /* Adwaita Named Color */
+  color: var(--blue-1); /* Adwaita Named Color */
 }
 
 .css_text {
-  color: @green_1; /* Adwaita Named Color */
+  color: var(--green-1); /* Adwaita Named Color */
 }
 
 .my_custom_class {
-  color: @red_1;
+  color: var(--red-1);
   font-weight: bold;
   text-decoration: underline;
 }
 
 #linked_box > :hover:first-child {
-  background-color: @destructive_bg_color;
+  background-color: var(--destructive-bg-color);
 }
 
 #linked_box > :hover:nth-child(2) {
-  background-color: @success_bg_color;
+  background-color: var(--success-bg-color);
 }
 
 #linked_box > :hover:last-child {
-  background-color: @accent_bg_color;
+  background-color: var(--accent-bg-color);
 }

@@ -4,7 +4,7 @@
 }
 
 .border {
-  border: 3px solid @accent_color;
+  border: 3px solid var(--accent-color);
 }
 
 .rotate {
