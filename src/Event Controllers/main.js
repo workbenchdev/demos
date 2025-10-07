@@ -44,6 +44,7 @@ ctrl_button.connect("clicked", () => {
 
 // Detect pointer button press and release events
 const gesture_click = new Gtk.GestureClick({ button: 0 });
+gesture_click.propagation_phase = Gtk.PropagationPhase.CAPTURE;
 
 window.add_controller(gesture_click);
 
