@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
-
 private Gtk.Scale scale_one;
 private Gtk.Scale scale_two;
 private Gtk.ScaleButton scale_button;

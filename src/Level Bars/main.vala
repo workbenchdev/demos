@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4
-
 Gtk.PasswordEntry entry;
 Gtk.LevelBar bar_discrete;
 Gtk.Label label_strength;

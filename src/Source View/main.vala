@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg gtksourceview-5
-
 public void main () {
     /*
      * Strictly speaking we don't _have_ to do this here since WorkBench does this for us.

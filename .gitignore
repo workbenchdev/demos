@@ -28,6 +28,7 @@ workbench-girs
 # Project files - sync with Makefile
 src/*/settings
 src/*/workbench.vala
+src/*/meson.build
 src/*/main.ui
 src/*/libworkbenchcode.so
 src/*/__pycache__

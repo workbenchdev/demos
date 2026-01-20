@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4
-
 async void save_file () {
     var file_dialog = new Gtk.FileDialog () {
         initial_name = "Workbench.txt"
