@@ -3,5 +3,5 @@
   "description": "Using libsoup to establish a WebSocket connection",
   "panels": ["code", "preview"],
   "autorun": true,
-  "flatpak-finish-args": ["--device=network"]
+  "flatpak-finish-args": ["--share=network"]
 }
