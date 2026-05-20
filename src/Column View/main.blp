@@ -7,11 +7,12 @@ Adw.StatusPage {
   valign: start;
 
   Adw.Clamp {
-    maximum-size: 240;
+    maximum-size: 600;
 
     Box {
       orientation: vertical;
       spacing: 18;
+      halign: center;
 
       Box {
         halign: center;
@@ -27,7 +28,11 @@ Adw.StatusPage {
         }
       }
 
-      Frame {
+      ScrolledWindow {
+        has-frame: true;
+        propagate-natural-width: true;
+        propagate-natural-height: true;
+
         ColumnView column_view {
           show-column-separators: true;
           show-row-separators: true;
