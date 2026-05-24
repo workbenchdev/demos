@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg gtksourceview-5
-
 private GtkSource.Buffer gtksource_buffer;
 private Adw.ComboRow combo_row_gradient_type;
 private Adw.SpinRow spin_row_angle;

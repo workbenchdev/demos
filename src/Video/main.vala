@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 public void main () {
     var video = (Gtk.Video) workbench.builder.get_object ("video");
     video.file = File.new_for_uri (workbench.resolve ("./workbench-video.mp4"));

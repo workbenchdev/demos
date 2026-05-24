@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
-
 public void main () {
     var button = workbench.builder.get_object ("button") as Gtk.Button;
     button.clicked.connect (on_button_clicked);

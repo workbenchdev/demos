@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 private Gtk.FileLauncher file_launcher;
 private Gtk.Entry uri_details;
 

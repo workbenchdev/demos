@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
-
 public void main() {
     var root_box = workbench.builder.get_object("root_box") as Gtk.Box;
     var carousel = workbench.builder.get_object("carousel") as Adw.Carousel;

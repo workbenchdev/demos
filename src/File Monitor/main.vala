@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg gio-2.0
-
 private FileMonitor monitor_for_dir;
 private FileMonitor monitor_for_file;
 public void main () {

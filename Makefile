@@ -32,6 +32,7 @@ ci: setup test
 clean:
 	rm -f src/*/settings
 	rm -f src/*/workbench.vala
+	rm -f src/*/meson.build
 	rm -f src/*/main.ui
 	rm -f src/*/libworkbenchcode.so
 	rm -f src/*/Cargo.toml

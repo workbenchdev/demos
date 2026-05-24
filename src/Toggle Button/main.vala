@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 public void main () {
 
     string[] button_ids = { "button_no_look", "button_look", "button_camera", "button_flashlight", "button_console" };

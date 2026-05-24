@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4
-
 public void main() {
     var switch_on = (Gtk.Switch) workbench.builder.get_object("switch_on");
     var label_on = (Gtk.Label) workbench.builder.get_object("label_on");

@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 private Gtk.FileFilter file_filter_image;
 
 public void main () {

@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 public void main () {
     var overlay = (Adw.ToastOverlay) workbench.builder.get_object ("overlay");
     var power_profile_monitor = PowerProfileMonitor.dup_default ();

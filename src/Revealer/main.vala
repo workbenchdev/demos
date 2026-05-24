@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4
-
 public void main () {
     var button_slide = (Gtk.ToggleButton) workbench.builder.get_object ("button_slide");
     var button_crossfade = (Gtk.ToggleButton) workbench.builder.get_object ("button_crossfade");

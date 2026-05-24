@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 public void main () {
     var circular_switch = (Adw.SwitchRow) workbench.builder.get_object ("circular_switch");
     var secondary_button = (Gtk.MenuButton) workbench.builder.get_object ("secondary");

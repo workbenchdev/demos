@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 private Gtk.Stack stack;
 private Gtk.ListBox list_box;
 private Gtk.FlowBox flow_box;

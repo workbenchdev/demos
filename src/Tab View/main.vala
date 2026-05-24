@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 private int tab_count = 1;
 private Adw.TabView tab_view;
 

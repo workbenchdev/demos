@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libsoup-3.0 --pkg json-glib-1.0
-
 public errordomain FetchError {
     FAILED_REQUEST,
     FAILED_TO_PARSE

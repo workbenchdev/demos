@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 async void select_folder () {
     var dialog_for_folder = new Gtk.FileDialog ();
     try {

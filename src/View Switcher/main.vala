@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
-
 public void main() {
     var notifications_page = workbench.builder.get_object("page3") as Adw.ViewStackPage;
     var notification_list = workbench.builder.get_object("notification_list") as Gtk.ListBox;

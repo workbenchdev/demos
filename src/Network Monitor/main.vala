@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
-
 void set_network_status (Adw.Banner banner, NetworkMonitor network_monitor, Gtk.LevelBar level_bar) {
     banner.revealed = network_monitor.network_metered;
     level_bar.value = (double) network_monitor.connectivity;

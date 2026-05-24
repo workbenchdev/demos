@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4
-
 async void on_clicked (Gtk.FontDialog dialog_custom) {
     try {
         Pango.FontFamily family = yield dialog_custom.choose_family (workbench.window, null, null);

@@ -1,5 +1,3 @@
-#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1 --pkg webkitgtk-6.0
-
 public void main () {
     var button_back = (Gtk.Button) workbench.builder.get_object ("button_back");
     var button_forward = (Gtk.Button) workbench.builder.get_object ("button_forward");
