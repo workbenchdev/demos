@@ -7,8 +7,7 @@ pub fn main() {
 
     let button: gtk::Button = workbench::builder().object("button").unwrap();
 
-    let mut file_filter = gtk::FileFilter::new();
-    file_filter.add_pixbuf_formats();
+    let mut file_filter = gtk::FileFilter::new().name("Images");
 
     let file_dialog = gtk::FileDialog::builder()
         .title("Select an Avatar")

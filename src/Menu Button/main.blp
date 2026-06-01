@@ -33,7 +33,7 @@ Adw.StatusPage {
       }
 
       MenuButton secondary {
-        direction: bind direction_row.selected;
+        direction: bind direction_row.selected as <Gtk.ArrowType>;
         halign: center;
         menu-model: secondary_button_menu;
         margin-top: 18;

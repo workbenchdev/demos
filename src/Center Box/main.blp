@@ -10,7 +10,7 @@ Adw.StatusPage {
     orientation: vertical;
 
     Adw.Clamp {
-      maximum-size: bind width_adjustment.value;
+      maximum-size: bind width_adjustment.value as <int>;
 
       child: CenterBox {
         shrink-center-last: true;

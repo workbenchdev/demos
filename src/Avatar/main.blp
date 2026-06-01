@@ -3,7 +3,7 @@ using Adw 1;
 
 Adw.StatusPage {
   title: _("Avatar");
-  description: "Display a round avatar for image or initials";
+  description: _("Display a round avatar for image or initials");
 
   Box {
     orientation: vertical;
@@ -12,7 +12,7 @@ Adw.StatusPage {
     Adw.Avatar {
       size: 96;
       show-initials: true;
-      text: "Jay Doe";
+      text: _("Jay Doe");
       margin-bottom: 6;
     }
 
@@ -27,7 +27,7 @@ Adw.StatusPage {
     }
 
     Button button {
-      label: "Image…";
+      label: _("Image…");
       margin-bottom: 30;
 
       styles [

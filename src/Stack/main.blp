@@ -7,9 +7,9 @@ Box root_box {
   valign: center;
 
   Stack stack {
-    interpolate-size: bind interpolate_switch.active;
-    transition-duration: bind transition_spin_button.value;
-    transition-type: bind transition_row.selected;
+    interpolate-size: bind interpolate_switch.active as <bool>;
+    transition-duration: bind transition_spin_button.value as <uint>;
+    transition-type: bind transition_row.selected as <Gtk.StackTransitionType>;
 
     StackPage page1 {
       title: _("Page 1");
@@ -18,33 +18,37 @@ Box root_box {
         title: _("Stack");
         description: _("A container which only shows one of its children at a time");
 
-        Label {
-          label: _("Documentation");
-          margin-top: 24;
-
-          styles [
-            "title-2",
-          ]
-        }
-
         Box {
-          orientation: horizontal;
-          halign: center;
-          margin-top: 24;
+          orientation: vertical;
 
-          LinkButton {
-            label: _("Stack API Reference");
-            uri: "https://docs.gtk.org/gtk4/class.Stack.html";
+          Label {
+            label: _("Documentation");
+            margin-top: 24;
+
+            styles [
+              "title-2",
+            ]
           }
 
-          LinkButton {
-            label: _("Stack Sidebar API Reference");
-            uri: "https://docs.gtk.org/gtk4/class.StackSidebar.html";
-          }
+          Box {
+            orientation: horizontal;
+            halign: center;
+            margin-top: 24;
 
-          LinkButton {
-            label: _("Stack Switcher API Reference");
-            uri: "https://docs.gtk.org/gtk4/class.StackSwitcher.html";
+            LinkButton {
+              label: _("Stack API Reference");
+              uri: "https://docs.gtk.org/gtk4/class.Stack.html";
+            }
+
+            LinkButton {
+              label: _("Stack Sidebar API Reference");
+              uri: "https://docs.gtk.org/gtk4/class.StackSidebar.html";
+            }
+
+            LinkButton {
+              label: _("Stack Switcher API Reference");
+              uri: "https://docs.gtk.org/gtk4/class.StackSwitcher.html";
+            }
           }
         }
       };
@@ -110,10 +114,10 @@ Box root_box {
             title: _("Transition Duration");
 
             adjustment: Adjustment {
-              step-increment: 10;
               lower: 100;
               upper: 1000;
               value: 200;
+              step-increment: 10;
             };
           }
         }

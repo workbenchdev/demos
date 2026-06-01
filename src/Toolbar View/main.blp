@@ -10,8 +10,8 @@ Adw.Window {
   Adw.ToolbarView toolbar_view {
     extend-content-to-bottom-edge: bind extend_bottom.active;
     extend-content-to-top-edge: bind extend_top.active;
-    top-bar-style: bind barstyle_select.selected;
-    bottom-bar-style: bind barstyle_select.selected;
+    top-bar-style: bind barstyle_select.selected as <Adw.ToolbarStyle>;
+    bottom-bar-style: bind barstyle_select.selected as <Adw.ToolbarStyle>;
     reveal-top-bars: bind reveal_topbar.active;
     reveal-bottom-bars: bind reveal_bottombar.active;
 

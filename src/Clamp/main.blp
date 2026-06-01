@@ -3,7 +3,7 @@ using Adw 1;
 
 Adw.StatusPage {
   title: _("Clamp");
-  description: "A widget constraining its child to a given size";
+  description: _("A widget constraining its child to a given size");
 
   Box {
     orientation: vertical;
@@ -37,7 +37,9 @@ Adw.StatusPage {
 
       Label label {
         wrap: true;
-        label: _("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ");
+        label: _(
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
+        );
       }
     }
   }

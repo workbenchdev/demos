@@ -1,13 +1,12 @@
 import gi
 
 gi.require_version("Gtk", "4.0")
+gi.require_version("Gly", "2")
 
-from gi.repository import Gtk, Gdk
 import workbench
+from gi.repository import Gdk, Gly, Gtk
 
-
-file_filter = Gtk.FileFilter()
-file_filter.add_pixbuf_formats()
+file_filter = Gtk.FileFilter(name="Images", mime_types=Gly.Loader.get_mime_types())
 
 file_dialog = Gtk.FileDialog(
     title="Select an Avatar",

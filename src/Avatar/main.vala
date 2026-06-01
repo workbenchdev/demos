@@ -1,4 +1,4 @@
-#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg glycin-2
 
 private Adw.Avatar avatar_image;
 private Gtk.FileFilter file_filter;
@@ -6,8 +6,11 @@ private Gtk.FileFilter file_filter;
 public void main () {
     avatar_image = (Adw.Avatar) workbench.builder.get_object ("avatar_image");
 
-    file_filter = new Gtk.FileFilter ();
-    file_filter.add_pixbuf_formats ();
+    file_filter = new Gtk.FileFilter () {
+        name = "Images",
+    };
+    foreach (var type in Gly.Loader.get_mime_types ())
+        file_filter.add_mime_type (type);
 
     var button = (Gtk.Button) workbench.builder.get_object ("button");
     button.clicked.connect (select_image.begin);

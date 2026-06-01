@@ -1,5 +1,6 @@
 using Gtk 4.0;
 using Adw 1;
+using Pango 1.0;
 
 Adw.StatusPage {
   title: _("Label");
@@ -96,9 +97,9 @@ Adw.StatusPage {
           digits: 1;
 
           adjustment: Adjustment {
-            step-increment: 0.1;
             lower: 0;
             upper: 1;
+            step-increment: 0.1;
           };
         }
       }
@@ -112,9 +113,9 @@ Adw.StatusPage {
     Separator {}
 
     Label label {
-      wrap: bind wrap_row.selected;
+      wrap: bind wrap_row.selected as <bool>;
       xalign: bind xalign_spin_button.value;
-      ellipsize: bind ellipsize_row.selected;
+      ellipsize: bind ellipsize_row.selected as <Pango.EllipsizeMode>;
       use-markup: bind markup_switch.active;
     }
   }

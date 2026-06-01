@@ -59,7 +59,7 @@ Adw.StatusPage {
 
 Adw.Dialog dialog {
   can-close: false;
-  presentation-mode: bind combo_row.selected;
+  presentation-mode: bind combo_row.selected as <Adw.DialogPresentationMode>;
 
   Adw.ToolbarView {
     [top]
