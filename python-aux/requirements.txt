@@ -1,0 +1,4 @@
+./workbench-typestubs
+ruff>=0.3.0
+pygobject-stubs>=2.11.0 --config-settings=config=Gtk4,Gdk4,GtkSource5
+mypy>=1.9.0

@@ -1,0 +1,2 @@
+include workbench/py.typed
+recursive-include workbench *.pyi

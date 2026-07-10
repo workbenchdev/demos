@@ -1,3 +1,5 @@
+from typing import cast
+
 import gi
 
 gi.require_version("Gtk", "4.0")
@@ -19,7 +21,7 @@ def dialog_response(dialog, response):
     dialog.close()
 
 
-subtitle_box: Gtk.Box = workbench.builder.get_object("subtitle")
+subtitle_box = cast(Gtk.Box, workbench.builder.get_object("subtitle"))
 
 button = Gtk.Button(label="Press me", margin_top=6, css_classes=["suggested-action"])
 button.connect("clicked", greet)
